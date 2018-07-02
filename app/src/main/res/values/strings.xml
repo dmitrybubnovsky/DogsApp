@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DogsApp</string>
+    <string name="explicit_btn_intent">Go to new Activity</string>
+    <string name="imlicit_btn_intent">Implicit intent</string>
 </resources>

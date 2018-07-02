@@ -1,13 +1,15 @@
 package com.andersen.dogsapp;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    Intent intent;
     Button btnActTwo;
+    Button btnActThree;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -16,6 +18,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnActTwo = (Button) findViewById(R.id.btnActTwo);
         btnActTwo.setOnClickListener(this);
+
+        btnActThree = (Button) findViewById(R.id.btnActThree);
+        btnActThree.setOnClickListener(this);
     }
 
     @Override
@@ -23,8 +28,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
 
             case R.id.btnActTwo:
-                Intent intent = new Intent(this, ActivityTwo.class);
+                intent = new Intent(this, ActivityTwo.class);
                 startActivity(intent);
+                break;
+            case R.id.btnActThree:
+                intent = new Intent();
+                intent.setAction(intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://www.andersenlab.com/"));
+                Intent intentChooser = Intent.createChooser(intent, "Select a browser");
+                startActivity(intentChooser);
                 break;
             default:
                 break;

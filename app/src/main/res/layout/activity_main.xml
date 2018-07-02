@@ -7,7 +7,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to Activity Two"
+        android:text="@string/explicit_btn_intent"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/btnActTwo">
+    </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/explicit_btn_intent"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btnActThree">
+
+    ">
     </Button>
 </LinearLayout>
