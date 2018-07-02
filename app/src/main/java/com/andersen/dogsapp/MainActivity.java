@@ -33,10 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnActThree:
                 intent = new Intent();
-                intent.setAction(intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://www.andersenlab.com/"));
-                Intent intentChooser = Intent.createChooser(intent, "Select a browser");
-                startActivity(intentChooser);
+                intent.setAction("com.andersen.dogsapp.CUSTOM_ACTION");
+                startActivity(intent);
                 break;
             default:
                 break;
