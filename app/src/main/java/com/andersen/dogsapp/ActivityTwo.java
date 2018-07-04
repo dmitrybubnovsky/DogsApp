@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 public class ActivityTwo extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setContentView(R.layout.activity_two);
         super.onCreate(savedInstanceState);
-
     }
 }

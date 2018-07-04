@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">DogsApp</string>
-    <string name="explicit_btn_intent">Go to new Activity</string>
-    <string name="imlicit_btn_intent">Implicit intent</string>
+    <string name="first_btn_title">Go to first Activity</string>
+    <string name="second_btn_title">Start second Activity</string>
+    <string name="third_btn_title">Create textviews in LinearLayout</string>
+    <string name="fourth_btn_title">Create textviews in RelativeLayout</string>
+    <string name="fifth_btn_title">Textviews in ConstraintLayout</string>
     <string name="btn_search">Go</string>
+    <string name="first_text_view">This is the first TextView</string>
+    <string name="second_text_view">This is the second one</string>
+    <string name="third_text_view">The third TextView</string>
+
 </resources>

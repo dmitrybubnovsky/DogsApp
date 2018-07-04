@@ -12,18 +12,25 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".ActivityTwo">
             <intent-filter>
-
-                <action android:name="com.andersen.dogsapp.CUSTOM_ACTION"/>
                 <category android:name="android.intent.category.DEFAULT"/>
 
+                <action android:name="com.andersen.dogsapp.CUSTOM_ACTION"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".ActivityThree">
+        </activity>
+        <activity android:name=".ActTextViewInFrameLayout">
+        </activity>
+        <activity android:name=".ActTextViewInRelativeLayout">
+        </activity>
+        <activity android:name=".ActTextViewInConstLayout">
+        </activity>
     </application>
 
 </manifest>
