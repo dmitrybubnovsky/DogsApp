@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.andersen.dogsapp.dogs.MainActDogsApp;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Intent intent;
     private Button btnActTwo;
@@ -12,26 +14,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnActFour;
     private Button btnActFive;
     private Button btnActSix;
+    private Button btnStartActDogs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnActTwo = (Button) findViewById(R.id.btnActTwo);
+        btnActTwo = findViewById(R.id.btnActTwo);
         btnActTwo.setOnClickListener(this);
 
-        btnActThree = (Button) findViewById(R.id.btnActThree);
+        btnActThree = findViewById(R.id.btnActThree);
         btnActThree.setOnClickListener(this);
 
-        btnActFour = (Button) findViewById(R.id.btnActFour);
+        btnActFour = findViewById(R.id.btnActFour);
         btnActFour.setOnClickListener(this);
 
-        btnActFive = (Button) findViewById(R.id.btnActFive);
+        btnActFive = findViewById(R.id.btnActFive);
         btnActFive.setOnClickListener(this);
 
-        btnActSix = (Button) findViewById(R.id.btnActSix);
+        btnActSix = findViewById(R.id.btnActSix);
         btnActSix.setOnClickListener(this);
+
+        btnStartActDogs = findViewById(R.id.btnStartActDogs);
+        btnStartActDogs.setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnActSix:
                 startActivity(new Intent(this, ActTextViewInConstLayout.class));
+                break;
+            case R.id.btnStartActDogs:
+                startActivity(new Intent(this, MainActDogsApp.class));
                 break;
             default:
                 break;

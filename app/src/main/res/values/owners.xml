@@ -1,0 +1,17 @@
+<resources>
+    <string-array name="owners">
+        <item>Adam Johnson</item>
+        <item>Boris Stevenson</item>
+        <item>Criss Jackson</item>
+        <item>David Oldman</item>
+        <item>Eaton Brooks</item>
+        <item>Fill Nickelson</item>
+        <item>George Clooney</item>
+        <item>Harry Born</item>
+        <item>James Bond</item>
+        <item>Snejana Denisovna</item>
+
+    </string-array>
+
+
+</resources>

@@ -44,4 +44,12 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/btnActSix">
     </Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/btn_start_dogs"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btnStartActDogs">
+    </Button>
 </LinearLayout>

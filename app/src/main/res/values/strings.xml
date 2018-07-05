@@ -5,6 +5,11 @@
     <string name="third_btn_title">Create textviews in LinearLayout</string>
     <string name="fourth_btn_title">Create textviews in RelativeLayout</string>
     <string name="fifth_btn_title">Textviews in ConstraintLayout</string>
+    <string name="btn_start_dogs">Start Dog App</string>
+    <string name="text_view_title_dogs_quantity">How many dogs: </string>
+    <string name="text_view_title_preff_dog">Favourite kind of dog: </string>
+
+
     <string name="btn_search">Go</string>
     <string name="first_text_view">This is the first TextView</string>
     <string name="second_text_view">This is the second one</string>
