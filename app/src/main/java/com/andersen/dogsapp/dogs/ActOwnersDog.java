@@ -8,23 +8,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.andersen.dogsapp.R;
-
 import java.util.Random;
-import java.util.UUID;
 
 public class ActOwnersDog extends AppCompatActivity {
     public static final String EXTRA_OWNER_NAME = "com.andersen.dogsapp.dogs.ActOwnersDog.owner_name";
     public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.ActOwnersDog.quantity";
-    private Intent intent;
     public String ownerName;
     public String kindOfDog[];
     public String dogName[];
     public int dogsQuantity;
-    public LinearLayout linlayoutInScroollDogsList; // private ?
+    public LinearLayout linlayoutInScroollDogsList;
     private View inflatedView;
     private TextView textViewOwnerName;
     private LayoutInflater layoutInflater;
-    private UUID uuid;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -67,8 +63,8 @@ public class ActOwnersDog extends AppCompatActivity {
                     String dogNm = ((TextView)view.findViewById(R.id.dog_name)).getText().toString();
 
                     Intent i = new Intent (getApplicationContext(), ActDogsInfo.class);
-                    i.putExtra(ActOwnersDog.EXTRA_OWNER_NAME, kindDog);
-                    i.putExtra(ActOwnersDog.EXTRA_DOGS_QUANTITY, dogNm);
+                    i.putExtra(ActDogsInfo.EXTRA_KIND_DOG, kindDog);
+                    i.putExtra(ActDogsInfo.EXTRA_DOG_NAME, dogNm);
                     startActivity(i);
                 }
             });

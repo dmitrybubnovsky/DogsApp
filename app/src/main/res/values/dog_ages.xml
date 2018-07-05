@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="dogage">
+        <item>2 years 3 months</item>
+        <item>1 years 7 months</item>
+        <item>4 years 5 months</item>
+        <item>3 years 4 months</item>
+        <item>6 years 2 months</item>
+        <item>2 years 5 months</item>
+        <item>7 years 6 months</item>
+        <item>3 years </item>
+        <item>1 years 4 months</item>
+        <item>10 months</item>
+    </string-array>
+
+
+</resources>

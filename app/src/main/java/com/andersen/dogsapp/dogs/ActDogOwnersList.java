@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 
 
-public class MainActDogsApp extends AppCompatActivity {
+public class ActDogOwnersList extends AppCompatActivity {
     String owner[];
     String kindOfDog[];
     int dogsQuantity[];

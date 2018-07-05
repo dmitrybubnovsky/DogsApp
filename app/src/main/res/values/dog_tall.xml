@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="dogtall">
+        <item>40</item>
+        <item>60</item>
+        <item>55</item>
+        <item>27</item>
+        <item>36</item>
+        <item>28</item>
+        <item>51</item>
+        <item>46</item>
+        <item>34</item>
+        <item>22</item>
+    </string-array>
+
+
+</resources>

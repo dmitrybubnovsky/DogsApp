@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.andersen.dogsapp.dogs.MainActDogsApp;
+import com.andersen.dogsapp.dogs.ActDogOwnersList;
+import com.andersen.dogsapp.dogs.ActMainDogSubscription;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Intent intent;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, ActTextViewInConstLayout.class));
                 break;
             case R.id.btnStartActDogs:
-                startActivity(new Intent(this, MainActDogsApp.class));
+                startActivity(new Intent(this, ActMainDogSubscription.class));
                 break;
             default:
                 break;
