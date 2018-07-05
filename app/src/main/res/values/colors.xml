@@ -3,9 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorCustomDark">#999999</color>
+    <color name="colorCustomDark">#7b7b7b</color>
     <color name="colorCustomDarkGreen">#006400</color>
     <color name="colorCustomLightDark">#b9b9b9</color>
+    <color name="colorCustomBlueGrey">#a39db5</color>
     <color name="colorCustomLightGreen">#03cd03</color>
     <color name="colorCustomYellow">#a2ff55</color>
     <color name="colorCustomOrange">#dfac03</color>

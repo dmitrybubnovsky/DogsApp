@@ -13,22 +13,22 @@ import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 
+import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
+
 
 public class ActDogOwnersList extends AppCompatActivity {
     String owner[];
     String kindOfDog[];
     int dogsQuantity[];
 
-    String ownerName;
-    String kindOfDogElement;
-    int dogsQuantElem;
-
-    LayoutInflater layoutInflater;
+    private String ownerName;
+    private String kindOfDogElement;
+    private int dogsQuantElem;
+    private LayoutInflater layoutInflater;
     private LinearLayout scrollinlayout;
     private static final String TAG = "#";
     private View inflatedView;
-
-    public Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class ActDogOwnersList extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_dogs_app);
         toolbar.setTitle(R.string.toolbar_title_owners_list);
+        toolbar.setTitleTextColor(colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
         owner = getResources().getStringArray(R.array.owners);
@@ -50,18 +51,21 @@ public class ActDogOwnersList extends AppCompatActivity {
             ownerName = owner[i];
             kindOfDogElement = kindOfDog[i];
             dogsQuantElem = dogsQuantity[i];
+            Log.d(TAG,kindOfDog[i]);
 
             // instantiate view-reference with inflated view
             // and set tag for that view
             inflatedView = layoutInflater.inflate(R.layout.owners_item, scrollinlayout, false);
 
             TextView textViewName = inflatedView.findViewById(R.id.owner_name);
-            textViewName.setTextAppearance(this, R.style.TextViewTitleItem);
             textViewName.setText(ownerName);
+            textViewName.setTextAppearance(this, R.style.TextViewTitleItem);
 
             TextView textViewPreffereDog = inflatedView.findViewById(R.id.preffered_dog);
+            textViewPreffereDog.setText(""+kindOfDogElement);
+            textViewPreffereDog.setTextAppearance(this, R.style.TextViewSubTitle);
 
-            final TextView textViewDogQuant = inflatedView.findViewById(R.id.dogs_quantity);
+            TextView textViewDogQuant = inflatedView.findViewById(R.id.dogs_quantity);
             textViewDogQuant.setText(""+dogsQuantElem);
 
             inflatedView.setOnClickListener(new View.OnClickListener() {

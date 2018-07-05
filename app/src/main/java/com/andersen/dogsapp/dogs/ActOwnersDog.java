@@ -14,15 +14,15 @@ import java.util.Random;
 public class ActOwnersDog extends AppCompatActivity {
     public static final String EXTRA_OWNER_NAME = "com.andersen.dogsapp.dogs.ActOwnersDog.owner_name";
     public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.ActOwnersDog.quantity";
-    public String ownerName;
-    public String kindOfDog[];
-    public String dogName[];
-    public int dogsQuantity;
-    public LinearLayout linlayoutInScroollDogsList;
+    private String kindOfDog[];
+    private String dogName[];
+    private String ownerName;
+    private int dogsQuantity;
+    private LinearLayout linlayoutInScroollDogsList;
     private View inflatedView;
     private TextView textViewOwnerName;
     private LayoutInflater layoutInflater;
-    public Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -59,6 +59,7 @@ public class ActOwnersDog extends AppCompatActivity {
 
             TextView textViewDogName = inflatedView.findViewById(R.id.dog_name);
             textViewDogName.setText(dogNameElem);
+            textViewDogName.setTextAppearance(this, R.style.TextViewSubTitle);
 
             linlayoutInScroollDogsList.addView(inflatedView);
 
