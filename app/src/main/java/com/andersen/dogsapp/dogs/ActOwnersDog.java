@@ -2,6 +2,7 @@ package com.andersen.dogsapp.dogs;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ public class ActOwnersDog extends AppCompatActivity {
     private View inflatedView;
     private TextView textViewOwnerName;
     private LayoutInflater layoutInflater;
+    public Toolbar toolbar;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -31,6 +33,10 @@ public class ActOwnersDog extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_owners_dog);
+
+        toolbar = findViewById(R.id.toolbar_dogs_app);
+        toolbar.setTitle(R.string.toolbar_title_dogs_list);
+        setSupportActionBar(toolbar);
 
         kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
         dogName = getResources().getStringArray(R.array.dog_name);

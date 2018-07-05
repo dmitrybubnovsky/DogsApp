@@ -6,24 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".dogs.ActOwnersDog">
+    <include
+        android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
 
     <TextView
         android:id="@+id/text_view_owner_name"
-        android:layout_width="353dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_dogs_app"
+        style="@style/TextViewTitleItem"/>
+
 
     <ScrollView
         android:id="@+id/scroll_view_dogs"
-        android:layout_width="368dp"
-        android:layout_height="440dp"
+        android:layout_width="match_parent"
+        android:layout_height="402dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_owner_name">
 

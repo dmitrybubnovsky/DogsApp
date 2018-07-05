@@ -31,12 +31,13 @@
         </activity>
         <activity android:name=".ActTextViewInConstLayout">
         </activity>
-        <activity android:name=".dogs.ActDogOwnersList">
-        </activity>
-        <activity android:name=".dogs.ActOwnersDog">
-        </activity>
-        <activity android:name=".dogs.ActDogsInfo">
-        </activity>
+        <activity android:name=".dogs.ActDogOwnersList"
+                  android:theme = "@style/MainDogApp"/>
+
+        <activity android:name=".dogs.ActOwnersDog"
+                  android:theme = "@style/MainDogApp"/>
+        <activity android:name=".dogs.ActDogsInfo"
+                  android:theme = "@style/MainDogApp"/>
         <activity android:name=".dogs.ActMainDogSubscription"
                   android:theme = "@style/NoActionBar"/>
     </application>

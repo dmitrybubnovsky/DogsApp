@@ -1,6 +1,7 @@
 package com.andersen.dogsapp.dogs;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,10 +26,17 @@ public class ActDogsInfo extends AppCompatActivity {
     TextView textViewDogTall;
     TextView textViewDogWeight;
     ImageView imageViewDog;
+
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
+
+        toolbar = findViewById(R.id.toolbar_dogs_app);
+        toolbar.setTitle(R.string.toolbar_title_detail_info);
+        setSupportActionBar(toolbar);
 
         Random r = new Random();
         dogName = getIntent().getStringExtra(EXTRA_DOG_NAME);
