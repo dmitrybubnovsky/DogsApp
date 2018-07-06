@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.andersen.dogsapp.dogs.ActDogOwnersList;
+import com.andersen.dogsapp.activities.with.textview.ActTextViewInConstLayout;
+import com.andersen.dogsapp.activities.with.textview.ActTextViewInFrameLayout;
+import com.andersen.dogsapp.activities.with.textview.ActTextViewInRelativeLayout;
+import com.andersen.dogsapp.activities.with.textview.ActivityThree;
+import com.andersen.dogsapp.activities.with.textview.ActivityTwo;
 import com.andersen.dogsapp.dogs.ActMainDogSubscription;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{

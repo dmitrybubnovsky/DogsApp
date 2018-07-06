@@ -1,6 +1,5 @@
-package com.andersen.dogsapp;
+package com.andersen.dogsapp.activities.with.textview;
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class CustomTextView {

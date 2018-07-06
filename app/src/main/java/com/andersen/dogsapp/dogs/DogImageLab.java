@@ -19,7 +19,7 @@ public class DogImageLab {
         return dogList.get(new Random().nextInt(12));
     }
 
-    DogImageLab(Context context){
+    private DogImageLab(Context context){
         dogList = new ArrayList<>();
         dogList.add(R.drawable.afghan_hound);
         dogList.add(R.drawable.english_coonhound);

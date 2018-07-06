@@ -25,11 +25,6 @@ public class ActOwnersDog extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_owners_dog);
@@ -62,24 +57,19 @@ public class ActOwnersDog extends AppCompatActivity {
             textViewDogName.setTextAppearance(this, R.style.TextViewSubTitle);
 
             linlayoutInScroollDogsList.addView(inflatedView);
-
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog)).getText().toString();
                     String dogNm = ((TextView)view.findViewById(R.id.dog_name)).getText().toString();
-
                     Intent i = new Intent (getApplicationContext(), ActDogsInfo.class);
                     i.putExtra(ActDogsInfo.EXTRA_KIND_DOG, kindDog);
                     i.putExtra(ActDogsInfo.EXTRA_DOG_NAME, dogNm);
                     startActivity(i);
                 }
             });
-
         }
         // TEST
-        Toast.makeText(getApplicationContext(), "dogQuant = "+dogsQuantity, Toast.LENGTH_SHORT).show();
-
-
+        // Toast.makeText(getApplicationContext(), "dogQuant = "+dogsQuantity, Toast.LENGTH_SHORT).show();
     }
 }

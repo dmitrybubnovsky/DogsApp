@@ -1,4 +1,4 @@
-package com.andersen.dogsapp;
+package com.andersen.dogsapp.activities.with.textview;
 
 public class LayoutParamsFactory{
 //    public AbsLayoutParams createLayoutParams(String str){ // Class <?> cls

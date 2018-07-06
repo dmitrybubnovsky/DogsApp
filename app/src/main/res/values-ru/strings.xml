@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">DogsApp</string>
+    <string name="first_btn_title">Вперёд на первое Activity</string>
+    <string name="second_btn_title">Запустить второе Activity</string>
+    <string name="third_btn_title">Создать текст-вьюхи в LinearLayout</string>
+    <string name="fourth_btn_title">Создать текст-вьюхи в RelativeLayout</string>
+    <string name="fifth_btn_title">Текст-вьюхи в ConstraintLayout</string>
+
+    <string name="btn_start_dogs">Запустить DOGGY DOGG</string>
+    <string name="text_view_title_dogs_quantity">Количество собак: </string>
+    <string name="woof_btn_title">Гаф!</string>
+    <string name="text_view_title_preff_dog">Любимая порода: </string>
+
+    <string name="toolbar_title_owners_list">СПИСОК СОБАКОВОДОВ</string>
+    <string name="toolbar_title_dogs_list">СПИСОК СОБАК</string>
+    <string name="toolbar_title_detail_info">ИНФОРМАЦИЯ О СОБАКЕ</string>
+
+    <string name="text_view_app_title">DOGGY DOGG</string>
+    <string name="text_view_app_description">Это приложение для собаководов. Оно состоит из списка владельцев домашних животных и детальной информацией об их домашних любимцах, включая имя, породу, возраст и рост питомца.</string>
+    <string name="text_view_title_kind">Порода: </string>
+    <string name="text_view_title_age">Возраст: </string>
+    <string name="text_view_title_weight">Вес: </string>
+    <string name="text_view_title_tall">Рост: </string>
+
+    <string name="btn_search">Вперед</string>
+    <string name="first_text_view">Первое текствью</string>
+    <string name="second_text_view">Второе текствью</string>
+    <string name="third_text_view">Третье текствью</string>
+</resources>

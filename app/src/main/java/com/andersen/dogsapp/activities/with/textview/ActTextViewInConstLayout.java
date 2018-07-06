@@ -1,9 +1,11 @@
-package com.andersen.dogsapp;
+package com.andersen.dogsapp.activities.with.textview;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.andersen.dogsapp.R;
 
 import static android.support.constraint.ConstraintSet.WRAP_CONTENT;
 
