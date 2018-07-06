@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ public class ActDogOwnersList extends AppCompatActivity {
     private static final String TAG = "#";
     private View inflatedView;
     private Toolbar toolbar;
+    private Typeface typeFace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class ActDogOwnersList extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_dogs_app);
         toolbar.setTitle(R.string.toolbar_title_owners_list);
-        toolbar.setTitleTextColor(colorCustomBlueGrey);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorCustomBlueGrey));
         setSupportActionBar(toolbar);
 
         owner = getResources().getStringArray(R.array.owners);
@@ -40,6 +42,9 @@ public class ActDogOwnersList extends AppCompatActivity {
 
         scrollinlayout = findViewById(R.id.scroll_child_linlayout);
         layoutInflater = getLayoutInflater();
+
+        typeFace = Typeface.createFromAsset(getAssets(),"DroidSerif-Italic.ttf");
+
 
         for(int i = 0; i< owner.length; i++){
             ownerName = owner[i];
@@ -56,8 +61,9 @@ public class ActDogOwnersList extends AppCompatActivity {
             textViewName.setTextAppearance(this, R.style.TextViewTitleItem);
 
             TextView textViewPreffereDog = inflatedView.findViewById(R.id.preffered_dog);
-            textViewPreffereDog.setText(""+kindOfDogElement);
             textViewPreffereDog.setTextAppearance(this, R.style.TextViewSubTitle);
+            textViewPreffereDog.setTypeface(typeFace);
+            textViewPreffereDog.setText(""+kindOfDogElement);
 
             TextView textViewDogQuant = inflatedView.findViewById(R.id.dogs_quantity);
             textViewDogQuant.setText(""+dogsQuantElem);
