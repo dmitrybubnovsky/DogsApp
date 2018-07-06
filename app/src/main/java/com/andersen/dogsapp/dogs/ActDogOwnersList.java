@@ -31,7 +31,8 @@ public class ActDogOwnersList extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar_dogs_app);
         toolbar.setTitle(R.string.toolbar_title_owners_list);
-        toolbar.setTitleTextColor(colorCustomBlueGrey);
+        toolbar.setTitleTextColor(getResources().getColor(colorCustomBlueGrey));
+
         setSupportActionBar(toolbar);
 
         owner = getResources().getStringArray(R.array.owners);
