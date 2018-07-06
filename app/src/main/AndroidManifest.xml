@@ -16,20 +16,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityTwo">
+        <activity android:name=".activities.with.textview.ActivityTwo">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
 
                 <action android:name="com.andersen.dogsapp.CUSTOM_ACTION"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityThree">
+        <activity android:name=".activities.with.textview.ActivityThree">
         </activity>
-        <activity android:name=".ActTextViewInFrameLayout">
+        <activity android:name=".activities.with.textview.ActTextViewInFrameLayout">
         </activity>
-        <activity android:name=".ActTextViewInRelativeLayout">
+        <activity android:name=".activities.with.textview.ActTextViewInRelativeLayout">
         </activity>
-        <activity android:name=".ActTextViewInConstLayout">
+        <activity android:name=".activities.with.textview.ActTextViewInConstLayout">
         </activity>
         <activity android:name=".dogs.ActDogOwnersList"
                   android:theme = "@style/MainDogApp"/>

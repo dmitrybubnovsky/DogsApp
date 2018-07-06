@@ -1,4 +1,4 @@
-package com.andersen.dogsapp;
+package com.andersen.dogsapp.activities.with.textview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

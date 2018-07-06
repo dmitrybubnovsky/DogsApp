@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="owners">
+        <item>Адам Джонсон</item>
+        <item>Борис Стивенсон</item>
+        <item>Крисс Джексон</item>
+        <item>Дэвид Олдман</item>
+        <item>Итан Брукс</item>
+        <item>Филл Николсон </item>
+        <item>Жорж Клуни</item>
+        <item>Гарри Борн</item>
+        <item>Джеймс Бонд</item>
+        <item>Снежана Денисовна</item>
+    </string-array>
+</resources>

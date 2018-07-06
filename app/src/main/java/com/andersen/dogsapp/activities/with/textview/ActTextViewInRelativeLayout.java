@@ -1,9 +1,11 @@
-package com.andersen.dogsapp;
+package com.andersen.dogsapp.activities.with.textview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.andersen.dogsapp.R;
 
 public class ActTextViewInRelativeLayout extends AppCompatActivity {
     private RelativeLayout parentRelLayout;

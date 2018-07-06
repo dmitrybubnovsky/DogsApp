@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="kind_of_dogs">
+        <item>Немецкая Овчарка</item>
+        <item>Австрийская Овчарка</item>
+        <item>Сибирская Хаски</item>
+        <item>Ротвейлер</item>
+        <item>Спаниэль</item>
+        <item>Колли</item>
+        <item>Добермен Пинчер</item>
+        <item>Самоед</item>
+        <item>Шотландский Теръер</item>
+        <item>Ирландский Теръер</item>
+    </string-array>
+</resources>
