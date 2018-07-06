@@ -8,19 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-
 import com.andersen.dogsapp.R;
-
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-
 public class ActDogOwnersList extends AppCompatActivity {
-    String owner[];
-    String kindOfDog[];
-    int dogsQuantity[];
-
+    private String owner[];
+    private String kindOfDog[];
+    private int dogsQuantity[];
     private String ownerName;
     private String kindOfDogElement;
     private int dogsQuantElem;
@@ -91,4 +85,3 @@ public class ActDogOwnersList extends AppCompatActivity {
 
 
 
-//
