@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,19 +64,37 @@ public class ActDogOwnersList extends AppCompatActivity {
             TextView textViewDogQuant = inflatedView.findViewById(R.id.dogs_quantity);
             textViewDogQuant.setText(""+dogsQuantElem);
 
-            inflatedView.setOnClickListener(new View.OnClickListener() {
+            inflatedView.setOnTouchListener(new View.OnTouchListener(){
                 @Override
-                public void onClick(View view) {
-                  TextView textVName = view.findViewById(R.id.owner_name);
-                  String ownNm = textVName.getText().toString();
+                public boolean onTouch(View view, MotionEvent event) {
+                    switch (event.getAction()){
+                        // if ACTION_UP then return color back to original state
+                        case MotionEvent.ACTION_UP:
+                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomLightDark));
 
-                  TextView textViewQuant = view.findViewById(R.id.dogs_quantity);
-                  Integer dogQuant = Integer.parseInt(textViewQuant.getText().toString());
+                            TextView textVName = view.findViewById(R.id.owner_name);
+                            String ownNm = textVName.getText().toString();
 
-                  Intent i = new Intent (getApplicationContext(), ActOwnersDog.class);
-                  i.putExtra(ActOwnersDog.EXTRA_OWNER_NAME, ownNm);
-                  i.putExtra(ActOwnersDog.EXTRA_DOGS_QUANTITY, dogQuant);
-                  startActivity(i);
+                            TextView textViewQuant = view.findViewById(R.id.dogs_quantity);
+                            Integer dogQuant = Integer.parseInt(textViewQuant.getText().toString());
+
+                            Intent i = new Intent (getApplicationContext(), ActOwnersDog.class);
+                            i.putExtra(ActOwnersDog.EXTRA_OWNER_NAME, ownNm);
+                            i.putExtra(ActOwnersDog.EXTRA_DOGS_QUANTITY, dogQuant);
+                            startActivity(i);
+                            break;
+                        // if ACTION_DOWN then change color
+                        case MotionEvent.ACTION_DOWN:
+                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomDarkL));
+                            break;
+                        // if ACTION MOVE/SCROLL/CANCEL then return color back to original state
+                        case MotionEvent.ACTION_MOVE:
+                        case MotionEvent.ACTION_SCROLL:
+                        case MotionEvent.ACTION_CANCEL:
+                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomLightDark));
+                            break;
+                    }
+                    return true;
                 }
             });
             scrollinlayout.addView(inflatedView);

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,15 +58,33 @@ public class ActOwnersDog extends AppCompatActivity {
             textViewDogName.setTextAppearance(this, R.style.TextViewSubTitle);
 
             linlayoutInScroollDogsList.addView(inflatedView);
-            inflatedView.setOnClickListener(new View.OnClickListener() {
+
+            inflatedView.setOnTouchListener(new View.OnTouchListener(){
                 @Override
-                public void onClick(View view) {
-                    String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog)).getText().toString();
-                    String dogNm = ((TextView)view.findViewById(R.id.dog_name)).getText().toString();
-                    Intent i = new Intent (getApplicationContext(), ActDogsInfo.class);
-                    i.putExtra(ActDogsInfo.EXTRA_KIND_DOG, kindDog);
-                    i.putExtra(ActDogsInfo.EXTRA_DOG_NAME, dogNm);
-                    startActivity(i);
+                public boolean onTouch(View view, MotionEvent event) {
+                    switch (event.getAction()){
+                        // if ACTION_UP then return color back to original state
+                        case MotionEvent.ACTION_UP:
+                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomLightDark));
+                            String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog)).getText().toString();
+                            String dogNm = ((TextView)view.findViewById(R.id.dog_name)).getText().toString();
+                            Intent i = new Intent (getApplicationContext(), ActDogsInfo.class);
+                            i.putExtra(ActDogsInfo.EXTRA_KIND_DOG, kindDog);
+                            i.putExtra(ActDogsInfo.EXTRA_DOG_NAME, dogNm);
+                            startActivity(i);
+                            break;
+                        // if ACTION_DOWN then change color
+                        case MotionEvent.ACTION_DOWN:
+                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomDarkL));
+                            break;
+                        // if ACTION MOVE/SCROLL/CANCEL then return color back to original state
+                        case MotionEvent.ACTION_MOVE:
+                        case MotionEvent.ACTION_SCROLL:
+                        case MotionEvent.ACTION_CANCEL:
+                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomLightDark));
+                            break;
+                    }
+                    return true;
                 }
             });
         }
