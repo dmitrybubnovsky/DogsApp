@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
-import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class ActDogOwnersList extends AppCompatActivity {
     private String owner[];
@@ -43,7 +42,7 @@ public class ActDogOwnersList extends AppCompatActivity {
         scrollinlayout = findViewById(R.id.scroll_child_linlayout);
         layoutInflater = getLayoutInflater();
 
-        typeFace = Typeface.createFromAsset(getAssets(),"DroidSerif-Italic.ttf");
+        typeFace = Typeface.createFromAsset(getAssets(), "fonts/DroidSerif-Italic.ttf");
 
 
         for(int i = 0; i< owner.length; i++){

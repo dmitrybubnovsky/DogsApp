@@ -26,7 +26,7 @@ public class ActMainDogSubscription extends AppCompatActivity implements View.On
         textViewDescription.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
         textViewDescription.setOnClickListener(this);
 
-        type = Typeface.createFromAsset(getAssets(),"Roboto_Thin.ttf");
+        type = Typeface.createFromAsset(getAssets(), "fonts/Roboto_Thin.ttf");
         textViewAppName = findViewById(R.id.textViewAppName);
         textViewAppName.setTypeface(Typeface.DEFAULT_BOLD, Typeface.BOLD);
         textViewAppName.setTypeface(type);
