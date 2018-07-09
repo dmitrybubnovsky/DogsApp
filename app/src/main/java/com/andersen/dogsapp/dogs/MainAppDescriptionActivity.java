@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 
-public class ActMainDogSubscription extends AppCompatActivity implements View.OnClickListener {
+public class MainAppDescriptionActivity extends AppCompatActivity implements View.OnClickListener {
     TextView textViewDescription;
     TextView textViewAppName;
     Button button_start_woof;
@@ -27,6 +27,6 @@ public class ActMainDogSubscription extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, ActDogOwnersList.class));
+        startActivity(new Intent(this, DogOwnersListActivity.class));
     }
 }

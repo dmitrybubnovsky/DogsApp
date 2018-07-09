@@ -12,33 +12,17 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityTwo">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
 
-                <action android:name="com.andersen.dogsapp.CUSTOM_ACTION"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".ActivityThree">
-        </activity>
-        <activity android:name=".ActTextViewInFrameLayout">
-        </activity>
-        <activity android:name=".ActTextViewInRelativeLayout">
-        </activity>
-        <activity android:name=".ActTextViewInConstLayout">
-        </activity>
-        <activity android:name=".dogs.ActDogOwnersList"
+        <activity android:name=".dogs.DogOwnersListActivity"
                   android:theme = "@style/MainDogApp"/>
-
-        <activity android:name=".dogs.ActOwnersDog"
+        <activity android:name=".dogs.OwnerDogsActivity"
                   android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.ActDogsInfo"
+        <activity android:name=".dogs.DogsInfoActivity"
                   android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.ActMainDogSubscription"
+        <activity android:name=".dogs.MainAppDescriptionActivity"
                   android:theme = "@style/NoActionBar"/>
     </application>
 

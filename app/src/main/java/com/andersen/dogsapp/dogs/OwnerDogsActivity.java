@@ -11,18 +11,23 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 import java.util.Random;
 
-public class ActOwnersDog extends AppCompatActivity {
-    public static final String EXTRA_OWNER_NAME = "com.andersen.dogsapp.dogs.ActOwnersDog.owner_name";
-    public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.ActOwnersDog.quantity";
-    private String kindOfDog[];
-    private String dogName[];
-    private String ownerName;
-    private int dogsQuantity;
+import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
+
+public class OwnerDogsActivity extends AppCompatActivity {
+    public static final String EXTRA_OWNER_NAME = "com.andersen.dogsapp.dogs.OwnerDogsActivity.owner_name";
+    public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.OwnerDogsActivity.quantity";
+
+    private LayoutInflater layoutInflater;
     private LinearLayout linlayoutInScroollDogsList;
     private View inflatedView;
     private TextView textViewOwnerName;
-    private LayoutInflater layoutInflater;
     private Toolbar toolbar;
+
+    private String kindOfDog[];
+    private String dogName[];
+    private String ownerName;
+
+    private int dogsQuantity;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -34,8 +39,7 @@ public class ActOwnersDog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_owners_dog);
 
-        toolbar = findViewById(R.id.toolbar_dogs_app);
-        toolbar.setTitle(R.string.toolbar_title_dogs_list);
+        toolbar = new DogToolBar().get(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
         kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
@@ -69,9 +73,9 @@ public class ActOwnersDog extends AppCompatActivity {
                     String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog)).getText().toString();
                     String dogNm = ((TextView)view.findViewById(R.id.dog_name)).getText().toString();
 
-                    Intent i = new Intent (getApplicationContext(), ActDogsInfo.class);
-                    i.putExtra(ActDogsInfo.EXTRA_KIND_DOG, kindDog);
-                    i.putExtra(ActDogsInfo.EXTRA_DOG_NAME, dogNm);
+                    Intent i = new Intent (getApplicationContext(), DogsInfoActivity.class);
+                    i.putExtra(DogsInfoActivity.EXTRA_KIND_DOG, kindDog);
+                    i.putExtra(DogsInfoActivity.EXTRA_DOG_NAME, dogNm);
                     startActivity(i);
                 }
             });
