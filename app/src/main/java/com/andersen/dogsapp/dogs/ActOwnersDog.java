@@ -59,6 +59,7 @@ public class ActOwnersDog extends AppCompatActivity {
 
             linlayoutInScroollDogsList.addView(inflatedView);
 
+
             inflatedView.setOnTouchListener(new View.OnTouchListener(){
                 @Override
                 public boolean onTouch(View view, MotionEvent event) {

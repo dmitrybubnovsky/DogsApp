@@ -10,9 +10,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
+
+import java.util.ArrayList;
+import java.util.UUID;
+
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class ActDogOwnersList extends AppCompatActivity {
+public class ActDogOwnersList extends AppCompatActivity  {
     private String owner[];
     private String kindOfDog[];
     private int dogsQuantity[];
@@ -24,7 +28,8 @@ public class ActDogOwnersList extends AppCompatActivity {
     private static final String TAG = "#";
     private View inflatedView;
     private Toolbar toolbar;
-
+    private ArrayList<UUID> listOfAddedViewId;
+    private UUID uuid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,7 @@ public class ActDogOwnersList extends AppCompatActivity {
         owner = getResources().getStringArray(R.array.owners);
         kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
         dogsQuantity = new int[]{1,2,3,4,6,8,5,3,7,9};
+        listOfAddedViewId = new ArrayList<>(owner.length);
 
         scrollinlayout = findViewById(R.id.scroll_child_linlayout);
         layoutInflater = getLayoutInflater();
@@ -55,6 +61,9 @@ public class ActDogOwnersList extends AppCompatActivity {
 
             TextView textViewName = inflatedView.findViewById(R.id.owner_name);
             textViewName.setText(ownerName);
+            if (i % 2 == 0){
+                textViewName.setEnabled(false);
+            }
             textViewName.setTextAppearance(this, R.style.TextViewTitleItem);
 
             TextView textViewPreffereDog = inflatedView.findViewById(R.id.preffered_dog);
@@ -64,41 +73,38 @@ public class ActDogOwnersList extends AppCompatActivity {
             TextView textViewDogQuant = inflatedView.findViewById(R.id.dogs_quantity);
             textViewDogQuant.setText(""+dogsQuantElem);
 
-            inflatedView.setOnTouchListener(new View.OnTouchListener(){
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    switch (event.getAction()){
-                        // if ACTION_UP then return color back to original state
-                        case MotionEvent.ACTION_UP:
-                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomLightDark));
+            uuid = UUID.randomUUID();
+            listOfAddedViewId.add(uuid);
+            inflatedView.setTag(uuid);
 
-                            TextView textVName = view.findViewById(R.id.owner_name);
-                            String ownNm = textVName.getText().toString();
-
-                            TextView textViewQuant = view.findViewById(R.id.dogs_quantity);
-                            Integer dogQuant = Integer.parseInt(textViewQuant.getText().toString());
-
-                            Intent i = new Intent (getApplicationContext(), ActOwnersDog.class);
-                            i.putExtra(ActOwnersDog.EXTRA_OWNER_NAME, ownNm);
-                            i.putExtra(ActOwnersDog.EXTRA_DOGS_QUANTITY, dogQuant);
-                            startActivity(i);
-                            break;
-                        // if ACTION_DOWN then change color
-                        case MotionEvent.ACTION_DOWN:
-                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomDarkL));
-                            break;
-                        // if ACTION MOVE/SCROLL/CANCEL then return color back to original state
-                        case MotionEvent.ACTION_MOVE:
-                        case MotionEvent.ACTION_SCROLL:
-                        case MotionEvent.ACTION_CANCEL:
-                            view.setBackgroundColor(getResources().getColor(R.color.colorCustomLightDark));
-                            break;
-                    }
-                    return true;
-                }
-            });
             scrollinlayout.addView(inflatedView);
+            if (i != (owner.length-1)){
+                inflatedView.setBackground(getResources().getDrawable(R.drawable.list_colors));
+
+                inflatedView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        TextView textVName = view.findViewById(R.id.owner_name);
+                        String ownNm = textVName.getText().toString();
+
+                        TextView textViewQuant = view.findViewById(R.id.dogs_quantity);
+                        Integer dogQuant = Integer.parseInt(textViewQuant.getText().toString());
+
+                        Intent i = new Intent (getApplicationContext(), ActOwnersDog.class);
+                        i.putExtra(ActOwnersDog.EXTRA_OWNER_NAME, ownNm);
+                        i.putExtra(ActOwnersDog.EXTRA_DOGS_QUANTITY, dogQuant);
+                        startActivity(i);
+                    }
+                });
+            }
         }
+
+        // set onTouchListener to all items except last one
+//        for (int i = 0 ; i< listOfAddedViewId.size(); i++){
+//            if (i != (owner.length-1)){
+//            }
+//        }
+        //scrollinlayout.findViewWithTag(listOfAddedViewId.get(listOfAddedViewId.size()-1)).getBackground().setAlpha(128);
     }
 }
 
