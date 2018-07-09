@@ -7,117 +7,130 @@
     android:layout_height="match_parent"
     tools:context=".dogs.ActDogsInfo">
 
-    <include android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar_dogs_app"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ScrollView
         android:id="@+id/own_dogs_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="505dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_dogs_app"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_dogs_app">
+        app:layout_constraintStart_toStartOf="parent">
+
         <LinearLayout
             android:id="@+id/owners_dogs_scr_lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/dogImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/shepherd"
-                android:layout_gravity="center_horizontal"/>
+                android:src="@drawable/shepherd"/>
+
             <TextView
                 android:id="@+id/text_view_dog_name"
                 style="@style/TextViewTitleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_marginStart="8dp"/>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/txtv_titile_kind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/text_view_title_kind"/>
+
                 <TextView
                     android:id="@+id/text_view_kind_dog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/txtv_titile_kind"
-                    app:layout_constraintTop_toTopOf="@+id/txtv_titile_kind"/>
+                    android:layout_marginLeft="16dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/txtv_titile_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/text_view_title_age"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtv_titile_kind"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/text_view_title_age"/>
+
                 <TextView
                     android:id="@+id/text_view_dog_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/txtv_titile_age"
-                    app:layout_constraintTop_toTopOf="@+id/txtv_titile_age"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/txtv_titile_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/text_view_title_weight"/>
 
                 <TextView
                     android:id="@+id/text_view_dog_weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/txtv_titile_tall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/text_view_title_tall"/>
+
                 <TextView
                     android:id="@+id/text_view_dog_tall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
