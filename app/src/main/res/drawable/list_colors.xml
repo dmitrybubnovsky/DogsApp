@@ -4,5 +4,11 @@
         android:state_pressed="true"
         android:drawable="@color/colorCustomYellow"/>
     <item
+        android:state_enabled="false"
+        android:color="#99A9A9A9"
         android:drawable="@color/colorCustomDarkL" />
+
+    <item
+        android:drawable="@color/colorCustomDarkL" />
+
 </selector>
