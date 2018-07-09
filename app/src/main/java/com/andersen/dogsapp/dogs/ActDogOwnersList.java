@@ -28,8 +28,7 @@ public class ActDogOwnersList extends AppCompatActivity  {
     private static final String TAG = "#";
     private View inflatedView;
     private Toolbar toolbar;
-    private ArrayList<UUID> listOfAddedViewId;
-    private UUID uuid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +43,6 @@ public class ActDogOwnersList extends AppCompatActivity  {
         owner = getResources().getStringArray(R.array.owners);
         kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
         dogsQuantity = new int[]{1,2,3,4,6,8,5,3,7,9};
-        listOfAddedViewId = new ArrayList<>(owner.length);
 
         scrollinlayout = findViewById(R.id.scroll_child_linlayout);
         layoutInflater = getLayoutInflater();
@@ -73,10 +71,6 @@ public class ActDogOwnersList extends AppCompatActivity  {
             TextView textViewDogQuant = inflatedView.findViewById(R.id.dogs_quantity);
             textViewDogQuant.setText(""+dogsQuantElem);
 
-            uuid = UUID.randomUUID();
-            listOfAddedViewId.add(uuid);
-            inflatedView.setTag(uuid);
-
             scrollinlayout.addView(inflatedView);
             if (i != (owner.length-1)){
                 inflatedView.setBackground(getResources().getDrawable(R.drawable.list_colors));
@@ -98,13 +92,6 @@ public class ActDogOwnersList extends AppCompatActivity  {
                 });
             }
         }
-
-        // set onTouchListener to all items except last one
-//        for (int i = 0 ; i< listOfAddedViewId.size(); i++){
-//            if (i != (owner.length-1)){
-//            }
-//        }
-        //scrollinlayout.findViewWithTag(listOfAddedViewId.get(listOfAddedViewId.size()-1)).getBackground().setAlpha(128);
     }
 }
 
