@@ -28,9 +28,9 @@ public class DogOwnersListActivity extends AppCompatActivity {
     private String kindOfDogElement;
     private int dogsQuantElem;
 
-    TextView textViewName;
-    TextView textViewPreffereDog;
-    TextView textViewDogQuant;
+    TextView ownerNameTextView;
+    TextView preffereDogTextView;
+    TextView dogQuantTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,22 +59,22 @@ public class DogOwnersListActivity extends AppCompatActivity {
             inflatedView = layoutInflater.inflate(R.layout.owners_item, scrollView, false);
 
 /*           по данному блоку есть вопрос
-*            TextView textViewName = inflatedView.findViewById(R.id.owner_name);
-*            textViewName.setText(ownerName);
-*            textViewName.setTextAppearance(this, R.style.TextViewTitleItem);
+*            TextView ownerNameTextView = inflatedView.findViewById(R.id.owner_name);
+*            ownerNameTextView.setText(ownerName);
+*            ownerNameTextView.setTextAppearance(this, R.style.TextViewTitleItem);
 */
-            textViewName = createTextView(inflatedView, R.id.owner_name, ownerName, R.style.TextViewTitleItem);
-            textViewPreffereDog = createTextView(inflatedView, R.id.preffered_dog, kindOfDogElement, R.style.TextViewSubTitle);
-            textViewDogQuant = createTextView(inflatedView, R.id.dogs_quantity, ""+dogsQuantElem);
+            ownerNameTextView = createTextView(inflatedView, R.id.owner_name, ownerName, R.style.TextViewTitleItem);
+            preffereDogTextView = createTextView(inflatedView, R.id.preffered_dog, kindOfDogElement, R.style.TextViewSubTitle);
+            dogQuantTextView = createTextView(inflatedView, R.id.dogs_quantity, ""+dogsQuantElem);
 
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TextView textVName = view.findViewById(R.id.owner_name);
-                    String ownNm = textVName.getText().toString();
+                    TextView ownNameTextV = view.findViewById(R.id.owner_name);
+                    String ownNm = ownNameTextV.getText().toString();
 
-                    TextView textViewQuant = view.findViewById(R.id.dogs_quantity);
-                    Integer dogQuant = Integer.parseInt(textViewQuant.getText().toString());
+                    TextView quantityTextView = view.findViewById(R.id.dogs_quantity);
+                    Integer dogQuant = Integer.parseInt(quantityTextView.getText().toString());
 
                     Intent i = new Intent (getApplicationContext(), OwnerDogsActivity.class);
                     i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownNm);

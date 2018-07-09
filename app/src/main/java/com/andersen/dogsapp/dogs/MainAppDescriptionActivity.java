@@ -9,20 +9,20 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 
 public class MainAppDescriptionActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView textViewDescription;
-    TextView textViewAppName;
-    Button button_start_woof;
+    TextView descriptionTextView;
+    TextView appNameTextView;
+    Button startWoofBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_main_dog_subscription);
 
-        button_start_woof = findViewById(R.id.btn_woof);
-        button_start_woof.setOnClickListener(this);
-        textViewDescription = findViewById(R.id.textViewAppDescription);
-        textViewDescription.setOnClickListener(this);
-        textViewAppName = findViewById(R.id.textViewAppName);
-        textViewAppName.setOnClickListener(this);
+        startWoofBtn = findViewById(R.id.btn_woof);
+        startWoofBtn.setOnClickListener(this);
+        descriptionTextView = findViewById(R.id.textViewAppDescription);
+        descriptionTextView.setOnClickListener(this);
+        appNameTextView = findViewById(R.id.textViewAppName);
+        appNameTextView.setOnClickListener(this);
     }
 
     @Override

@@ -11,16 +11,14 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 import java.util.Random;
 
-import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
-
 public class OwnerDogsActivity extends AppCompatActivity {
     public static final String EXTRA_OWNER_NAME = "com.andersen.dogsapp.dogs.OwnerDogsActivity.owner_name";
     public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.OwnerDogsActivity.quantity";
 
     private LayoutInflater layoutInflater;
-    private LinearLayout linlayoutInScroollDogsList;
+    private LinearLayout dogsLinearLayout;
     private View inflatedView;
-    private TextView textViewOwnerName;
+    private TextView ownerNameTextView;
     private Toolbar toolbar;
 
     private String kindOfDog[];
@@ -48,13 +46,13 @@ public class OwnerDogsActivity extends AppCompatActivity {
         ownerName = getIntent().getStringExtra(EXTRA_OWNER_NAME);
         dogsQuantity = getIntent().getIntExtra(EXTRA_DOGS_QUANTITY, 0);
 
-        linlayoutInScroollDogsList = findViewById(R.id.lin_layout_in_scrooll_dogs_list);
-        textViewOwnerName = findViewById(R.id.text_view_owner_name);
-        textViewOwnerName.setText(ownerName);
+        dogsLinearLayout = findViewById(R.id.lin_layout_in_scrooll_dogs_list);
+        ownerNameTextView = findViewById(R.id.text_view_owner_name);
+        ownerNameTextView.setText(ownerName);
         layoutInflater = getLayoutInflater();
         Random r = new Random();
         for(int i=0; i<dogsQuantity; i++){
-            inflatedView = layoutInflater.inflate(R.layout.owners_dog_item, linlayoutInScroollDogsList,  false);
+            inflatedView = layoutInflater.inflate(R.layout.owners_dog_item, dogsLinearLayout,  false);
             String kindOfDogElem = kindOfDog[r.nextInt(10)];
             String dogNameElem = dogName[r.nextInt(10)];
 
@@ -65,7 +63,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
             textViewDogName.setText(dogNameElem);
             textViewDogName.setTextAppearance(this, R.style.TextViewSubTitle);
 
-            linlayoutInScroollDogsList.addView(inflatedView);
+            dogsLinearLayout.addView(inflatedView);
 
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -15,11 +15,11 @@ public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_NAME = "com.andersen.dogsapp.dogs.OwnerDogsActivity.dogname";
     public static final String EXTRA_KIND_DOG = "com.andersen.dogsapp.dogs.OwnerDogsActivity.kinddog";
 
-    private TextView textViewDogName;
-    private TextView textViewKindDog;
-    private TextView textViewDogAge;
-    private TextView textViewDogTall;
-    private TextView textViewDogWeight;
+    private TextView dogNameTextView;
+    private TextView kindDogTextView;
+    private TextView dogAgeTextView;
+    private TextView dogTallTextView;
+    private TextView dogWeightTextView;
     private Toolbar toolbar;
     private ImageView dogsPhoto;
 
@@ -64,22 +64,22 @@ public class DogsInfoActivity extends AppCompatActivity {
     }
 
     private void setTextInTextViews(){
-        textViewDogName.setText(dogName);
-        textViewKindDog.setText(kindOfDog);
+        dogNameTextView.setText(dogName);
+        kindDogTextView.setText(kindOfDog);
         // random data fetching for age, tall and weight
         // and set those datas to appropriate textViews
         Random r = new Random();
-        textViewDogAge.setText(dogAges[r.nextInt(10)]);
-        textViewDogTall.setText(dogTalls[r.nextInt(10)]+" cm");
-        textViewDogWeight.setText(dogWeights[r.nextInt(10)]+" kg");
+        dogAgeTextView.setText(dogAges[r.nextInt(10)]);
+        dogTallTextView.setText(dogTalls[r.nextInt(10)]+" cm");
+        dogWeightTextView.setText(dogWeights[r.nextInt(10)]+" kg");
     }
 
     private void findViewsByid(){
-        textViewDogName = findViewById(R.id.text_view_dog_name);
-        textViewKindDog = findViewById(R.id.text_view_kind_dog);
-        textViewDogAge = findViewById(R.id.text_view_dog_age);
-        textViewDogTall = findViewById(R.id.text_view_dog_tall);
-        textViewDogWeight = findViewById(R.id.text_view_dog_weight);
+        dogNameTextView = findViewById(R.id.text_view_dog_name);
+        kindDogTextView = findViewById(R.id.text_view_kind_dog);
+        dogAgeTextView = findViewById(R.id.text_view_dog_age);
+        dogTallTextView = findViewById(R.id.text_view_dog_tall);
+        dogWeightTextView = findViewById(R.id.text_view_dog_weight);
     }
 
     private void getExtrasFromIntent(Intent intent){
