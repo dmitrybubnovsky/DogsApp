@@ -35,7 +35,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_owners_dog);
+        setContentView(R.layout.dogs_list_activity);
 
         toolbar = new DogToolBar().get(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
@@ -46,20 +46,20 @@ public class OwnerDogsActivity extends AppCompatActivity {
         ownerName = getIntent().getStringExtra(EXTRA_OWNER_NAME);
         dogsQuantity = getIntent().getIntExtra(EXTRA_DOGS_QUANTITY, 0);
 
-        dogsLinearLayout = findViewById(R.id.lin_layout_in_scrooll_dogs_list);
-        ownerNameTextView = findViewById(R.id.text_view_owner_name);
+        dogsLinearLayout = findViewById(R.id.dogs_container);
+        ownerNameTextView = findViewById(R.id.owner_name_textview);
         ownerNameTextView.setText(ownerName);
         layoutInflater = getLayoutInflater();
         Random r = new Random();
         for(int i=0; i<dogsQuantity; i++){
-            inflatedView = layoutInflater.inflate(R.layout.owners_dog_item, dogsLinearLayout,  false);
+            inflatedView = layoutInflater.inflate(R.layout.dog_item, dogsLinearLayout,  false);
             String kindOfDogElem = kindOfDog[r.nextInt(10)];
             String dogNameElem = dogName[r.nextInt(10)];
 
-            TextView textViewKindDog = inflatedView.findViewById(R.id.kind_of_dog);
+            TextView textViewKindDog = inflatedView.findViewById(R.id.kind_of_dog_textview);
             textViewKindDog.setText(kindOfDogElem);
 
-            TextView textViewDogName = inflatedView.findViewById(R.id.dog_name);
+            TextView textViewDogName = inflatedView.findViewById(R.id.dog_name_textview);
             textViewDogName.setText(dogNameElem);
             textViewDogName.setTextAppearance(this, R.style.TextViewSubTitle);
 
@@ -68,8 +68,8 @@ public class OwnerDogsActivity extends AppCompatActivity {
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog)).getText().toString();
-                    String dogNm = ((TextView)view.findViewById(R.id.dog_name)).getText().toString();
+                    String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog_textview)).getText().toString();
+                    String dogNm = ((TextView)view.findViewById(R.id.dog_name_textview)).getText().toString();
 
                     Intent i = new Intent (getApplicationContext(), DogsInfoActivity.class);
                     i.putExtra(DogsInfoActivity.EXTRA_KIND_DOG, kindDog);

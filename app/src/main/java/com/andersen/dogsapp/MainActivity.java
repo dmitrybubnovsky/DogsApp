@@ -13,16 +13,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
-        btnStartActDogs = findViewById(R.id.btnStartActDogs);
+        btnStartActDogs = findViewById(R.id.start_app_button);
         btnStartActDogs.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnStartActDogs:
+            case R.id.start_app_button:
                 startActivity(new Intent(this, MainAppDescriptionActivity.class));
                 break;
             default:

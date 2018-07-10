@@ -15,13 +15,13 @@ public class MainAppDescriptionActivity extends AppCompatActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_act_main_dog_subscription);
+        setContentView(R.layout.main_app_subscription_activity);
 
-        startWoofBtn = findViewById(R.id.btn_woof);
+        startWoofBtn = findViewById(R.id.woof_button);
         startWoofBtn.setOnClickListener(this);
-        descriptionTextView = findViewById(R.id.textViewAppDescription);
+        descriptionTextView = findViewById(R.id.app_description_textview);
         descriptionTextView.setOnClickListener(this);
-        appNameTextView = findViewById(R.id.textViewAppName);
+        appNameTextView = findViewById(R.id.app_name_textview);
         appNameTextView.setOnClickListener(this);
     }
 

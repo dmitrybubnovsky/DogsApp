@@ -48,11 +48,11 @@ public class DogsInfoActivity extends AppCompatActivity {
 
         initResources(R.array.dogage, R.array.dogtall, R.array.dogweight);
 
-        dogsPhoto = findViewById(R.id.dogImage);
+        dogsPhoto = findViewById(R.id.dog_imageview);
 
         findViewsByid();
 
-        dogsPhoto.setImageResource(DogImageLab.get(this).someImage());
+        dogsPhoto.setImageResource(DogImageLab.get(this).getRandomDogImageResource());
         setTextInTextViews();
     }
 
@@ -75,11 +75,11 @@ public class DogsInfoActivity extends AppCompatActivity {
     }
 
     private void findViewsByid(){
-        dogNameTextView = findViewById(R.id.text_view_dog_name);
-        kindDogTextView = findViewById(R.id.text_view_kind_dog);
-        dogAgeTextView = findViewById(R.id.text_view_dog_age);
-        dogTallTextView = findViewById(R.id.text_view_dog_tall);
-        dogWeightTextView = findViewById(R.id.text_view_dog_weight);
+        dogNameTextView = findViewById(R.id.dog_name_textview);
+        kindDogTextView = findViewById(R.id.kind_dog_textview);
+        dogAgeTextView = findViewById(R.id.dog_age_textview);
+        dogTallTextView = findViewById(R.id.dog_tall_textview);
+        dogWeightTextView = findViewById(R.id.dog_weight_textview);
     }
 
     private void getExtrasFromIntent(Intent intent){

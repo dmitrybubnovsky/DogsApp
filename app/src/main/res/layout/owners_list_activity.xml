@@ -11,7 +11,7 @@
     <include android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
 
     <ScrollView
-        android:id="@+id/scroll_view_owners"
+        android:id="@+id/owners_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="505dp"
         android:layout_marginEnd="8dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_dogs_app">
 
         <LinearLayout
-            android:id="@+id/scroll_child_linlayout"
+            android:id="@+id/owners_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
