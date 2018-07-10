@@ -39,7 +39,7 @@ public class DogsInfoActivity extends AppCompatActivity {
         toolbar = new DogToolBar().get(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
 
-        // get extras and put into dogName and kindOfDog
+        // create extras and put into dogName and kindOfDog
         intent = new Intent();
         getExtrasFromIntent(intent);
 
@@ -50,7 +50,7 @@ public class DogsInfoActivity extends AppCompatActivity {
 
         dogsPhoto = findViewById(R.id.dog_imageview);
 
-        findViewsByid();
+        findTextViewsByid();
 
         dogsPhoto.setImageResource(DogImageLab.get(this).getRandomDogImageResource());
         setTextInTextViews();
@@ -74,7 +74,7 @@ public class DogsInfoActivity extends AppCompatActivity {
         dogWeightTextView.setText(dogWeights[r.nextInt(10)]+" kg");
     }
 
-    private void findViewsByid(){
+    private void findTextViewsByid(){
         dogNameTextView = findViewById(R.id.dog_name_textview);
         kindDogTextView = findViewById(R.id.kind_dog_textview);
         dogAgeTextView = findViewById(R.id.dog_age_textview);

@@ -32,6 +32,10 @@ public class DogOwnersListActivity extends AppCompatActivity {
     TextView preffereDogTextView;
     TextView dogQuantTextView;
 
+    TextViewCreator textViewCreator;
+
+    Resources resources;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +44,9 @@ public class DogOwnersListActivity extends AppCompatActivity {
         toolbar = new DogToolBar().get(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
-        Resources resources = getResources();
-        owner = resources.getStringArray(R.array.owners);
-        kindOfDog = resources.getStringArray(R.array.kind_of_dogs);
+        // init owner[] and kindOfDog[] from Resources
+        resources = getResources();
+        initResources(R.array.owners, R.array.kind_of_dogs);
         dogsQuantity = new int[]{1,2,3,4,6,8,5,3,7,9};
 
         scrollView = findViewById(R.id.owners_container);
@@ -58,14 +62,9 @@ public class DogOwnersListActivity extends AppCompatActivity {
             // and set tag for that view
             inflatedView = layoutInflater.inflate(R.layout.owners_item, scrollView, false);
 
-/*           по данному блоку есть вопрос
-*            TextView ownerNameTextView = inflatedView.findViewById(R.id.owner_name);
-*            ownerNameTextView.setText(ownerName);
-*            ownerNameTextView.setTextAppearance(this, R.style.TextViewTitleItem);
-*/
-            ownerNameTextView = createTextView(inflatedView, R.id.owner_name_textview, ownerName, R.style.TextViewTitleItem);
-            preffereDogTextView = createTextView(inflatedView, R.id.preffered_dog_textview, kindOfDogElement, R.style.TextViewSubTitle);
-            dogQuantTextView = createTextView(inflatedView, R.id.quantity_textview, ""+dogsQuantElem);
+            ownerNameTextView = new TextViewCreator().create(this, inflatedView, R.id.owner_name_textview, ownerName, R.style.TextViewTitleItem);
+            preffereDogTextView = new TextViewCreator().create(this,inflatedView, R.id.preffered_dog_textview, kindOfDogElement, R.style.TextViewSubTitle);
+            dogQuantTextView = new TextViewCreator().create(inflatedView, R.id.quantity_textview, ""+dogsQuantElem);
 
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,16 +85,8 @@ public class DogOwnersListActivity extends AppCompatActivity {
         }
     }
 
-    protected TextView createTextView(View view, int id, String str, int style){
-        TextView textView = view.findViewById(id);
-        textView.setText(str);
-        textView.setTextAppearance(this, style);
-        return textView;
-    }
-
-    protected TextView createTextView(View view, int id, String str){
-        TextView textView = view.findViewById(id);
-        textView.setText(str);
-        return textView;
+    protected void initResources(int owners, int kindDogArray){
+        owner = resources.getStringArray(owners);
+        kindOfDog = resources.getStringArray(kindDogArray);
     }
 }

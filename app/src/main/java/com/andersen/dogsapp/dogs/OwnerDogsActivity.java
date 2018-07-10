@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +19,11 @@ public class OwnerDogsActivity extends AppCompatActivity {
     private LayoutInflater layoutInflater;
     private LinearLayout dogsLinearLayout;
     private View inflatedView;
+
     private TextView ownerNameTextView;
+    private TextView textViewKindDog;
+    private TextView textViewDogName;
+
     private Toolbar toolbar;
 
     private String kindOfDog[];
@@ -26,6 +31,8 @@ public class OwnerDogsActivity extends AppCompatActivity {
     private String ownerName;
 
     private int dogsQuantity;
+
+    private Resources resources;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -40,15 +47,17 @@ public class OwnerDogsActivity extends AppCompatActivity {
         toolbar = new DogToolBar().get(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
-        kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
-        dogName = getResources().getStringArray(R.array.dog_name);
+        // init dogName[] and kindOfDog[] from Resources
+        resources = getResources();
+        initResources(R.array.dog_name, R.array.kind_of_dogs);
 
         ownerName = getIntent().getStringExtra(EXTRA_OWNER_NAME);
         dogsQuantity = getIntent().getIntExtra(EXTRA_DOGS_QUANTITY, 0);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
-        ownerNameTextView = findViewById(R.id.owner_name_textview);
-        ownerNameTextView.setText(ownerName);
+
+        ownerNameTextView = new TextViewCreator().create(this, R.id.owner_name_textview, ""+ownerName);
+
         layoutInflater = getLayoutInflater();
         Random r = new Random();
         for(int i=0; i<dogsQuantity; i++){
@@ -56,12 +65,8 @@ public class OwnerDogsActivity extends AppCompatActivity {
             String kindOfDogElem = kindOfDog[r.nextInt(10)];
             String dogNameElem = dogName[r.nextInt(10)];
 
-            TextView textViewKindDog = inflatedView.findViewById(R.id.kind_of_dog_textview);
-            textViewKindDog.setText(kindOfDogElem);
-
-            TextView textViewDogName = inflatedView.findViewById(R.id.dog_name_textview);
-            textViewDogName.setText(dogNameElem);
-            textViewDogName.setTextAppearance(this, R.style.TextViewSubTitle);
+            textViewKindDog = new TextViewCreator().create(inflatedView, R.id.kind_of_dog_textview, ""+kindOfDogElem);
+            textViewDogName = new TextViewCreator().create(this, inflatedView, R.id.dog_name_textview, ""+dogNameElem, R.style.TextViewSubTitle);
 
             dogsLinearLayout.addView(inflatedView);
 
@@ -77,11 +82,11 @@ public class OwnerDogsActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             });
-
         }
-        // TEST
-        Toast.makeText(getApplicationContext(), "dogQuant = "+dogsQuantity, Toast.LENGTH_SHORT).show();
+    }
 
-
+    protected void initResources(int dogNameArray, int kindDogArray){
+        dogName = getResources().getStringArray(R.array.dog_name);
+        kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
     }
 }

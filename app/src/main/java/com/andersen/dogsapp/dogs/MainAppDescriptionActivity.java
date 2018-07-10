@@ -19,8 +19,10 @@ public class MainAppDescriptionActivity extends AppCompatActivity implements Vie
 
         startWoofBtn = findViewById(R.id.woof_button);
         startWoofBtn.setOnClickListener(this);
+
         descriptionTextView = findViewById(R.id.app_description_textview);
         descriptionTextView.setOnClickListener(this);
+
         appNameTextView = findViewById(R.id.app_name_textview);
         appNameTextView.setOnClickListener(this);
     }
