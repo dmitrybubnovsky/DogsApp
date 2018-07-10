@@ -28,9 +28,9 @@ public class DogOwnersListActivity extends AppCompatActivity {
     private String kindDog;
     private int quantityDog;
 
-    TextView ownerNameTextView;
-    TextView preffereDogTextView;
-    TextView dogQuantTextView;
+    private TextView ownerNameTextView;
+    private TextView preffereDogTextView;
+    private TextView dogQuantTextView;
 
     Resources resources;
 
@@ -60,9 +60,14 @@ public class DogOwnersListActivity extends AppCompatActivity {
             // and set tag for that view
             inflatedView = layoutInflater.inflate(R.layout.owners_item, scrollView, false);
 
-            ownerNameTextView = new TextViewCreator().create(this, inflatedView, R.id.owner_name_textview, ownerName, R.style.TextViewTitleItem);
-            preffereDogTextView = new TextViewCreator().create(this,inflatedView, R.id.preffered_dog_textview, kindDog, R.style.TextViewSubTitle);
-            dogQuantTextView = new TextViewCreator().create(inflatedView, R.id.quantity_textview, ""+ quantityDog);
+            ownerNameTextView = new AppTextView.Builder().idTextView(inflatedView, R.id.owner_name_textview).text(ownerName)
+                                .style(this,R.style.TextViewTitleItem).build();
+
+            preffereDogTextView = new AppTextView.Builder().idTextView(inflatedView, R.id.preffered_dog_textview)
+                                  .text(kindDog).style(this,R.style.TextViewSubTitle).build();
+
+            dogQuantTextView  = new AppTextView.Builder().idTextView(inflatedView, R.id.quantity_textview)
+                                .text(""+ quantityDog).build();
 
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override
