@@ -53,7 +53,6 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
             ownerName = owner[i];
             kindDog = dogKinds[i];
             quantityDog = quantitiesDogs[i];
-            Log.d(TAG, dogKinds[i]);
 
             // instantiate view-reference with inflated view
             // and set tag for that view
@@ -73,22 +72,24 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    @Override
     public void onClick(View view) {
-        TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
-        String ownNm = ownerNameTextView.getText().toString();
-
-        TextView quantityTextView = view.findViewById(R.id.quantity_textview);
-        Integer dogQuant = Integer.parseInt(quantityTextView.getText().toString());
-
-        Intent i = new Intent (getApplicationContext(), OwnerDogsActivity.class);
-        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownNm);
-        i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, dogQuant);
-        startActivity(i);
+        openOwnerDogs(view);
     }
 
-    protected void initResources(int owners, int kindDogArray){
+    private void initResources(int owners, int kindDogArray){
         resources = getResources();
         owner = resources.getStringArray(owners);
         dogKinds = resources.getStringArray(kindDogArray);
+    }
+
+    private void openOwnerDogs(View view){
+        TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
+        TextView quantityTextView = view.findViewById(R.id.quantity_textview);
+
+        Intent i = new Intent (getApplicationContext(), OwnerDogsActivity.class);
+        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownerNameTextView.getText().toString());
+        i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, Integer.parseInt(quantityTextView.getText().toString()));
+        startActivity(i);
     }
 }

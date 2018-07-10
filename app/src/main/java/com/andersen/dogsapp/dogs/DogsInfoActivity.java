@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 
@@ -27,7 +28,7 @@ public class DogsInfoActivity extends AppCompatActivity {
     private String dogTalls[];
     private String dogWeights[];
 
-    private String kindOfDog;
+    private String kindDog;
     private String dogName;
     private Intent intent;
 
@@ -36,26 +37,13 @@ public class DogsInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
 
-        //toolbar = new DogToolBar().get(this, R.string.toolbar_title_detail_info);
         toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
 
         setSupportActionBar(toolbar);
 
-        // create extras and put into dogName and kindOfDog
-        intent = new Intent();
-        getExtrasFromIntent(intent);
-
-        dogName = getIntent().getStringExtra(EXTRA_DOG_NAME);
-        kindOfDog = getIntent().getStringExtra(EXTRA_KIND_DOG);
-
         initResources(R.array.dogage, R.array.dogtall, R.array.dogweight);
-
-        dogsPhoto = findViewById(R.id.dog_imageview);
-
-        findTextViewsByid();
-
-        dogsPhoto.setImageResource(DogImageLab.get(this).getRandomDogImageResource());
-        setTextInTextViews();
+        intent = getIntent();
+        initViews(intent);
     }
 
     protected void initResources (int dogage, int doagtall, int dogweight){
@@ -65,27 +53,34 @@ public class DogsInfoActivity extends AppCompatActivity {
         dogWeights = resources.getStringArray(dogweight);
     }
 
-    private void setTextInTextViews(){
+    private void initViews(Intent intent){
+        dogsPhoto = findViewById(R.id.dog_imageview);
+        dogsPhoto.setImageResource(DogImageLab.get(this).getRandomDogImageResource());
+
+        getDogInfo(intent);
+
+        dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dogName);
-        kindDogTextView.setText(kindOfDog);
+
+        kindDogTextView = findViewById(R.id.kind_dog_textview);
+        kindDogTextView.setText(kindDog);
+
+        Random r = new Random();
+
         // random data fetching for age, tall and weight
         // and set those datas to appropriate textViews
-        Random r = new Random();
-        dogAgeTextView.setText(dogAges[r.nextInt(10)]);
-        dogTallTextView.setText(dogTalls[r.nextInt(10)]+" cm");
-        dogWeightTextView.setText(dogWeights[r.nextInt(10)]+" kg");
-    }
-
-    private void findTextViewsByid(){
-        dogNameTextView = findViewById(R.id.dog_name_textview);
-        kindDogTextView = findViewById(R.id.kind_dog_textview);
         dogAgeTextView = findViewById(R.id.dog_age_textview);
-        dogTallTextView = findViewById(R.id.dog_tall_textview);
-        dogWeightTextView = findViewById(R.id.dog_weight_textview);
-    }
+        dogAgeTextView.setText(dogAges[r.nextInt(10)]);
 
-    private void getExtrasFromIntent(Intent intent){
+        dogTallTextView = findViewById(R.id.dog_tall_textview);
+        dogTallTextView.setText(dogTalls[r.nextInt(10)]+" cm");
+
+        dogWeightTextView = findViewById(R.id.dog_weight_textview);
+        dogWeightTextView.setText(dogWeights[r.nextInt(10)]+" kg");
+        }
+
+    private void getDogInfo(Intent intent){
         dogName = intent.getStringExtra(EXTRA_DOG_NAME);
-        kindOfDog = intent.getStringExtra(EXTRA_KIND_DOG);
+        kindDog = intent.getStringExtra(EXTRA_KIND_DOG);
     }
 }
