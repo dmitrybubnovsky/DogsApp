@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.andersen.dogsapp.R;
 import java.util.Random;
 
@@ -42,7 +42,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dogs_list_activity);
+        setContentView(R.layout.activity_dogs_list);
 
         toolbar = new DogToolBar().get(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);

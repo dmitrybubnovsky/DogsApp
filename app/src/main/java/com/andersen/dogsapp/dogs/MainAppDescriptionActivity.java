@@ -15,7 +15,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity implements Vie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_app_subscription_activity);
+        setContentView(R.layout.activity_main_app_subscription);
 
         startWoofBtn = findViewById(R.id.woof_button);
         startWoofBtn.setOnClickListener(this);
