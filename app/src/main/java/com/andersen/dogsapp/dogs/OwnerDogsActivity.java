@@ -48,7 +48,6 @@ public class OwnerDogsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // init dogName[] and kindOfDog[] from Resources
-        resources = getResources();
         initResources(R.array.dog_name, R.array.kind_of_dogs);
 
         ownerName = getIntent().getStringExtra(EXTRA_OWNER_NAME);
@@ -88,7 +87,8 @@ public class OwnerDogsActivity extends AppCompatActivity {
     }
 
     protected void initResources(int dogNameArray, int kindDogArray){
-        dogName = getResources().getStringArray(R.array.dog_name);
-        kindOfDog = getResources().getStringArray(R.array.kind_of_dogs);
+        resources = getResources();
+        dogName = getResources().getStringArray(dogNameArray);
+        kindOfDog = getResources().getStringArray(kindDogArray);
     }
 }

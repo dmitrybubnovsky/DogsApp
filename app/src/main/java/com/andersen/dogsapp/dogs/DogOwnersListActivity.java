@@ -43,7 +43,6 @@ public class DogOwnersListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // init owner[] and dogKinds[] from Resources
-        resources = getResources();
         initResources(R.array.owners, R.array.kind_of_dogs);
         quantitiesDogs = new int[]{1,2,3,4,6,8,5,3,7,9};
 
@@ -89,6 +88,7 @@ public class DogOwnersListActivity extends AppCompatActivity {
     }
 
     protected void initResources(int owners, int kindDogArray){
+        resources = getResources();
         owner = resources.getStringArray(owners);
         dogKinds = resources.getStringArray(kindDogArray);
     }
