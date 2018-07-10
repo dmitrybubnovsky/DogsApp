@@ -44,7 +44,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
-        toolbar = new DogToolBar().get(this, R.string.toolbar_title_dogs_list);
+        toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
         // init dogName[] and kindOfDog[] from Resources

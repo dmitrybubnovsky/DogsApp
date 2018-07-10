@@ -29,14 +29,16 @@ public class DogsInfoActivity extends AppCompatActivity {
 
     private String kindOfDog;
     private String dogName;
-    public Intent intent;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
 
-        toolbar = new DogToolBar().get(this, R.string.toolbar_title_detail_info);
+        //toolbar = new DogToolBar().get(this, R.string.toolbar_title_detail_info);
+        toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
+
         setSupportActionBar(toolbar);
 
         // create extras and put into dogName and kindOfDog

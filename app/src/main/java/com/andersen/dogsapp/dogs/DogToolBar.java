@@ -1,7 +1,6 @@
 package com.andersen.dogsapp.dogs;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.v7.widget.Toolbar;
 
 import com.andersen.dogsapp.R;
@@ -17,10 +16,10 @@ public class DogToolBar {
         dogToolbar.setTitle(str);
     }
 
-    private DogToolBar(Activity activity, int str, int color){
+    private DogToolBar(Activity activity, int titleRes, int color){
         dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
         dogToolbar.setTitleTextColor(color);
-        dogToolbar.setTitle(str);
+        dogToolbar.setTitle(titleRes);
     }
 
     public Toolbar get(Activity activity, int str){
@@ -29,6 +28,16 @@ public class DogToolBar {
     }
 
     public Toolbar get(Activity activity, int str, int color){
+        DogToolBar dtb = new DogToolBar(activity, str, color);
+        return dtb.dogToolbar;
+    }
+
+    public static Toolbar init(Activity activity, int str){
+        DogToolBar dtb = new DogToolBar(activity, str);
+        return dtb.dogToolbar;
+    }
+
+    public static Toolbar init(Activity activity, int str, int color){
         DogToolBar dtb = new DogToolBar(activity, str, color);
         return dtb.dogToolbar;
     }

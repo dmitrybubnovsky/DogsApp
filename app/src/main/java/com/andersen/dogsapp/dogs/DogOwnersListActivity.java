@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class DogOwnersListActivity extends AppCompatActivity {
+public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "#";
 
     private LayoutInflater layoutInflater;
@@ -39,7 +39,7 @@ public class DogOwnersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        toolbar = new DogToolBar().get(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
+        toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
         // init owner[] and dogKinds[] from Resources
@@ -68,23 +68,22 @@ public class DogOwnersListActivity extends AppCompatActivity {
             dogQuantTextView  = new AppTextView.Builder().idTextView(inflatedView, R.id.quantity_textview)
                                 .text(""+ quantityDog).build();
 
-            inflatedView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TextView ownNameTextV = view.findViewById(R.id.owner_name_textview);
-                    String ownNm = ownNameTextV.getText().toString();
-
-                    TextView quantityTextView = view.findViewById(R.id.quantity_textview);
-                    Integer dogQuant = Integer.parseInt(quantityTextView.getText().toString());
-
-                    Intent i = new Intent (getApplicationContext(), OwnerDogsActivity.class);
-                    i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownNm);
-                    i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, dogQuant);
-                    startActivity(i);
-                }
-            });
+            inflatedView.setOnClickListener(this);
             scrollView.addView(inflatedView);
         }
+    }
+
+    public void onClick(View view) {
+        TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
+        String ownNm = ownerNameTextView.getText().toString();
+
+        TextView quantityTextView = view.findViewById(R.id.quantity_textview);
+        Integer dogQuant = Integer.parseInt(quantityTextView.getText().toString());
+
+        Intent i = new Intent (getApplicationContext(), OwnerDogsActivity.class);
+        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownNm);
+        i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, dogQuant);
+        startActivity(i);
     }
 
     protected void initResources(int owners, int kindDogArray){
