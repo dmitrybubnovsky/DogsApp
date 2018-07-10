@@ -12,7 +12,8 @@ public class DogImageLab {
     public static DogImageLab get(Context context){
         if(dogImageLab == null){
             dogImageLab = new DogImageLab(context);
-        } return dogImageLab;
+        }
+        return dogImageLab;
     }
 
     public int getRandomDogImageResource(){
