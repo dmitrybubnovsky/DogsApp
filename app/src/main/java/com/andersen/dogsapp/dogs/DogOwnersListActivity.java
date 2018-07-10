@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,7 +19,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private View inflatedView;
     private Toolbar toolbar;
 
-    private String owner[];
+    private String owners[];
     private String dogKinds[];
     private int quantitiesDogs[];
 
@@ -32,8 +31,6 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private TextView preffereDogTextView;
     private TextView dogQuantTextView;
 
-    Resources resources;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,15 +39,15 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
-        // init owner[] and dogKinds[] from Resources
+        // init owners[] and dogKinds[] from Resources
         initResources(R.array.owners, R.array.kind_of_dogs);
         quantitiesDogs = new int[]{1,2,3,4,6,8,5,3,7,9};
 
         scrollView = findViewById(R.id.owners_container);
         layoutInflater = getLayoutInflater();
 
-        for(int i = 0; i< owner.length; i++){
-            ownerName = owner[i];
+        for(int i = 0; i< owners.length; i++){
+            ownerName = owners[i];
             kindDog = dogKinds[i];
             quantityDog = quantitiesDogs[i];
 
@@ -78,8 +75,8 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initResources(int owners, int kindDogArray){
-        resources = getResources();
-        owner = resources.getStringArray(owners);
+        Resources resources = getResources();
+        this.owners = resources.getStringArray(owners);
         dogKinds = resources.getStringArray(kindDogArray);
     }
 

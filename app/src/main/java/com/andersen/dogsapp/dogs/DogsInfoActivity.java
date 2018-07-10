@@ -46,7 +46,7 @@ public class DogsInfoActivity extends AppCompatActivity {
         initViews(intent);
     }
 
-    protected void initResources (int dogage, int doagtall, int dogweight){
+    private void initResources (int dogage, int doagtall, int dogweight){
         Resources resources = getResources();
         dogAges = resources.getStringArray(dogage);
         dogTalls = resources.getStringArray(doagtall);

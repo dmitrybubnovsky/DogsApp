@@ -33,8 +33,6 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
     private int dogsQuantity;
 
-    private Resources resources;
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -75,13 +73,9 @@ public class OwnerDogsActivity extends AppCompatActivity {
             inflatedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String kindDog = ((TextView)view.findViewById(R.id.kind_of_dog_textview)).getText().toString();
-                    String dogNm = ((TextView)view.findViewById(R.id.dog_name_textview)).getText().toString();
-
                     Intent i = new Intent (getApplicationContext(), DogsInfoActivity.class);
-                    i.putExtra(DogsInfoActivity.EXTRA_KIND_DOG, kindDog);
-                    //Toast.makeText(getApplicationContext()," kindDog "+ kindDog, Toast.LENGTH_SHORT).show();
-                    i.putExtra(DogsInfoActivity.EXTRA_DOG_NAME, dogNm);
+                    i.putExtra(DogsInfoActivity.EXTRA_KIND_DOG, ((TextView)view.findViewById(R.id.kind_of_dog_textview)).getText().toString());
+                    i.putExtra(DogsInfoActivity.EXTRA_DOG_NAME, ((TextView)view.findViewById(R.id.dog_name_textview)).getText().toString());
                     startActivity(i);
                 }
             });
@@ -89,8 +83,8 @@ public class OwnerDogsActivity extends AppCompatActivity {
     }
 
     protected void initResources(int dogNameArray, int kindDogArray){
-        resources = getResources();
-        dogNames = getResources().getStringArray(dogNameArray);
-        kindOfDogs = getResources().getStringArray(kindDogArray);
+        Resources resources = getResources();
+        dogNames = resources.getStringArray(dogNameArray);
+        kindOfDogs = resources.getStringArray(kindDogArray);
     }
 }
