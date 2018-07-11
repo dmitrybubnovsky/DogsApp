@@ -21,10 +21,6 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
     private LinearLayout containerLinLayout;
 
-    private TextView ownerNameTextview;
-    private TextView prefferedDogTextview;
-    private TextView quantityTextview;
-
     private String ownersStringArray[];
     private String dogKindsStringArray[];
     private int quantitiesDogs[];
@@ -41,6 +37,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         initResources(R.array.owners, R.array.dogs_kinds);
 
         containerLinLayout = findViewById(R.id.owners_container);
+
         LayoutInflater layoutInflater = getLayoutInflater();
 
         for (int i = 0; i < ownersStringArray.length; i++) {
@@ -53,22 +50,22 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private View initItemView(LayoutInflater layoutInflater, int i) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
 
-            String ownerName = ownersStringArray[i];
-            String dogKind = dogKindsStringArray[i];
-            int quantityDog = quantitiesDogs[i];
+        String ownerName = ownersStringArray[i];
+        String dogKind = dogKindsStringArray[i];
+        int quantityDog = quantitiesDogs[i];
 
-            // instantiate view-reference with inflated view
-        ownerNameTextview = AppTextView.newInstance(itemView, R.id.owner_name_textview)
+        // instantiate view-reference with inflated view
+        AppTextView.newInstance(itemView, R.id.owner_name_textview)
                     .text(ownerName)
                     .style(this, R.style.TextViewTitleItem)
                     .build();
 
-        prefferedDogTextview = AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
+        AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
                     .text(dogKind)
                     .style(this, R.style.TextViewSubTitle)
                     .build();
 
-        quantityTextview = AppTextView.newInstance(itemView, R.id.quantity_textview)
+        AppTextView.newInstance(itemView, R.id.quantity_textview)
                     .text("" + quantityDog)
                     .build();
         return itemView;

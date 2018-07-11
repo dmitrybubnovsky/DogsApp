@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_NAME = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogname";
-    public static final String EXTRA_KIND_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.kinddog";
+    public static final String EXTRA_DOG_KIND = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.kinddog";
 
     private String dogAges[];
     private String dogTalls[];
@@ -72,6 +72,6 @@ public class DogsInfoActivity extends AppCompatActivity {
 
     private void getDogInfo() {
         dogName = getIntent().getStringExtra(EXTRA_DOG_NAME);
-        kindDog = getIntent().getStringExtra(EXTRA_KIND_DOG);
+        kindDog = getIntent().getStringExtra(EXTRA_DOG_KIND);
     }
 }

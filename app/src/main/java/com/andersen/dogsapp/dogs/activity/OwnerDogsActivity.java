@@ -93,7 +93,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
     private void onItemClick() {
         Intent i = new Intent(getApplicationContext(), DogsInfoActivity.class);
-        i.putExtra(DogsInfoActivity.EXTRA_KIND_DOG, dogKindTextview.getText().toString());
+        i.putExtra(DogsInfoActivity.EXTRA_DOG_KIND, dogKindTextview.getText().toString());
         i.putExtra(DogsInfoActivity.EXTRA_DOG_NAME, dogNameTextview.getText().toString());
         startActivity(i);
     }
