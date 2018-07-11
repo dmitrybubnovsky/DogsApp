@@ -19,6 +19,12 @@ import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "#";
 
+    private LinearLayout containerLinLayout;
+
+    private TextView ownerNameTextview;
+    private TextView prefferedDogTextview;
+    private TextView quantityTextview;
+
     private String ownersStringArray[];
     private String dogKindsStringArray[];
     private int quantitiesDogs[];
@@ -34,39 +40,38 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         // init ownersStringArray[] and dogKindsStringArray[] from Resources
         initResources(R.array.owners, R.array.dogs_kinds);
 
-        LinearLayout containerLinLayout = findViewById(R.id.owners_container);
+        containerLinLayout = findViewById(R.id.owners_container);
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        initAddInflatedView(layoutInflater, containerLinLayout);
+        for (int i = 0; i < ownersStringArray.length; i++) {
+            View itemView = initItemView(layoutInflater, i);
+            itemView.setOnClickListener(this);
+            containerLinLayout.addView(itemView);
+        }
     }
 
-    private void initAddInflatedView(LayoutInflater layoutInflater, LinearLayout containerLinLayout) {
-        for (int i = 0; i < ownersStringArray.length; i++) {
+    private View initItemView(LayoutInflater layoutInflater, int i) {
+        View itemView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
+
             String ownerName = ownersStringArray[i];
             String dogKind = dogKindsStringArray[i];
             int quantityDog = quantitiesDogs[i];
 
             // instantiate view-reference with inflated view
-            // and set tag for that view
-            View inflatedView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
-
-            AppTextView.newInstance(inflatedView, R.id.owner_name_textview)
+        ownerNameTextview = AppTextView.newInstance(itemView, R.id.owner_name_textview)
                     .text(ownerName)
                     .style(this, R.style.TextViewTitleItem)
                     .build();
 
-            AppTextView.newInstance(inflatedView, R.id.preffered_dog_textview)
+        prefferedDogTextview = AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
                     .text(dogKind)
                     .style(this, R.style.TextViewSubTitle)
                     .build();
 
-            AppTextView.newInstance(inflatedView, R.id.quantity_textview)
+        quantityTextview = AppTextView.newInstance(itemView, R.id.quantity_textview)
                     .text("" + quantityDog)
                     .build();
-
-            inflatedView.setOnClickListener(this);
-            containerLinLayout.addView(inflatedView);
-        }
+        return itemView;
     }
 
     @Override
