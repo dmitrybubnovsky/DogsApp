@@ -19,8 +19,11 @@ import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "#";
 
-    private String owners[];
-    private String dogKinds[];
+    private String ownersStringArray[];
+    private String dogKindsStringArray[];
+    private int quantitiesDogs[];
+
+    LinearLayout scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +33,19 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
-        // init owners[] and dogKinds[] from Resources
+        // init ownersStringArray[] and dogKindsStringArray[] from Resources
         initResources(R.array.owners, R.array.dogs_kinds);
-        int[] quantitiesDogs = new int[]{1, 2, 3, 4, 6, 8, 5, 3, 7, 9};
 
-        LinearLayout scrollView = findViewById(R.id.owners_container);
+        scrollView = findViewById(R.id.owners_container);
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        for (int i = 0; i < owners.length; i++) {
-            String ownerName = owners[i];
-            String dogKind = dogKinds[i];
+        initAddInflatedView(layoutInflater);
+    }
+
+    private void initAddInflatedView(LayoutInflater layoutInflater) {
+        for (int i = 0; i < ownersStringArray.length; i++) {
+            String ownerName = ownersStringArray[i];
+            String dogKind = dogKindsStringArray[i];
             int quantityDog = quantitiesDogs[i];
 
             // instantiate view-reference with inflated view
@@ -70,10 +76,11 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         openOwnerDogs(view);
     }
 
-    private void initResources(int ownersArrayRes, int dogKindArray) {
+    private void initResources(int ownersArrayRes, int dogKindsArray) {
+        quantitiesDogs = new int[]{1, 2, 3, 4, 6, 8, 5, 3, 7, 9};
         Resources resources = getResources();
-        this.owners = resources.getStringArray(ownersArrayRes);
-        dogKinds = resources.getStringArray(dogKindArray);
+        ownersStringArray = resources.getStringArray(ownersArrayRes);
+        dogKindsStringArray = resources.getStringArray(dogKindsArray);
     }
 
     private void openOwnerDogs(View view) {
