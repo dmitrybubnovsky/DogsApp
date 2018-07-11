@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dogs.MainAppDescriptionActivity">
+    tools:context=".dogs.activity.MainAppDescriptionActivity">
 
     <TextView
         android:id="@+id/app_name_textview"

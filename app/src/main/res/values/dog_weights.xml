@@ -1,5 +1,5 @@
 <resources>
-    <string-array name="dogweight">
+    <string-array name="dog_weight">
         <item>27</item>
         <item>44</item>
         <item>58</item>

@@ -1,14 +1,15 @@
-package com.andersen.dogsapp;
+package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.andersen.dogsapp.dogs.MainAppDescriptionActivity;
+import com.andersen.dogsapp.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button btnStartActDogs;
+    protected Button btnStartActDogs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class AppTextView {
-    public TextView textView;
+    private TextView textView;
 
     public static AppTextView newInstance(Activity activity, int id) {
         return new AppTextView(activity, id);

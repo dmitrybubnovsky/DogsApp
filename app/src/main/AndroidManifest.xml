@@ -9,21 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".dogs.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".dogs.DogOwnersListActivity"
-                  android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.OwnerDogsActivity"
-                  android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.DogsInfoActivity"
-                  android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.MainAppDescriptionActivity"
-                  android:theme = "@style/NoActionBar"/>
+        <activity
+            android:name=".dogs.activity.DogOwnersListActivity"
+            android:theme = "@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.activity.OwnerDogsActivity"
+            android:theme = "@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.activity.DogsInfoActivity"
+            android:theme = "@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.activity.MainAppDescriptionActivity"
+            android:theme = "@style/NoActionBar"/>
     </application>
 
 </manifest>
