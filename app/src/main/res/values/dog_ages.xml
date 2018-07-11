@@ -1,5 +1,5 @@
 <resources>
-    <string-array name="dogage">
+    <string-array name="dog_age">
         <item>2 years 3 months</item>
         <item>1 years 7 months</item>
         <item>4 years 5 months</item>
