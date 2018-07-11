@@ -1,6 +1,9 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Context;
+
 import com.andersen.dogsapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +24,6 @@ public class DogImageLab {
 
     private DogImageLab(Context context){
         dogList = new ArrayList<>();
-        dogList.add(R.drawable.afghan_hound);
         dogList.add(R.drawable.english_coonhound);
         dogList.add(R.drawable.american_foxhound);
         dogList.add(R.drawable.water_spaniel);
