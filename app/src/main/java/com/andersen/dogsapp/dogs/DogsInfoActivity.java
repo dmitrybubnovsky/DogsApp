@@ -67,6 +67,7 @@ public class DogsInfoActivity extends AppCompatActivity {
 
         Random r = new Random();
 
+
         // random data fetching for age, tall and weight
         // and set those datas to appropriate textViews
         dogAgeTextView = findViewById(R.id.dog_age_textview);

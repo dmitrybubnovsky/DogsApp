@@ -55,8 +55,9 @@ public class OwnerDogsActivity extends AppCompatActivity {
         dogsLinearLayout = findViewById(R.id.dogs_container);
 
 
-        ownerNameTextView = new AppTextView.Builder().idTextView(this, R.id.owner_name_textview)
-                .text(ownerName).build();
+        ownerNameTextView = AppTextView.newInstance(this, R.id.owner_name_textview)
+                .text(ownerName)
+                .build();
 
         layoutInflater = getLayoutInflater();
         Random r = new Random();
@@ -65,6 +66,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
             String kindOfDogElem = kindOfDogs[r.nextInt(10)];
             String dogNameElem = dogNames[r.nextInt(10)];
 
+            // initialize appropriate textview inside inflatedView
             textViewKindDog = new TextViewCreator().create(inflatedView, R.id.kind_of_dog_textview, ""+kindOfDogElem);
             textViewDogName = new TextViewCreator().create(this, inflatedView, R.id.dog_name_textview, ""+dogNameElem, R.style.TextViewSubTitle);
 

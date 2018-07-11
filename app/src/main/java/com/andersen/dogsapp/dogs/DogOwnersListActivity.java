@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
+
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,12 +44,12 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
         // init owners[] and dogKinds[] from Resources
         initResources(R.array.owners, R.array.kind_of_dogs);
-        quantitiesDogs = new int[]{1,2,3,4,6,8,5,3,7,9};
+        quantitiesDogs = new int[]{1, 2, 3, 4, 6, 8, 5, 3, 7, 9};
 
         scrollView = findViewById(R.id.owners_container);
         layoutInflater = getLayoutInflater();
 
-        for(int i = 0; i< owners.length; i++){
+        for (int i = 0; i < owners.length; i++) {
             ownerName = owners[i];
             kindDog = dogKinds[i];
             quantityDog = quantitiesDogs[i];
@@ -55,14 +58,16 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
             // and set tag for that view
             inflatedView = layoutInflater.inflate(R.layout.owners_item, scrollView, false);
 
-            ownerNameTextView = new AppTextView.Builder().idTextView(inflatedView, R.id.owner_name_textview).text(ownerName)
-                                .style(this,R.style.TextViewTitleItem).build();
+            ownerNameTextView = AppTextView.newInstance(inflatedView, R.id.owner_name_textview)
+                    .text(ownerName)
+                    .style(this, R.style.TextViewTitleItem)
+                    .build();
 
-            preffereDogTextView = new AppTextView.Builder().idTextView(inflatedView, R.id.preffered_dog_textview)
-                                  .text(kindDog).style(this,R.style.TextViewSubTitle).build();
+            preffereDogTextView = AppTextView.newInstance(inflatedView, R.id.preffered_dog_textview)
+                    .text(kindDog).style(this, R.style.TextViewSubTitle).build();
 
-            dogQuantTextView  = new AppTextView.Builder().idTextView(inflatedView, R.id.quantity_textview)
-                                .text(""+ quantityDog).build();
+            dogQuantTextView = AppTextView.newInstance(inflatedView, R.id.quantity_textview)
+                    .text("" + quantityDog).build();
 
             inflatedView.setOnClickListener(this);
             scrollView.addView(inflatedView);
@@ -74,17 +79,17 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         openOwnerDogs(view);
     }
 
-    private void initResources(int owners, int kindDogArray){
+    private void initResources(int owners, int kindDogArray) {
         Resources resources = getResources();
         this.owners = resources.getStringArray(owners);
         dogKinds = resources.getStringArray(kindDogArray);
     }
 
-    private void openOwnerDogs(View view){
+    private void openOwnerDogs(View view) {
         TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
         TextView quantityTextView = view.findViewById(R.id.quantity_textview);
 
-        Intent i = new Intent (getApplicationContext(), OwnerDogsActivity.class);
+        Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
         i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownerNameTextView.getText().toString());
         i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, Integer.parseInt(quantityTextView.getText().toString()));
         startActivity(i);
