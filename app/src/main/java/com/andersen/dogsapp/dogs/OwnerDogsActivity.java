@@ -67,8 +67,13 @@ public class OwnerDogsActivity extends AppCompatActivity {
             String dogNameElem = dogNames[r.nextInt(10)];
 
             // initialize appropriate textview inside inflatedView
-            textViewKindDog = new TextViewCreator().create(inflatedView, R.id.kind_of_dog_textview, ""+kindOfDogElem);
-            textViewDogName = new TextViewCreator().create(this, inflatedView, R.id.dog_name_textview, ""+dogNameElem, R.style.TextViewSubTitle);
+            textViewKindDog = AppTextView.newInstance(inflatedView, R.id.kind_of_dog_textview)
+                    .text(""+kindOfDogElem)
+                    .build();
+            textViewDogName = AppTextView.newInstance(inflatedView, R.id.dog_name_textview)
+                    .text(""+dogNameElem)
+                    .style(this,R.style.TextViewSubTitle)
+                    .build();
 
             dogsLinearLayout.addView(inflatedView);
 

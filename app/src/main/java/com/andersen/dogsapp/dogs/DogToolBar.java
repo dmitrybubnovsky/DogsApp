@@ -22,16 +22,6 @@ public class DogToolBar {
         dogToolbar.setTitle(titleRes);
     }
 
-    public Toolbar get(Activity activity, int str){
-        DogToolBar dtb = new DogToolBar(activity, str);
-        return dtb.dogToolbar;
-    }
-
-    public Toolbar get(Activity activity, int str, int color){
-        DogToolBar dtb = new DogToolBar(activity, str, color);
-        return dtb.dogToolbar;
-    }
-
     public static Toolbar init(Activity activity, int str){
         DogToolBar dtb = new DogToolBar(activity, str);
         return dtb.dogToolbar;

@@ -64,10 +64,13 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
                     .build();
 
             preffereDogTextView = AppTextView.newInstance(inflatedView, R.id.preffered_dog_textview)
-                    .text(kindDog).style(this, R.style.TextViewSubTitle).build();
+                    .text(kindDog)
+                    .style(this, R.style.TextViewSubTitle)
+                    .build();
 
             dogQuantTextView = AppTextView.newInstance(inflatedView, R.id.quantity_textview)
-                    .text("" + quantityDog).build();
+                    .text("" + quantityDog)
+                    .build();
 
             inflatedView.setOnClickListener(this);
             scrollView.addView(inflatedView);
