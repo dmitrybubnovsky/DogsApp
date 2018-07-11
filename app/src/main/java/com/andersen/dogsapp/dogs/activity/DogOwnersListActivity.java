@@ -23,8 +23,6 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private String dogKindsStringArray[];
     private int quantitiesDogs[];
 
-    LinearLayout scrollView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +34,13 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         // init ownersStringArray[] and dogKindsStringArray[] from Resources
         initResources(R.array.owners, R.array.dogs_kinds);
 
-        scrollView = findViewById(R.id.owners_container);
+        LinearLayout containerLinLayout = findViewById(R.id.owners_container);
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        initAddInflatedView(layoutInflater);
+        initAddInflatedView(layoutInflater, containerLinLayout);
     }
 
-    private void initAddInflatedView(LayoutInflater layoutInflater) {
+    private void initAddInflatedView(LayoutInflater layoutInflater, LinearLayout containerLinLayout) {
         for (int i = 0; i < ownersStringArray.length; i++) {
             String ownerName = ownersStringArray[i];
             String dogKind = dogKindsStringArray[i];
@@ -50,7 +48,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
             // instantiate view-reference with inflated view
             // and set tag for that view
-            View inflatedView = layoutInflater.inflate(R.layout.owners_item, scrollView, false);
+            View inflatedView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
 
             AppTextView.newInstance(inflatedView, R.id.owner_name_textview)
                     .text(ownerName)
@@ -67,7 +65,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
                     .build();
 
             inflatedView.setOnClickListener(this);
-            scrollView.addView(inflatedView);
+            containerLinLayout.addView(inflatedView);
         }
     }
 
@@ -77,7 +75,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initResources(int ownersArrayRes, int dogKindsArray) {
-        quantitiesDogs = new int[]{1, 2, 3, 4, 6, 8, 5, 3, 7, 9};
+        quantitiesDogs = new int[]{3, 2, 2, 4, 5, 8, 5, 3, 7, 9};
         Resources resources = getResources();
         ownersStringArray = resources.getStringArray(ownersArrayRes);
         dogKindsStringArray = resources.getStringArray(dogKindsArray);
