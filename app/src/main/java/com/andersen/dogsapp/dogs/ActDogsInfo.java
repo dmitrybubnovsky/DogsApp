@@ -49,7 +49,7 @@ public class ActDogsInfo extends AppCompatActivity {
         textViewDogTall = findViewById(R.id.text_view_dog_tall);
         textViewDogWeight = findViewById(R.id.text_view_dog_weight);
 
-        dogsPhoto.setImageResource(DogImageLab.get(this).someImage());
+        dogsPhoto.setImageResource(DogImageLab.get().someImage());
         textViewDogName.setText(dogName);
         textViewKindDog.setText(kindOfDog);
         // random data fetching for age, tall and weight
