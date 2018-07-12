@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="dog_name">
+        <item>Коли</item>
+        <item>Чаки</item>
+        <item>Локки</item>
+        <item>Снекки</item>
+        <item>Вилли</item>
+        <item>Кири</item>
+        <item>Джесси</item>
+        <item>Китти</item>
+        <item>Синди</item>
+        <item>Джилли</item>
+    </string-array>
+
+
+</resources>

@@ -1,6 +1,9 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Context;
+
 import com.andersen.dogsapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,9 +12,9 @@ public class DogImageLab {
     private static DogImageLab dogImageLab;
     private List<Integer> dogList;
 
-    public static DogImageLab get(Context context){
+    public static DogImageLab get(){
         if(dogImageLab == null){
-            dogImageLab = new DogImageLab(context);
+            dogImageLab = new DogImageLab();
         }
         return dogImageLab;
     }
@@ -20,7 +23,7 @@ public class DogImageLab {
         return dogList.get(new Random().nextInt(12));
     }
 
-    DogImageLab(Context context){
+    private DogImageLab(){
         dogList = new ArrayList<>();
         dogList.add(R.drawable.english_coonhound);
         dogList.add(R.drawable.american_foxhound);
