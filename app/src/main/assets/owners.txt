@@ -1,0 +1,92 @@
+{
+  {
+    "ownerId" : 1,
+    "ownerName" : "Adam",
+    "ownerSurName" : "Johnson",
+    "dogIds" : [ 2, 3 ]
+  },
+  {
+    "ownerId" : 2,
+    "ownerName" : "Will",
+    "ownerSurName" : "Kuklachyov",
+    "dogs" : [ 1 ]
+  },
+  {
+    "ownerId" : 3,
+    "ownerName" : "Jack",
+    "ownerSurName" : "Marks",
+    "dogs" : [ 4,5,5 ]
+  },
+  {
+    "ownerId" : 4,
+    "ownerName" : "Kevin",
+    "ownerSurName" : "Costner",
+    "dogs" : [ 7,8,9,10 ]
+  },
+  {
+    "ownerId" : 5,
+    "ownerName" : "Steve",
+    "ownerSurName" : "Wilson",
+    "dogs" : [ 11 ]
+  },
+  {
+    "ownerId" : 6,
+    "ownerName" : "Katy",
+    "ownerSurName" : "Perry",
+    "dogs" : [ 12,13,14,15,16 ]
+  },
+  {
+    "ownerId" : 7,
+    "ownerName" : "Snejana",
+    "ownerSurName" : "Denisovna",
+    "dogs" : [ 17,18 ]
+  },
+  {
+    "ownerId" : 8,
+    "ownerName" : "James",
+    "ownerSurName" : "Bond",
+    "dogs" : [ 19 ]
+  },
+  {
+    "ownerId" : 9,
+    "ownerName" : "Garry",
+    "ownerSurName" : "Born",
+    "dogs" : [ 20 ]
+  },
+  {
+    "ownerId" : 10,
+    "ownerName" : "George",
+    "ownerSurName" : "Clooney",
+    "dogs" : [ 21,23 ]
+  },
+  {
+    "ownerId" : 11,
+    "ownerName" : "Alex",
+    "ownerSurName" : "Nickelson",
+    "dogs" : [ 22 ]
+  },
+  {
+    "ownerId" : 12,
+    "ownerName" : "Gomes",
+    "ownerSurName" : "Brooks",
+    "dogs" : [ 24 ]
+  },
+  {
+    "ownerId" : 13,
+    "ownerName" : "Alan",
+    "ownerSurName" : "Oldman",
+    "dogs" : [ 26 ]
+  },
+  {
+    "ownerId" : 14,
+    "ownerName" : "Joshua",
+    "ownerSurName" : "Jackson",
+    "dogs" : [ 25 ]
+  },
+  {
+    "ownerId" : 15,
+    "ownerName" : "Soul",
+    "ownerSurName" : "Stevenson",
+    "dogs" : [ 27,28 ]
+  }
+}
