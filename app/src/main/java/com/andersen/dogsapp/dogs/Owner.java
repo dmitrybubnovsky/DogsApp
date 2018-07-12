@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.UUID;
 
 public class Owner implements Serializable {
-    private Long ownerId;
+    private int ownerId;
     private String ownerName;
     private String ownerSurName;
-    private List<UUID> dogId;
+    private List<Integer> dogId;
 
-    public Owner(Long ownerId, String ownerName, String ownerSurName, List<UUID> dogId) {
+    public Owner(int ownerId, String ownerName, String ownerSurName, List<Integer> dogId) {
         this.ownerId = ownerId;
         this.ownerName = ownerName;
         this.ownerSurName = ownerSurName;
         this.dogId = dogId;
     }
 
-    public Long getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 
@@ -28,7 +28,5 @@ public class Owner implements Serializable {
         return ownerSurName;
     }
 
-    public List<UUID> getDogId() {
-        return dogId;
-    }
+
 }

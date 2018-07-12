@@ -62,10 +62,15 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         final Gson GSON = builder.setPrettyPrinting().create();
 
         String json = getAssetsJSON("owners.json");
-        OwnersStorage ownersStorage = GSON.fromJson(json, OwnersStorage.class);
-        List<Owner> owners = ownersStorage.getOwners();
 
-        Toast.makeText(getApplicationContext(), "Name : "+owners.get(0).getOwnerName(), Toast.LENGTH_LONG).show();
+        //List<Owner> owners = GSON.fromJson(json, OwnersStorage.class).getOwners();
+
+        // method 'init' initialize instance of his class OwnerStorage by copy
+        // that has been taking as a parameter
+        List<Owner> owners = OwnersStorage.init(GSON.fromJson(json, OwnersStorage.class)).getOwners();
+
+//      Toast.makeText(getApplicationContext(), "Name : "+owners.get(0).getOwnerName(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Name : "+owners.size(),Toast.LENGTH_LONG).show();
     }
 
     private View initItemView(LayoutInflater layoutInflater, int i) {
