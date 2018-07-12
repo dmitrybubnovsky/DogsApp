@@ -1,0 +1,16 @@
+<resources>
+    <string-array name="dogs_kinds">
+        <item>German Sheepdog</item>
+        <item>Austrian Sheepdog</item>
+        <item>Siberian Husky</item>
+        <item>Rottweiler</item>
+        <item>Spaniel</item>
+        <item>Collie</item>
+        <item>Doberman Pincher</item>
+        <item>Samoyed</item>
+        <item>Scottish Terrier</item>
+        <item>Irish Terrier</item>
+    </string-array>
+
+
+</resources>

@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">DogsApp</string>
+    <string name="first_btn_title">Go to first Activity</string>
+    <string name="second_btn_title">Start second Activity</string>
+    <string name="third_btn_title">Create textviews in LinearLayout</string>
+    <string name="fourth_btn_title">Create textviews in RelativeLayout</string>
+    <string name="fifth_btn_title">Textviews in ConstraintLayout</string>
+    <string name="btn_start_dogs">Start Dog App</string>
+    <string name="text_view_title_dogs_quantity">How many dogs: </string>
+    <string name="woof_btn_title">WOOF!</string>
+    <string name="text_view_title_preff_dog">Favourite kind of dog: </string>
+
+    <string name="toolbar_title_owners_list">OWNERS LIST</string>
+    <string name="toolbar_title_dogs_list">DOGS LIST</string>
+    <string name="toolbar_title_detail_info">DOGS INFO</string>
+
+
+
+    <string name="text_view_app_title">DOGGY DOGG</string>
+    <string name="text_view_app_description">This app dedicated to Dog-fanciers. It contains the list of dog-owners with detailed information of their pet including its name, type of dog, weight, age and tall</string>
+    <string name="text_view_title_kind">Kind of dog: </string>
+    <string name="text_view_title_age">Age: </string>
+    <string name="text_view_title_weight">Weight: </string>
+    <string name="text_view_title_tall">Tall: </string>
+
+    <string name="btn_search">Go</string>
+    <string name="first_text_view">This is the first TextView</string>
+    <string name="second_text_view">This is the second one</string>
+    <string name="third_text_view">The third TextView</string>
+
 </resources>
