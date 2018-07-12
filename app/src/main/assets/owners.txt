@@ -15,7 +15,7 @@
     "ownerId" : 3,
     "ownerName" : "Jack",
     "ownerSurName" : "Marks",
-    "dogs" : [ 4,5,5 ]
+    "dogs" : [ 4,5,6 ]
   },
   {
     "ownerId" : 4,
@@ -57,36 +57,6 @@
     "ownerId" : 10,
     "ownerName" : "George",
     "ownerSurName" : "Clooney",
-    "dogs" : [ 21,23 ]
-  },
-  {
-    "ownerId" : 11,
-    "ownerName" : "Alex",
-    "ownerSurName" : "Nickelson",
-    "dogs" : [ 22 ]
-  },
-  {
-    "ownerId" : 12,
-    "ownerName" : "Gomes",
-    "ownerSurName" : "Brooks",
-    "dogs" : [ 24 ]
-  },
-  {
-    "ownerId" : 13,
-    "ownerName" : "Alan",
-    "ownerSurName" : "Oldman",
-    "dogs" : [ 26 ]
-  },
-  {
-    "ownerId" : 14,
-    "ownerName" : "Joshua",
-    "ownerSurName" : "Jackson",
-    "dogs" : [ 25 ]
-  },
-  {
-    "ownerId" : 15,
-    "ownerName" : "Soul",
-    "ownerSurName" : "Stevenson",
-    "dogs" : [ 27,28 ]
+    "dogs" : [ 21,22 ]
   }
 }
