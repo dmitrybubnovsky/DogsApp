@@ -5,19 +5,31 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DogToolBar;
+import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.OwnersStorage;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "#";
+
+    List<Owner> owners;
 
     private LinearLayout containerLinLayout;
 
@@ -45,6 +57,15 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
             itemView.setOnClickListener(this);
             containerLinLayout.addView(itemView);
         }
+
+        GsonBuilder builder = new GsonBuilder();
+        final Gson GSON = builder.setPrettyPrinting().create();
+
+        String json = getAssetsJSON("owners.json");
+        OwnersStorage ownersStorage = GSON.fromJson(json, OwnersStorage.class);
+        List<Owner> owners = ownersStorage.getOwners();
+
+        Toast.makeText(getApplicationContext(), "Name : "+owners.get(0).getOwnerName(), Toast.LENGTH_LONG).show();
     }
 
     private View initItemView(LayoutInflater layoutInflater, int i) {
@@ -91,5 +112,20 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownerNameTextView.getText().toString());
         i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, Integer.parseInt(quantityTextView.getText().toString()));
         startActivity(i);
+    }
+
+    private String getAssetsJSON(String fileName){
+        String json = null;
+        try{
+            InputStream inputStream = this.getAssets().open(fileName);
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String (buffer, "UTF-8");
+        } catch (IOException e ){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

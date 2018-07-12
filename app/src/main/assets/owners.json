@@ -1,4 +1,4 @@
-{
+{ "owners":[
   {
     "ownerId" : 1,
     "ownerName" : "Adam",
@@ -7,8 +7,8 @@
   },
   {
     "ownerId" : 2,
-    "ownerName" : "Will",
-    "ownerSurName" : "Kuklachyov",
+    "ownerName" : "Bill",
+    "ownerSurName" : "Kuklachov",
     "dogs" : [ 1 ]
   },
   {
@@ -59,4 +59,5 @@
     "ownerSurName" : "Clooney",
     "dogs" : [ 21,22 ]
   }
+  ]
 }

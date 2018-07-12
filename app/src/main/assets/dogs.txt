@@ -161,7 +161,7 @@
   },
   {
     "dogId" : 19,
-    "ownerId" : ,
+    "ownerId" : 8,
     "dogName" : "Maika",
     "dogKind" : "Shepherd",
     "dogImageId" : 1,
