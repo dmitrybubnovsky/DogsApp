@@ -3,60 +3,70 @@
     "ownerId" : 1,
     "ownerName" : "Adam",
     "ownerSurName" : "Johnson",
+    "prefferedDogsKind" : "",
     "dogIds" : [ 2, 3 ]
   },
   {
     "ownerId" : 2,
     "ownerName" : "Bill",
     "ownerSurName" : "Kuklachov",
+    "prefferedDogsKind" : "",
     "dogs" : [ 1 ]
   },
   {
     "ownerId" : 3,
     "ownerName" : "Jack",
     "ownerSurName" : "Marks",
+    "prefferedDogsKind" : "",
     "dogs" : [ 4,5,6 ]
   },
   {
     "ownerId" : 4,
     "ownerName" : "Kevin",
     "ownerSurName" : "Costner",
+    "prefferedDogsKind" : "",
     "dogs" : [ 7,8,9,10 ]
   },
   {
     "ownerId" : 5,
     "ownerName" : "Steve",
     "ownerSurName" : "Wilson",
+    "prefferedDogsKind" : "",
     "dogs" : [ 11 ]
   },
   {
     "ownerId" : 6,
     "ownerName" : "Katy",
     "ownerSurName" : "Perry",
+    "prefferedDogsKind" : "",
     "dogs" : [ 12,13,14,15,16 ]
   },
   {
     "ownerId" : 7,
     "ownerName" : "Snejana",
     "ownerSurName" : "Denisovna",
+    "prefferedDogsKind" : "",
     "dogs" : [ 17,18 ]
   },
   {
     "ownerId" : 8,
     "ownerName" : "James",
     "ownerSurName" : "Bond",
+    "prefferedDogsKind" : "",
     "dogs" : [ 19 ]
   },
   {
     "ownerId" : 9,
     "ownerName" : "Garry",
     "ownerSurName" : "Born",
+    "prefferedDogsKind" : "",
     "dogs" : [ 20 ]
   },
   {
     "ownerId" : 10,
     "ownerName" : "George",
     "ownerSurName" : "Clooney",
+    "prefferedDogsKind" : "",
     "dogs" : [ 21,22 ]
   }
   ]

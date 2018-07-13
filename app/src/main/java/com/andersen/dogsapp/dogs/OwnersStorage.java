@@ -12,28 +12,28 @@ public class OwnersStorage {
     @Expose
     public List<Owner> owners;
 
-    OwnersStorage(OwnersStorage copy){
+    private OwnersStorage(OwnersStorage copy){
         this(copy.owners);
     }
 
-    OwnersStorage(List<Owner> owners){
+    private OwnersStorage(List<Owner> owners){
         this.owners = new ArrayList<>();
         this.owners.addAll(owners);
     }
 
     public static OwnersStorage init (OwnersStorage instance){
         if(ownersStorage == null){
-            return new OwnersStorage(instance);
+            ownersStorage = new OwnersStorage(instance);
         }
         return ownersStorage;
     }
 
-    public List<Owner> getOwners(){
-        return owners;
+    public static OwnersStorage get (){
+            return ownersStorage;
     }
 
-    public int getCount(){
-        return owners.size();
+    public List<Owner> getOwners(){
+        return owners;
     }
 
     public void setOwners(List<Owner> owners){
@@ -48,5 +48,14 @@ public class OwnersStorage {
                 return owner;
         }
         return null;
+    }
+    public List<String> getOwnerNames(){
+        ArrayList<String> fullNames = new ArrayList<>();
+        String fullName = null;
+        for(Owner owner : owners){
+            fullName = owner.getOwnerName();
+            fullNames.add(fullName);
+        }
+        return fullNames;
     }
 }
