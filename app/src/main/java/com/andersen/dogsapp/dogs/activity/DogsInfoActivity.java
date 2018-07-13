@@ -46,7 +46,7 @@ public class DogsInfoActivity extends AppCompatActivity {
 
     private void initViews() {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageResource(DogImageLab.get(this).getRandomDogImageResource());
+        dogsPhoto.setImageResource(DogImageLab.get().getRandomDogImageResource());
 
         getDogInfo();
 
