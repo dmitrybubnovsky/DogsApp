@@ -1,4 +1,105 @@
 package com.andersen.dogsapp.dogs;
+import android.content.Context;
+import android.widget.Toast;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class DataRepository {
+    private static DataRepository dataRepository;
+
+    private List<Dog> dogs;
+    private List<Owner> owners;
+
+    private DataRepository(Context context){
+        GsonBuilder builder = new GsonBuilder();
+        final Gson GSON = builder.create();
+        String json;
+
+        json = getAssetsJSON("owners.json", context);
+        OwnersDataSource ownersDataSource = OwnersDataSource.init(GSON.fromJson(json, OwnersDataSource.class));
+        owners = ownersDataSource.getOwners();
+
+        json = getAssetsJSON("dogs.json", context);
+        DogsDataSource dogsDataSource = DogsDataSource.init(GSON.fromJson(json, DogsDataSource.class));
+        dogs = dogsDataSource.getDogs();
+
+        Toast.makeText(context, "DataRepository: owners"+owners.size()+"  dogs "+dogs.size(),Toast.LENGTH_LONG).show();
+    }
+
+    public static DataRepository get(Context context){
+        if(dataRepository == null){
+            dataRepository = new DataRepository(context);
+        } return dataRepository;
+    }
+
+    private static String getAssetsJSON(String fileName, Context context){
+        String json = null;
+        try{
+            InputStream inputStream = context.getAssets().open(fileName);
+            int size = inputStream.available();
+            byte[] buffer = new byte[size];
+            inputStream.read(buffer);
+            inputStream.close();
+            json = new String (buffer, "UTF-8");
+        } catch (IOException e ){
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    /*
+     *  methods for Owner and Owners fields
+     */
+
+    public List<Owner> getOwners(){
+        return owners;
+    }
+
+    public ArrayList<String> getOwnersNames(){
+        ArrayList<String> fullNames = new ArrayList<>();
+        for(Owner owner : owners){
+            fullNames.add(owner.getOwnerName()+" "+owner.getOwnerSurname());
+        }
+        return fullNames;
+    }
+
+    public ArrayList<String> getPrefereDogsKinds(){
+        ArrayList<String> dogsKinds = new ArrayList<>();
+        for(Owner owner : owners){
+            dogsKinds.add(owner.getPreferedDogsKind());
+        }
+        return dogsKinds;
+    }
+
+    public int[] getQuantitiesDogs(){
+        int[] quantitiesDogs = new int[owners.size()];
+        for (int i=0;i<owners.size();i++){
+            quantitiesDogs[i] = owners.get(i).getDogsQuantity();
+        }
+        return quantitiesDogs;
+    }
+
+    public List<Dog> getDogs(){
+        return dogs;
+    }
+
+    public Owner getOwner(int ownerId){
+        for(Owner owner : owners){
+            if (owner.getOwnerId() == (ownerId)){
+                return owner;
+            }
+        }
+        return null;
+    }
+
+//    public ArrayList<Dog> getDogsByOwnerId(int ownerId){
+//        List<Dog> dogs = new ArrayList<>();
+//        Owner owner = owners.get
+//    }
+
+
 }

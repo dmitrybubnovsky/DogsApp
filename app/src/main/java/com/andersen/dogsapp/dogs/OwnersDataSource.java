@@ -9,7 +9,7 @@ public class OwnersDataSource {
 
     @SerializedName("owners")
     @Expose
-    public List<Owner> owners;
+    private List<Owner> owners;
 
     private OwnersDataSource(OwnersDataSource copy){
         this(copy.owners);
@@ -39,36 +39,5 @@ public class OwnersDataSource {
         if (owners == null){
             this.owners.addAll(owners);
         }
-    }
-
-    public Owner getOwner(int ownerId){
-        for(Owner owner : owners){
-            if (owner.getOwnerId() == (ownerId))
-                return owner;
-        }
-        return null;
-    }
-
-    public ArrayList<String> getOwnersNames(){
-        ArrayList<String> fullNames = new ArrayList<>();
-        for(Owner owner : owners){
-            fullNames.add(owner.getOwnerName()+" "+owner.getOwnerSurname());
-        }
-        return fullNames;
-    }
-
-    public ArrayList<String> getPrefereDogsKinds(){
-        ArrayList<String> dogsKinds = new ArrayList<>();
-        for(Owner owner : owners){
-            dogsKinds.add(owner.getPreferedDogsKind());
-        }
-        return dogsKinds;
-    }
-    public int[] getQuantitiesDogs(){
-        int[] quantitiesDogs = new int[owners.size()];
-        for (int i=0;i<owners.size();i++){
-              quantitiesDogs[i] = owners.get(i).getDogsQuantity();
-        }
-        return quantitiesDogs;
     }
 }

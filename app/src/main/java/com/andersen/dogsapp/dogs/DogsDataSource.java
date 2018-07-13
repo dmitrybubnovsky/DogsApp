@@ -9,7 +9,7 @@ public class DogsDataSource {
 
     @SerializedName("dogs")
     @Expose
-    public List<Dog> dogs;
+    private List<Dog> dogs;
 
     private DogsDataSource(DogsDataSource copy){
         this(copy.dogs);
@@ -22,7 +22,7 @@ public class DogsDataSource {
 
     public static DogsDataSource init (DogsDataSource instance){
         if(dogsDataSource == null){
-            return new DogsDataSource(instance);
+            dogsDataSource = new DogsDataSource(instance);
         }
         return dogsDataSource;
     }
@@ -30,12 +30,12 @@ public class DogsDataSource {
     public List<Dog> getDogs(){
         return dogs;
     }
-
-    public void setDogs(List<Dog> dogs){
-        if (dogs == null){
-            this.dogs.addAll(dogs);
-        }
-    }
+//
+//    public void setDogs(List<Dog> dogs){
+//        if (dogs == null){
+//            this.dogs.addAll(dogs);
+//        }
+//    }
 
     public Dog getDog(int dogId){
         for(Dog dog : dogs){
