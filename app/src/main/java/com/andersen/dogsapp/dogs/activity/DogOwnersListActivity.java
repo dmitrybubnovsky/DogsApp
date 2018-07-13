@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,12 +15,13 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.OwnersStorage;
+import com.andersen.dogsapp.dogs.OwnersDataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
@@ -32,9 +32,9 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
     private LinearLayout containerLinLayout;
 
-    private String ownersStringArray[];
-    private String dogKindsStringArray[];
-    private int quantitiesDogs[];
+    private ArrayList<String> ownersStringArray;
+    private ArrayList<String>  dogKindsStringArray;
+    private ArrayList<Integer> quantitiesDogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,23 +45,13 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         setSupportActionBar(toolbar);
 
         // init ownersStringArray[] and dogKindsStringArray[] from Resources
-
-//        GsonBuilder builder = new GsonBuilder();
-//        final Gson GSON = builder.setPrettyPrinting().create();
-//
-//        String json = getAssetsJSON("owners.json");
-//        // method 'init' initialize instance of his class OwnerStorage by copy that has been taking as a parameter
-//        OwnersStorage ownersStorage = OwnersStorage.init(GSON.fromJson(json, OwnersStorage.class));
-//        owners = ownersStorage.getOwners();
-//        Toast.makeText(getApplicationContext(), "Name : "+owners.size(),Toast.LENGTH_LONG).show();
-
-        initResources(R.array.owners, R.array.dogs_kinds);
+        initResources(); //R.array.owners, R.array.dogs_kinds
 
         containerLinLayout = findViewById(R.id.owners_container);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        for (int i = 0; i < ownersStringArray.length; i++) {
+        for (int i = 0; i < ownersStringArray.size(); i++) {
             View itemView = initItemView(layoutInflater, i);
             itemView.setOnClickListener(this);
             containerLinLayout.addView(itemView);
@@ -71,9 +61,9 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private View initItemView(LayoutInflater layoutInflater, int i) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
 
-        String ownerName = ownersStringArray[i];
-        String dogKind = dogKindsStringArray[i];
-        int quantityDog = quantitiesDogs[i];
+        String ownerName = ownersStringArray.get(i);
+        String prefferedDogKind = dogKindsStringArray.get(i);
+        int quantityDog = quantitiesDogs.get(i);
 
         // instantiate view-reference with inflated view
         AppTextView.newInstance(itemView, R.id.owner_name_textview)
@@ -82,7 +72,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
                     .build();
 
         AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
-                    .text(dogKind)
+                    .text(prefferedDogKind)
                     .style(this, R.style.TextViewSubTitle)
                     .build();
 
@@ -97,25 +87,22 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         openOwnerDogs(view);
     }
 
-    private void initResources(int ownersArrayRes, int dogKindsArray) {
+    private void initResources() {//  int ownersArrayRes, int dogKindsArray
 
         GsonBuilder builder = new GsonBuilder();
         final Gson GSON = builder.setPrettyPrinting().create();
-
         String json = getAssetsJSON("owners.json");
         // method 'init' initialize instance of his class OwnerStorage by copy that has been taking as a parameter
-        OwnersStorage ownersStorage = OwnersStorage.init(GSON.fromJson(json, OwnersStorage.class));
-        owners = ownersStorage.getOwners();
+        OwnersDataSource ownersDataSource = OwnersDataSource.init(GSON.fromJson(json, OwnersDataSource.class));
+        owners = ownersDataSource.getOwners();
 
-        Toast.makeText(getApplicationContext(), "Name : "+owners.size(),Toast.LENGTH_LONG).show();
-
-
-
-
-        quantitiesDogs = new int[]{3, 2, 2, 4, 5, 8, 5, 3, 7, 9};
         Resources resources = getResources();
-        ownersStringArray = resources.getStringArray(ownersArrayRes);
-        dogKindsStringArray = resources.getStringArray(dogKindsArray);
+        ownersStringArray = ownersDataSource.getOwnersNames();
+        dogKindsStringArray = ownersDataSource.getPrefereDogsKinds();
+        quantitiesDogs = ownersDataSource.getQuantitiesDogs();
+
+        Toast.makeText(getApplicationContext(), "Name : "+owners.size()+ "  " + ownersDataSource.getOwners().size(),Toast.LENGTH_LONG).show();
+
     }
 
     private void openOwnerDogs(View view) {

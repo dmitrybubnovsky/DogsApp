@@ -1,19 +1,22 @@
 package com.andersen.dogsapp.dogs;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Owner implements Serializable {
     private int ownerId;
     private String ownerName;
-    private String ownerSurName;
-    private List<Integer> dogId;
+    private String ownerSurname;
+    private String preferedDogsKind;
+    public ArrayList<Integer> dogsIds;
 
-    public Owner(int ownerId, String ownerName, String ownerSurName, List<Integer> dogId) {
+    public Owner(int ownerId, String ownerName, String ownerSurname, String preferDogKind, ArrayList<Integer> dogsIds) {
         this.ownerId = ownerId;
         this.ownerName = ownerName;
-        this.ownerSurName = ownerSurName;
-        this.dogId = dogId;
+        this.ownerSurname = ownerSurname;
+        this.preferedDogsKind = preferDogKind;
+        this.dogsIds = new ArrayList<>();
+        this.dogsIds.addAll(dogsIds);
     }
 
     public int getOwnerId() {
@@ -24,8 +27,21 @@ public class Owner implements Serializable {
         return ownerName;
     }
 
-    public String getOwnerSurName() {
-        return ownerSurName;
+    public String getOwnerSurname() {
+        return ownerSurname;
+    }
+
+    public String getPreferedDogsKind() {
+        return preferedDogsKind;
+    }
+
+
+    public ArrayList<Integer> getDogsIds() {
+        return dogsIds;
+    }
+
+    public Integer getDogsQuantity() {
+        return Integer.valueOf(getDogsIds().size());
     }
 
 
