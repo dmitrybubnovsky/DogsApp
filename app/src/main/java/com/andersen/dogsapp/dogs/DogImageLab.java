@@ -15,7 +15,7 @@ public class DogImageLab {
         } return dogImageLab;
     }
 
-    public int someImage(){
+    public int getRandomDogImageResource(){
         return dogList.get(new Random().nextInt(12));
     }
 
