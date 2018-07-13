@@ -4,30 +4,19 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Dog implements Serializable{
-    private Long dogId;
-    private Long ownerId;
-    private String dogName;
-    private String dogKind;
+    private int dogId;
+    private int ownerId;
     private int dogImageId;
     private int dogAge;
 
-    public Dog() {
-    }
+    private String dogName;
+    private String dogKind;
 
-    public Dog(Long dogId, Long ownerId, String dogName, String dogKind, int dogImageId, int dogAge) {
-        this.dogId = dogId;
-        this.ownerId = ownerId;
-        this.dogName = dogName;
-        this.dogKind = dogKind;
-        this.dogImageId = dogImageId;
-        this.dogAge = dogAge;
-    }
-
-    public Long getDogId() {
+    public int getDogId() {
         return dogId;
     }
 
-    public Long getOwnerId() {
+    public int getOwnerId() {
         return ownerId;
     }
 

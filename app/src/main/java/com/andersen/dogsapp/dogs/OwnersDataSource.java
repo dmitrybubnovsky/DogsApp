@@ -1,12 +1,11 @@
 package com.andersen.dogsapp.dogs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersDataSource {
-    private static OwnersDataSource sOwnersDataSource;
+    private static OwnersDataSource ownersDataSource;
 
     @SerializedName("owners")
     @Expose
@@ -22,14 +21,14 @@ public class OwnersDataSource {
     }
 
     public static OwnersDataSource init (OwnersDataSource instance){
-        if(sOwnersDataSource == null){
-            sOwnersDataSource = new OwnersDataSource(instance);
+        if(ownersDataSource == null){
+            ownersDataSource = new OwnersDataSource(instance);
         }
-        return sOwnersDataSource;
+        return ownersDataSource;
     }
 
     public static OwnersDataSource get (){
-            return sOwnersDataSource;
+            return ownersDataSource;
     }
 
     public List<Owner> getOwners(){
@@ -49,6 +48,7 @@ public class OwnersDataSource {
         }
         return null;
     }
+
     public ArrayList<String> getOwnersNames(){
         ArrayList<String> fullNames = new ArrayList<>();
         for(Owner owner : owners){
@@ -64,11 +64,10 @@ public class OwnersDataSource {
         }
         return dogsKinds;
     }
-    public ArrayList<Integer> getQuantitiesDogs(){
-        ArrayList<Integer> quantitiesDogs = new ArrayList<>();
-        for(Owner owner : owners){
-          //  quantitiesDogs.add(owner.getDogsQuantity());
-            quantitiesDogs.add(owner.getDogsIds().size());
+    public int[] getQuantitiesDogs(){
+        int[] quantitiesDogs = new int[owners.size()];
+        for (int i=0;i<owners.size();i++){
+              quantitiesDogs[i] = owners.get(i).getDogsQuantity();
         }
         return quantitiesDogs;
     }

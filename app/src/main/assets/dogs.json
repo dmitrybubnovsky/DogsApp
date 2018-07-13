@@ -1,187 +1,189 @@
-{ "dogs":[
+{
+  "dogs":
+  [
     {
-      "dogId" : 1,
-      "ownerId" : 2,
-      "dogName" : "Palkan",
-      "dogKind" : "German Sheepdog",
-      "dogImageId" : 1,
-      "dogAge" : 24
-    },
-    {
-      "dogId" : 2,
-      "ownerId" : 1,
-      "dogName" : "Snejok",
-      "dogKind" : "Irish Terrier",
-      "dogImageId" : 1,
-      "dogAge" : 24
+      "dogId": 1,
+      "ownerId": 2,
+      "dogName": "Palkan",
+      "dogKind": "German Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
     },
     {
-      "dogId" : 3,
-      "ownerId" : 1,
-      "dogName" : "Drujok",
-      "dogKind" : "Samoyed",
-      "dogImageId" : 1,
-      "dogAge" : 24
+      "dogId": 2,
+      "ownerId": 1,
+      "dogName": "Snejok",
+      "dogKind": "Irish Terrier",
+      "dogImageId": 1,
+      "dogAge": 24
     },
     {
-     "dogId" : 4,
-     "ownerId" : 3,
-     "dogName" : "Terry",
-     "dogKind" : "Shepherd",
-     "dogImageId" : 1,
-     "dogAge" : 24
+      "dogId": 3,
+      "ownerId": 1,
+      "dogName": "Drujok",
+      "dogKind": "Samoyed",
+      "dogImageId": 1,
+      "dogAge": 24
     },
     {
-     "dogId" : 5,
-     "ownerId" : 3,
-     "dogName" : "Fox",
-     "dogKind" : "German Sheepdog",
-     "dogImageId" : 1,
-     "dogAge" : 24
+      "dogId": 4,
+      "ownerId": 3,
+      "dogName": "Terry",
+      "dogKind": "Shepherd",
+      "dogImageId": 1,
+      "dogAge": 24
     },
-   {
-     "dogId" : 6,
-     "ownerId" : 3,
-     "dogName" : "Doggy",
-     "dogKind" : "Doberman Pincher",
-     "dogImageId" : 1,
-     "dogAge" : 24
-   },
-   {
-     "dogId" : 7,
-     "ownerId" : 4,
-     "dogName" : "Palma",
-     "dogKind" : "German Sheepdog",
-     "dogImageId" : 1,
-     "dogAge" : 24
-   },
-   {
-     "dogId" : 1,
-     "ownerId" : 4,
-     "dogName" : "Naomi",
-     "dogKind" : "Siberian Husky",
-      "dogImageId" : 1,
-     "dogAge" : 24
-   },
-   {
-     "dogId" : 8,
-     "ownerId" : 4,
-     "dogName" : "Sarah",
-     "dogKind" : "German Sheepdog",
-     "dogImageId" : 1,
-     "dogAge" : 24
-   },
-   {
-     "dogId" : 9,
-     "ownerId" : 4,
-     "dogName" : "Cindy",
-     "dogKind" : "Siberian Husky",
-     "dogImageId" : 1,
-     "dogAge" : 24
-   },
-   {
-     "dogId" : 10,
-     "ownerId" : 4,
-     "dogName" : "Grey",
-     "dogKind" : "Austrian Sheepdog",
-     "dogImageId" : 1,
-      "dogAge" : 24
-   },
-   {
-     "dogId" : 11,
-     "ownerId" : 5,
-     "dogName" : "Sharik",
-     "dogKind" : "German Sheepdog",
-      "dogImageId" : 1,
-     "dogAge" : 24
-   },
-   {
-     "dogId" : 12,
-     "ownerId" : 6,
-     "dogName" : "Kashtanka",
-     "dogKind" : "Doberman Pincher",
-      "dogImageId" : 1,
-     "dogAge" : 24
+    {
+      "dogId": 5,
+      "ownerId": 3,
+      "dogName": "Fox",
+      "dogKind": "German Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
     },
-  {
-     "dogId" : 13,
-     "ownerId" : 6,
-     "dogName" : "Juchka",
-     "dogKind" : "Rottweiler",
-     "dogImageId" : 1,
-     "dogAge" : 24
-  },
-  {
-     "dogId" : 1,
-     "ownerId" : 6,
-     "dogName" : "Strelka",
-     "dogKind" : "Rottweiler",
-      "dogImageId" : 1,
-     "dogAge" : 24
-  },
-  {
-    "dogId" : 14,
-    "ownerId" : 6,
-    "dogName" : "Belka",
-    "dogKind" : "Collie",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 15,
-    "ownerId" : 6,
-    "dogName" : "Gaika",
-    "dogKind" : "Siberian Husky",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 16,
-    "ownerId" : 6,
-    "dogName" : "Soika",
-    "dogKind" : "Samoyed",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 17,
-    "ownerId" : 7,
-    "dogName" : "Sally",
-    "dogKind" : "Spaniel",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 18,
-    "ownerId" : 7,
-    "dogName" : "Laika",
-    "dogKind" : "Pocket Beagle",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 19,
-    "ownerId" : 8,
-    "dogName" : "Maika",
-    "dogKind" : "Shepherd",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 20,
-    "ownerId" : 8,
-    "dogName" : "Greazly",
-    "dogKind" : "Saint Bernhard",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  },
-  {
-    "dogId" : 21,
-    "ownerId" : 9,
-    "dogName" : "Buzzy",
-    "dogKind" : "German Sheepdog",
-    "dogImageId" : 1,
-    "dogAge" : 24
-  }
+    {
+      "dogId": 6,
+      "ownerId": 3,
+      "dogName": "Doggy",
+      "dogKind": "Doberman Pincher",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 7,
+      "ownerId": 4,
+      "dogName": "Palma",
+      "dogKind": "German Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 1,
+      "ownerId": 4,
+      "dogName": "Naomi",
+      "dogKind": "Siberian Husky",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 8,
+      "ownerId": 4,
+      "dogName": "Sarah",
+      "dogKind": "German Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 9,
+      "ownerId": 4,
+      "dogName": "Cindy",
+      "dogKind": "Siberian Husky",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 10,
+      "ownerId": 4,
+      "dogName": "Grey",
+      "dogKind": "Austrian Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 11,
+      "ownerId": 5,
+      "dogName": "Sharik",
+      "dogKind": "German Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 12,
+      "ownerId": 6,
+      "dogName": "Kashtanka",
+      "dogKind": "Doberman Pincher",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 13,
+      "ownerId": 6,
+      "dogName": "Juchka",
+      "dogKind": "Rottweiler",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 1,
+      "ownerId": 6,
+      "dogName": "Strelka",
+      "dogKind": "Rottweiler",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 14,
+      "ownerId": 6,
+      "dogName": "Belka",
+      "dogKind": "Collie",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 15,
+      "ownerId": 6,
+      "dogName": "Gaika",
+      "dogKind": "Siberian Husky",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 16,
+      "ownerId": 6,
+      "dogName": "Soika",
+      "dogKind": "Samoyed",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 17,
+      "ownerId": 7,
+      "dogName": "Sally",
+      "dogKind": "Spaniel",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 18,
+      "ownerId": 7,
+      "dogName": "Laika",
+      "dogKind": "Pocket Beagle",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 19,
+      "ownerId": 8,
+      "dogName": "Maika",
+      "dogKind": "Shepherd",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 20,
+      "ownerId": 8,
+      "dogName": "Greazly",
+      "dogKind": "Saint Bernhard",
+      "dogImageId": 1,
+      "dogAge": 24
+    },
+    {
+      "dogId": 21,
+      "ownerId": 9,
+      "dogName": "Buzzy",
+      "dogKind": "German Sheepdog",
+      "dogImageId": 1,
+      "dogAge": 24
+    }
   ]
 }

@@ -1,31 +1,30 @@
 package com.andersen.dogsapp.dogs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogsStorage {
-    private static DogsStorage dogsStorage;
+public class DogsDataSource {
+    private static DogsDataSource dogsDataSource;
 
     @SerializedName("dogs")
     @Expose
     public List<Dog> dogs;
 
-    DogsStorage(DogsStorage copy){
+    private DogsDataSource(DogsDataSource copy){
         this(copy.dogs);
     }
 
-    DogsStorage(List<Dog> dogs){
+    private DogsDataSource(List<Dog> dogs){
         this.dogs = new ArrayList<>();
         this.dogs.addAll(dogs);
     }
 
-    public static DogsStorage init (DogsStorage instance){
-        if(dogsStorage == null){
-            return new DogsStorage(instance);
+    public static DogsDataSource init (DogsDataSource instance){
+        if(dogsDataSource == null){
+            return new DogsDataSource(instance);
         }
-        return dogsStorage;
+        return dogsDataSource;
     }
 
     public List<Dog> getDogs(){

@@ -1,73 +1,75 @@
-{ "owners":[
-  {
-    "ownerId" : 1,
-    "ownerName" : "Adam",
-    "ownerSurname" : "Johnson",
-    "preferedDogsKind" : "Scottish Terrier",
-    "dogIds" : [ 2, 3 ]
-  },
-  {
-    "ownerId" : 2,
-    "ownerName" : "Bill",
-    "ownerSurname" : "Kuklachov",
-    "preferedDogsKind" : "Samoyed",
-    "dogsIds" : [ 1 ]
-  },
-  {
-    "ownerId" : 3,
-    "ownerName" : "Jack",
-    "ownerSurname" : "Marks",
-    "preferedDogsKind" : "Collie",
-    "dogsIds" : [ 4,5,6 ]
-  },
-  {
-    "ownerId" : 4,
-    "ownerName" : "Kevin",
-    "ownerSurname" : "Costner",
-    "preferedDogsKind" : "Doberman Pincher",
-    "dogsIds" : [ 7, 8, 9, 10 ]
-  },
-  {
-    "ownerId" : 5,
-    "ownerName" : "Steve",
-    "ownerSurname" : "Wilson",
-    "preferedDogsKind" : "German Sheepdog",
-    "dogsIds" : [ 11 ]
-  },
-  {
-    "ownerId" : 6,
-    "ownerName" : "Katy",
-    "ownerSurname" : "Perry",
-    "preferedDogsKind" : "Spaniel",
-    "dogsIds" : [ 12,13,14,15,16 ]
-  },
-  {
-    "ownerId" : 7,
-    "ownerName" : "Snejana",
-    "ownerSurname" : "Denisovna",
-    "preferedDogsKind" : "Rottweiler",
-    "dogsIds" : [ 17,18 ]
-  },
-  {
-    "ownerId" : 8,
-    "ownerName" : "James",
-    "ownerSurname" : "Bond",
-    "preferedDogsKind" : "Siberian Husky",
-    "dogsIds" : [ 19 ]
-  },
-  {
-    "ownerId" : 9,
-    "ownerName" : "Garry",
-    "ownerSurname" : "Born",
-    "preferedDogsKind" : "Austrian Sheepdog",
-    "dogsIds" : [ 20 ]
-  },
-  {
-    "ownerId" : 10,
-    "ownerName" : "George",
-    "ownerSurname" : "Clooney",
-    "preferedDogsKind" : "German Sheepdog",
-    "dogsIds" : [ 21,22 ]
-  }
-]
+{
+  "owners":
+  [
+    {
+    "ownerId": 1,
+    "ownerName": "Adam",
+    "ownerSurname": "Johnson",
+    "preferedDogsKind": "Scottish Terrier",
+    "dogsIds": [2, 3]
+    },
+    {
+      "ownerId": 2,
+      "ownerName": "Bill",
+      "ownerSurname": "Kuklachov",
+      "preferedDogsKind": "Samoyed",
+      "dogsIds": [1]
+    },
+    {
+      "ownerId": 3,
+      "ownerName": "Jack",
+      "ownerSurname": "Marks",
+      "preferedDogsKind": "Collie",
+      "dogsIds": [4, 5, 6]
+    },
+    {
+      "ownerId": 4,
+      "ownerName": "Kevin",
+      "ownerSurname": "Costner",
+      "preferedDogsKind": "Doberman Pincher",
+      "dogsIds": [7, 8, 9, 10]
+    },
+    {
+      "ownerId": 5,
+      "ownerName": "Steve",
+      "ownerSurname": "Wilson",
+      "preferedDogsKind": "German Sheepdog",
+      "dogsIds": [11]
+    },
+    {
+      "ownerId": 6,
+      "ownerName": "Katy",
+      "ownerSurname": "Perry",
+      "preferedDogsKind": "Spaniel",
+      "dogsIds": [12, 13, 14, 15, 16]
+    },
+    {
+      "ownerId": 7,
+      "ownerName": "Snejana",
+      "ownerSurname": "Denisovna",
+      "preferedDogsKind": "Rottweiler",
+      "dogsIds": [17, 18]
+    },
+    {
+      "ownerId": 8,
+      "ownerName": "James",
+      "ownerSurname": "Bond",
+      "preferedDogsKind": "Siberian Husky",
+      "dogsIds": [19]
+    },
+    {
+      "ownerId": 9,
+      "ownerName": "Garry",
+      "ownerSurname": "Born",
+      "preferedDogsKind": "Austrian Sheepdog",
+      "dogsIds": [20]
+    },
+    {
+      "ownerId": 10,
+      "ownerName": "George",
+      "ownerSurname": "Clooney",
+      "preferedDogsKind": "German Sheepdog",
+      "dogsIds": [21, 22]
+    }
+  ]
 }
