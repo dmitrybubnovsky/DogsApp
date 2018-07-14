@@ -7,8 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
@@ -27,8 +25,8 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
     private LinearLayout containerLinLayout;
 
-    private ArrayList<String> ownersNamesArrayList;
-    private ArrayList<String> dogKindsArrayList;
+    private ArrayList<String> ownersNames;
+    private ArrayList<String> dogKinds;
     private int[] quantitiesDogs;
 
     @Override
@@ -45,7 +43,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        for (int i = 0; i < ownersNamesArrayList.size(); i++) {
+        for (int i = 0; i < ownersNames.size(); i++) {
             View itemView = initItemView(layoutInflater, i);
             itemView.setTag(owners.get(i).getOwnerId());
             itemView.setOnClickListener(this);
@@ -56,8 +54,8 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private View initItemView(LayoutInflater layoutInflater, int i) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
 
-        String ownerName = ownersNamesArrayList.get(i);
-        String prefferedDogKind = dogKindsArrayList.get(i);
+        String ownerName = ownersNames.get(i);
+        String prefferedDogKind = dogKinds.get(i);
         int quantityDog = quantitiesDogs[i];
 
         // instantiate view-reference with inflated view
@@ -86,22 +84,15 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         DataRepository dataRepository = DataRepository.get(this);
         owners = dataRepository.getOwners();
 
-        ownersNamesArrayList = dataRepository.getOwnersNames();
-        dogKindsArrayList = dataRepository.getPrefereDogsKinds();
+        ownersNames = dataRepository.getOwnersNames();
+        dogKinds = dataRepository.getPrefereDogsKinds();
         quantitiesDogs = dataRepository.getDogsCountsEachOwnerArray();
     }
 
     private void openOwnerDogs(View view) {
-        TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
-        TextView quantityTextView = view.findViewById(R.id.quantity_textview);
-
         Integer ownerId = (Integer)view.getTag();
-        Toast.makeText(getApplicationContext(), "getTag : "+ownerId,Toast.LENGTH_LONG).show();
-
         Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
-        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownerNameTextView.getText().toString());
         i.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
-        i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, Integer.parseInt(quantityTextView.getText().toString()));
         startActivity(i);
     }
 }
