@@ -31,12 +31,6 @@ public class DogsDataSource {
         return dogs;
     }
 //
-//    public void setDogs(List<Dog> dogs){
-//        if (dogs == null){
-//            this.dogs.addAll(dogs);
-//        }
-//    }
-
     public Dog getDog(int dogId){
         for(Dog dog : dogs){
             if (dog.getOwnerId() == (dogId))

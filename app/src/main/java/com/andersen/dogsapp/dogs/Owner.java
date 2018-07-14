@@ -18,12 +18,20 @@ public class Owner implements Serializable {
         return ownerName;
     }
 
+    public String getOwnerFullName() {
+        return ownerName + " " + ownerSurname;
+    }
+
     public String getOwnerSurname() {
         return ownerSurname;
     }
 
     public String getPreferedDogsKind() {
         return preferedDogsKind;
+    }
+
+    public int[] getDogsIds() {
+        return dogsIds;
     }
 
     public int getDogsQuantity() {

@@ -13,13 +13,16 @@ import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
+import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
 
 import com.andersen.dogsapp.dogs.DogsDataSource;
 import com.andersen.dogsapp.dogs.Dog;
-import com.andersen.dogsapp.dogs.OwnersDataSource;
+import com.andersen.dogsapp.dogs.Owner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import java.io.IOException;
@@ -32,14 +35,19 @@ public class OwnerDogsActivity extends AppCompatActivity {
     public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.quantity";
 
     private LinearLayout dogsLinearLayout;
-    private String dogsKinds[];
-    private String dogsNames[];
-    private String ownerName;
+    private ArrayList<String> dogsKinds;  // 2
+    private ArrayList<String> dogsNamesArrayList;  // 3
+    private String ownerName;  //  1
 
     private List<Dog> dogs;
+    private List<Owner> owners;
+    private Owner owner;
 
     private TextView dogKindTextview;
     private TextView dogNameTextview;
+    int ownerId;
+
+    DataRepository dataRepository;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -51,16 +59,19 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
+        dataRepository = DataRepository.get(this);
+
+
+        dogs = new ArrayList<>();
+        owners = new ArrayList<>();
+
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
-        // init dogsNames[] and dogsKinds[] from Resources
-        initResources(R.array.dog_name, R.array.dogs_kinds);
+        ownerId = getIntent().getIntExtra(EXTRA_OWNER_ID, 0);
+        ownerName = dataRepository.getOwnerById(ownerId).getOwnerFullName();
 
-        ownerName = getIntent().getStringExtra(EXTRA_OWNER_NAME);
-        int ownerId = getIntent().getIntExtra(EXTRA_OWNER_ID, 0);
-        Toast.makeText(getApplicationContext(), "ownerId : "
-                +ownerId,Toast.LENGTH_LONG).show();
+        initResources(R.array.dog_name, R.array.dogs_kinds);
 
         int dogsQuantity = getIntent().getIntExtra(EXTRA_DOGS_QUANTITY, 0);
 
@@ -73,7 +84,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         Random random = new Random();
         LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < dogsQuantity; i++) {
-            View itemView = initItemView(layoutInflater, random);
+            View itemView = initItemView(layoutInflater, random, i);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -85,33 +96,45 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
     }
 
-    private View initItemView(LayoutInflater layoutInflater, Random random) {
-        View itemView = layoutInflater.inflate(R.layout.dog_item, dogsLinearLayout, false);
-
-        // initialize appropriate textview inside inflatedView
-        String kindOfDogElem = dogsKinds[random.nextInt(10)];
-        dogKindTextview = AppTextView.newInstance(itemView, R.id.dog_kind_textview)
-                .text("" + kindOfDogElem)
-                .build();
-
-        String dogNameElem = dogsNames[random.nextInt(10)];
-        dogNameTextview = AppTextView.newInstance(itemView, R.id.dog_name_textview)
-                .text("" + dogNameElem)
-                .style(this, R.style.TextViewSubTitle)
-                .build();
-        return itemView;
-    }
-
-    private void initResources(int dogNameArrayRes, int dogKindsArrayRes) {
+        private void initResources(int dogNameArrayRes, int dogKindsArrayRes) {
+// this block will be deleted=====================================================
         GsonBuilder builder = new GsonBuilder();
         final Gson GSON = builder.setPrettyPrinting().create();
         String dogsJson = getAssetsJSON("dogs.json");
         DogsDataSource dogsDataSource = DogsDataSource.init(GSON.fromJson(dogsJson, DogsDataSource.class));
         dogs = dogsDataSource.getDogs();
+//=================================================================================
+
+        DataRepository dataRepository = DataRepository.get(this);
+        dogs = dataRepository.getDogs();
+        owners = dataRepository.getOwners();
+        //owner = dataRepository.getOwnerById(3);
+     //   dataRepository.getDogsNamesByOwnerId(ownerId);
+        Toast.makeText(getApplicationContext(), "OwnerId: "
+                +ownerId,Toast.LENGTH_LONG).show();
 
         Resources resources = getResources();
-        dogsNames = resources.getStringArray(dogNameArrayRes);
-        dogsKinds = resources.getStringArray(dogKindsArrayRes);
+     //   dogsNamesArrayList = resources.getStringArray(dogNameArrayRes);
+        dogsNamesArrayList = dataRepository.getDogsNamesByOwnerId(ownerId);
+      //  dogsKinds = resources.getStringArray(dogKindsArrayRes);
+        dogsKinds = dataRepository.getDogsKindsByOwnerId(ownerId);
+    }
+
+    private View initItemView(LayoutInflater layoutInflater, Random random, int i) {
+        View itemView = layoutInflater.inflate(R.layout.dog_item, dogsLinearLayout, false);
+
+        // initialize appropriate textview inside inflatedView
+        String dogKindElem = dogsKinds.get(i);
+        dogKindTextview = AppTextView.newInstance(itemView, R.id.dog_kind_textview)
+                .text("" + dogKindElem)
+                .build();
+
+        String dogNameElem = dogsNamesArrayList.get(i);
+        dogNameTextview = AppTextView.newInstance(itemView, R.id.dog_name_textview)
+                .text("" + dogNameElem)
+                .style(this, R.style.TextViewSubTitle)
+                .build();
+        return itemView;
     }
 
     private void onItemClick() {

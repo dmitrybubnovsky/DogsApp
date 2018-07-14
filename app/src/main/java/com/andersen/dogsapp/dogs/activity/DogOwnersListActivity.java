@@ -15,12 +15,7 @@ import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.OwnersDataSource;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,18 +88,19 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
         ownersNamesArrayList = dataRepository.getOwnersNames();
         dogKindsArrayList = dataRepository.getPrefereDogsKinds();
-        quantitiesDogs = dataRepository.getQuantitiesDogs();
+        quantitiesDogs = dataRepository.getDogsCountsEachOwnerArray();
     }
 
     private void openOwnerDogs(View view) {
         TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
         TextView quantityTextView = view.findViewById(R.id.quantity_textview);
 
-        Toast.makeText(getApplicationContext(), "getTag : "+view.getTag(),Toast.LENGTH_LONG).show();
+        Integer ownerId = (Integer)view.getTag();
+        Toast.makeText(getApplicationContext(), "getTag : "+ownerId,Toast.LENGTH_LONG).show();
 
         Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
         i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownerNameTextView.getText().toString());
-        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, (Integer)view.getTag());
+        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
         i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, Integer.parseInt(quantityTextView.getText().toString()));
         startActivity(i);
     }

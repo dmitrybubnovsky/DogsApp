@@ -34,10 +34,4 @@ public class OwnersDataSource {
     public List<Owner> getOwners(){
         return owners;
     }
-
-    public void setOwners(List<Owner> owners){
-        if (owners == null){
-            this.owners.addAll(owners);
-        }
-    }
 }

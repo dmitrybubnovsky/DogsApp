@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,7 +76,7 @@ public class DataRepository {
         return dogsKinds;
     }
 
-    public int[] getQuantitiesDogs(){
+    public int[] getDogsCountsEachOwnerArray(){
         int[] quantitiesDogs = new int[owners.size()];
         for (int i=0;i<owners.size();i++){
             quantitiesDogs[i] = owners.get(i).getDogsQuantity();
@@ -87,19 +88,60 @@ public class DataRepository {
         return dogs;
     }
 
-    public Owner getOwner(int ownerId){
+    public Owner getOwnerById(int ownerId){
         for(Owner owner : owners){
             if (owner.getOwnerId() == (ownerId)){
                 return owner;
             }
         }
-        return null;
+        throw new IndexOutOfBoundsException("Class DataRepository. Method getOwnerById. Not acceptable ownerId");
     }
 
-//    public ArrayList<Dog> getDogsByOwnerId(int ownerId){
-//        List<Dog> dogs = new ArrayList<>();
-//        Owner owner = owners.get
-//    }
 
+    public Dog getDogById(int dogId){
+        for(Dog dog : dogs){
+            if (dog.getDogId() == (dogId)){
+                return dog;
+            }
+        }
+        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable ownerId");
+    }
 
+    public ArrayList<Dog> getDogsByOwnerId(int ownerId){
+        ArrayList<Dog> dogs = new ArrayList<>();
+        Dog dog;
+        Owner owner = this.getOwnerById(ownerId);
+        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids
+        int dogsQuantity = owner.getDogsQuantity();
+        for(int i = 0; i<dogsQuantity; i++){
+            dog = this.getDogById(dogsIds[i]);
+            dogs.add(dog);
+            Log.d("#", dog.getDogName());
+        }
+        return dogs;
+    }
+
+    public ArrayList<String> getDogsNamesByOwnerId(int ownerId){
+        ArrayList<String> dogsNames = new ArrayList<>();
+        Owner owner = this.getOwnerById(ownerId);
+        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids
+        int dogsQuantity = owner.getDogsQuantity();
+        for(int i = 0; i<dogsQuantity; i++){
+            dogsNames.add(this.getDogById(dogsIds[i]).getDogName());
+            Log.d("#", dogsNames.get(i));
+        }
+        return dogsNames;
+    }
+
+    public ArrayList<String> getDogsKindsByOwnerId(int ownerId){
+        ArrayList<String> dogsKinds = new ArrayList<>();
+        Owner owner = this.getOwnerById(ownerId);
+        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids
+        int dogsQuantity = owner.getDogsQuantity();
+        for(int i = 0; i<dogsQuantity; i++){
+            dogsKinds.add(this.getDogById(dogsIds[i]).getDogKind());
+            Log.d("#", dogsKinds.get(i));
+        }
+        return dogsKinds;
+    }
 }

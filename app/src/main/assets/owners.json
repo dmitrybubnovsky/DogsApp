@@ -62,14 +62,14 @@
       "ownerName": "Garry",
       "ownerSurname": "Born",
       "preferedDogsKind": "Austrian Sheepdog",
-      "dogsIds": [20]
+      "dogsIds": [20,21,22]
     },
     {
       "ownerId": 10,
       "ownerName": "George",
       "ownerSurname": "Clooney",
       "preferedDogsKind": "German Sheepdog",
-      "dogsIds": [21, 22]
+      "dogsIds": [23, 24, 25]
     }
   ]
 }
