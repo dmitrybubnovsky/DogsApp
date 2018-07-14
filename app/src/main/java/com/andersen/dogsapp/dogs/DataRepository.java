@@ -144,4 +144,8 @@ public class DataRepository {
         }
         return dogsKinds;
     }
+
+    public int[] getDogsIdsByOwnerId(int ownerId){
+        return this.getOwnerById(ownerId).getDogsIds();
+    }
 }

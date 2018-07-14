@@ -16,11 +16,11 @@ import android.widget.Toast;
 
 
 public class OwnerDogsActivity extends AppCompatActivity {
-    public static final String EXTRA_OWNER_NAME = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner_name";
     public static final String EXTRA_OWNER_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner_id";
-    public static final String EXTRA_DOGS_QUANTITY = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.quantity";
 
     private LinearLayout dogsLinearLayout;
+
+    private int[] dogsIds;
     private ArrayList<String> dogsKinds;
     private ArrayList<String> dogsNamesArrayList;
 
@@ -61,7 +61,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClick();
+                    onItemClick(view);
                 }
             });
             dogsLinearLayout.addView(itemView);
@@ -71,29 +71,31 @@ public class OwnerDogsActivity extends AppCompatActivity {
     private void initResources(int ownerId) {
         dogsNamesArrayList = dataRepository.getDogsNamesByOwnerId(ownerId);
         dogsKinds = dataRepository.getDogsKindsByOwnerId(ownerId);
+        dogsIds = dataRepository.getDogsIdsByOwnerId(ownerId);
     }
 
     private View initItemView(LayoutInflater layoutInflater, int i) {
         View itemView = layoutInflater.inflate(R.layout.dog_item, dogsLinearLayout, false);
 
-        // initialize appropriate textview inside inflatedView
-        String dogKindElem = dogsKinds.get(i);
+        // set ID of the current dog to this itemView
+        itemView.setTag(dogsIds[i]);
+
+        // initialize appropriate textview inside inflated itemView
         dogKindTextview = AppTextView.newInstance(itemView, R.id.dog_kind_textview)
-                .text("" + dogKindElem)
+                .text("" + dogsKinds.get(i))
                 .build();
 
-        String dogNameElem = dogsNamesArrayList.get(i);
+        // initialize this textview and put there dog's name
         dogNameTextview = AppTextView.newInstance(itemView, R.id.dog_name_textview)
-                .text("" + dogNameElem)
+                .text("" + dogsNamesArrayList.get(i))
                 .style(this, R.style.TextViewSubTitle)
                 .build();
         return itemView;
     }
 
-    private void onItemClick() {
+    private void onItemClick(View view) {
         Intent i = new Intent(getApplicationContext(), DogsInfoActivity.class);
-        i.putExtra(DogsInfoActivity.EXTRA_DOG_KIND, dogKindTextview.getText().toString());
-        i.putExtra(DogsInfoActivity.EXTRA_DOG_NAME, dogNameTextview.getText().toString());
+        i.putExtra(DogsInfoActivity.EXTRA_DOG_ID, (Integer)view.getTag());
         startActivity(i);
     }
 }

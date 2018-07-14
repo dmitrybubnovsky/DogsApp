@@ -8,6 +8,8 @@ public class Dog implements Serializable{
     private int ownerId;
     private int dogImageId;
     private int dogAge;
+    private int dogTall;
+    private int dogWeight;
 
     private String dogName;
     private String dogKind;
@@ -34,5 +36,13 @@ public class Dog implements Serializable{
 
     public int getDogAge() {
         return dogAge;
+    }
+
+    public int getDogTall() {
+        return dogTall;
+    }
+
+    public int getDogWeight() {
+        return dogWeight;
     }
 }
