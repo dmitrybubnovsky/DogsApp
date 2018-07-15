@@ -30,21 +30,4 @@ public class DogsDataSource {
     public List<Dog> getDogs(){
         return dogs;
     }
-//
-    public Dog getDog(int dogId){
-        for(Dog dog : dogs){
-            if (dog.getOwnerId() == (dogId))
-                return dog;
-        }
-        return null;
-    }
-    public List<String> getDogsNames(){
-        ArrayList<String> dogsNames = new ArrayList<>();
-        String dogName = null;
-        for(Dog dog : dogs){
-            dogName = dog.getDogName();
-            dogsNames.add(dogName);
-        }
-        return dogsNames;
-    }
 }

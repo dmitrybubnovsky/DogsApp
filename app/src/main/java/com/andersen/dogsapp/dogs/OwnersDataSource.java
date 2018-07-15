@@ -27,10 +27,6 @@ public class OwnersDataSource {
         return ownersDataSource;
     }
 
-    public static OwnersDataSource get (){
-            return ownersDataSource;
-    }
-
     public List<Owner> getOwners(){
         return owners;
     }

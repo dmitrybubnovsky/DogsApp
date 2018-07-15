@@ -21,9 +21,6 @@ import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "#";
     private List<Owner> owners;
-
-    private LinearLayout containerLinLayout;
-
     private ArrayList<String> ownersNames;
     private ArrayList<String> dogKinds;
     private int[] quantitiesDogs;
@@ -33,25 +30,28 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
+        DataRepository dataRepository = DataRepository.get(this);
+
+        LinearLayout containerLinLayout = findViewById(R.id.owners_container);
+
+
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
-        initResources();
-
-        containerLinLayout = findViewById(R.id.owners_container);
+        initResources(dataRepository);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
         for (int i = 0; i < ownersNames.size(); i++) {
-            View itemView = initItemView(layoutInflater, i);
+            View itemView = initItemView(layoutInflater, containerLinLayout, i);
             itemView.setTag(owners.get(i).getOwnerId());
             itemView.setOnClickListener(this);
             containerLinLayout.addView(itemView);
         }
     }
 
-    private View initItemView(LayoutInflater layoutInflater, int i) {
-        View itemView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
+    private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i) {
+        View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
         String ownerName = ownersNames.get(i);
         String prefferedDogKind = dogKinds.get(i);
@@ -79,10 +79,8 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         openOwnerDogs(view);
     }
 
-    private void initResources() {
-        DataRepository dataRepository = DataRepository.get(this);
+    private void initResources(DataRepository dataRepository) {
         owners = dataRepository.getOwners();
-
         ownersNames = dataRepository.getOwnersNames();
         dogKinds = dataRepository.getPrefereDogsKinds();
         quantitiesDogs = dataRepository.getDogsCountsEachOwnerArray();

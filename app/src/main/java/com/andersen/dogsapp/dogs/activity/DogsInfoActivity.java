@@ -13,9 +13,9 @@ public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogid";
 
     private int dogId;
-    private int dogAges;
-    private int dogTalls;
-    private int dogWeights;
+    private int dogAge;
+    private int dogTall;
+    private int dogWeight;
 
     private String dogKind;
     private String dogName;
@@ -40,9 +40,9 @@ public class DogsInfoActivity extends AppCompatActivity {
     private void initResources(DataRepository dataRepository) {
         dogName = dataRepository.getDogById(dogId).getDogName();
         dogKind = dataRepository.getDogById(dogId).getDogKind();
-        dogAges = dataRepository.getDogById(dogId).getDogAge();
-        dogTalls = dataRepository.getDogById(dogId).getDogTall();
-        dogWeights = dataRepository.getDogById(dogId).getDogWeight();
+        dogAge = dataRepository.getDogById(dogId).getDogAge();
+        dogTall = dataRepository.getDogById(dogId).getDogTall();
+        dogWeight = dataRepository.getDogById(dogId).getDogWeight();
     }
 
     private void initViews() {
@@ -59,14 +59,14 @@ public class DogsInfoActivity extends AppCompatActivity {
 
         //  TODO add method that converts months to year and months
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
-        dogAgeTextView.setText(""+dogAges);
+        dogAgeTextView.setText(""+ dogAge);
 
         //  TODO add resources cm in string resources
         TextView dogTallTextView = findViewById(R.id.dog_tall_textview);
-        dogTallTextView.setText(""+dogTalls+" cm");
+        dogTallTextView.setText(""+ dogTall +" cm");
 
         //  TODO add resources kg in string resources
         TextView dogWeightTextView = findViewById(R.id.dog_weight_textview);
-        dogWeightTextView.setText(""+dogWeights+" kg");
+        dogWeightTextView.setText(""+ dogWeight +" kg");
         }
 }
