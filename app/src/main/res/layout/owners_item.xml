@@ -27,6 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto_thin"
         android:layout_toRightOf="@+id/preffered_dog_title_textview"
         android:layout_below="@id/owner_name_textview"/>
 
@@ -41,6 +43,8 @@
         android:id="@+id/quantity_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_thin"
         android:layout_below="@id/preffered_dog_title_textview"
         android:layout_toRightOf="@id/quantity_title_textivew"
         android:layout_margin="@dimen/margin_8dp"/>

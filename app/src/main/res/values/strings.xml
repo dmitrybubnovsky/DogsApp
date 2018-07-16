@@ -6,6 +6,7 @@
     <string name="fourth_btn_title">Create textviews in RelativeLayout</string>
     <string name="fifth_btn_title">Textviews in ConstraintLayout</string>
     <string name="btn_start_dogs">Start Dog App</string>
+    <string name="btn_command_voice">VOICE!</string>
     <string name="text_view_title_dogs_quantity">How many dogs: </string>
     <string name="woof_btn_title">WOOF!</string>
     <string name="text_view_title_preff_dog">Favourite kind of dog: </string>
@@ -16,8 +17,8 @@
 
     <string name="weight_measure">kg</string>
     <string name="tall_measure">cm</string>
-    <string name="age_year_measure">cm</string>
-    <string name="age_months_measure">cm</string>
+    <string name="age_year_measure">yrs</string>
+    <string name="age_months_measure">months</string>
 
     <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="text_view_app_description">This app dedicated to Dog-fanciers. It contains the list of dog-owners with detailed information of their pet including its name, type of dog, weight, age and tall</string>
