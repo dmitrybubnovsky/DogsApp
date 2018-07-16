@@ -46,10 +46,8 @@ public class DogsInfoActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-
-        //  TODO add image resource in dog.json
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageResource(DogImageLab.get(this).getRandomDogImageResource());
+        dogsPhoto.setImageResource(DogImageLab.get().getRandomDogImageResource());
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dogName);
@@ -57,16 +55,13 @@ public class DogsInfoActivity extends AppCompatActivity {
         TextView kindDogTextView = findViewById(R.id.kind_dog_textview);
         kindDogTextView.setText(dogKind);
 
-        //  TODO add method that converts months to year and months
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
-        dogAgeTextView.setText(""+ dogAge);
+        dogAgeTextView.setText(""+ dogAge + " "+ getResources().getString(R.string.age_months_measure));
 
-        //  TODO add resources cm in string resources
         TextView dogTallTextView = findViewById(R.id.dog_tall_textview);
-        dogTallTextView.setText(""+ dogTall +" cm");
+        dogTallTextView.setText(""+ dogTall + " " + getResources().getString(R.string.tall_measure));
 
-        //  TODO add resources kg in string resources
         TextView dogWeightTextView = findViewById(R.id.dog_weight_textview);
-        dogWeightTextView.setText(""+ dogWeight +" kg");
+        dogWeightTextView.setText(""+ dogWeight + " " + getResources().getString(R.string.weight_measure));
         }
 }

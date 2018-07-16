@@ -37,6 +37,4 @@ public class Owner implements Serializable {
     public int getDogsQuantity() {
         return dogsIds.length;
     }
-
-
 }

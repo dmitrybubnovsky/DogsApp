@@ -12,17 +12,15 @@ import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "#";
     private List<Owner> owners;
     private ArrayList<String> ownersNames;
-    private ArrayList<String> dogKinds;
+    private ArrayList<String> preferedDogKinds;
     private int[] quantitiesDogs;
 
     @Override
@@ -32,15 +30,14 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
         DataRepository dataRepository = DataRepository.get(this);
 
-        LinearLayout containerLinLayout = findViewById(R.id.owners_container);
+        LayoutInflater layoutInflater = getLayoutInflater();
 
+        LinearLayout containerLinLayout = findViewById(R.id.owners_container);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
         initResources(dataRepository);
-
-        LayoutInflater layoutInflater = getLayoutInflater();
 
         for (int i = 0; i < ownersNames.size(); i++) {
             View itemView = initItemView(layoutInflater, containerLinLayout, i);
@@ -54,10 +51,9 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
         String ownerName = ownersNames.get(i);
-        String prefferedDogKind = dogKinds.get(i);
+        String prefferedDogKind = preferedDogKinds.get(i);
         int quantityDog = quantitiesDogs[i];
 
-        // instantiate view-reference with inflated view
         AppTextView.newInstance(itemView, R.id.owner_name_textview)
                     .text(ownerName)
                     .style(this, R.style.TextViewTitleItem)
@@ -82,7 +78,7 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
     private void initResources(DataRepository dataRepository) {
         owners = dataRepository.getOwners();
         ownersNames = dataRepository.getOwnersNames();
-        dogKinds = dataRepository.getPrefereDogsKinds();
+        preferedDogKinds = dataRepository.getPrefereDogsKinds();
         quantitiesDogs = dataRepository.getDogsCountsEachOwnerArray();
     }
 

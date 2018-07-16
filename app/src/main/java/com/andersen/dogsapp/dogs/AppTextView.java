@@ -1,5 +1,4 @@
 package com.andersen.dogsapp.dogs;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;

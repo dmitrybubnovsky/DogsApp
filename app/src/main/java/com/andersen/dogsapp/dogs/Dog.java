@@ -18,20 +18,12 @@ public class Dog implements Serializable{
         return dogId;
     }
 
-    public int getOwnerId() {
-        return ownerId;
-    }
-
     public String getDogName() {
         return dogName;
     }
 
     public String getDogKind() {
         return dogKind;
-    }
-
-    public int getDogImageId() {
-        return dogImageId;
     }
 
     public int getDogAge() {
