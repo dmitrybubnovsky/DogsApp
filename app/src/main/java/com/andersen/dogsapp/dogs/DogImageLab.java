@@ -12,17 +12,18 @@ public class DogImageLab {
     private static DogImageLab dogImageLab;
     private List<Integer> dogList;
 
-    public static DogImageLab get(Context context){
+    public static DogImageLab get(){
         if(dogImageLab == null){
-            dogImageLab = new DogImageLab(context);
-        } return dogImageLab;
+            dogImageLab = new DogImageLab();
+        }
+        return dogImageLab;
     }
 
-    public int someImage(){
+    public int getRandomDogImageResource(){
         return dogList.get(new Random().nextInt(12));
     }
 
-    DogImageLab(Context context){
+    private DogImageLab(){
         dogList = new ArrayList<>();
         dogList.add(R.drawable.english_coonhound);
         dogList.add(R.drawable.american_foxhound);
