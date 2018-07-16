@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dogs.ActDogsInfo">
+    tools:context=".dogs.activity.DogsInfoActivity">
 
     <include
         android:id="@+id/toolbar_dogs_app"
@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/dogImage"
+                android:id="@+id/dog_imageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -42,7 +42,7 @@
                 android:src="@drawable/shepherd"/>
 
             <TextView
-                android:id="@+id/text_view_dog_name"
+                android:id="@+id/dog_name_textview"
                 style="@style/TextViewTitleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,14 +57,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtv_titile_kind"
+                    android:id="@+id/kind_dog_titile_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="@string/text_view_title_kind"/>
 
                 <TextView
-                    android:id="@+id/text_view_kind_dog"
+                    android:id="@+id/kind_dog_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"/>
@@ -76,7 +76,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtv_titile_age"
+                    android:id="@+id/age_dog_title_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -84,7 +84,7 @@
                     android:text="@string/text_view_title_age"/>
 
                 <TextView
-                    android:id="@+id/text_view_dog_age"
+                    android:id="@+id/dog_age_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -97,7 +97,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtv_titile_weight"
+                    android:id="@+id/weight_dog_title_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -105,7 +105,7 @@
                     android:text="@string/text_view_title_weight"/>
 
                 <TextView
-                    android:id="@+id/text_view_dog_weight"
+                    android:id="@+id/dog_weight_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -118,7 +118,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtv_titile_tall"
+                    android:id="@+id/dog_tall_title_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -126,7 +126,7 @@
                     android:text="@string/text_view_title_tall"/>
 
                 <TextView
-                    android:id="@+id/text_view_dog_tall"
+                    android:id="@+id/dog_tall_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
