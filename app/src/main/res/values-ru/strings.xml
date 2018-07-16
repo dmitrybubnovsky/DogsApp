@@ -16,7 +16,7 @@
     <string name="toolbar_title_detail_info">ИНФОРМАЦИЯ О СОБАКЕ</string>
 
     <string name="text_view_app_title">DOGGY DOGG</string>
-    <string name="text_view_app_description">Это приложение для собаководов. Оно состоит из списка владельцев домашних животных и детальной информацией об их домашних любимцах, включая имя, породу, возраст и рост питомца.</string>
+    <string name="text_view_app_description">Это приложение для собаководов. Оно состоит из списка владельцев домашних животных и детальной информации об их домашних любимцах, включая имя, породу, возраст и рост питомца.</string>
     <string name="text_view_title_kind">Порода: </string>
     <string name="text_view_title_age">Возраст: </string>
     <string name="text_view_title_weight">Вес: </string>

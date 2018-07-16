@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/aguafina_script_regular"/>
+    <font app:fontStyle="italic" app:fontWeight="400" app:font="@font/roboto_thin"/>
+    <font app:fontStyle="italic" app:fontWeight="400" app:font="@font/droid_serif_italic"/>
+</font-family>

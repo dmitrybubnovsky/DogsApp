@@ -27,6 +27,7 @@
         android:layout_marginTop="@dimen/margin_64dp"
         android:text="@string/text_view_app_description"
         android:textSize="@dimen/text_size_14sp"
+        android:textColor="#1d0085"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name_textview"/>
