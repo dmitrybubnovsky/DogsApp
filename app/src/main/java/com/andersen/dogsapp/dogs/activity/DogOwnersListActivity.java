@@ -42,7 +42,13 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
         for (int i = 0; i < ownersStringArray.length; i++) {
             View itemView = initItemView(layoutInflater, i);
-            itemView.setOnClickListener(this);
+
+            if( i != ownersStringArray.length-1 ){
+                itemView.setOnClickListener(this);
+            } else {
+                itemView.setEnabled(false);
+                itemView.setBackground(getResources().getDrawable(R.drawable.list_colors));
+            }
             containerLinLayout.addView(itemView);
         }
     }

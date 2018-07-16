@@ -2,13 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_pressed="true"
-        android:drawable="@color/colorCustomYellow"/>
+        android:drawable="@drawable/drawableColorYellow"/>
     <item
         android:state_enabled="false"
-        android:color="#99A9A9A9"
-        android:drawable="@color/colorCustomDarkL" />
+        android:drawable="@drawable/drawableColorHalfTransparency"
+        android:alpha="0.5"/>
 
     <item
-        android:drawable="@color/colorCustomDarkL" />
+        android:drawable="@drawable/drawableColorLightDark" />
 
 </selector>
