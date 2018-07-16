@@ -4,27 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:id="@+id/kind_of_dog"
+        android:id="@+id/dog_kind_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         />
     <TextView
-        android:id="@+id/dog_name"
+        android:id="@+id/dog_name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/kind_of_dog"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_toRightOf="@id/dog_kind_textview"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"/>
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorCustomYellow"
-        android:layout_below="@id/dog_name"
-        android:layout_margin="8dp"/>
+        android:layout_below="@id/dog_name_textview"
+        android:layout_margin="@dimen/margin_8dp"/>
 </RelativeLayout>

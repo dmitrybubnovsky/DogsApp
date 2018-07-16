@@ -9,36 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".dogs.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.with.textview.ActivityTwo">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
 
-                <action android:name="com.andersen.dogsapp.CUSTOM_ACTION"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.with.textview.ActivityThree">
-        </activity>
-        <activity android:name=".activities.with.textview.ActTextViewInFrameLayout">
-        </activity>
-        <activity android:name=".activities.with.textview.ActTextViewInRelativeLayout">
-        </activity>
-        <activity android:name=".activities.with.textview.ActTextViewInConstLayout">
-        </activity>
-        <activity android:name=".dogs.ActDogOwnersList"
-                  android:theme = "@style/MainDogApp"/>
-
-        <activity android:name=".dogs.ActOwnersDog"
-                  android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.ActDogsInfo"
-                  android:theme = "@style/MainDogApp"/>
-        <activity android:name=".dogs.ActMainDogSubscription"
-                  android:theme = "@style/NoActionBar"/>
+        <activity
+            android:name=".dogs.activity.DogOwnersListActivity"
+            android:theme = "@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.activity.OwnerDogsActivity"
+            android:theme = "@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.activity.DogsInfoActivity"
+            android:theme = "@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.activity.MainAppDescriptionActivity"
+            android:theme = "@style/NoActionBar"/>
     </application>
 
 </manifest>

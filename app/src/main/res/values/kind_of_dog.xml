@@ -1,5 +1,5 @@
 <resources>
-    <string-array name="kind_of_dogs">
+    <string-array name="dogs_kinds">
         <item>German Sheepdog</item>
         <item>Austrian Sheepdog</item>
         <item>Siberian Husky</item>
