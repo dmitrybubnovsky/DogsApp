@@ -27,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
-        android:textSize="20sp"
-        android:fontFamily="@font/aguafina_script_regular"
+        android:textSize="14sp"
+        android:fontFamily="@font/roboto_thin"
         android:layout_toRightOf="@+id/preffered_dog_title_textview"
         android:layout_below="@id/owner_name_textview"/>
 
