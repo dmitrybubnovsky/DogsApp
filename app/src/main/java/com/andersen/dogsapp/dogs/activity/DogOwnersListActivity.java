@@ -61,7 +61,6 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
 
         AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
                     .text(prefferedDogKind)
-                    .style(this, R.style.TextViewSubTitle)
                     .build();
 
         AppTextView.newInstance(itemView, R.id.quantity_textview)

@@ -88,7 +88,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         // initialize this textview and put there dog's name
         dogNameTextview = AppTextView.newInstance(itemView, R.id.dog_name_textview)
                 .text("" + dogsNamesArrayList.get(i))
-                .style(this, R.style.TextViewSubTitle)
+                .style(this, R.style.BoldRobotoThin)
                 .build();
         return itemView;
     }
