@@ -47,6 +47,11 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        openOwnerDogs(view);
+    }
+
     private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
@@ -67,11 +72,6 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
                     .text("" + quantityDog)
                     .build();
         return itemView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        openOwnerDogs(view);
     }
 
     private void initResources(DataRepository dataRepository) {
