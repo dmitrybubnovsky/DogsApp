@@ -58,14 +58,16 @@ public class OwnerDogsActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < dogsQuantity; i++) {
             View itemView = initItemView(layoutInflater, i);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClick(view);
-                }
-            });
+            itemView.setOnClickListener(view -> {onItemClick(view);});
             dogsLinearLayout.addView(itemView);
         }
+    }
+
+    private void onItemClick(View view) {
+        Integer dogId = (Integer)view.getTag();
+        Intent i = new Intent(getApplicationContext(), DogsInfoActivity.class);
+        i.putExtra(DogsInfoActivity.EXTRA_DOG_ID, dogId);
+        startActivity(i);
     }
 
     private void initResources(int ownerId) {
@@ -91,11 +93,5 @@ public class OwnerDogsActivity extends AppCompatActivity {
                 .style(this, R.style.BoldRobotoThin)
                 .build();
         return itemView;
-    }
-
-    private void onItemClick(View view) {
-        Intent i = new Intent(getApplicationContext(), DogsInfoActivity.class);
-        i.putExtra(DogsInfoActivity.EXTRA_DOG_ID, (Integer)view.getTag());
-        startActivity(i);
     }
 }

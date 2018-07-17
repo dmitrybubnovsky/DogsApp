@@ -1,5 +1,4 @@
 package com.andersen.dogsapp.dogs.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,11 +41,17 @@ public class DogOwnersListActivity extends AppCompatActivity{
         for (int i = 0; i < ownersNames.size(); i++) {
             View itemView = initItemView(layoutInflater, containerLinLayout, i);
             itemView.setTag(owners.get(i).getOwnerId());
-            itemView.setOnClickListener(view -> openOwnerDogs(view));
+            itemView.setOnClickListener(view -> {openOwnerDogs(view);});
             containerLinLayout.addView(itemView);
         }
     }
 
+    private void openOwnerDogs(View view) {
+        Integer ownerId = (Integer)view.getTag();
+        Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
+        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
+        startActivity(i);
+    }
 
     private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
@@ -75,12 +80,5 @@ public class DogOwnersListActivity extends AppCompatActivity{
         ownersNames = dataRepository.getOwnersNames();
         preferedDogKinds = dataRepository.getPrefereDogsKinds();
         quantitiesDogs = dataRepository.getDogsCountsEachOwnerArray();
-    }
-
-    private void openOwnerDogs(View view) {
-        Integer ownerId = (Integer)view.getTag();
-        Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
-        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
-        startActivity(i);
     }
 }
