@@ -3,11 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorCustomRed">#b20000</color>
     <color name="colorCustomDark">#7b7b7b</color>
     <color name="colorCustomDarkGreen">#006400</color>
     <color name="colorCustomLightDark">#b9b9b9</color>
+    <color name="colorHalfTransparency">#99d8d8d8</color>
+    <color name="colorCustomDarkL">#a9a9a9</color>
     <color name="colorCustomBlueGrey">#a39db5</color>
     <color name="colorCustomLightGreen">#03cd03</color>
     <color name="colorCustomYellow">#a2ff55</color>
     <color name="colorCustomOrange">#dfac03</color>
+
+    <drawable name="drawableColorHalfTransparency">#99d8d8d8</drawable>
+    <drawable name="drawableColorYellow">#a2ff55</drawable>
+    <drawable name="drawableColorLightDark">#b9b9b9</drawable>
+
+
 </resources>
