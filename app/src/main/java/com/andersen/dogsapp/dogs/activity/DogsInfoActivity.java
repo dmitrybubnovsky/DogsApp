@@ -1,9 +1,13 @@
 package com.andersen.dogsapp.dogs.activity;
 
 import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +20,7 @@ import java.util.Random;
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_NAME = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogname";
     public static final String EXTRA_DOG_KIND = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.kinddog";
+    MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 
     private String dogAges[];
     private String dogTalls[];
@@ -35,6 +40,8 @@ public class DogsInfoActivity extends AppCompatActivity {
         initResources(R.array.dog_age, R.array.dog_tall, R.array.dog_weight);
 
         initViews();
+
+        playSound(mediaPlayer);
     }
 
     private void initResources(int dogAge, int dogTall, int dogWeight) {
@@ -49,6 +56,16 @@ public class DogsInfoActivity extends AppCompatActivity {
         dogsPhoto.setImageResource(DogImageLab.get().getRandomDogImageResource());
 
         getDogInfo();
+
+        Button btnVoice = findViewById(R.id.button_voice);
+        btnVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playSound(mediaPlayer);
+
+            }
+        });
+
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dogName);
@@ -73,5 +90,10 @@ public class DogsInfoActivity extends AppCompatActivity {
     private void getDogInfo() {
         dogName = getIntent().getStringExtra(EXTRA_DOG_NAME);
         kindDog = getIntent().getStringExtra(EXTRA_DOG_KIND);
+    }
+
+    private void playSound(MediaPlayer mediaPlayer){
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.start();
     }
 }
