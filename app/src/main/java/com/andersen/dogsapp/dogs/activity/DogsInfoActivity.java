@@ -19,19 +19,20 @@ import java.util.Random;
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_NAME = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogname";
     public static final String EXTRA_DOG_KIND = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.kinddog";
-    MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
-
     private String dogAges[];
     private String dogTalls[];
     private String dogWeights[];
 
     private String kindDog;
     private String dogName;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
@@ -40,7 +41,6 @@ public class DogsInfoActivity extends AppCompatActivity {
 
         initViews();
 
-        playSound(mediaPlayer);
     }
 
     private void initResources(int dogAge, int dogTall, int dogWeight) {
@@ -57,14 +57,7 @@ public class DogsInfoActivity extends AppCompatActivity {
         getDogInfo();
 
         Button btnVoice = findViewById(R.id.button_voice);
-        btnVoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                playSound(mediaPlayer);
-
-            }
-        });
-
+        btnVoice.setOnClickListener(view -> playSound(mediaPlayer));
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dogName);
