@@ -16,45 +16,24 @@ public class OwnersDataSource {
     @Expose
     private List<Owner> owners;
 
-    private OwnersDataSource(OwnersDataSource copy){
-        this(copy.owners);
-    }
-
     private OwnersDataSource(List<Owner> owners){
         this.owners = new ArrayList<>();
         this.owners.addAll(owners);
     }
 
     public static OwnersDataSource getInstance (Context context){
-        GsonBuilder builder = new GsonBuilder();
-        final Gson GSON = builder.create();
-        String json;
-        json = getAssetsJSON("owners.json", context);
-
         if(ownersDataSource == null){
-            ownersDataSource = new OwnersDataSource(GSON.fromJson(json, OwnersDataSource.class));
+            try{
+                InputStream inputStream = context.getAssets().open("owners.json");
+                ownersDataSource = JsonParser.newInstance().parseInputStream(inputStream, OwnersDataSource.class);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
         return ownersDataSource;
     }
 
-
-
     public List<Owner> getOwners(){
         return owners;
-    }
-
-    private static String getAssetsJSON(String fileName, Context context){
-        String json = null;
-        try{
-            InputStream inputStream = context.getAssets().open(fileName);
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String (buffer, "UTF-8");
-        } catch (IOException e ){
-            e.printStackTrace();
-        }
-        return json;
     }
 }

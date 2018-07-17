@@ -3,7 +3,7 @@ package com.andersen.dogsapp.dogs;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Dog implements Serializable{
+public class Dog{
     private int dogId;
     private int ownerId;
     private int dogImageId;

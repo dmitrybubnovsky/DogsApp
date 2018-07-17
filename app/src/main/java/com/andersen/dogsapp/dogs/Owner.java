@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Owner implements Serializable {
+public class Owner {
     private int ownerId;
     private String ownerName;
     private String ownerSurname;
