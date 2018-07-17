@@ -36,7 +36,7 @@ public class DogOwnersListActivity extends AppCompatActivity{
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
-        initResources(dataRepository);
+        loadData(dataRepository);
 
         for (int i = 0; i < ownersNames.size(); i++) {
             View itemView = initItemView(layoutInflater, containerLinLayout, i);
@@ -75,7 +75,7 @@ public class DogOwnersListActivity extends AppCompatActivity{
         return itemView;
     }
 
-    private void initResources(DataRepository dataRepository) {
+    private void loadData(DataRepository dataRepository) {
         owners = dataRepository.getOwners();
         ownersNames = dataRepository.getOwnersNames();
         preferedDogKinds = dataRepository.getPrefereDogsKinds();

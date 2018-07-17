@@ -46,7 +46,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
         int ownerId = getIntent().getIntExtra(EXTRA_OWNER_ID, 0);
 
-        initResources(ownerId);
+        loadData(ownerId);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
 
@@ -70,7 +70,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void initResources(int ownerId) {
+    private void loadData(int ownerId) {
         dogsNamesArrayList = dataRepository.getDogsNamesByOwnerId(ownerId);
         dogsKinds = dataRepository.getDogsKindsByOwnerId(ownerId);
         dogsIds = dataRepository.getDogsIdsByOwnerId(ownerId);

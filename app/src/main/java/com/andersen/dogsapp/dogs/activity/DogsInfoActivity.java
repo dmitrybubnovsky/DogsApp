@@ -32,12 +32,12 @@ public class DogsInfoActivity extends AppCompatActivity {
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
 
-        initResources(dataRepository);
+        loadData(dataRepository);
 
         initViews();
     }
 
-    private void initResources(DataRepository dataRepository) {
+    private void loadData(DataRepository dataRepository) {
         dogName = dataRepository.getDogById(dogId).getDogName();
         dogKind = dataRepository.getDogById(dogId).getDogKind();
         dogAge = dataRepository.getDogById(dogId).getDogAge();
