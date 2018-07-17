@@ -1,5 +1,4 @@
 package com.andersen.dogsapp.dogs.activity;
-
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;

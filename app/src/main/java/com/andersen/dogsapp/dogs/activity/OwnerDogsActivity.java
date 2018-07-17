@@ -57,12 +57,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < dogsQuantity; i++) {
             View itemView = initItemView(layoutInflater, random);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClick();
-                }
-            });
+            itemView.setOnClickListener(itemView->onItemClick());
             dogsLinearLayout.addView(itemView);
         }
 

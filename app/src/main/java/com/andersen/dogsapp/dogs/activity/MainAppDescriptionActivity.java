@@ -20,6 +20,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
 
+
         startWoofBtn = findViewById(R.id.woof_button);
         startWoofBtn.setOnClickListener(this);
 
@@ -27,7 +28,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity implements Vie
         descriptionTextView.setOnClickListener(this);
 
         appNameTextView = findViewById(R.id.app_name_textview);
-        appNameTextView.setOnClickListener(this);
+        appNameTextView.setOnClickListener(view -> startActivity(new Intent(this, DogOwnersListActivity.class)));
 
         setTypeFonts(this);
     }
