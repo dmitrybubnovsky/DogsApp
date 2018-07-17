@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
+public class DogOwnersListActivity extends AppCompatActivity{
     private List<Owner> owners;
     private ArrayList<String> ownersNames;
     private ArrayList<String> preferedDogKinds;
@@ -42,15 +42,11 @@ public class DogOwnersListActivity extends AppCompatActivity implements View.OnC
         for (int i = 0; i < ownersNames.size(); i++) {
             View itemView = initItemView(layoutInflater, containerLinLayout, i);
             itemView.setTag(owners.get(i).getOwnerId());
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(view -> openOwnerDogs(view));
             containerLinLayout.addView(itemView);
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        openOwnerDogs(view);
-    }
 
     private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);

@@ -26,7 +26,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity implements Vie
         descriptionTextView.setOnClickListener(this);
 
         appNameTextView = findViewById(R.id.app_name_textview);
-        appNameTextView.setOnClickListener(this);
+        appNameTextView.setOnClickListener(view -> startActivity(new Intent(this, DogOwnersListActivity.class)));
 
         setTypeFonts(this);
     }
