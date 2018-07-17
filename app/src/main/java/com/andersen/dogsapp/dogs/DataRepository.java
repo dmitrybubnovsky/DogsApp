@@ -16,37 +16,14 @@ public class DataRepository {
     private List<Owner> owners;
 
     private DataRepository(Context context){
-        GsonBuilder builder = new GsonBuilder();
-        final Gson GSON = builder.create();
-        String json;
-
-
         owners = OwnersDataSource.getInstance(context).getOwners();
-
-        json = getAssetsJSON("dogs.json", context);
-        DogsDataSource dogsDataSource = DogsDataSource.init(GSON.fromJson(json, DogsDataSource.class));
-        dogs = dogsDataSource.getDogs();
+        dogs = DogsDataSource.getInstance(context).getDogs();
     }
 
     public static DataRepository get(Context context){
         if(dataRepository == null){
             dataRepository = new DataRepository(context);
         } return dataRepository;
-    }
-
-    private static String getAssetsJSON(String fileName, Context context){
-        String json = null;
-        try{
-            InputStream inputStream = context.getAssets().open(fileName);
-            int size = inputStream.available();
-            byte[] buffer = new byte[size];
-            inputStream.read(buffer);
-            inputStream.close();
-            json = new String (buffer, "UTF-8");
-        } catch (IOException e ){
-            e.printStackTrace();
-        }
-        return json;
     }
 
     public List<Owner> getOwners(){
