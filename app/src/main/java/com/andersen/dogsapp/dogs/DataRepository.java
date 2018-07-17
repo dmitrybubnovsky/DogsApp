@@ -20,9 +20,8 @@ public class DataRepository {
         final Gson GSON = builder.create();
         String json;
 
-        json = getAssetsJSON("owners.json", context);
-        OwnersDataSource ownersDataSource = OwnersDataSource.init(GSON.fromJson(json, OwnersDataSource.class));
-        owners = ownersDataSource.getOwners();
+
+        owners = OwnersDataSource.getInstance(context).getOwners();
 
         json = getAssetsJSON("dogs.json", context);
         DogsDataSource dogsDataSource = DogsDataSource.init(GSON.fromJson(json, DogsDataSource.class));
