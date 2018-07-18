@@ -38,6 +38,8 @@ public class DataRepository {
         return fullNames;
     }
 
+
+
     public ArrayList<String> getPrefereDogsKinds(){
         ArrayList<String> dogsKinds = new ArrayList<>();
         for(Owner owner : owners){
@@ -64,7 +66,7 @@ public class DataRepository {
                 return owner;
             }
         }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getOwnerById. Not acceptable ownerId");
+        throw new IndexOutOfBoundsException("Class DataRepository. Method getOwnerById. Not acceptable Id");
     }
 
 
@@ -74,7 +76,18 @@ public class DataRepository {
                 return dog;
             }
         }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable ownerId");
+        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
+    }
+
+    public ArrayList<Dog> getOwnerDogs(Owner owner){
+        ArrayList<Dog> dogs = new ArrayList<>();
+        int[] dogsIds = owner.getDogsIds();// get array of dogs' ids on single owner
+        int dogsQuantity = owner.getDogsQuantity();
+        for(int i = 0; i<dogsQuantity; i++){
+            dogs.add(this.getDogById(dogsIds[i]));
+//            Log.d("#", dogsNames.get(i));
+        }
+        return dogs;
     }
 
     public ArrayList<String> getDogsNamesByOwnerId(int ownerId){
@@ -84,7 +97,7 @@ public class DataRepository {
         int dogsQuantity = owner.getDogsQuantity();
         for(int i = 0; i<dogsQuantity; i++){
             dogsNames.add(this.getDogById(dogsIds[i]).getDogName());
-            Log.d("#", dogsNames.get(i));
+//            Log.d("#", dogsNames.get(i));
         }
         return dogsNames;
     }

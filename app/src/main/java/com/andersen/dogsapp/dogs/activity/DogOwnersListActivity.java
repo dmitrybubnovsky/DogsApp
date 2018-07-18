@@ -22,12 +22,15 @@ public class DogOwnersListActivity extends AppCompatActivity{
     private ArrayList<String> preferedDogKinds;
     private int[] quantitiesDogs;
 
+    private Owner owner;
+    private DataRepository dataRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        DataRepository dataRepository = DataRepository.get(this);
+        dataRepository = DataRepository.get(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
@@ -48,9 +51,12 @@ public class DogOwnersListActivity extends AppCompatActivity{
 
     private void openOwnerDogs(View view) {
         Integer ownerId = (Integer)view.getTag();
-        Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
-        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
-        startActivity(i);
+        owner = dataRepository.getOwnerById(ownerId);
+
+        Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
+        intent.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
+        intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
+        startActivity(intent);
     }
 
     private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i) {
