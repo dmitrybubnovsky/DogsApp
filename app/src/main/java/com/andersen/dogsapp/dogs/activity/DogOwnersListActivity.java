@@ -54,7 +54,6 @@ public class DogOwnersListActivity extends AppCompatActivity{
         owner = dataRepository.getOwnerById(ownerId);
 
         Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
-        intent.putExtra(OwnerDogsActivity.EXTRA_OWNER_ID, ownerId);
         intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
         startActivity(intent);
     }
