@@ -1,8 +1,16 @@
 package com.andersen.dogsapp.dogs.activity;
+import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.media.MediaPlayer;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
@@ -15,6 +23,7 @@ import com.andersen.dogsapp.dogs.Owner;
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogid";
     public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
+    private MediaPlayer mediaPlayer;
 
     Dog dog;
 
@@ -22,6 +31,8 @@ public class DogsInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
@@ -48,5 +59,13 @@ public class DogsInfoActivity extends AppCompatActivity {
 
         TextView dogWeightTextView = findViewById(R.id.dog_weight_textview);
         dogWeightTextView.setText(""+ dog.getDogWeight() + " " + getResources().getString(R.string.weight_measure));
-        }
+
+        Button btnVoice = findViewById(R.id.button_voice);
+        btnVoice.setOnClickListener(view -> playSound(mediaPlayer));
+    }
+
+    private void playSound(MediaPlayer mediaPlayer){
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.start();
+    }
 }

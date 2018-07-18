@@ -8,8 +8,9 @@
 
     <string name="btn_start_dogs">Запустить DOGGY DOGG</string>
     <string name="text_view_title_dogs_quantity">Количество собак: </string>
-    <string name="woof_btn_title">Гаф!</string>
+    <string name="woof_btn_title">Голос</string>
     <string name="text_view_title_preff_dog">Любимая порода: </string>
+    <string name="voice_btn_title">ГОЛОС!</string>
 
     <string name="toolbar_title_owners_list">СПИСОК СОБАКОВОДОВ</string>
     <string name="toolbar_title_dogs_list">СПИСОК СОБАК</string>

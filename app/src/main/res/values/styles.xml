@@ -24,7 +24,7 @@
 
     <style name="TextViewTitleItem" parent="MainDogApp">
         <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/text_view_colors</item>
     </style>
 
     <style name="BoldRobotoThin" parent="MainDogApp">
