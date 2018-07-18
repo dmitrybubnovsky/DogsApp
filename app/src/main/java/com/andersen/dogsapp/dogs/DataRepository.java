@@ -30,32 +30,6 @@ public class DataRepository {
         return owners;
     }
 
-    public ArrayList<String> getOwnersNames(){
-        ArrayList<String> fullNames = new ArrayList<>();
-        for(Owner owner : owners){
-            fullNames.add(owner.getOwnerName()+" "+owner.getOwnerSurname());
-        }
-        return fullNames;
-    }
-
-
-
-    public ArrayList<String> getPrefereDogsKinds(){
-        ArrayList<String> dogsKinds = new ArrayList<>();
-        for(Owner owner : owners){
-            dogsKinds.add(owner.getPreferedDogsKind());
-        }
-        return dogsKinds;
-    }
-
-    public int[] getDogsCountsEachOwnerArray(){
-        int[] quantitiesDogs = new int[owners.size()];
-        for (int i=0;i<owners.size();i++){
-            quantitiesDogs[i] = owners.get(i).getDogsQuantity();
-        }
-        return quantitiesDogs;
-    }
-
     public List<Dog> getDogs(){
         return dogs;
     }
@@ -85,36 +59,7 @@ public class DataRepository {
         int dogsQuantity = owner.getDogsQuantity();
         for(int i = 0; i<dogsQuantity; i++){
             dogs.add(this.getDogById(dogsIds[i]));
-//            Log.d("#", dogsNames.get(i));
         }
         return dogs;
-    }
-
-    public ArrayList<String> getDogsNamesByOwnerId(int ownerId){
-        ArrayList<String> dogsNames = new ArrayList<>();
-        Owner owner = this.getOwnerById(ownerId);
-        int[] dogsIds = owner.getDogsIds();// get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for(int i = 0; i<dogsQuantity; i++){
-            dogsNames.add(this.getDogById(dogsIds[i]).getDogName());
-//            Log.d("#", dogsNames.get(i));
-        }
-        return dogsNames;
-    }
-
-    public ArrayList<String> getDogsKindsByOwnerId(int ownerId){
-        ArrayList<String> dogsKinds = new ArrayList<>();
-        Owner owner = this.getOwnerById(ownerId);
-        int[] dogsIds = owner.getDogsIds();
-        int dogsQuantity = owner.getDogsQuantity();
-        for(int i = 0; i<dogsQuantity; i++){
-            dogsKinds.add(this.getDogById(dogsIds[i]).getDogKind());
-            Log.d("#", dogsKinds.get(i));
-        }
-        return dogsKinds;
-    }
-
-    public int[] getDogsIdsByOwnerId(int ownerId){
-        return this.getOwnerById(ownerId).getDogsIds();
     }
 }

@@ -33,7 +33,7 @@ public class DogOwnersListActivity extends AppCompatActivity{
 
         for (int i = 0; i < owners.size(); i++) {
             Owner owner = owners.get(i);
-            View itemView = initItemView(layoutInflater, containerLinLayout, i, owner);
+            View itemView = initItemView(layoutInflater, containerLinLayout, owner);
             itemView.setTag(owner.getOwnerId());
             itemView.setOnClickListener(view -> openOwnerDogs(owner));
             containerLinLayout.addView(itemView);
@@ -46,7 +46,7 @@ public class DogOwnersListActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i, Owner owner) {
+    private View initItemView(LayoutInflater layoutInflater, LinearLayout root, Owner owner) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
         AppTextView.newInstance(itemView, R.id.owner_name_textview)

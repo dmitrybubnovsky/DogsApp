@@ -7,63 +7,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.DataRepository;
+import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogImageLab;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
 
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogid";
+    public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
 
-    private int dogId;
-    private int dogAge;
-    private int dogTall;
-    private int dogWeight;
-
-    private String dogKind;
-    private String dogName;
+    Dog dog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
 
-        dogId = getIntent().getIntExtra(EXTRA_DOG_ID,0);
-
-        DataRepository dataRepository = DataRepository.get(this);
-
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
 
-        loadData(dataRepository);
-
-        initViews();
+        dog = getIntent().getParcelableExtra(EXTRA_DOG);
+        initViews(dog);
     }
 
-    private void loadData(DataRepository dataRepository) {
-        dogName = dataRepository.getDogById(dogId).getDogName();
-        dogKind = dataRepository.getDogById(dogId).getDogKind();
-        dogAge = dataRepository.getDogById(dogId).getDogAge();
-        dogTall = dataRepository.getDogById(dogId).getDogTall();
-        dogWeight = dataRepository.getDogById(dogId).getDogWeight();
-    }
-
-    private void initViews() {
+    private void initViews(Dog dog) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
         dogsPhoto.setImageResource(DogImageLab.get().getRandomDogImageResource());
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
-        dogNameTextView.setText(dogName);
+        dogNameTextView.setText(dog.getDogName());
 
         TextView kindDogTextView = findViewById(R.id.kind_dog_textview);
-        kindDogTextView.setText(dogKind);
+        kindDogTextView.setText(dog.getDogName());
 
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
-        dogAgeTextView.setText(""+ dogAge + " "+ getResources().getString(R.string.age_months_measure));
+        dogAgeTextView.setText(""+ dog.getDogAge() + " "+ getResources().getString(R.string.age_months_measure));
 
         TextView dogTallTextView = findViewById(R.id.dog_tall_textview);
-        dogTallTextView.setText(""+ dogTall + " " + getResources().getString(R.string.tall_measure));
+        dogTallTextView.setText(""+ dog.getDogTall() + " " + getResources().getString(R.string.tall_measure));
 
         TextView dogWeightTextView = findViewById(R.id.dog_weight_textview);
-        dogWeightTextView.setText(""+ dogWeight + " " + getResources().getString(R.string.weight_measure));
+        dogWeightTextView.setText(""+ dog.getDogWeight() + " " + getResources().getString(R.string.weight_measure));
         }
 }

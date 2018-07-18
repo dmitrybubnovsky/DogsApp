@@ -3,7 +3,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,27 +12,20 @@ import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
-import java.util.ArrayList;
 import java.util.List;
-
 import com.andersen.dogsapp.dogs.Owner;
 import android.widget.Toast;
-
+import android.util.Log;
 
 public class OwnerDogsActivity extends AppCompatActivity {
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
-    public static final String EXTRA_OWNER_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner_id";
+
+    private DataRepository dataRepository;
 
     private LinearLayout dogsLinearLayout;
 
-    private int[] dogsIds;
-    private ArrayList<String> dogsKinds;
-    private ArrayList<String> dogsNamesArrayList;
-
     private TextView dogKindTextview;
     private TextView dogNameTextview;
-
-    private DataRepository dataRepository;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -64,22 +56,21 @@ public class OwnerDogsActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < dogsQuantity; i++) {
             Dog dog = dogs.get(i);
-            View itemView = initItemView(layoutInflater, i, dog);
-            itemView.setOnClickListener(view -> {onItemClick(view);});
+            View itemView = initItemView(layoutInflater, dog);
+            itemView.setOnClickListener(view -> onItemClick(view, dog));
             dogsLinearLayout.addView(itemView);
         }
     }
 
-    private void onItemClick(View view) {
+    private void onItemClick(View view, Dog dog) {
         Integer dogId = (Integer)view.getTag();
-       // dog = dataRepository.getDogById(dogId);
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG_ID, dogId);
-        //intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
+        intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);
     }
 
-    private View initItemView(LayoutInflater layoutInflater, int i, Dog dog) {
+    private View initItemView(LayoutInflater layoutInflater, Dog dog) {
         View itemView = layoutInflater.inflate(R.layout.dog_item, dogsLinearLayout, false);
 
         // set ID of the current dog to this itemView

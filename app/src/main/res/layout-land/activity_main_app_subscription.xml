@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
+    android:id="@+id/root_layout"
+    tools:ignore="InvalidId"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,39 +9,34 @@
     android:layout_height="match_parent"
     tools:context=".dogs.activity.MainAppDescriptionActivity">
 
+
     <TextView
         android:id="@+id/app_name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:gravity="center"
         android:text="@string/text_view_app_title"
         android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.282"/>
 
     <TextView
         android:id="@+id/app_description_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="@dimen/margin_16dp"
         android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginTop="8dp"
         android:text="@string/text_view_app_description"
+        android:textColor="#1d0085"
         android:textSize="@dimen/text_size_14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_name_textview"/>
-
-    <Button
-        android:id="@+id/woof_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_8dp"
-        android:layout_marginStart="@dimen/margin_8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/woof_btn_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_description_textview"/>
+        app:layout_constraintTop_toBottomOf="@+id/app_name_textview"
+        app:layout_constraintVertical_bias="0.3"/>
 </android.support.constraint.ConstraintLayout>
