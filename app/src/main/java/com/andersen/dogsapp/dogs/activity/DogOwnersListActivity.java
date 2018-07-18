@@ -11,26 +11,18 @@ import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity{
-    private List<Owner> owners;
-    private ArrayList<String> ownersNames;
-    private ArrayList<String> preferedDogKinds;
-    private int[] quantitiesDogs;
-
-    private Owner owner;
-    private DataRepository dataRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        dataRepository = DataRepository.get(this);
+        List<Owner> owners = DataRepository.get(this).getOwners();
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
@@ -39,51 +31,36 @@ public class DogOwnersListActivity extends AppCompatActivity{
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
-        loadData(dataRepository);
-
-        for (int i = 0; i < ownersNames.size(); i++) {
-            View itemView = initItemView(layoutInflater, containerLinLayout, i);
-            itemView.setTag(owners.get(i).getOwnerId());
-            itemView.setOnClickListener(view -> {openOwnerDogs(view);});
+        for (int i = 0; i < owners.size(); i++) {
+            Owner owner = owners.get(i);
+            View itemView = initItemView(layoutInflater, containerLinLayout, i, owner);
+            itemView.setTag(owner.getOwnerId());
+            itemView.setOnClickListener(view -> openOwnerDogs(owner));
             containerLinLayout.addView(itemView);
         }
     }
 
-    private void openOwnerDogs(View view) {
-        Integer ownerId = (Integer)view.getTag();
-        owner = dataRepository.getOwnerById(ownerId);
-
+    private void openOwnerDogs(Owner owner) {
         Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
         intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
         startActivity(intent);
     }
 
-    private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i) {
+    private View initItemView(LayoutInflater layoutInflater, LinearLayout root, int i, Owner owner) {
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
-        String ownerName = ownersNames.get(i);
-        String prefferedDogKind = preferedDogKinds.get(i);
-        int quantityDog = quantitiesDogs[i];
-
         AppTextView.newInstance(itemView, R.id.owner_name_textview)
-                    .text(ownerName)
+                    .text(owner.getOwnerFullName())
                     .style(this, R.style.TextViewTitleItem)
                     .build();
 
         AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
-                    .text(prefferedDogKind)
+                    .text(owner.getPreferedDogsKind())
                     .build();
 
         AppTextView.newInstance(itemView, R.id.quantity_textview)
-                    .text("" + quantityDog)
+                    .text("" + owner.getDogsQuantity())
                     .build();
         return itemView;
-    }
-
-    private void loadData(DataRepository dataRepository) {
-        owners = dataRepository.getOwners();
-        ownersNames = dataRepository.getOwnersNames();
-        preferedDogKinds = dataRepository.getPrefereDogsKinds();
-        quantitiesDogs = dataRepository.getDogsCountsEachOwnerArray();
     }
 }
