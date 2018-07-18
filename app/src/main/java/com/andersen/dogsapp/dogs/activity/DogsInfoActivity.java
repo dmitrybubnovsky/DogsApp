@@ -1,24 +1,16 @@
 package com.andersen.dogsapp.dogs.activity;
-import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.media.MediaPlayer;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogImageLab;
 import com.andersen.dogsapp.dogs.DogToolBar;
-import com.andersen.dogsapp.dogs.Owner;
 
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogid";
