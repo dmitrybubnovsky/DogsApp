@@ -12,12 +12,13 @@ import com.google.gson.GsonBuilder;
 public class DataRepository {
     private static DataRepository dataRepository;
 
-    private List<Dog> dogs;
-    private List<Owner> owners;
+    private OwnersDataSource ownersDataSource;
+    private DogsDataSource dogsDataSource;
+
 
     private DataRepository(Context context){
-        owners = OwnersDataSource.getInstance(context).getOwners();
-        dogs = DogsDataSource.getInstance(context).getDogs();
+        ownersDataSource = OwnersDataSource.getInstance(context);
+        dogsDataSource = DogsDataSource.getInstance(context);
     }
 
     public static DataRepository get(Context context){
@@ -27,39 +28,14 @@ public class DataRepository {
     }
 
     public List<Owner> getOwners(){
-        return owners;
+        return ownersDataSource.getOwners();
     }
 
     public List<Dog> getDogs(){
-        return dogs;
+        return dogsDataSource.getDogs();
     }
 
-    public Owner getOwnerById(int ownerId){
-        for(Owner owner : owners){
-            if (owner.getOwnerId() == (ownerId)){
-                return owner;
-            }
-        }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getOwnerById. Not acceptable Id");
-    }
-
-
-    public Dog getDogById(int dogId){
-        for(Dog dog : dogs){
-            if (dog.getDogId() == (dogId)){
-                return dog;
-            }
-        }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
-    }
-
-    public ArrayList<Dog> getOwnerDogs(Owner owner){
-        ArrayList<Dog> dogs = new ArrayList<>();
-        int[] dogsIds = owner.getDogsIds();// get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for(int i = 0; i<dogsQuantity; i++){
-            dogs.add(this.getDogById(dogsIds[i]));
-        }
-        return dogs;
+    public List<Dog> getOwnerDogs(Owner owner){
+        return dogsDataSource.getOwnerDogs(owner);
     }
 }

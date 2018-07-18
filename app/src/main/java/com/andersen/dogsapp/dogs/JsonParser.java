@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,17 +25,11 @@ public class JsonParser{
         return jsonParser;
     }
 
-    public <T> T parseInputStream(InputStream inputStream, Class<T> classType){
-        T result = null;
-        try{
+    public <T> T parseInputStream(InputStream inputStream, Class<T> classType) throws IOException{
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);
             inputStream.close();
-            result = gson.fromJson(new String (buffer, "UTF-8"), classType);
-        } catch (IOException e ){
-            e.printStackTrace();
-        }
-        return result;
+            return gson.fromJson(new String (buffer, "UTF-8"), classType);
     }
 }

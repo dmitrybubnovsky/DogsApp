@@ -6,9 +6,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
+import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
 import java.util.List;
@@ -23,6 +26,9 @@ public class DogOwnersListActivity extends AppCompatActivity{
         setContentView(R.layout.activity_owners_list);
 
         List<Owner> owners = DataRepository.get(this).getOwners();
+        List<Dog> dogs = DataRepository.get(this).getDogs();
+        // Toast.makeText(getApplicationContext(), ""+dogs.size(),Toast.LENGTH_SHORT).show();
+
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
