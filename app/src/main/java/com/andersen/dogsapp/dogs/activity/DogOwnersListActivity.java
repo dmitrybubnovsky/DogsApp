@@ -26,7 +26,7 @@ public class DogOwnersListActivity extends AppCompatActivity{
         setContentView(R.layout.activity_owners_list);
 
         List<Owner> owners = DataRepository.get(this).getOwners();
-        List<Dog> dogs = DataRepository.get(this).getDogs();
+        List<Dog> dogs = DataRepository.get(this).getDogs(this);
         // Toast.makeText(getApplicationContext(), ""+dogs.size(),Toast.LENGTH_SHORT).show();
 
 

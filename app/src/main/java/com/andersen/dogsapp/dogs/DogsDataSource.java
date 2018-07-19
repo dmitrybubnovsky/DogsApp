@@ -20,22 +20,22 @@ public class DogsDataSource {
     private static DogsDataSource dogsDataSource;
 
     private JsonParser jsonParser;
-    private Context context;
+    //private Context context;
     private DogsData dogsData;
 
-    private DogsDataSource(Context context){
+    private DogsDataSource(){
         jsonParser = JsonParser.newInstance();
-        this.context = context;
+        //this.context = context;
     }
 
-    public static DogsDataSource getInstance(Context context){
+    public static DogsDataSource getInstance(){
         if(dogsDataSource == null){
-           dogsDataSource = new DogsDataSource(context);
+           dogsDataSource = new DogsDataSource();
         }
         return dogsDataSource;
     }
 
-    public List<Dog> getDogs(){
+    public List<Dog> getDogs(Context context){
         try {
             InputStream inputStream = context.getAssets().open("dogs.json");
             dogsData = jsonParser.parseInputStream(inputStream, DogsData.class);

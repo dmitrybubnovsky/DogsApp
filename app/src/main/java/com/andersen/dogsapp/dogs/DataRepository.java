@@ -18,7 +18,7 @@ public class DataRepository {
 
     private DataRepository(Context context){
         ownersDataSource = OwnersDataSource.getInstance(context);
-        dogsDataSource = DogsDataSource.getInstance(context);
+        dogsDataSource = DogsDataSource.getInstance();
     }
 
     public static DataRepository get(Context context){
@@ -31,8 +31,8 @@ public class DataRepository {
         return ownersDataSource.getOwners();
     }
 
-    public List<Dog> getDogs(){
-        return dogsDataSource.getDogs();
+    public List<Dog> getDogs(Context context){
+        return dogsDataSource.getDogs(context);
     }
 
     public List<Dog> getOwnerDogs(Owner owner){
