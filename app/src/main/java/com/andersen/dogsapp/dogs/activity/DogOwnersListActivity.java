@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs.activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +16,8 @@ import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.database.OwnerDBHelper;
+
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
@@ -42,6 +46,15 @@ public class DogOwnersListActivity extends AppCompatActivity{
             itemView.setOnClickListener(view -> openOwnerDogs(owner));
             containerLinLayout.addView(itemView);
         }
+
+
+        createDB(this);
+    }
+
+    void createDB(Context context){
+        OwnerDBHelper ownerDBHelper = new OwnerDBHelper(context);
+        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
+
     }
 
     private void openOwnerDogs(Owner owner) {

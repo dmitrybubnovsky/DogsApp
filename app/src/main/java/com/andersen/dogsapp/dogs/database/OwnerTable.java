@@ -6,4 +6,5 @@ public class OwnerTable {
     public static final String NAME = "ownerName";
     public static final String SURNAME = "ownerSurname";
     public static final String PREFERED_DOGS_KIND = "preferedDogsKind";
+    public static final String DOGS_IDS = "dogsIds";
 }

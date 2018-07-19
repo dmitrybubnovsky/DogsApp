@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.andersen.dogsapp.dogs.database.DogsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.database.OwnersSQLiteDataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -14,6 +17,9 @@ public class DataRepository {
 
     private OwnersDataSource ownersDataSource;
     private DogsDataSource dogsDataSource;
+
+    private OwnersSQLiteDataSource ownersSQLiteDataSource;
+    private DogsSQLiteDataSource dogsSQLiteDataSource;
 
 
     private DataRepository(){
