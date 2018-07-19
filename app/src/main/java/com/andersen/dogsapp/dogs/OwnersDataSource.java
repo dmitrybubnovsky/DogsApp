@@ -15,22 +15,18 @@ import java.util.List;
 public class OwnersDataSource {
     private static OwnersDataSource ownersDataSource;
 
-    private JsonParser jsonParser;
-    //private Context context;
     private OwnersData ownersData;
 
     @SerializedName("owners")
     @Expose
     private List<Owner> owners;
 
-    private OwnersDataSource(){//Context context
-        //this.context = context;
-        jsonParser = JsonParser.newInstance();
+    private OwnersDataSource(){
     }
 
-    public static OwnersDataSource getInstance (){//Context context
+    public static OwnersDataSource getInstance (){
         if(ownersDataSource == null){
-            ownersDataSource = new OwnersDataSource();//context
+            ownersDataSource = new OwnersDataSource();
         }
         return ownersDataSource;
     }
@@ -39,6 +35,7 @@ public class OwnersDataSource {
         try {
             InputStream inputStream = context.getAssets().open("owners.json");
             // TODO: do i really need the field 'jsonParser'
+            JsonParser jsonParser = JsonParser.newInstance();
             ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
             return ownersData.getOwners();
         }catch (IOException e){

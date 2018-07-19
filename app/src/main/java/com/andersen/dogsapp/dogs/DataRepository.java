@@ -21,9 +21,9 @@ public class DataRepository {
         dogsDataSource = DogsDataSource.getInstance();
     }
 
-    public static DataRepository get(){//Context context
+    public static DataRepository get(){
         if(dataRepository == null){
-            dataRepository = new DataRepository();//context
+            dataRepository = new DataRepository();
         } return dataRepository;
     }
 

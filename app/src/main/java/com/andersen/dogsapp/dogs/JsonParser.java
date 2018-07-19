@@ -1,14 +1,8 @@
 package com.andersen.dogsapp.dogs;
-
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 
 public class JsonParser{
     private static JsonParser jsonParser;

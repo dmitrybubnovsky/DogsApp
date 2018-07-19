@@ -19,13 +19,9 @@ import java.util.List;
 public class DogsDataSource {
     private static DogsDataSource dogsDataSource;
 
-    private JsonParser jsonParser;
-    //private Context context;
     private DogsData dogsData;
 
     private DogsDataSource(){
-        jsonParser = JsonParser.newInstance();
-        //this.context = context;
     }
 
     public static DogsDataSource getInstance(){
@@ -37,6 +33,7 @@ public class DogsDataSource {
 
     public List<Dog> getDogs(Context context){
         try {
+            JsonParser jsonParser = JsonParser.newInstance();
             InputStream inputStream = context.getAssets().open("dogs.json");
             dogsData = jsonParser.parseInputStream(inputStream, DogsData.class);
             return dogsData.getDogs();
