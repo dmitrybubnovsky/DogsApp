@@ -16,26 +16,26 @@ public class OwnersDataSource {
     private static OwnersDataSource ownersDataSource;
 
     private JsonParser jsonParser;
-    private Context context;
+    //private Context context;
     private OwnersData ownersData;
 
     @SerializedName("owners")
     @Expose
     private List<Owner> owners;
 
-    private OwnersDataSource(Context context){
-        this.context = context;
+    private OwnersDataSource(){//Context context
+        //this.context = context;
         jsonParser = JsonParser.newInstance();
     }
 
-    public static OwnersDataSource getInstance (Context context){
+    public static OwnersDataSource getInstance (){//Context context
         if(ownersDataSource == null){
-            ownersDataSource = new OwnersDataSource(context);
+            ownersDataSource = new OwnersDataSource();//context
         }
         return ownersDataSource;
     }
 
-    public List<Owner> getOwners(){
+    public List<Owner> getOwners(Context context){
         try {
             InputStream inputStream = context.getAssets().open("owners.json");
             // TODO: do i really need the field 'jsonParser'

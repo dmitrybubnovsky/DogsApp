@@ -16,19 +16,19 @@ public class DataRepository {
     private DogsDataSource dogsDataSource;
 
 
-    private DataRepository(Context context){
-        ownersDataSource = OwnersDataSource.getInstance(context);
+    private DataRepository(){
+        ownersDataSource = OwnersDataSource.getInstance();
         dogsDataSource = DogsDataSource.getInstance();
     }
 
-    public static DataRepository get(Context context){
+    public static DataRepository get(){//Context context
         if(dataRepository == null){
-            dataRepository = new DataRepository(context);
+            dataRepository = new DataRepository();//context
         } return dataRepository;
     }
 
-    public List<Owner> getOwners(){
-        return ownersDataSource.getOwners();
+    public List<Owner> getOwners(Context context){
+        return ownersDataSource.getOwners(context);
     }
 
     public List<Dog> getDogs(Context context){
