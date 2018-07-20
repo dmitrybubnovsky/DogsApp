@@ -11,18 +11,23 @@ public class DogsDataSource {
     private static DogsDataSource dogsDataSource;
 
     private DogsData dogsData;
+    private List<Dog> dogs;
 
-    private DogsDataSource(){
+    private DogsDataSource(Context context){
+        dogs = getDogs(context);
     }
 
-    public static DogsDataSource getInstance(){
+    public static DogsDataSource getInstance(Context context){
         if(dogsDataSource == null){
-           dogsDataSource = new DogsDataSource();
+           dogsDataSource = new DogsDataSource(context);
         }
         return dogsDataSource;
     }
 
     public List<Dog> getDogs(Context context){
+        if (dogs != null){
+            return dogs;
+        }
         try {
             JsonParser jsonParser = JsonParser.newInstance();
             InputStream inputStream = context.getAssets().open("dogs.json");
@@ -37,7 +42,7 @@ public class DogsDataSource {
     private Dog getDogById(int dogId){
         String str = (dogsData.equals(null)) ? "dogsData == null " : "ok " ;
         Log.d("#  getDogById ", str);
-        List<Dog> dogs = dogsData.getDogs();
+     //   List<Dog> dogs = dogsData.getDogs();
         for(Dog dog : dogs){
             if (dog.getDogId() == (dogId)){
                 return dog;
@@ -47,13 +52,13 @@ public class DogsDataSource {
     }
 
     public List<Dog> getOwnerDogs(Owner owner){
-        List<Dog> dogs = new ArrayList<>();
+        List<Dog> ownerDogs = new ArrayList<>();
         int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
         int dogsQuantity = owner.getDogsQuantity();
         for(int i = 0; i<dogsQuantity; i++){
-            dogs.add(getDogById(dogsIds[i]));
+            ownerDogs.add(getDogById(dogsIds[i]));
         }
-        return dogs;
+        return ownerDogs ;
     }
 
 

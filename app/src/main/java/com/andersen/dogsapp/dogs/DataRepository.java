@@ -22,14 +22,8 @@ public class DataRepository {
     private OwnersSQLiteDataSource ownersSQLiteDataSource;
     private DogsSQLiteDataSource dogsSQLiteDataSource;
 
-
     private DataRepository(){
-        ownersDataSource = OwnersDataSource.getInstance();
-        dogsDataSource = DogsDataSource.getInstance();
-    }
-
-    private DataRepository(SQLiteDatabase db){
-        ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(db);
+//        ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(db);
         // DogsSQLiteDataSource dogsSQLiteDataSource;
     }
 
@@ -39,23 +33,20 @@ public class DataRepository {
         } return dataRepository;
     }
 
-    public static DataRepository get(SQLiteDatabase db){
-        if(dataRepository == null){
-            dataRepository = new DataRepository(db);
-        } return dataRepository;
-    }
-
     public List<Owner> getOwners(Context context){
+        ownersDataSource = OwnersDataSource.getInstance(context);
+        dogsDataSource = DogsDataSource.getInstance(context);
         return ownersDataSource.getOwners(context);
-    }
-
-    public List<Owner> getOwners(){
-        return ownersSQLiteDataSource.getOwners();
     }
 
     public List<Dog> getDogs(Context context){
         return dogsDataSource.getDogs(context);
     }
+
+    public List<Owner> getOwners(SQLiteDatabase db){
+        return ownersSQLiteDataSource.getOwners(db);
+    }
+
 
     public List<Dog> getOwnerDogs(Owner owner){
         return dogsDataSource.getOwnerDogs(owner);

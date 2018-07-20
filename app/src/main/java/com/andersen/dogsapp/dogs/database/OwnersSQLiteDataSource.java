@@ -2,6 +2,7 @@ package com.andersen.dogsapp.dogs.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.andersen.dogsapp.dogs.Owner;
 import java.util.ArrayList;
@@ -9,26 +10,27 @@ import java.util.List;
 
 public class OwnersSQLiteDataSource  {
     private static OwnersSQLiteDataSource ownersDataSource;
+    private static final String TAG = "# OwnersSQLiteDataSource";
 
     public OwnersCursorWrapper ownersCursor;
   //  private SQLiteDatabase db;
     private List<Owner> owners;
 
-    private OwnersSQLiteDataSource(SQLiteDatabase db){
+    private OwnersSQLiteDataSource(){
         //this.db = db;
-        ownersCursor = queryOwners(db);
+       // ownersCursor = queryOwners();
     }
 
-    public static OwnersSQLiteDataSource getInstance (SQLiteDatabase db){
+    public static OwnersSQLiteDataSource getInstance (){
         if(ownersDataSource == null){
-            ownersDataSource = new OwnersSQLiteDataSource(db);
+            ownersDataSource = new OwnersSQLiteDataSource();
         }
         return ownersDataSource;
     }
 
-    public List<Owner> getOwners (){
+    public List<Owner> getOwners (SQLiteDatabase db){
         List<Owner> owners  = new ArrayList<>();
-       // ownersCursor = queryOwners();
+        ownersCursor = queryOwners(db);
 
         try{
             ownersCursor.moveToNext();
@@ -39,10 +41,12 @@ public class OwnersSQLiteDataSource  {
         } finally{
             ownersCursor.close();
         }
+        this.owners = owners;
         return owners;
     }
 
     private OwnersCursorWrapper queryOwners(SQLiteDatabase db){
+        Log.d(TAG, "queryOwners");
         Cursor cursor = db.query(
                 OwnerTable.TABLE_NAME,
                 null,
