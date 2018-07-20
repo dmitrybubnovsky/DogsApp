@@ -37,12 +37,13 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
-        dataRepository = DataRepository.get();
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
+        dataRepository = DataRepository.get();
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+        DataRepository.get().getDogs(this);
         List<Dog> dogs = dataRepository.getOwnerDogs(owner);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);

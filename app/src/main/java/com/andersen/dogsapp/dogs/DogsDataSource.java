@@ -35,7 +35,8 @@ public class DogsDataSource {
     }
 
     private Dog getDogById(int dogId){
-        Log.d("#  getDogById" , ""+dogId);
+        String str = (dogsData.equals(null)) ? "dogsData == null " : "ok " ;
+        Log.d("#  getDogById ", str);
         List<Dog> dogs = dogsData.getDogs();
         for(Dog dog : dogs){
             if (dog.getDogId() == (dogId)){

@@ -4,9 +4,6 @@ import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.OwnersDataSource;
-import com.andersen.dogsapp.dogs.data.OwnersData;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +11,12 @@ public class OwnersSQLiteDataSource  {
     private static OwnersSQLiteDataSource ownersDataSource;
 
     public OwnersCursorWrapper ownersCursor;
-    private SQLiteDatabase db;
+  //  private SQLiteDatabase db;
     private List<Owner> owners;
 
     private OwnersSQLiteDataSource(SQLiteDatabase db){
-        this.db = db;
-        ownersCursor = queryOwners();
+        //this.db = db;
+        ownersCursor = queryOwners(db);
     }
 
     public static OwnersSQLiteDataSource getInstance (SQLiteDatabase db){
@@ -31,7 +28,7 @@ public class OwnersSQLiteDataSource  {
 
     public List<Owner> getOwners (){
         List<Owner> owners  = new ArrayList<>();
-        ownersCursor = queryOwners();
+       // ownersCursor = queryOwners();
 
         try{
             ownersCursor.moveToNext();
@@ -45,7 +42,7 @@ public class OwnersSQLiteDataSource  {
         return owners;
     }
 
-    private OwnersCursorWrapper queryOwners(){
+    private OwnersCursorWrapper queryOwners(SQLiteDatabase db){
         Cursor cursor = db.query(
                 OwnerTable.TABLE_NAME,
                 null,

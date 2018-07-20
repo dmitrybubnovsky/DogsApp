@@ -29,8 +29,13 @@ public class DogOwnersListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        List<Owner> owners = DataRepository.get().getOwners(this);
-        DataRepository.get().getDogs(this);
+        OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
+        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
+        ownerDBHelper.addSomeDB();
+
+//       List<Owner> owners = DataRepository.get().getOwners(this);
+        List<Owner> owners = DataRepository.get(db).getOwners();
+   //     List<Dog> dogs = DataRepository.get().getDogs(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
@@ -46,14 +51,6 @@ public class DogOwnersListActivity extends AppCompatActivity{
             itemView.setOnClickListener(view -> openOwnerDogs(owner));
             containerLinLayout.addView(itemView);
         }
-
-
-        createDB(this);
-    }
-
-    void createDB(Context context){
-        OwnerDBHelper ownerDBHelper = new OwnerDBHelper(context);
-        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
 
     }
 

@@ -12,6 +12,9 @@ public class Dog implements Parcelable {
     private String dogName;
     private String dogKind;
 
+    public Dog() {
+    }
+
     public int getDogId() {
         return dogId;
     }
@@ -64,6 +67,34 @@ public class Dog implements Parcelable {
         }
     };
 
+    public void setDogId(int dogId) {
+        this.dogId = dogId;
+    }
+
+    public void setDogImageId(int dogImageId) {
+        this.dogImageId = dogImageId;
+    }
+
+    public void setDogAge(int dogAge) {
+        this.dogAge = dogAge;
+    }
+
+    public void setDogTall(int dogTall) {
+        this.dogTall = dogTall;
+    }
+
+    public void setDogWeight(int dogWeight) {
+        this.dogWeight = dogWeight;
+    }
+
+    public void setDogName(String dogName) {
+        this.dogName = dogName;
+    }
+
+    public void setDogKind(String dogKind) {
+        this.dogKind = dogKind;
+    }
+
     private Dog(Parcel parcelInstance){
         dogId = parcelInstance.readInt();
         dogImageId = parcelInstance.readInt();
@@ -73,6 +104,7 @@ public class Dog implements Parcelable {
         dogName = parcelInstance.readString();
         dogKind = parcelInstance.readString();
     }
+
 }
 
 
