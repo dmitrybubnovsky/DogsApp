@@ -41,7 +41,6 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
         dataRepository = DataRepository.get();
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
-        //DataRepository.get().getDogs(this);
         List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);

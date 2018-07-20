@@ -1,5 +1,4 @@
 package com.andersen.dogsapp.dogs.database;
-
 import android.database.Cursor;
 import android.database.CursorWrapper;
 

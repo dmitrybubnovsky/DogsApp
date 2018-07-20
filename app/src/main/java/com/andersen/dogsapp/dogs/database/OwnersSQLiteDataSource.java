@@ -14,7 +14,6 @@ public class OwnersSQLiteDataSource  {
     private static final String TAG = "# OwnersSQLiteDataSource";
 
     public OwnersCursorWrapper ownersCursor;
-  //  private SQLiteDatabase db;
     private List<Owner> owners;
 
     private OwnersSQLiteDataSource(SQLiteDatabase db){
