@@ -14,8 +14,6 @@ import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import java.util.List;
 import com.andersen.dogsapp.dogs.Owner;
-import android.widget.Toast;
-import android.util.Log;
 
 public class OwnerDogsActivity extends AppCompatActivity {
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
@@ -43,8 +41,8 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
         dataRepository = DataRepository.get();
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
-        DataRepository.get().getDogs(this);
-        List<Dog> dogs = dataRepository.getOwnerDogs(owner);
+        //DataRepository.get().getDogs(this);
+        List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
 
@@ -55,7 +53,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         int dogsQuantity = owner.getDogsQuantity();
         LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < dogsQuantity; i++) {
-            Dog dog = dogs.get(i);
+            Dog dog = ownerDogs.get(i);
             View itemView = initItemView(layoutInflater, dog);
             itemView.setOnClickListener(view -> onItemClick(view, dog));
             dogsLinearLayout.addView(itemView);

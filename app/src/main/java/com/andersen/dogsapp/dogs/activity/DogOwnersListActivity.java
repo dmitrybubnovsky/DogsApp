@@ -33,9 +33,10 @@ public class DogOwnersListActivity extends AppCompatActivity{
         SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
         ownerDBHelper.addSomeDB();
 
-       List<Owner> owners = DataRepository.get().getOwners(this);
-//        List<Owner> owners = DataRepository.get(db).getOwners();
-        List<Dog> dogs = DataRepository.get().getDogs(this);
+//       List<Owner> owners = DataRepository.get().getOwners(this);
+        List<Owner> owners = DataRepository.get().getOwners(db);
+        List<Dog> dogs = DataRepository.get().getDogs(db);
+//        List<Dog> dogs = DataRepository.get().getDogs(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 

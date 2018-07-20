@@ -9,12 +9,10 @@ public class DogsSQLiteDataSource {
     private static DogsSQLiteDataSource dogsDataSource;
 
     public DogsCursorWrapper dogsCursor;
-    //  private SQLiteDatabase db;
     private List<Dog>dogs;
 
     private DogsSQLiteDataSource(SQLiteDatabase db){
-        //this.db = db;
-        dogsCursor = queryDogs(db);
+        dogs = getDogs(db);
     }
 
     public static DogsSQLiteDataSource getInstance (SQLiteDatabase db){
@@ -24,18 +22,21 @@ public class DogsSQLiteDataSource {
         return dogsDataSource;
     }
 
-    public List<Dog> getDogs (){
-        List<Dog> dogs  = new ArrayList<>();
-        // dogsCursor = queryDogs();
-
-        try{
-            dogsCursor.moveToNext();
-            while (!dogsCursor.isAfterLast()){
-                dogs.add(dogsCursor.getDog());
+    public List<Dog> getDogs (SQLiteDatabase db){
+        if(dogs != null){
+            return dogs;
+        } else {
+            dogs = new ArrayList<>();
+            try{
+                dogsCursor = queryDogs(db);
                 dogsCursor.moveToNext();
+                while (!dogsCursor.isAfterLast()){
+                    dogs.add(dogsCursor.getDog());
+                    dogsCursor.moveToNext();
+                }
+            } finally{
+                dogsCursor.close();
             }
-        } finally{
-            dogsCursor.close();
         }
         return dogs;
     }

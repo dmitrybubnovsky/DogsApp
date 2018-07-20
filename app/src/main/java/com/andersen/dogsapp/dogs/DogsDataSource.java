@@ -39,27 +39,19 @@ public class DogsDataSource {
         return null;
     }
 
-    private Dog getDogById(int dogId){
-        String str = (dogsData.equals(null)) ? "dogsData == null " : "ok " ;
-        Log.d("#  getDogById ", str);
-     //   List<Dog> dogs = dogsData.getDogs();
-        for(Dog dog : dogs){
-            if (dog.getDogId() == (dogId)){
-                return dog;
-            }
-        }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
-    }
+//    private Dog getDogById(int dogId){
+//        String str = (dogsData.equals(null)) ? "dogsData == null " : "ok " ;
+//        Log.d("#  getDogById ", str);
+//     //   List<Dog> dogs = dogsData.getDogs();
+//        for(Dog dog : dogs){
+//            if (dog.getDogId() == (dogId)){
+//                return dog;
+//            }
+//        }
+//        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
+//    }
 
-    public List<Dog> getOwnerDogs(Owner owner){
-        List<Dog> ownerDogs = new ArrayList<>();
-        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for(int i = 0; i<dogsQuantity; i++){
-            ownerDogs.add(getDogById(dogsIds[i]));
-        }
-        return ownerDogs ;
-    }
-
-
+//    public List<Dog> getOwnerDogs(Owner owner){
+//        return dogs.getOwnerDogs(owner) ;
+//    }
 }

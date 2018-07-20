@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.database;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,32 +17,33 @@ public class OwnersSQLiteDataSource  {
   //  private SQLiteDatabase db;
     private List<Owner> owners;
 
-    private OwnersSQLiteDataSource(){
-        //this.db = db;
-       // ownersCursor = queryOwners();
+    private OwnersSQLiteDataSource(SQLiteDatabase db){
+        owners = getOwners(db);
     }
 
-    public static OwnersSQLiteDataSource getInstance (){
+    public static OwnersSQLiteDataSource getInstance (SQLiteDatabase db){
         if(ownersDataSource == null){
-            ownersDataSource = new OwnersSQLiteDataSource();
+            ownersDataSource = new OwnersSQLiteDataSource(db);
         }
         return ownersDataSource;
     }
 
     public List<Owner> getOwners (SQLiteDatabase db){
-        List<Owner> owners  = new ArrayList<>();
-        ownersCursor = queryOwners(db);
-
-        try{
-            ownersCursor.moveToNext();
-            while (!ownersCursor.isAfterLast()){
-                owners.add(ownersCursor.getOwner());
+        if (owners != null){
+            return owners;
+        } else {
+            owners = new ArrayList<>();
+            ownersCursor = queryOwners(db);
+            try{
                 ownersCursor.moveToNext();
+                while (!ownersCursor.isAfterLast()){
+                    owners.add(ownersCursor.getOwner());
+                    ownersCursor.moveToNext();
+                }
+            } finally{
+                ownersCursor.close();
             }
-        } finally{
-            ownersCursor.close();
         }
-        this.owners = owners;
         return owners;
     }
 
@@ -59,7 +61,4 @@ public class OwnersSQLiteDataSource  {
         );
         return new OwnersCursorWrapper(cursor);
     }
-
-
-
 }
