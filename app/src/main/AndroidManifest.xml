@@ -12,22 +12,24 @@
         <activity android:name=".dogs.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".dogs.activity.DogOwnersListActivity"
-            android:theme = "@style/MainDogApp"/>
+            android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.activity.OwnerDogsActivity"
-            android:theme = "@style/MainDogApp"/>
+            android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.activity.DogsInfoActivity"
-            android:theme = "@style/MainDogApp"/>
+            android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.activity.MainAppDescriptionActivity"
-            android:theme = "@style/NoActionBar"/>
+            android:theme="@style/NoActionBar"/>
+        <activity android:name=".dogs.activity.RecyclerViewTestActivity">
+        </activity>
     </application>
 
 </manifest>
