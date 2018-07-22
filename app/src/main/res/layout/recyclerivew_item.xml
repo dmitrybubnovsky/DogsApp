@@ -26,9 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:contentDescription="@string/text_view_app_description"
-                android:padding="5dp"
-                android:src="@drawable/standard_schnauzer"/>
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/dog_name_recycler_textiview"

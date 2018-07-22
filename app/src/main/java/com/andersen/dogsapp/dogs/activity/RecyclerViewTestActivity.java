@@ -13,7 +13,6 @@ import com.andersen.dogsapp.dogs.Owner;
 import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
 
 import java.util.List;
-
 public class RecyclerViewTestActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
     List<Owner> owners;
     List<Dog> dogs;
