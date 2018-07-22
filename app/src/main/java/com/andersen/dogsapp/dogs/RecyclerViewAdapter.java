@@ -37,9 +37,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             view.setOnClickListener(this);
 
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
-                    .style(context, R.style.BoldRobotoThin)
+                    .style(context, R.style.BoldRobotoThin15sp)
                     .build();
-            dogKindTextView = view.findViewById(R.id.dog_kind_recycler_textiview);
+            dogKindTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
+                    .style(context, R.style.BoldRobotoThin13sp)
+                    .build();
             dogImageView = view.findViewById(R.id.dog_recycler_image_view);
             relativeLayout = view.findViewById(R.id.recycler_item_relativeLayout);
         }
@@ -49,9 +51,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
-
-            dogImageView.setImageResource(R.drawable.english_coonhound);
-//            relativeLayout.setBackground();
+            dogImageView.setImageResource(dog.getDogImageId(context));
+//          relativeLayout.setBackground();
         }
 
         @Override
