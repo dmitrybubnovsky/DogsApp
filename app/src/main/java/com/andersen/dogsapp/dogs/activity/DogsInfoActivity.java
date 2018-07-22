@@ -20,36 +20,30 @@ public class DogsInfoActivity extends AppCompatActivity {
     public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
     private MediaPlayer mediaPlayer;
 
-    Dog dog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_dogs_info);
         DataRepository.get().getDogs(this);
 
-
         mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
 
-        dog = (Dog) getIntent().getParcelableExtra(EXTRA_DOG);
+        Dog dog = getIntent().getParcelableExtra(EXTRA_DOG);
         initViews(dog);
-        Log.d(TAG, "DogsIngo "+ dog.getDogName());
-
     }
 
     private void initViews(Dog dog) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageResource(DogImageLab.get().getRandomDogImageResource());
-//        dogsPhoto.setImageResource(dog.getDogImageId(this));
+        dogsPhoto.setImageResource(dog.getDogImageId(this));
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());
 
         TextView kindDogTextView = findViewById(R.id.kind_dog_textview);
-        kindDogTextView.setText(dog.getDogName());
+        kindDogTextView.setText(dog.getDogKind());
 
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
         dogAgeTextView.setText(""+ dog.getDogAge() + " "+ getResources().getString(R.string.age_months_measure));
