@@ -1,8 +1,6 @@
 package com.andersen.dogsapp.dogs;
-import android.content.Context;
-
 import java.util.List;
-
+import android.content.Context;
 import com.andersen.dogsapp.dogs.data.DogsHandler;
 import com.andersen.dogsapp.dogs.data.OwnersHandler;
 
@@ -28,12 +26,12 @@ public class DataRepository {
 
     public List<Owner> getOwners(Context context){
         ownersDataSource = OwnersDataSource.getInstance(context);
-        dogsDataSource = DogsDataSource.getInstance(context);
         ownersHandler.setOwners(ownersDataSource.getOwners(context));
         return ownersHandler.getOwners();
     }
 
     public List<Dog> getDogs(Context context){
+        dogsDataSource = DogsDataSource.getInstance(context);
         dogsHandler.setDogs(dogsDataSource.getDogs(context));
         return dogsHandler.getDogs();
     }

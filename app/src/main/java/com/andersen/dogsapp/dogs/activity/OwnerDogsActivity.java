@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.util.Log;
 
 public class OwnerDogsActivity extends AppCompatActivity {
+    public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
     private DataRepository dataRepository;
@@ -37,12 +38,12 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
-        dataRepository = DataRepository.get();
-
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+        dataRepository = DataRepository.get();
+
         List<Dog> dogs = dataRepository.getOwnerDogs(owner);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
@@ -55,6 +56,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < dogsQuantity; i++) {
             Dog dog = dogs.get(i);
+            Log.d(TAG, ""+ dog.getDogName());
             View itemView = initItemView(layoutInflater, dog);
             itemView.setOnClickListener(view -> onItemClick(view, dog));
             dogsLinearLayout.addView(itemView);
@@ -62,10 +64,11 @@ public class OwnerDogsActivity extends AppCompatActivity {
     }
 
     private void onItemClick(View view, Dog dog) {
-        Integer dogId = (Integer)view.getTag();
+ //       Integer dogId = (Integer)view.getTag();
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
-        intent.putExtra(DogsInfoActivity.EXTRA_DOG_ID, dogId);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
+        Log.d(TAG, ""+ dog.getDogKind());
+
         startActivity(intent);
     }
 

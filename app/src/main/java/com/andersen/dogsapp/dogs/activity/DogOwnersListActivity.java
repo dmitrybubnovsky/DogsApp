@@ -25,7 +25,9 @@ public class DogOwnersListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        List<Owner> owners = DataRepository.get().getOwners(this);
+        DataRepository dataRepository = DataRepository.get();
+        List<Owner> owners = dataRepository.get().getOwners(this);
+        dataRepository.get().getDogs(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 

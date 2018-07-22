@@ -56,10 +56,10 @@ public class Dog implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(dogId);
-        dest.writeString(dogImageString);
         dest.writeInt(dogAge);
         dest.writeInt(dogTall);
         dest.writeInt(dogWeight);
+        dest.writeString(dogImageString);
         dest.writeString(dogName);
         dest.writeString(dogKind);
     }
