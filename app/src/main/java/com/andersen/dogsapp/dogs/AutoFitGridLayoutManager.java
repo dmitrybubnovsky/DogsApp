@@ -2,14 +2,17 @@ package com.andersen.dogsapp.dogs;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.widget.Toast;
 
 public class AutoFitGridLayoutManager  extends GridLayoutManager {
+    public static final String TAG = "##";
 
     private int columnWidth;
     private boolean columnWidthChanged = true;
 
     public AutoFitGridLayoutManager(Context context, int columnWidth) {
-        super(context, 1);
+        super(context, 2);
 
         setColumnWidth(columnWidth);
     }
@@ -32,7 +35,7 @@ public class AutoFitGridLayoutManager  extends GridLayoutManager {
                 totalSpace = getHeight() - getPaddingTop() - getPaddingBottom();
             }
             int spanCount = Math.max(1, totalSpace / columnWidth);
-            setSpanCount(spanCount);
+            setSpanCount(2);
             columnWidthChanged = false;
         }
         super.onLayoutChildren(recycler, state);
