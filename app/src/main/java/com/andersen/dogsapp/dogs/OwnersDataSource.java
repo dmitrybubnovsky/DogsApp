@@ -16,25 +16,30 @@ public class OwnersDataSource {
     @Expose
     private List<Owner> owners;
 
-    private OwnersDataSource(){
+    private OwnersDataSource(Context context){
+        owners = getOwners(context);
     }
 
-    public static OwnersDataSource getInstance (){
+    public static OwnersDataSource getInstance (Context context){
         if(ownersDataSource == null){
-            ownersDataSource = new OwnersDataSource();
+            ownersDataSource = new OwnersDataSource(context);
         }
         return ownersDataSource;
     }
 
     public List<Owner> getOwners(Context context){
-        try {
-            InputStream inputStream = context.getAssets().open("owners.json");
-            JsonParser jsonParser = JsonParser.newInstance();
-            ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
-            return ownersData.getOwners();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        if(owners != null){
+            return owners;
+        } else
+            try {
+                InputStream inputStream = context.getAssets().open("owners.json");
+                JsonParser jsonParser = JsonParser.newInstance();
+                ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
+                owners = ownersData.getOwners();
+                return owners;
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         return null;
     }
 }

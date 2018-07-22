@@ -1,13 +1,10 @@
 package com.andersen.dogsapp.dogs;
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
+
 import java.util.List;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
+import com.andersen.dogsapp.dogs.data.DogsHandler;
+import com.andersen.dogsapp.dogs.data.OwnersHandler;
 
 public class DataRepository {
     private static DataRepository dataRepository;
@@ -15,10 +12,12 @@ public class DataRepository {
     private OwnersDataSource ownersDataSource;
     private DogsDataSource dogsDataSource;
 
+    private DogsHandler dogsHandler;
+    private OwnersHandler ownersHandler;
 
     private DataRepository(){
-        ownersDataSource = OwnersDataSource.getInstance();
-        dogsDataSource = DogsDataSource.getInstance();
+        dogsHandler = DogsHandler.getInstance();
+        ownersHandler = OwnersHandler.getInstance();
     }
 
     public static DataRepository get(){
@@ -28,14 +27,18 @@ public class DataRepository {
     }
 
     public List<Owner> getOwners(Context context){
-        return ownersDataSource.getOwners(context);
+        ownersDataSource = OwnersDataSource.getInstance(context);
+        dogsDataSource = DogsDataSource.getInstance(context);
+        ownersHandler.setOwners(ownersDataSource.getOwners(context));
+        return ownersHandler.getOwners();
     }
 
     public List<Dog> getDogs(Context context){
-        return dogsDataSource.getDogs(context);
+        dogsHandler.setDogs(dogsDataSource.getDogs(context));
+        return dogsHandler.getDogs();
     }
 
     public List<Dog> getOwnerDogs(Owner owner){
-        return dogsDataSource.getOwnerDogs(owner);
+        return dogsHandler.getOwnerDogs(owner);
     }
 }

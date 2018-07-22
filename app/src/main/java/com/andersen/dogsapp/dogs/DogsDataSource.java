@@ -11,18 +11,23 @@ public class DogsDataSource {
     private static DogsDataSource dogsDataSource;
 
     private DogsData dogsData;
+    private List<Dog> dogs;
 
-    private DogsDataSource(){
+    private DogsDataSource(Context context){
+        dogs = getDogs(context);
     }
 
-    public static DogsDataSource getInstance(){
+    public static DogsDataSource getInstance(Context context){
         if(dogsDataSource == null){
-           dogsDataSource = new DogsDataSource();
+            dogsDataSource = new DogsDataSource(context);
         }
         return dogsDataSource;
     }
 
     public List<Dog> getDogs(Context context){
+        if (dogs != null){
+            return dogs;
+        }
         try {
             JsonParser jsonParser = JsonParser.newInstance();
             InputStream inputStream = context.getAssets().open("dogs.json");
@@ -33,27 +38,4 @@ public class DogsDataSource {
         }
         return null;
     }
-
-    private Dog getDogById(int dogId){
-        Log.d("#  getDogById" , ""+dogId);
-        List<Dog> dogs = dogsData.getDogs();
-        for(Dog dog : dogs){
-            if (dog.getDogId() == (dogId)){
-                return dog;
-            }
-        }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
-    }
-
-    public List<Dog> getOwnerDogs(Owner owner){
-        List<Dog> dogs = new ArrayList<>();
-        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for(int i = 0; i<dogsQuantity; i++){
-            dogs.add(getDogById(dogsIds[i]));
-        }
-        return dogs;
-    }
-
-
 }
