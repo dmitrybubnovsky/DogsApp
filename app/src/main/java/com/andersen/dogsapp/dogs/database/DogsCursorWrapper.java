@@ -1,14 +1,16 @@
 package com.andersen.dogsapp.dogs.database;
+
 import android.database.Cursor;
 import android.database.CursorWrapper;
+
 import com.andersen.dogsapp.dogs.Dog;
 
 public class DogsCursorWrapper extends CursorWrapper {
-    public DogsCursorWrapper(Cursor cursor){
+    public DogsCursorWrapper(Cursor cursor) {
         super(cursor);
     }
 
-    public Dog getDog(){
+    public Dog getDog() {
         Dog dog = new Dog();
         dog.setDogId(getInt(getColumnIndex(DogTable.ID)));
         dog.setDogName(getString(getColumnIndex(DogTable.NAME)));

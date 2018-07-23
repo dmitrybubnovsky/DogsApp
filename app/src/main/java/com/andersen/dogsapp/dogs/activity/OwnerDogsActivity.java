@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -7,18 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
+
 import java.util.List;
+
 import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.database.OwnerDBHelper;
 
 public class OwnerDogsActivity extends AppCompatActivity {
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
-
-    private DataRepository dataRepository;
 
     private LinearLayout dogsLinearLayout;
 
@@ -35,13 +39,19 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
+        Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
-        dataRepository = DataRepository.get();
-        Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+        OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
+        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
+
+        DataRepository dataRepository = DataRepository.get();
+//        dataRepository.get().getDogs(this);
+        dataRepository.get().getDogs(db);
         List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
+
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
 
@@ -54,15 +64,13 @@ public class OwnerDogsActivity extends AppCompatActivity {
         for (int i = 0; i < dogsQuantity; i++) {
             Dog dog = ownerDogs.get(i);
             View itemView = initItemView(layoutInflater, dog);
-            itemView.setOnClickListener(view -> onItemClick(view, dog));
+            itemView.setOnClickListener(view -> onItemClick(dog));
             dogsLinearLayout.addView(itemView);
         }
     }
 
-    private void onItemClick(View view, Dog dog) {
-        Integer dogId = (Integer)view.getTag();
+    private void onItemClick(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
-        intent.putExtra(DogsInfoActivity.EXTRA_DOG_ID, dogId);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);
     }

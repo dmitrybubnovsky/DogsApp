@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs.data;
+
 import com.andersen.dogsapp.dogs.Owner;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,8 @@ public class OwnersHandler {
         owners = new ArrayList<>();
     }
 
-    public static OwnersHandler getInstance (){
-        if(instance == null){
+    public static OwnersHandler getInstance() {
+        if (instance == null) {
             instance = new OwnersHandler();
         }
         return instance;

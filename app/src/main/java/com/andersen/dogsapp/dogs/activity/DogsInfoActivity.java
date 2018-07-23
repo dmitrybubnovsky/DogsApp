@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -7,13 +8,13 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogImageLab;
 import com.andersen.dogsapp.dogs.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
-    public static final String EXTRA_DOG_ID = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dogid";
     public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
     private MediaPlayer mediaPlayer;
 
@@ -44,19 +45,19 @@ public class DogsInfoActivity extends AppCompatActivity {
         kindDogTextView.setText(dog.getDogName());
 
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
-        dogAgeTextView.setText(""+ dog.getDogAge() + " "+ getResources().getString(R.string.age_months_measure));
+        dogAgeTextView.setText("" + dog.getDogAge() + " " + getResources().getString(R.string.age_months_measure));
 
         TextView dogTallTextView = findViewById(R.id.dog_tall_textview);
-        dogTallTextView.setText(""+ dog.getDogTall() + " " + getResources().getString(R.string.tall_measure));
+        dogTallTextView.setText("" + dog.getDogTall() + " " + getResources().getString(R.string.tall_measure));
 
         TextView dogWeightTextView = findViewById(R.id.dog_weight_textview);
-        dogWeightTextView.setText(""+ dog.getDogWeight() + " " + getResources().getString(R.string.weight_measure));
+        dogWeightTextView.setText("" + dog.getDogWeight() + " " + getResources().getString(R.string.weight_measure));
 
         Button btnVoice = findViewById(R.id.button_voice);
         btnVoice.setOnClickListener(view -> playSound(mediaPlayer));
     }
 
-    private void playSound(MediaPlayer mediaPlayer){
+    private void playSound(MediaPlayer mediaPlayer) {
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mediaPlayer.start();
     }

@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.database;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
@@ -6,47 +7,48 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.andersen.dogsapp.dogs.Owner;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnersSQLiteDataSource  {
+public class OwnersSQLiteDataSource {
     private static OwnersSQLiteDataSource ownersDataSource;
-    private static final String TAG = "# OwnersSQLiteDataSource";
+    private static final String TAG = "#";
 
     public OwnersCursorWrapper ownersCursor;
     private List<Owner> owners;
 
-    private OwnersSQLiteDataSource(SQLiteDatabase db){
+    private OwnersSQLiteDataSource(SQLiteDatabase db) {
         owners = getOwners(db);
     }
 
-    public static OwnersSQLiteDataSource getInstance (SQLiteDatabase db){
-        if(ownersDataSource == null){
+    public static OwnersSQLiteDataSource getInstance(SQLiteDatabase db) {
+        if (ownersDataSource == null) {
             ownersDataSource = new OwnersSQLiteDataSource(db);
         }
         return ownersDataSource;
     }
 
-    public List<Owner> getOwners (SQLiteDatabase db){
-        if (owners != null){
+    public List<Owner> getOwners(SQLiteDatabase db) {
+        if (owners != null) {
             return owners;
         } else {
             owners = new ArrayList<>();
             ownersCursor = queryOwners(db);
-            try{
+            try {
                 ownersCursor.moveToNext();
-                while (!ownersCursor.isAfterLast()){
+                while (!ownersCursor.isAfterLast()) {
                     owners.add(ownersCursor.getOwner());
                     ownersCursor.moveToNext();
                 }
-            } finally{
+            } finally {
                 ownersCursor.close();
             }
         }
         return owners;
     }
 
-    private OwnersCursorWrapper queryOwners(SQLiteDatabase db){
+    private OwnersCursorWrapper queryOwners(SQLiteDatabase db) {
         Log.d(TAG, "queryOwners");
         Cursor cursor = db.query(
                 OwnerTable.TABLE_NAME,

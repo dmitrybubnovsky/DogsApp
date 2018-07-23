@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,21 +23,22 @@ import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class DogOwnersListActivity extends AppCompatActivity{
+public class DogOwnersListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
+        DataRepository dataRepository = DataRepository.get();
+
         OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
         SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
         ownerDBHelper.addSomeDB();
 
-//       List<Owner> owners = DataRepository.get().getOwners(this);
-        List<Owner> owners = DataRepository.get().getOwners(db);
-        List<Dog> dogs = DataRepository.get().getDogs(db);
-//        List<Dog> dogs = DataRepository.get().getDogs(this);
+        List<Owner> owners = dataRepository.getOwners(db);
+        List<Dog> dogs = dataRepository.getDogs(db);
+//        List<Owner> owners = dataRepository.getOwners(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
@@ -65,17 +67,17 @@ public class DogOwnersListActivity extends AppCompatActivity{
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
         AppTextView.newInstance(itemView, R.id.owner_name_textview)
-                    .text(owner.getOwnerFullName())
-                    .style(this, R.style.TextViewTitleItem)
-                    .build();
+                .text(owner.getOwnerFullName())
+                .style(this, R.style.TextViewTitleItem)
+                .build();
 
         AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
-                    .text(owner.getPreferedDogsKind())
-                    .build();
+                .text(owner.getPreferedDogsKind())
+                .build();
 
         AppTextView.newInstance(itemView, R.id.quantity_textview)
-                    .text("" + owner.getDogsQuantity())
-                    .build();
+                .text("" + owner.getDogsQuantity())
+                .build();
         return itemView;
     }
 }

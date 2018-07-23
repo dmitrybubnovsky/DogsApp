@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -21,42 +22,43 @@ public class DataRepository {
     private DogsHandler dogsHandler;
     private OwnersHandler ownersHandler;
 
-    private DataRepository(){
+    private DataRepository() {
         dogsHandler = DogsHandler.getInstance();
         ownersHandler = OwnersHandler.getInstance();
     }
 
-    public static DataRepository get(){
-        if(dataRepository == null){
+    public static DataRepository get() {
+        if (dataRepository == null) {
             dataRepository = new DataRepository();
-        } return dataRepository;
+        }
+        return dataRepository;
     }
 
-    public List<Owner> getOwners(Context context){
+    public List<Owner> getOwners(Context context) {
         ownersDataSource = OwnersDataSource.getInstance(context);
-        dogsDataSource = DogsDataSource.getInstance(context);
         ownersHandler.setOwners(ownersDataSource.getOwners(context));
         return ownersHandler.getOwners();
     }
 
-    public List<Owner> getOwners(SQLiteDatabase db){
+    public List<Owner> getOwners(SQLiteDatabase db) {
         ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(db);
         dogsSQLiteDataSource = DogsSQLiteDataSource.getInstance(db);
         ownersHandler.setOwners(ownersSQLiteDataSource.getOwners(db));
         return ownersHandler.getOwners();
     }
 
-    public List<Dog> getDogs(Context context){
+    public List<Dog> getDogs(Context context) {
+        dogsDataSource = DogsDataSource.getInstance(context);
         dogsHandler.setDogs(dogsDataSource.getDogs(context));
         return dogsHandler.getDogs();
     }
 
-    public List<Dog> getDogs(SQLiteDatabase db){
+    public List<Dog> getDogs(SQLiteDatabase db) {
         dogsHandler.setDogs(dogsSQLiteDataSource.getDogs(db));
         return dogsHandler.getDogs();
     }
 
-    public List<Dog> getOwnerDogs(Owner owner){
+    public List<Dog> getOwnerDogs(Owner owner) {
         return dogsHandler.getOwnerDogs(owner);
     }
 }
