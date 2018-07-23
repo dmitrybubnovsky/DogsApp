@@ -1,8 +1,11 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Context;
+
 import com.andersen.dogsapp.dogs.data.OwnersData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -16,23 +19,23 @@ public class OwnersDataSource {
     @Expose
     private List<Owner> owners;
 
-    private OwnersDataSource(){
+    private OwnersDataSource() {
     }
 
-    public static OwnersDataSource getInstance (){
-        if(ownersDataSource == null){
+    public static OwnersDataSource getInstance() {
+        if (ownersDataSource == null) {
             ownersDataSource = new OwnersDataSource();
         }
         return ownersDataSource;
     }
 
-    public List<Owner> getOwners(Context context){
+    public List<Owner> getOwners(Context context) {
         try {
             InputStream inputStream = context.getAssets().open("owners.json");
             JsonParser jsonParser = JsonParser.newInstance();
             ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
             return ownersData.getOwners();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

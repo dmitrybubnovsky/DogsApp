@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
+
 import java.util.List;
+
 import com.andersen.dogsapp.dogs.Owner;
+
 import android.widget.Toast;
 import android.util.Log;
 
@@ -62,7 +67,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
     }
 
     private void onItemClick(View view, Dog dog) {
-        Integer dogId = (Integer)view.getTag();
+        Integer dogId = (Integer) view.getTag();
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG_ID, dogId);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);

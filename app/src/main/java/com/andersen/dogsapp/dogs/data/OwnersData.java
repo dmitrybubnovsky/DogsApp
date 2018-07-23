@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.data;
+
 import com.andersen.dogsapp.dogs.Owner;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

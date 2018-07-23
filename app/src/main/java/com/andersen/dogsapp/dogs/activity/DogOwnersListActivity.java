@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +15,12 @@ import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.Owner;
+
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class DogOwnersListActivity extends AppCompatActivity{
+public class DogOwnersListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +56,17 @@ public class DogOwnersListActivity extends AppCompatActivity{
         View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
         AppTextView.newInstance(itemView, R.id.owner_name_textview)
-                    .text(owner.getOwnerFullName())
-                    .style(this, R.style.TextViewTitleItem)
-                    .build();
+                .text(owner.getOwnerFullName())
+                .style(this, R.style.TextViewTitleItem)
+                .build();
 
         AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
-                    .text(owner.getPreferedDogsKind())
-                    .build();
+                .text(owner.getPreferedDogsKind())
+                .build();
 
         AppTextView.newInstance(itemView, R.id.quantity_textview)
-                    .text("" + owner.getDogsQuantity())
-                    .build();
+                .text("" + owner.getDogsQuantity())
+                .build();
         return itemView;
     }
 }
