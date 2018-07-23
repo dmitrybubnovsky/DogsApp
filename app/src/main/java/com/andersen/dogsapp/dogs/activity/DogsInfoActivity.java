@@ -36,13 +36,13 @@ public class DogsInfoActivity extends AppCompatActivity {
 
     private void initViews(Dog dog) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageResource(DogImageLab.get().getRandomDogImageResource());
+        dogsPhoto.setImageResource();
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());
 
         TextView kindDogTextView = findViewById(R.id.kind_dog_textview);
-        kindDogTextView.setText(dog.getDogName());
+        kindDogTextView.setText(dog.getDogKind());
 
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
         dogAgeTextView.setText("" + dog.getDogAge() + " " + getResources().getString(R.string.age_months_measure));
