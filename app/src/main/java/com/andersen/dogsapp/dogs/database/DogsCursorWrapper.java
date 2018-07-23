@@ -15,7 +15,7 @@ public class DogsCursorWrapper extends CursorWrapper {
         dog.setDogId(getInt(getColumnIndex(DogTable.ID)));
         dog.setDogName(getString(getColumnIndex(DogTable.NAME)));
         dog.setDogKind(getString(getColumnIndex(DogTable.KIND)));
-        dog.setDogImageId(getInt(getColumnIndex(DogTable.IMAGE_ID)));
+        dog.setDogImage(getString(getColumnIndex(DogTable.IMAGE)));
         dog.setDogAge(getInt(getColumnIndex(DogTable.AGE)));
         dog.setDogTall(getInt(getColumnIndex(DogTable.TALL)));
         dog.setDogWeight(getInt(getColumnIndex(DogTable.WEIGHT)));

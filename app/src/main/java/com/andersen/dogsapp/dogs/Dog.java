@@ -5,7 +5,7 @@ import android.os.Parcel;
 
 public class Dog implements Parcelable {
     private int dogId;
-    private int dogImageId;
+    private String dogImage;
     private int dogAge;
     private int dogTall;
     private int dogWeight;
@@ -48,7 +48,7 @@ public class Dog implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(dogId);
-        dest.writeInt(dogImageId);
+        dest.writeString(dogImage);
         dest.writeInt(dogAge);
         dest.writeInt(dogTall);
         dest.writeInt(dogWeight);
@@ -72,8 +72,8 @@ public class Dog implements Parcelable {
         this.dogId = dogId;
     }
 
-    public void setDogImageId(int dogImageId) {
-        this.dogImageId = dogImageId;
+    public void setDogImage(String dogImg) {
+        dogImage = dogImg;
     }
 
     public void setDogAge(int dogAge) {
@@ -98,7 +98,7 @@ public class Dog implements Parcelable {
 
     private Dog(Parcel parcelInstance) {
         dogId = parcelInstance.readInt();
-        dogImageId = parcelInstance.readInt();
+        dogImage = parcelInstance.readString();
         dogAge = parcelInstance.readInt();
         dogTall = parcelInstance.readInt();
         dogWeight = parcelInstance.readInt();
