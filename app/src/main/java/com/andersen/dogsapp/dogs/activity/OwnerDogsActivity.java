@@ -68,10 +68,10 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         startActivity(intent);
     }
 
-    private static class DogsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup{
+    private static class DogsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
         @Override
         public int getSpanSize(int position) {
-                return (position % 3 == 0) ? 2 : 1;
+            return (position % 3 == 0) ? 2 : 1;
         }
     }
 }

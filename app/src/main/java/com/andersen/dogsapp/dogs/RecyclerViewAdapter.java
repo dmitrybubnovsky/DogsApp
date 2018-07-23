@@ -15,15 +15,12 @@ import com.andersen.dogsapp.R;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    Context context;
-    Owner owner;
-    List<Dog> dogs;
-    ItemListener listener;
+    private Context context;
+    private List<Dog> dogs;
+    private ItemListener listener;
 
-    //    RecyclerViewAdapter(Context context, ItemListener listener, Owner owner, List<Dog> dogs){
     public RecyclerViewAdapter(Context context, List<Dog> dogs, ItemListener listener) {
         this.context = context;
-//        this.owner = owner;
         this.dogs = dogs;
         this.listener = listener;
     }
@@ -34,7 +31,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView dogImageView;
         RelativeLayout relativeLayout;
         Dog dog;
-        List<Dog> dogs;
 
         public ViewHolder(View view) {
             super(view);
@@ -51,18 +47,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         public void setData(Dog dog) {
-//        public void setData (Owner owner, List<Dog> dogs){
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
             dogImageView.setImageResource(dog.getDogImageId(context));
-//          relativeLayout.setBackground();
         }
 
         @Override
         public void onClick(View view) {
             if (listener != null) {
-                //        listener.onItemClick(owner, dogs);
                 listener.onItemClick(dog);
             }
         }
@@ -76,7 +69,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //     holder.setData(owner, dogs);
         holder.setData(dogs.get(position));
     }
 
@@ -86,7 +78,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public interface ItemListener {
-        //      void onItemClick(Owner owner, List<Dog> dogs);
         void onItemClick(Dog dog);
     }
 }
