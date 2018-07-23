@@ -39,19 +39,25 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
+        DataRepository dataRepository = DataRepository.get();
+
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+        List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
+        /*
+         *  для работы с json'ом.  Аналогично в DogOwnersListAcitivity
+         */
+//        dataRepository.get().getDogs(this);
+
+        /*
+         *   для работы с SQLite'ом. Аналогично в DogOwnersListAcitivity
+         */
         OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
         SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
-
-        DataRepository dataRepository = DataRepository.get();
-//        dataRepository.get().getDogs(this);
         dataRepository.get().getDogs(db);
-        List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
-
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
 

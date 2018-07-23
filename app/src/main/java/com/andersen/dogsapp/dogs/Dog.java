@@ -109,7 +109,6 @@ public class Dog implements Parcelable {
     }
 
 
-
     private Dog(Parcel parcelInstance) {
         dogId = parcelInstance.readInt();
         dogImageString = parcelInstance.readString();

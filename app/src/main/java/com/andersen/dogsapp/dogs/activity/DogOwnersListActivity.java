@@ -33,16 +33,21 @@ public class DogOwnersListActivity extends AppCompatActivity {
 
         DataRepository dataRepository = DataRepository.get();
 
+        /*
+         *  для работы с SQLite'ом. Аналогично в OwnerDogsAcitivity
+         */
         OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
         SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
         ownerDBHelper.addSomeDB();
-
         List<Owner> owners = dataRepository.getOwners(db);
         List<Dog> dogs = dataRepository.getDogs(db);
+
+        /*
+         *   для работы с json'ом. Аналогично в OwnerDogsAcitivity
+         */
 //        List<Owner> owners = dataRepository.getOwners(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
-
         LinearLayout containerLinLayout = findViewById(R.id.owners_container);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
