@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.Dog;
-import com.andersen.dogsapp.dogs.DogImageLab;
 import com.andersen.dogsapp.dogs.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
@@ -36,7 +35,7 @@ public class DogsInfoActivity extends AppCompatActivity {
 
     private void initViews(Dog dog) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageResource();
+        dogsPhoto.setImageResource(dog.getDogImageId(this));
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());

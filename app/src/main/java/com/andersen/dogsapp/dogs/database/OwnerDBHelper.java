@@ -84,15 +84,6 @@ public class OwnerDBHelper extends SQLiteOpenHelper {
         return getWritableDatabase().insert(DogTable.TABLE_NAME, null, cv);
     }
 
-
-    public long addRelation(String dogId, String ownerId) {
-        ContentValues cv = new ContentValues();
-        cv.put(DogTable.ID, dogId);
-        cv.put(OwnerTable.ID, ownerId);
-
-        return getWritableDatabase().insert(ClassTable.TABLE_NAME, null, cv);
-    }
-
     public void addSomeDB() {
         addOwner(1, "Andy", "Garcia", "Collie", "102 103");
         addOwner(2, "Tom", "Cruis", "Doberman Pincher", "101");
