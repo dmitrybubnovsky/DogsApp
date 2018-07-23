@@ -43,7 +43,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
 
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());
         setSupportActionBar(toolbar);
 
         dataRepository = DataRepository.get();
@@ -70,7 +70,6 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
     public void onItemClick(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
-        Log.d(TAG, "" + dog.getDogKind());
         startActivity(intent);
     }
 }
