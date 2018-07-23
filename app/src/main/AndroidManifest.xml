@@ -28,8 +28,6 @@
         <activity
             android:name=".dogs.activity.MainAppDescriptionActivity"
             android:theme="@style/NoActionBar"/>
-        <activity android:name=".dogs.activity.RecyclerViewTestActivity">
-        </activity>
     </application>
 
 </manifest>

@@ -19,7 +19,6 @@ public class DogToolBar {
     private DogToolBar(Activity activity, int titleRes, int color){
         dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
         dogToolbar.setTitleTextColor(color);
-        dogToolbar.setTitle(titleRes);
     }
 
     public static Toolbar init(Activity activity, int str){

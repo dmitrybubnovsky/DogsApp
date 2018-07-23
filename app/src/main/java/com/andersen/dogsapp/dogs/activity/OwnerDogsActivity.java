@@ -37,10 +37,11 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_dogs_list_recyclerview);
 
+        Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
-        Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
         dataRepository = DataRepository.get();
 
         List<Dog> dogs = dataRepository.getOwnerDogs(owner);
@@ -51,7 +52,6 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         layoutManager.setSpanSizeLookup( new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                // 2 column size for first row
                 if((position % 3) == 0){
                     return 2;
                 } else
@@ -64,11 +64,9 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
 
     @Override
     public void onItemClick(Dog dog) {
- //       Integer dogId = (Integer)view.getTag();
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         Log.d(TAG, ""+ dog.getDogKind());
-
         startActivity(intent);
     }
 }
