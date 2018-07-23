@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,8 @@ import android.widget.Button;
 
 import com.andersen.dogsapp.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnStartActDogs;
-    private Button btnStartRecyclerViewAcitvity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

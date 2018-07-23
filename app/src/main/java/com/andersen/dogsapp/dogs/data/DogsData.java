@@ -16,7 +16,7 @@ public class DogsData {
     private List<Dog> dogs;
 
     public List<Dog> getDogs() {
-        Log.d("# DogsData. getDogs" , ""+dogs.size());
+        Log.d("# DogsData. getDogs", "" + dogs.size());
         return dogs;
     }
 }

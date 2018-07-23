@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,23 +9,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
+
 import java.util.List;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Context context;
     Owner owner;
     List<Dog> dogs;
     ItemListener listener;
 
-//    RecyclerViewAdapter(Context context, ItemListener listener, Owner owner, List<Dog> dogs){
-    public RecyclerViewAdapter(Context context, List<Dog> dogs, ItemListener listener){
+    //    RecyclerViewAdapter(Context context, ItemListener listener, Owner owner, List<Dog> dogs){
+    public RecyclerViewAdapter(Context context, List<Dog> dogs, ItemListener listener) {
         this.context = context;
 //        this.owner = owner;
         this.dogs = dogs;
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView dogNameTextView;
         TextView dogKindTextView;
         ImageView dogImageView;
@@ -32,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Dog dog;
         List<Dog> dogs;
 
-        public ViewHolder (View view){
+        public ViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
 
@@ -46,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             relativeLayout = view.findViewById(R.id.recycler_item_relativeLayout);
         }
 
-        public void setData (Dog dog){
+        public void setData(Dog dog) {
 //        public void setData (Owner owner, List<Dog> dogs){
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
@@ -56,9 +60,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         @Override
-        public void onClick(View view){
-            if (listener != null){
-        //        listener.onItemClick(owner, dogs);
+        public void onClick(View view) {
+            if (listener != null) {
+                //        listener.onItemClick(owner, dogs);
                 listener.onItemClick(dog);
             }
         }
@@ -72,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-   //     holder.setData(owner, dogs);
+        //     holder.setData(owner, dogs);
         holder.setData(dogs.get(position));
     }
 
@@ -81,8 +85,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return dogs.size();
     }
 
-    public interface ItemListener{
-  //      void onItemClick(Owner owner, List<Dog> dogs);
+    public interface ItemListener {
+        //      void onItemClick(Owner owner, List<Dog> dogs);
         void onItemClick(Dog dog);
     }
 }

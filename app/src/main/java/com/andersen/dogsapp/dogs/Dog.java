@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Parcelable;
@@ -76,7 +77,7 @@ public class Dog implements Parcelable {
         }
     };
 
-    private Dog(Parcel parcelInstance){
+    private Dog(Parcel parcelInstance) {
         dogId = parcelInstance.readInt();
         dogAge = parcelInstance.readInt();
         dogTall = parcelInstance.readInt();

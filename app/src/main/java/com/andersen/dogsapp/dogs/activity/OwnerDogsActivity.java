@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
+
 import java.util.List;
+
 import com.andersen.dogsapp.dogs.Owner;
 import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
 
@@ -49,10 +53,10 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, dogs, this);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        layoutManager.setSpanSizeLookup( new GridLayoutManager.SpanSizeLookup() {
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if((position % 3) == 0){
+                if ((position % 3) == 0) {
                     return 2;
                 } else
                     return 1;
@@ -66,7 +70,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
     public void onItemClick(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
-        Log.d(TAG, ""+ dog.getDogKind());
+        Log.d(TAG, "" + dog.getDogKind());
         startActivity(intent);
     }
 }

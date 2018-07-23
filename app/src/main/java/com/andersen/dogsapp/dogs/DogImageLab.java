@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs;
+
 import com.andersen.dogsapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

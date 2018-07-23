@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -27,9 +28,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         setTypeFonts(this, descriptionTextView, appNameTextView);
     }
 
-    private void setTypeFonts(Context context, TextView appNameTextView, TextView descriptionTextView){
+    private void setTypeFonts(Context context, TextView appNameTextView, TextView descriptionTextView) {
         // first way through the asset folder
-        appNameTextView.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/Aclonica.ttf"));
+        appNameTextView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aclonica.ttf"));
         // second way through the R.font resource
         descriptionTextView.setTypeface(ResourcesCompat.getFont(context, R.font.droid_serif_italic));
     }
