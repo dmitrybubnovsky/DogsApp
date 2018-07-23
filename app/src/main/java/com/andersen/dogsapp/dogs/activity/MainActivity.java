@@ -18,9 +18,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnStartActDogs = findViewById(R.id.start_app_button);
         btnStartActDogs.setOnClickListener(this);
-
-        btnStartRecyclerViewAcitvity = findViewById(R.id.start_recyclerview);
-        btnStartRecyclerViewAcitvity.setOnClickListener(this);
     }
 
     @Override
@@ -28,9 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.start_app_button:
                 startActivity(new Intent(this, MainAppDescriptionActivity.class));
-                break;
-            case R.id.start_recyclerview:
-                startActivity(new Intent(this, RecyclerViewTestActivity.class));
                 break;
             default:
                 break;

@@ -6,7 +6,7 @@
       "ownerId": 2,
       "dogName": "Drujok",
       "dogKind": "Samoyed",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "samoyed",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -15,8 +15,8 @@
       "dogId": 2,
       "ownerId": 1,
       "dogName": "Terry",
-      "dogKind": "Shepherd",
-      "dogImageString": "siberian_husky",
+      "dogKind": "German Shepherd",
+      "dogImageString": "german_shepherd",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -26,7 +26,7 @@
       "ownerId": 1,
       "dogName": "Fox",
       "dogKind": "German Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "german_shepherd",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -35,8 +35,8 @@
       "dogId": 4,
       "ownerId": 3,
       "dogName": "Doggy",
-      "dogKind": "Doberman Pincher",
-      "dogImageString": "siberian_husky",
+      "dogKind": "Chinook",
+      "dogImageString": "chinook",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -46,7 +46,7 @@
       "ownerId": 3,
       "dogName": "Palma",
       "dogKind": "German Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "german_shepherd",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -55,8 +55,8 @@
       "dogId": 6,
       "ownerId": 3,
       "dogName": "Naomi",
-      "dogKind": "Siberian Husky",
-      "dogImageString": "siberian_husky",
+      "dogKind": "Standard schnauzer",
+      "dogImageString": "standard_schnauzer",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -65,8 +65,8 @@
       "dogId": 7,
       "ownerId": 4,
       "dogName": "Sarah",
-      "dogKind": "German Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogKind": "American foxhound",
+      "dogImageString": "american_foxhound",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -85,8 +85,8 @@
       "dogId": 9,
       "ownerId": 4,
       "dogName": "Grey",
-      "dogKind": "Austrian Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogKind": "Chesapeake bay retriever",
+      "dogImageString": "chesapeake_bay_retriever",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -95,8 +95,8 @@
       "dogId": 10,
       "ownerId": 4,
       "dogName": "Sharik",
-      "dogKind": "German Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogKind": "Berger picard",
+      "dogImageString": "berger_picard",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -155,8 +155,8 @@
       "dogId": 16,
       "ownerId": 6,
       "dogName": "Soika",
-      "dogKind": "Samoyed",
-      "dogImageString": "siberian_husky",
+      "dogKind": "English coonhound",
+      "dogImageString": "english_coonhound",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -165,8 +165,8 @@
       "dogId": 17,
       "ownerId": 7,
       "dogName": "Sally",
-      "dogKind": "Spaniel",
-      "dogImageString": "siberian_husky",
+      "dogKind": "Munsterlander pointer",
+      "dogImageString": "munsterlander_pointer",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -176,7 +176,7 @@
       "ownerId": 7,
       "dogName": "Laika",
       "dogKind": "Pocket Beagle",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "pocket_beagle",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -185,8 +185,8 @@
       "dogId": 19,
       "ownerId": 8,
       "dogName": "Maika",
-      "dogKind": "Shepherd",
-      "dogImageString": "siberian_husky",
+      "dogKind": "Water spaniel",
+      "dogImageString": "water_spaniel",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -196,7 +196,7 @@
       "ownerId": 9,
       "dogName": "Greazly",
       "dogKind": "Saint Bernhard",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "saint_bernard",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -206,7 +206,7 @@
       "ownerId": 9,
       "dogName": "Buzzy",
       "dogKind": "German Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "german_shepherd",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24
@@ -236,7 +236,7 @@
       "ownerId": 10,
       "dogName": "Palkan",
       "dogKind": "German Sheepdog",
-      "dogImageString": "siberian_husky",
+      "dogImageString": "german_shepherd",
       "dogTall": 46,
       "dogWeight": 38,
       "dogAge": 24

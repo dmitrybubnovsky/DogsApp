@@ -24,6 +24,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.listener = listener;
     }
 
+//    @Override
+//    public int getItemViewType(int position) {
+//        if(position % 2 == 0){
+//            return 2;
+//        }
+//        return super.getItemViewType(position);
+//    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView dogNameTextView;
         TextView dogKindTextView;
