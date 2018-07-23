@@ -31,6 +31,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
 
     private DataRepository dataRepository;
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -53,15 +54,9 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, dogs, this);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if ((position % 3) == 0) {
-                    return 2;
-                } else
-                    return 1;
-            }
-        });
+
+        OwnerDogsActivity.DogsSpanSizeLookup dogsSpanSizeLookup = new OwnerDogsActivity.DogsSpanSizeLookup();
+        layoutManager.setSpanSizeLookup(dogsSpanSizeLookup);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -71,5 +66,12 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);
+    }
+
+    private static class DogsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup{
+        @Override
+        public int getSpanSize(int position) {
+                return (position % 3 == 0) ? 2 : 1;
+        }
     }
 }
