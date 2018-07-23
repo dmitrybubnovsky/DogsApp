@@ -14,6 +14,12 @@
     <string name="toolbar_title_owners_list">OWNERS LIST</string>
     <string name="toolbar_title_dogs_list">DOGS LIST</string>
     <string name="toolbar_title_detail_info">DOGS INFO</string>
+
+    <string name="weight_measure">kg</string>
+    <string name="tall_measure">cm</string>
+    <string name="age_year_measure">yrs</string>
+    <string name="age_months_measure">months</string>
+
     <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="voice_btn_title">VOICE!</string>
     <string name="text_view_app_description">This app dedicated to Dog-fanciers. It contains the list of dog-owners with detailed information of their pet including its name, type of dog, weight, age and tall</string>

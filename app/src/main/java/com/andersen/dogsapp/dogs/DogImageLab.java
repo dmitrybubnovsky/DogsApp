@@ -1,6 +1,5 @@
 package com.andersen.dogsapp.dogs;
 
-
 import com.andersen.dogsapp.R;
 
 import java.util.ArrayList;

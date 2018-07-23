@@ -1,99 +1,72 @@
 package com.andersen.dogsapp.dogs.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
+import com.andersen.dogsapp.dogs.DataRepository;
+import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
+import com.andersen.dogsapp.dogs.Owner;
+
+import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class DogOwnersListActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "#";
-
-    private LinearLayout containerLinLayout;
-
-    private String ownersStringArray[];
-    private String dogKindsStringArray[];
-    private int quantitiesDogs[];
+public class DogOwnersListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
-        setSupportActionBar(toolbar);
-
-        // init ownersStringArray[] and dogKindsStringArray[] from Resources
-        initResources(R.array.owners, R.array.dogs_kinds);
-
-        containerLinLayout = findViewById(R.id.owners_container);
+        List<Owner> owners = DataRepository.get().getOwners(this);
+        DataRepository.get().getDogs(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        for (int i = 0; i < ownersStringArray.length; i++) {
-            View itemView = initItemView(layoutInflater, i);
+        LinearLayout containerLinLayout = findViewById(R.id.owners_container);
 
-            if( i == ownersStringArray.length-1 ){
-                itemView.setEnabled(false);
-            }
-            itemView.setOnClickListener(this);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
+        setSupportActionBar(toolbar);
+
+        for (int i = 0; i < owners.size(); i++) {
+            Owner owner = owners.get(i);
+            View itemView = initItemView(layoutInflater, containerLinLayout, owner);
+            itemView.setTag(owner.getOwnerId());
+            itemView.setOnClickListener(view -> openOwnerDogs(owner));
             containerLinLayout.addView(itemView);
         }
     }
 
-    private View initItemView(LayoutInflater layoutInflater, int i) {
-        View itemView = layoutInflater.inflate(R.layout.owners_item, containerLinLayout, false);
+    private void openOwnerDogs(Owner owner) {
+        Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
+        intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
+        startActivity(intent);
+    }
 
-        String ownerName = ownersStringArray[i];
-        String dogKind = dogKindsStringArray[i];
-        int quantityDog = quantitiesDogs[i];
+    private View initItemView(LayoutInflater layoutInflater, LinearLayout root, Owner owner) {
+        View itemView = layoutInflater.inflate(R.layout.owners_item, root, false);
 
-        // instantiate view-reference with inflated view
         AppTextView.newInstance(itemView, R.id.owner_name_textview)
-                    .text(ownerName)
-                    .style(this, R.style.TextViewTitleItem)
-                    .build();
+                .text(owner.getOwnerFullName())
+                .style(this, R.style.TextViewTitleItem)
+                .build();
 
         AppTextView.newInstance(itemView, R.id.preffered_dog_textview)
-                    .text(dogKind)
-                    .style(this, R.style.TextViewSubTitle)
-                    .build();
+                .text(owner.getPreferedDogsKind())
+                .build();
 
         AppTextView.newInstance(itemView, R.id.quantity_textview)
-                    .text("" + quantityDog)
-                    .build();
+                .text("" + owner.getDogsQuantity())
+                .build();
         return itemView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        openOwnerDogs(view);
-    }
-
-    private void initResources(int ownersArrayRes, int dogKindsArray) {
-        quantitiesDogs = new int[]{3, 2, 2, 4, 5, 8, 5, 3, 7, 9};
-        Resources resources = getResources();
-        ownersStringArray = resources.getStringArray(ownersArrayRes);
-        dogKindsStringArray = resources.getStringArray(dogKindsArray);
-    }
-
-    private void openOwnerDogs(View view) {
-        TextView ownerNameTextView = view.findViewById(R.id.owner_name_textview);
-        TextView quantityTextView = view.findViewById(R.id.quantity_textview);
-
-        Intent i = new Intent(getApplicationContext(), OwnerDogsActivity.class);
-        i.putExtra(OwnerDogsActivity.EXTRA_OWNER_NAME, ownerNameTextView.getText().toString());
-        i.putExtra(OwnerDogsActivity.EXTRA_DOGS_QUANTITY, Integer.parseInt(quantityTextView.getText().toString()));
-        startActivity(i);
     }
 }
