@@ -5,9 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
+import com.andersen.dogsapp.dogs.data.DogKind;
 import com.andersen.dogsapp.dogs.data.DogsHandler;
 import com.andersen.dogsapp.dogs.data.OwnersHandler;
 import com.andersen.dogsapp.dogs.database.DogsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.database.OwnerDBHelper;
 import com.andersen.dogsapp.dogs.database.OwnersSQLiteDataSource;
 
 public class DataRepository {
@@ -40,10 +42,11 @@ public class DataRepository {
         return ownersHandler.getOwners();
     }
 
-    public List<Owner> getOwners(SQLiteDatabase db) {
-        ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(db);
-        dogsSQLiteDataSource = DogsSQLiteDataSource.getInstance(db);
-        ownersHandler.setOwners(ownersSQLiteDataSource.getOwners(db));
+    public List<Owner> getOwners(OwnerDBHelper ownerDBHelper) {
+        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
+        ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(ownerDBHelper);
+        dogsSQLiteDataSource = DogsSQLiteDataSource.getInstance(ownerDBHelper);
+        ownersHandler.setOwners(ownersSQLiteDataSource.getOwners(ownerDBHelper));
         return ownersHandler.getOwners();
     }
 
@@ -53,8 +56,10 @@ public class DataRepository {
         return dogsHandler.getDogs();
     }
 
-    public List<Dog> getDogs(SQLiteDatabase db) {
-        dogsHandler.setDogs(dogsSQLiteDataSource.getDogs(db));
+    public List<Dog> getDogs(OwnerDBHelper ownerDBHelper) {
+        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
+
+        dogsHandler.setDogs(dogsSQLiteDataSource.getDogs(ownerDBHelper));
         return dogsHandler.getDogs();
     }
 

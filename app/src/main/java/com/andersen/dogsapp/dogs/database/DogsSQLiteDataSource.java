@@ -16,18 +16,19 @@ public class DogsSQLiteDataSource {
     public DogsCursorWrapper dogsCursor;
     private List<Dog> dogs;
 
-    private DogsSQLiteDataSource(SQLiteDatabase db) {
-        dogs = getDogs(db);
+    private DogsSQLiteDataSource(OwnerDBHelper ownerDBHelper) {
+        dogs = getDogs(ownerDBHelper);
     }
 
-    public static DogsSQLiteDataSource getInstance(SQLiteDatabase db) {
+    public static DogsSQLiteDataSource getInstance(OwnerDBHelper ownerDBHelper) {
         if (dogsDataSource == null) {
-            dogsDataSource = new DogsSQLiteDataSource(db);
+            dogsDataSource = new DogsSQLiteDataSource(ownerDBHelper);
         }
         return dogsDataSource;
     }
 
-    public List<Dog> getDogs(SQLiteDatabase db) {
+    public List<Dog> getDogs(OwnerDBHelper ownerDBHelper) {
+        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
         if (dogs != null) {
             return dogs;
         } else {

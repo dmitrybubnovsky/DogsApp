@@ -56,8 +56,7 @@ public class OwnerDogsActivity extends AppCompatActivity {
          *   для работы с SQLite'ом. Аналогично в DogOwnersListAcitivity
          */
         OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
-        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
-        dataRepository.get().getDogs(db);
+        dataRepository.get().getDogs(ownerDBHelper);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
 

@@ -37,10 +37,10 @@ public class DogOwnersListActivity extends AppCompatActivity {
          *  для работы с SQLite'ом. Аналогично в OwnerDogsAcitivity
          */
         OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
-        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
-        ownerDBHelper.addSomeDB();
-        List<Owner> owners = dataRepository.getOwners(db);
-        List<Dog> dogs = dataRepository.getDogs(db);
+//        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
+//        ownerDBHelper.addSomeDB();
+        List<Owner> owners = dataRepository.getOwners(ownerDBHelper);
+        List<Dog> dogs = dataRepository.getDogs(ownerDBHelper);
 
         /*
          *   для работы с json'ом. Аналогично в OwnerDogsAcitivity
