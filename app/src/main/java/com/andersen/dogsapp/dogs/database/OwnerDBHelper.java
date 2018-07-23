@@ -5,6 +5,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.andersen.dogsapp.dogs.data.DogKind;
+import com.andersen.dogsapp.dogs.database.tables.ClassTable;
+import com.andersen.dogsapp.dogs.database.tables.DogTable;
+import com.andersen.dogsapp.dogs.database.tables.OwnerTable;
+
 public class OwnerDBHelper extends SQLiteOpenHelper {
     public static final String TAG = "# OwnerDBHelper";
 
@@ -85,41 +90,42 @@ public class OwnerDBHelper extends SQLiteOpenHelper {
     }
 
     public void addSomeDB() {
-        addOwner(1, "Andy", "Garcia", "Collie", "102 103");
-        addOwner(2, "Tom", "Cruis", "Doberman Pincher", "101");
-        addOwner(3, "Robert", "De Niro", "Pincher", "104 105 106");
-        addOwner(4, "Al", "Pacino", "Spaniel", "107 108 109 110");
-        addOwner(5, "Garry", "Potter", "Austrian Sheepdog", "111");
-        addOwner(6, "Will", "Smith", "Spaniel", "112 113 114 116");
-        addOwner(7, "Snejana", "Denisovna", "Pincher", "117 118");
-        addOwner(8, "James", "Bond", "Collie", "119");
-        addOwner(9, "Christian", "Baile", "Doberman Pincher", "120 121 122");
-        addOwner(10, "Anjelina", "Jolie", "Pit Bull", "123 124 125");
 
-        addDog(101, "Palkan", "Collie", "shepherd", 201, 55, 65);
-        addDog(102, "Drujok", "Doberman Pincher", "shepherd", 201, 55, 65);
-        addDog(103, "Sharik", "Pincher", "shepherd", 201, 55, 65);
-        addDog(104, "Greezly", "Spaniel", "shepherd", 201, 55, 65);
-        addDog(105, "Mickey", "Kaukaz Sheepdog", "shepherd", 201, 55, 65);
-        addDog(106, "Plooto", "Collie", "shepherd", 201, 55, 65);
-        addDog(107, "Muhtar", "Husky", "shepherd", 201, 55, 65);
-        addDog(108, "Kachtanka", "Spaniel", "shepherd", 201, 55, 65);
-        addDog(109, "Leopold", "Husky", "shepherd", 201, 55, 65);
-        addDog(110, "Barboss", "Austrian Sheepdog", "shepherd", 201, 55, 65);
-        addDog(111, "Joochka", "Collie", "shepherd", 201, 55, 65);
-        addDog(112, "Belka", "Husky", "shepherd", 201, 55, 65);
-        addDog(113, "Strelka", "Doberman", "shepherd", 201, 55, 65);
-        addDog(114, "Laika", "Husky", "shepherd", 201, 55, 65);
-        addDog(115, "Palma", "Spaniel", "shepherd", 201, 55, 65);
-        addDog(116, "Gerda", "Pit Bull", "shepherd", 201, 55, 65);
-        addDog(117, "Sally", "Collie", "shepherd", 201, 55, 65);
-        addDog(118, "Joochka", "Husky", "shepherd", 201, 55, 65);
-        addDog(119, "Kachtanka", "Spaniel", "shepherd", 201, 55, 65);
-        addDog(120, "Pluto", "Husky", "shepherd", 201, 55, 65);
-        addDog(121, "Strelka", "Collie", "shepherd", 201, 55, 65);
-        addDog(122, "Mickey", "Pit Bull", "shepherd", 201, 55, 65);
-        addDog(123, "Greazy", "Spaniel", "shepherd", 201, 55, 65);
-        addDog(124, "Muhtar", "Husky", "shepherd", 201, 55, 65);
-        addDog(125, "Leopold", "Collie", "shepherd", 201, 55, 65);
+        addOwner(1, "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
+        addOwner(2, "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
+        addOwner(3, "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
+        addOwner(4, "Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
+        addOwner(5, "Garry", "Potter", DogKind.MUNSTERLANDER, "111");
+        addOwner(6, "Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
+        addOwner(7, "Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
+        addOwner(8, "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
+        addOwner(9, "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
+        addOwner(10, "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
+
+        addDog(101, "Palkan", DogKind.AMERICAN_FOXHOUND, "shepherd", 201, 55, 65);
+        addDog(102, "Drujok", DogKind.BERGER_PICKARD, "shepherd", 201, 55, 65);
+        addDog(103, "Sharik", DogKind.CHINOOK, "shepherd", 201, 55, 65);
+        addDog(104, "Greezly", DogKind.ENGLISH_COONHOUND, "shepherd", 201, 55, 65);
+        addDog(105, "Mickey", DogKind.MUNSTERLANDER, "shepherd", 201, 55, 65);
+        addDog(106, "Plooto", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
+        addDog(107, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
+        addDog(108, "Kachtanka", DogKind.SAINT_BERNARD, "shepherd", 201, 55, 65);
+        addDog(109, "Leopold", DogKind.SHEPHERD, "shepherd", 201, 55, 65);
+        addDog(110, "Barboss", DogKind.WATER_SPANIEL, "shepherd", 201, 55, 65);
+        addDog(111, "Joochka", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
+        addDog(112, "Belka", DogKind.MUNSTERLANDER, "shepherd", 201, 55, 65);
+        addDog(113, "Strelka", DogKind.SAINT_BERNARD, "shepherd", 201, 55, 65);
+        addDog(114, "Laika", DogKind.CHINOOK, "shepherd", 201, 55, 65);
+        addDog(115, "Palma", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
+        addDog(116, "Gerda", DogKind.WATER_SPANIEL, "shepherd", 201, 55, 65);
+        addDog(117, "Sally", DogKind.AMERICAN_FOXHOUND, "shepherd", 201, 55, 65);
+        addDog(118, "Joochka", DogKind.CHESAPEAKE, "shepherd", 201, 55, 65);
+        addDog(119, "Kachtanka", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
+        addDog(120, "Pluto", DogKind.ENGLISH_COONHOUND, "shepherd", 201, 55, 65);
+        addDog(121, "Strelka", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
+        addDog(122, "Mickey", DogKind.SIBERIAN_HUSKY, "shepherd", 201, 55, 65);
+        addDog(123, "Greazy", DogKind.SHEPHERD, "shepherd", 201, 55, 65);
+        addDog(124, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
+        addDog(125, "Leopold", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
     }
 }

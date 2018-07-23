@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.andersen.dogsapp.dogs.Dog;
+import com.andersen.dogsapp.dogs.database.tables.DogTable;
+import com.andersen.dogsapp.dogs.database.wrappers.DogsCursorWrapper;
 
 import java.util.ArrayList;
 import java.util.List;

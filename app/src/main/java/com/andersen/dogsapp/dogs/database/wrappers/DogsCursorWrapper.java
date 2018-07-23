@@ -1,9 +1,10 @@
-package com.andersen.dogsapp.dogs.database;
+package com.andersen.dogsapp.dogs.database.wrappers;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.andersen.dogsapp.dogs.Dog;
+import com.andersen.dogsapp.dogs.database.tables.DogTable;
 
 public class DogsCursorWrapper extends CursorWrapper {
     public DogsCursorWrapper(Cursor cursor) {

@@ -1,12 +1,11 @@
 package com.andersen.dogsapp.dogs.database;
-
-import android.content.Context;
 import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.database.tables.OwnerTable;
+import com.andersen.dogsapp.dogs.database.wrappers.OwnersCursorWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
