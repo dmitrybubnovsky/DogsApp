@@ -1,24 +1,19 @@
 package com.andersen.dogsapp.dogs.data.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import com.andersen.dogsapp.dogs.Owner;
 import com.andersen.dogsapp.dogs.data.DogKind;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 import com.andersen.dogsapp.dogs.data.database.wrappers.OwnersCursorWrapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private static OwnersSQLiteDataSource ownersDataSource;
-    private static final String TAG = "#";
 
     private SQLiteDatabase db;
     private OwnersCursorWrapper ownersCursor;
@@ -58,7 +53,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     private OwnersCursorWrapper queryOwners() {
-        Log.d(TAG, "queryOwners");
         Cursor cursor = db.query(
                 OwnerTable.TABLE_NAME,
                 null,
