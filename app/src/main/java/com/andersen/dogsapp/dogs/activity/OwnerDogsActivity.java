@@ -51,7 +51,8 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
 
         List<Dog> ownerDogs = dataRepository.getDogs(owner);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());        setSupportActionBar(toolbar);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());
+        setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, ownerDogs, this);
