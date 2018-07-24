@@ -1,7 +1,6 @@
 package com.andersen.dogsapp.dogs.activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,8 +17,12 @@ import com.andersen.dogsapp.dogs.DogToolBar;
 
 import java.util.List;
 
+import com.andersen.dogsapp.dogs.JsonDogsDataSource;
+import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
 import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.database.OwnerDBHelper;
+import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.database.DBHelper;
 
 public class OwnerDogsActivity extends AppCompatActivity {
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
@@ -39,24 +42,17 @@ public class OwnerDogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_list);
 
-        DataRepository dataRepository = DataRepository.get();
-
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
-        List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
+
+        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
+
+        List<Dog> ownerDogs = dataRepository.getDogs(owner);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
-
-        /*
-         *  для работы с json'ом.  Аналогично в DogOwnersListAcitivity
-         */
-//        dataRepository.get().getDogs(this);
-
-        /*
-         *   для работы с SQLite'ом. Аналогично в DogOwnersListAcitivity
-         */
-        OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
-        dataRepository.get().getDogs(ownerDBHelper);
 
         dogsLinearLayout = findViewById(R.id.dogs_container);
 

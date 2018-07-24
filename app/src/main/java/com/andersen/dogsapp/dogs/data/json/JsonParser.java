@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.data.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

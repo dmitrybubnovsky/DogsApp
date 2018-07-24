@@ -1,24 +1,24 @@
 package com.andersen.dogsapp.dogs.activity;
 
-import android.content.Context;
-
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
+import com.andersen.dogsapp.dogs.JsonDogsDataSource;
+import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
 import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.database.OwnerDBHelper;
+import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.database.DBHelper;
 
 import java.util.List;
 
@@ -31,21 +31,12 @@ public class DogOwnersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        DataRepository dataRepository = DataRepository.get();
+        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
-        /*
-         *  для работы с SQLite'ом. Аналогично в OwnerDogsAcitivity
-         */
-        OwnerDBHelper ownerDBHelper = new OwnerDBHelper(this);
-//        SQLiteDatabase db = ownerDBHelper.getWritableDatabase();
-//        ownerDBHelper.addSomeDB();
-        List<Owner> owners = dataRepository.getOwners(ownerDBHelper);
-        List<Dog> dogs = dataRepository.getDogs(ownerDBHelper);
+        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 
-        /*
-         *   для работы с json'ом. Аналогично в OwnerDogsAcitivity
-         */
-//        List<Owner> owners = dataRepository.getOwners(this);
+        List<Owner> owners = dataRepository.getOwners(this);
 
         LayoutInflater layoutInflater = getLayoutInflater();
         LinearLayout containerLinLayout = findViewById(R.id.owners_container);

@@ -1,22 +1,28 @@
-package com.andersen.dogsapp.dogs.database;
+package com.andersen.dogsapp.dogs.data.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.andersen.dogsapp.dogs.data.DogKind;
-import com.andersen.dogsapp.dogs.database.tables.ClassTable;
-import com.andersen.dogsapp.dogs.database.tables.DogTable;
-import com.andersen.dogsapp.dogs.database.tables.OwnerTable;
+import com.andersen.dogsapp.dogs.data.database.tables.ClassTable;
+import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
+import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
-public class OwnerDBHelper extends SQLiteOpenHelper {
-    public static final String TAG = "# OwnerDBHelper";
+public class DBHelper extends SQLiteOpenHelper {
+    private static DBHelper dbHelper = null;
 
+    public static final String TAG = "# DBHelper";
     private static final String DB_NAME = "doggy_dogg.db";
     private static final int VERSION = 1;
 
-    public OwnerDBHelper(Context context) {
+    public static DBHelper getInstance (Context context){
+        if (dbHelper == null){
+            dbHelper = new DBHelper(context);
+        }
+        return dbHelper;
+    }
+
+    private DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
     }
 

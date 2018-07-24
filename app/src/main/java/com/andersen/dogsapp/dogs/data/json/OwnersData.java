@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data;
+package com.andersen.dogsapp.dogs.data.json;
 
 import com.andersen.dogsapp.dogs.Owner;
 import com.google.gson.annotations.Expose;

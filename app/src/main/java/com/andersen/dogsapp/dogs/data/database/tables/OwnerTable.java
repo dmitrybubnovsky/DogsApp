@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.database.tables;
+package com.andersen.dogsapp.dogs.data.database.tables;
 
 public class OwnerTable {
     public static final String TABLE_NAME = "owners";

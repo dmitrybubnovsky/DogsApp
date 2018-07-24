@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data;
+package com.andersen.dogsapp.dogs.data.json;
 
 import android.util.Log;
 

@@ -29,22 +29,7 @@ public class DogsHandler {
         return dogs;
     }
 
-    private Dog getDogById(int dogId) {
-        for (Dog dog : dogs) {
-            if (dog.getDogId() == (dogId)) {
-                return dog;
-            }
-        }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
-    }
 
-    public List<Dog> getOwnerDogs(Owner owner) {
-        List<Dog> ownerDogs = new ArrayList<>();
-        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for (int i = 0; i < dogsQuantity; i++) {
-            ownerDogs.add(getDogById(dogsIds[i]));
-        }
-        return ownerDogs;
-    }
+
+
 }
