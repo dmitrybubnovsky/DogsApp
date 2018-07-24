@@ -31,8 +31,8 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
     }
 
     @Override
-    public List<Owner> getOwners(Context context) {
-        return this.owners;
+    public List<Owner> getOwners() {
+        return owners;
     }
 
     private void loadOwners(Context context) {

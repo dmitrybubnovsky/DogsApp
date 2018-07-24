@@ -34,16 +34,16 @@ public class DogOwnersListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owners_list);
 
 //      json имплементация
-//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
         // sqlite имплементация
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(this);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(this);
+//        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(this);
+//        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(this);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 
-        List<Owner> owners = dataRepository.getOwners(this);
+        List<Owner> owners = dataRepository.getOwners();
 
         LayoutInflater layoutInflater = getLayoutInflater();
         LinearLayout containerLinLayout = findViewById(R.id.owners_container);

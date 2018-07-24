@@ -35,7 +35,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     @Override
-    public List<Owner> getOwners(Context context) {
+    public List<Owner> getOwners() {
         return owners;
     }
 
