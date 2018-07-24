@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data;
+package com.andersen.dogsapp.dogs.data.json;
 
 import android.util.Log;
 
@@ -15,7 +15,6 @@ public class DogsData {
 
     public List<Dog> getDogs() {
         Log.d("# DogsData. getDogs", "" + dogs.size());
-
-        return this.dogs;
+        return dogs;
     }
 }

@@ -11,6 +11,11 @@ public class DogToolBar {
     public DogToolBar() {
     }
 
+    private DogToolBar(Activity activity, int resId, String str) {
+        dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
+        dogToolbar.setTitle(activity.getResources().getString(resId) + " " + str);
+    }
+
     private DogToolBar(Activity activity, int str) {
         dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
         dogToolbar.setTitle(str);
@@ -19,11 +24,15 @@ public class DogToolBar {
     private DogToolBar(Activity activity, int titleRes, int color) {
         dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
         dogToolbar.setTitleTextColor(color);
-        dogToolbar.setTitle(titleRes);
     }
 
     public static Toolbar init(Activity activity, int str) {
         DogToolBar dtb = new DogToolBar(activity, str);
+        return dtb.dogToolbar;
+    }
+
+    public static Toolbar init(Activity activity, int resId, String str) {
+        DogToolBar dtb = new DogToolBar(activity, resId, str);
         return dtb.dogToolbar;
     }
 

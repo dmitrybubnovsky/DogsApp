@@ -1,15 +1,17 @@
 package com.andersen.dogsapp.dogs;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Parcelable;
 import android.os.Parcel;
 
 public class Dog implements Parcelable {
     private int dogId;
-    private int dogImageId;
     private int dogAge;
     private int dogTall;
     private int dogWeight;
 
+    private String dogImageString;
     private String dogName;
     private String dogKind;
 
@@ -23,6 +25,13 @@ public class Dog implements Parcelable {
 
     public String getDogKind() {
         return dogKind;
+    }
+
+
+    public int getDogImageId(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
+        return resourceId;
     }
 
     public int getDogAge() {
@@ -45,10 +54,10 @@ public class Dog implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(dogId);
-        dest.writeInt(dogImageId);
         dest.writeInt(dogAge);
         dest.writeInt(dogTall);
         dest.writeInt(dogWeight);
+        dest.writeString(dogImageString);
         dest.writeString(dogName);
         dest.writeString(dogKind);
     }
@@ -67,10 +76,10 @@ public class Dog implements Parcelable {
 
     private Dog(Parcel parcelInstance) {
         dogId = parcelInstance.readInt();
-        dogImageId = parcelInstance.readInt();
         dogAge = parcelInstance.readInt();
         dogTall = parcelInstance.readInt();
         dogWeight = parcelInstance.readInt();
+        dogImageString = parcelInstance.readString();
         dogName = parcelInstance.readString();
         dogKind = parcelInstance.readString();
     }

@@ -14,7 +14,11 @@ import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
+import com.andersen.dogsapp.dogs.JsonDogsDataSource;
+import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
 import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 
 import java.util.List;
 
@@ -27,11 +31,14 @@ public class DogOwnersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        List<Owner> owners = DataRepository.get().getOwners(this);
-        DataRepository.get().getDogs(this);
+        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
+
+        List<Owner> owners = dataRepository.getOwners();
 
         LayoutInflater layoutInflater = getLayoutInflater();
-
         LinearLayout containerLinLayout = findViewById(R.id.owners_container);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
