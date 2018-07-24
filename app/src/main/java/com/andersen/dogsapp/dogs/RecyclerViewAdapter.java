@@ -26,11 +26,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView dogNameTextView;
-        TextView dogKindTextView;
-        ImageView dogImageView;
-        RelativeLayout relativeLayout;
-        Dog dog;
+        private TextView dogNameTextView;
+        private TextView dogKindTextView;
+        private ImageView dogImageView;
+        private RelativeLayout relativeLayout;
+        private Dog dog;
 
         public ViewHolder(View view) {
             super(view);
@@ -63,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recyclerivew_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
         return new ViewHolder(view);
     }
 

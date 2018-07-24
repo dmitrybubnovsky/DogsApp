@@ -7,6 +7,6 @@ import com.andersen.dogsapp.dogs.Owner;
 import java.util.List;
 
 public interface IOwnersDataSource {
-    List<Owner> getOwners(Context context);
+    List<Owner> getOwners();
 }
 

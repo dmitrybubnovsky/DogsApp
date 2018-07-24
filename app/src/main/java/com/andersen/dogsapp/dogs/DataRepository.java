@@ -24,7 +24,7 @@ public class DataRepository {
         return dogsDataSource.getOwnerDogs(owner);
     }
 
-    public List<Owner> getOwners(Context context) {
-        return ownersDataSource.getOwners(context);
+    public List<Owner> getOwners() {
+        return ownersDataSource.getOwners();
     }
 }
