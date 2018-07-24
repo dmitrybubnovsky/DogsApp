@@ -8,9 +8,6 @@ import com.andersen.dogsapp.R;
 public class DogToolBar {
     private Toolbar dogToolbar;
 
-    public DogToolBar() {
-    }
-
     private DogToolBar(Activity activity, int resId, String str) {
         dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
         dogToolbar.setTitle(activity.getResources().getString(resId) + " " + str);
@@ -23,6 +20,7 @@ public class DogToolBar {
 
     private DogToolBar(Activity activity, int titleRes, int color) {
         dogToolbar = activity.findViewById(R.id.toolbar_dogs_app);
+        dogToolbar.setTitle(titleRes);
         dogToolbar.setTitleTextColor(color);
     }
 

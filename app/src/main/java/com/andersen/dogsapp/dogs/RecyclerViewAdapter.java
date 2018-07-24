@@ -25,7 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView dogNameTextView;
         private TextView dogKindTextView;
         private ImageView dogImageView;
@@ -34,8 +34,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(View view) {
             super(view);
-            view.setOnClickListener(this);
+            view.setOnClickListener(view1 -> {
+                if (listener != null) {
+                    listener.onItemClick(dog);
+                }
+            });
+            initViews(view);
+        }
 
+        private void initViews (View view){
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin15sp)
                     .build();
@@ -46,18 +53,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             relativeLayout = view.findViewById(R.id.recycler_item_relativeLayout);
         }
 
-        public void setData(Dog dog) {
+        private void setData(Dog dog) {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
             dogImageView.setImageResource(dog.getDogImageId(context));
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (listener != null) {
-                listener.onItemClick(dog);
-            }
         }
     }
 

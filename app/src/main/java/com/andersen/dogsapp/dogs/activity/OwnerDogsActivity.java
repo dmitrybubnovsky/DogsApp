@@ -38,17 +38,10 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
-    private LinearLayout dogsLinearLayout;
-
-    private TextView dogKindTextview;
-    private TextView dogNameTextview;
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
-    private DataRepository dataRepository;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +57,6 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         // sqlite имплементация
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(this);
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(this);
-
-        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
-
-        List<Dog> ownerDogs = dataRepository.getDogs(owner);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 

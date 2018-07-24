@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DogsSQLiteDataSource implements IDogsDataSource {
     private static DogsSQLiteDataSource dogsDataSource;
-    public DogsCursorWrapper dogsCursor;
+    private DogsCursorWrapper dogsCursor;
     private List<Dog> dogs;
 
     private DogsSQLiteDataSource(Context context) {
@@ -29,7 +29,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         return dogsDataSource;
     }
 
-    public void loadDogs(Context context) {
+    private void loadDogs(Context context) {
         DBHelper dbHelper = DBHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dogs = new ArrayList<>();
@@ -45,7 +45,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         }
         dbHelper.close();
     }
-
 
     private DogsCursorWrapper queryDogs(SQLiteDatabase db) {
         Cursor cursor = db.query(
@@ -75,7 +74,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     }
 
     // temporary implementation.
-    // TODO: change to query request
     private Dog getDogById(int dogId) {
         for (Dog dog : dogs) {
             if (dog.getDogId() == dogId) {

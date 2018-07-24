@@ -13,6 +13,6 @@ public class OwnersData {
     private List<Owner> owners;
 
     public List<Owner> getOwners() {
-        return this.owners;
+        return owners;
     }
 }
