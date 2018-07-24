@@ -20,11 +20,13 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private static OwnersSQLiteDataSource ownersDataSource;
     private static final String TAG = "#";
 
+    private SQLiteDatabase db;
     private OwnersCursorWrapper ownersCursor;
     private List<Owner> owners;
 
     private OwnersSQLiteDataSource(DBHelper dbHelper) {
-        loadOwners(dbHelper);
+        db = dbHelper.getWritableDatabase();
+        loadOwners();
     }
 
     public static OwnersSQLiteDataSource getInstance(DBHelper dbHelper) {
@@ -39,13 +41,11 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return owners;
     }
 
-    private void loadOwners(DBHelper dbHelper) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        addSomeDB(dbHelper);
+    private void loadOwners() {
+        addSomeDB();
 
         owners = new ArrayList<>();
-        ownersCursor = queryOwners(db);
+        ownersCursor = queryOwners();
         try {
             ownersCursor.moveToNext();
             while (!ownersCursor.isAfterLast()) {
@@ -55,10 +55,9 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         } finally {
             ownersCursor.close();
         }
-        dbHelper.close();
     }
 
-    private OwnersCursorWrapper queryOwners(SQLiteDatabase db) {
+    private OwnersCursorWrapper queryOwners() {
         Log.d(TAG, "queryOwners");
         Cursor cursor = db.query(
                 OwnerTable.TABLE_NAME,
@@ -73,62 +72,60 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return new OwnersCursorWrapper(cursor);
     }
 
-    private void addSomeDB(DBHelper dbHelper) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    private void addSomeDB() {
         Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null,null,null,null,null);
         if( cursor.getCount() == 0) {
-            addOwner(dbHelper, 1, "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
-            addOwner(dbHelper, 2, "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
-            addOwner(dbHelper, 3, "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
-            addOwner(dbHelper, 4, "Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
-            addOwner(dbHelper, 5, "Garry", "Potter", DogKind.MUNSTERLANDER, "111");
-            addOwner(dbHelper, 6, "Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
-            addOwner(dbHelper, 7, "Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
-            addOwner(dbHelper, 8, "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
-            addOwner(dbHelper, 9, "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
-            addOwner(dbHelper, 10, "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
+            addOwner(1, "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
+            addOwner(2, "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
+            addOwner(3, "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
+            addOwner(4, "Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
+            addOwner(5, "Garry", "Potter", DogKind.MUNSTERLANDER, "111");
+            addOwner(6, "Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
+            addOwner(7, "Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
+            addOwner(8, "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
+            addOwner(9, "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
+            addOwner(10, "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
 
-            addDog(dbHelper, 101, "Palkan", DogKind.AMERICAN_FOXHOUND, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 102, "Drujok", DogKind.BERGER_PICKARD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 103, "Sharik", DogKind.CHINOOK, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 104, "Greezly", DogKind.ENGLISH_COONHOUND, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 105, "Mickey", DogKind.MUNSTERLANDER, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 106, "Plooto", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 107, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 108, "Kachtanka", DogKind.SAINT_BERNARD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 109, "Leopold", DogKind.SHEPHERD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 110, "Barboss", DogKind.WATER_SPANIEL, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 111, "Joochka", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 112, "Belka", DogKind.MUNSTERLANDER, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 113, "Strelka", DogKind.SAINT_BERNARD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 114, "Laika", DogKind.CHINOOK, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 115, "Palma", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 116, "Gerda", DogKind.WATER_SPANIEL, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 117, "Sally", DogKind.AMERICAN_FOXHOUND, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 118, "Joochka", DogKind.CHESAPEAKE, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 119, "Kachtanka", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 120, "Pluto", DogKind.ENGLISH_COONHOUND, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 121, "Strelka", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 122, "Mickey", DogKind.SIBERIAN_HUSKY, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 123, "Greazy", DogKind.SHEPHERD, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 124, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
-            addDog(dbHelper, 125, "Leopold", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
+            addDog(101, "Palkan", DogKind.AMERICAN_FOXHOUND, "shepherd", 201, 55, 65);
+            addDog(102, "Drujok", DogKind.BERGER_PICKARD, "shepherd", 201, 55, 65);
+            addDog(103, "Sharik", DogKind.CHINOOK, "shepherd", 201, 55, 65);
+            addDog(104, "Greezly", DogKind.ENGLISH_COONHOUND, "shepherd", 201, 55, 65);
+            addDog(105, "Mickey", DogKind.MUNSTERLANDER, "shepherd", 201, 55, 65);
+            addDog(106, "Plooto", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
+            addDog(107, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
+            addDog(108, "Kachtanka", DogKind.SAINT_BERNARD, "shepherd", 201, 55, 65);
+            addDog(109, "Leopold", DogKind.SHEPHERD, "shepherd", 201, 55, 65);
+            addDog(110, "Barboss", DogKind.WATER_SPANIEL, "shepherd", 201, 55, 65);
+            addDog(111, "Joochka", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
+            addDog(112, "Belka", DogKind.MUNSTERLANDER, "shepherd", 201, 55, 65);
+            addDog(113, "Strelka", DogKind.SAINT_BERNARD, "shepherd", 201, 55, 65);
+            addDog(114, "Laika", DogKind.CHINOOK, "shepherd", 201, 55, 65);
+            addDog(115, "Palma", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
+            addDog(116, "Gerda", DogKind.WATER_SPANIEL, "shepherd", 201, 55, 65);
+            addDog(117, "Sally", DogKind.AMERICAN_FOXHOUND, "shepherd", 201, 55, 65);
+            addDog(118, "Joochka", DogKind.CHESAPEAKE, "shepherd", 201, 55, 65);
+            addDog(119, "Kachtanka", DogKind.GERMAN_SHEPHERD, "shepherd", 201, 55, 65);
+            addDog(120, "Pluto", DogKind.ENGLISH_COONHOUND, "shepherd", 201, 55, 65);
+            addDog(121, "Strelka", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
+            addDog(122, "Mickey", DogKind.SIBERIAN_HUSKY, "shepherd", 201, 55, 65);
+            addDog(123, "Greazy", DogKind.SHEPHERD, "shepherd", 201, 55, 65);
+            addDog(124, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
+            addDog(125, "Leopold", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
         }
         cursor.close();
     }
 
-    private void addOwner(DBHelper dbHelper, int id, String name, String surname, String preferedKind, String dogsIds) {
+    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
         ContentValues cv = new ContentValues();
         cv.put(OwnerTable.ID, id);
         cv.put(OwnerTable.NAME, name);
         cv.put(OwnerTable.SURNAME, surname);
         cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
         cv.put(OwnerTable.DOGS_IDS, dogsIds);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.insert(OwnerTable.TABLE_NAME, null, cv);
     }
 
-    private void addDog(DBHelper dbHelper, int id, String name, String kind, String image, int age, int weight, int tall) {
+    private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
         ContentValues cv = new ContentValues();
         cv.put(DogTable.ID, id);
         cv.put(DogTable.NAME, name);
@@ -137,7 +134,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         cv.put(DogTable.AGE, age);
         cv.put(DogTable.WEIGHT, weight);
         cv.put(DogTable.TALL, tall);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.insert(DogTable.TABLE_NAME, null, cv);
     }
 }

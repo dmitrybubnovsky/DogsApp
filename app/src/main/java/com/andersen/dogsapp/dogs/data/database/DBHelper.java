@@ -14,7 +14,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TAG = "# DBHelper";
     private static final String DB_NAME = "doggy_dogg.db";
     private static final int VERSION = 1;
-    private SQLiteDatabase db;
 
     public static DBHelper getInstance(Context context) {
         if (dbHelper == null) {
@@ -25,7 +24,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
-        db = getWritableDatabase();
     }
 
     // CREATE OWNERS TABLE
@@ -49,12 +47,12 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(DogTable.TALL).append(" INTEGER,")
             .append(DogTable.WEIGHT).append(" INTEGER,")
             .append(DogTable.AGE).append(" INTEGER);").toString();
-
-    private static final String CREATE_CLASS_TABLE = new StringBuilder()
-            .append("CREATE TABLE ").append(ClassTable.TABLE_NAME).append("(")
-            .append(ClassTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
-            .append(ClassTable.DOG_ID).append(" INTEGER,")
-            .append(ClassTable.OWNER_ID).append(" INTEGER);").toString();
+//
+//    private static final String CREATE_CLASS_TABLE = new StringBuilder()
+//            .append("CREATE TABLE ").append(ClassTable.TABLE_NAME).append("(")
+//            .append(ClassTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
+//            .append(ClassTable.DOG_ID).append(" INTEGER,")
+//            .append(ClassTable.OWNER_ID).append(" INTEGER);").toString();
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -62,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_DOG);
 
-        db.execSQL(CREATE_CLASS_TABLE);
+//        db.execSQL(CREATE_CLASS_TABLE);
     }
 
     @Override

@@ -17,9 +17,12 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     private static DogsSQLiteDataSource dogsDataSource;
     private DogsCursorWrapper dogsCursor;
     private List<Dog> dogs;
+    private SQLiteDatabase db;
+
 
     private DogsSQLiteDataSource(DBHelper dbHelper) {
-        loadDogs(dbHelper);
+        db = dbHelper.getWritableDatabase();
+        loadDogs();
     }
 
     public static DogsSQLiteDataSource getInstance(DBHelper dbHelper) {
@@ -29,11 +32,10 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         return dogsDataSource;
     }
 
-    private void loadDogs(DBHelper dbHelper) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    private void loadDogs() {
         dogs = new ArrayList<>();
         try {
-            dogsCursor = queryDogs(db);
+            dogsCursor = queryDogs();
             dogsCursor.moveToNext();
             while (!dogsCursor.isAfterLast()) {
                 dogs.add(dogsCursor.getDog());
@@ -42,10 +44,9 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         } finally {
             dogsCursor.close();
         }
-        dbHelper.close();
     }
 
-    private DogsCursorWrapper queryDogs(SQLiteDatabase db) {
+    private DogsCursorWrapper queryDogs() {
         Cursor cursor = db.query(
                 DogTable.TABLE_NAME,
                 null,
