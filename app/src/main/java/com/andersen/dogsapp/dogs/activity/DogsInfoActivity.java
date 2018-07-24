@@ -14,22 +14,22 @@ import com.andersen.dogsapp.dogs.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
+    public static final String TAG = "#";
+
     public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
     private MediaPlayer mediaPlayer;
-
-    Dog dog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_act_dogs_info);
+        setContentView(R.layout.activity_dogs_info);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
 
-        dog = getIntent().getParcelableExtra(EXTRA_DOG);
+        Dog dog = getIntent().getParcelableExtra(EXTRA_DOG);
         initViews(dog);
     }
 

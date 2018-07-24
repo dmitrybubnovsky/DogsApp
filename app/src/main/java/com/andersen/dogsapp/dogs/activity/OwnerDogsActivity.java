@@ -3,6 +3,8 @@ package com.andersen.dogsapp.dogs.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +22,20 @@ import java.util.List;
 import com.andersen.dogsapp.dogs.JsonDogsDataSource;
 import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
 import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
+import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+
+import android.widget.Toast;
+import android.util.Log;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
-public class OwnerDogsActivity extends AppCompatActivity {
+public class OwnerDogsActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
+    public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
     private LinearLayout dogsLinearLayout;
@@ -38,11 +47,13 @@ public class OwnerDogsActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+    private DataRepository dataRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dogs_list);
+        setContentView(R.layout.activity_owner_dogs_list_recyclerview);
 
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
@@ -58,47 +69,35 @@ public class OwnerDogsActivity extends AppCompatActivity {
 
         List<Dog> ownerDogs = dataRepository.getDogs(owner);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
+        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
+
+        List<Dog> ownerDogs = dataRepository.getDogs(owner);
+
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());
         setSupportActionBar(toolbar);
 
-        dogsLinearLayout = findViewById(R.id.dogs_container);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, ownerDogs, this);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
 
-        AppTextView.newInstance(this, R.id.owner_name_textview)
-                .text(owner.getOwnerFullName())
-                .build();
-
-        int dogsQuantity = owner.getDogsQuantity();
-        LayoutInflater layoutInflater = getLayoutInflater();
-        for (int i = 0; i < dogsQuantity; i++) {
-            Dog dog = ownerDogs.get(i);
-            View itemView = initItemView(layoutInflater, dog);
-            itemView.setOnClickListener(view -> onItemClick(dog));
-            dogsLinearLayout.addView(itemView);
-        }
+        OwnerDogsActivity.DogsSpanSizeLookup dogsSpanSizeLookup = new OwnerDogsActivity.DogsSpanSizeLookup();
+        layoutManager.setSpanSizeLookup(dogsSpanSizeLookup);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
-    private void onItemClick(Dog dog) {
+    @Override
+    public void onItemClick(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);
     }
 
-    private View initItemView(LayoutInflater layoutInflater, Dog dog) {
-        View itemView = layoutInflater.inflate(R.layout.dog_item, dogsLinearLayout, false);
-
-        // set ID of the current dog to this itemView
-        itemView.setTag(dog.getDogId());
-
-        // initialize appropriate textview inside inflated itemView
-        dogKindTextview = AppTextView.newInstance(itemView, R.id.dog_kind_textview)
-                .text("" + dog.getDogKind())
-                .build();
-
-        // initialize this textview and put there dog's name
-        dogNameTextview = AppTextView.newInstance(itemView, R.id.dog_name_textview)
-                .text("" + dog.getDogName())
-                .style(this, R.style.BoldRobotoThin)
-                .build();
-        return itemView;
+    private static class DogsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
+        @Override
+        public int getSpanSize(int position) {
+            return (position % 3 == 0) ? 2 : 1;
+        }
     }
 }
+

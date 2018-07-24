@@ -7,16 +7,13 @@ import android.os.Parcel;
 
 public class Dog implements Parcelable {
     private int dogId;
-    private String dogImageString;
     private int dogAge;
     private int dogTall;
     private int dogWeight;
 
+    private String dogImageString;
     private String dogName;
     private String dogKind;
-
-    public Dog() {
-    }
 
     public int getDogId() {
         return dogId;
@@ -28,6 +25,13 @@ public class Dog implements Parcelable {
 
     public String getDogKind() {
         return dogKind;
+    }
+
+
+    public int getDogImageId(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
+        return resourceId;
     }
 
     public int getDogAge() {
@@ -42,16 +46,6 @@ public class Dog implements Parcelable {
         return dogWeight;
     }
 
-    public String getDogImageString() {
-        return dogImageString;
-    }
-
-    public int getDogImageId(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
-        return resourceId;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -60,10 +54,10 @@ public class Dog implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(dogId);
-        dest.writeString(dogImageString);
         dest.writeInt(dogAge);
         dest.writeInt(dogTall);
         dest.writeInt(dogWeight);
+        dest.writeString(dogImageString);
         dest.writeString(dogName);
         dest.writeString(dogKind);
     }
@@ -80,41 +74,12 @@ public class Dog implements Parcelable {
         }
     };
 
-    public void setDogId(int dogId) {
-        this.dogId = dogId;
-    }
-
-    public void setDogImageString(String dogImg) {
-        dogImageString = dogImg;
-    }
-
-    public void setDogAge(int dogAge) {
-        this.dogAge = dogAge;
-    }
-
-    public void setDogTall(int dogTall) {
-        this.dogTall = dogTall;
-    }
-
-    public void setDogWeight(int dogWeight) {
-        this.dogWeight = dogWeight;
-    }
-
-    public void setDogName(String dogName) {
-        this.dogName = dogName;
-    }
-
-    public void setDogKind(String dogKind) {
-        this.dogKind = dogKind;
-    }
-
-
     private Dog(Parcel parcelInstance) {
         dogId = parcelInstance.readInt();
-        dogImageString = parcelInstance.readString();
         dogAge = parcelInstance.readInt();
         dogTall = parcelInstance.readInt();
         dogWeight = parcelInstance.readInt();
+        dogImageString = parcelInstance.readString();
         dogName = parcelInstance.readString();
         dogKind = parcelInstance.readString();
     }
