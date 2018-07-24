@@ -19,6 +19,8 @@ import com.andersen.dogsapp.dogs.Owner;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
+import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
 import java.util.List;
 
@@ -31,8 +33,13 @@ public class DogOwnersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+//      json имплементация
+//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        // sqlite имплементация
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(this);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(this);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 

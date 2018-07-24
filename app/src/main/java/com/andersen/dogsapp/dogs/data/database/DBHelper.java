@@ -15,8 +15,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "doggy_dogg.db";
     private static final int VERSION = 1;
 
-    public static DBHelper getInstance (Context context){
-        if (dbHelper == null){
+    public static DBHelper getInstance(Context context) {
+        if (dbHelper == null) {
             dbHelper = new DBHelper(context);
         }
         return dbHelper;

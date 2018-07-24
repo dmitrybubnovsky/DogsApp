@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.data.database;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +16,7 @@ import com.andersen.dogsapp.dogs.data.database.wrappers.OwnersCursorWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnersSQLiteDataSource implements IOwnersDataSource{
+public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private static OwnersSQLiteDataSource ownersDataSource;
     private static final String TAG = "#";
 
