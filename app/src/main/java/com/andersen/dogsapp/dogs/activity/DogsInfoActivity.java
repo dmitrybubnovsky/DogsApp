@@ -24,7 +24,6 @@ public class DogsInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_info);
-        DataRepository.get().getDogs(this);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 

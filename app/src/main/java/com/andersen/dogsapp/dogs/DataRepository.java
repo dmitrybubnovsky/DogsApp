@@ -5,42 +5,28 @@ import java.util.List;
 import android.content.Context;
 
 import com.andersen.dogsapp.dogs.data.DogsHandler;
+import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.OwnersHandler;
 
 public class DataRepository {
-    private static DataRepository dataRepository;
+    private IOwnersDataSource ownersDataSource;
+    private IDogsDataSource dogsDataSource;
 
-    private OwnersDataSource ownersDataSource;
-    private DogsDataSource dogsDataSource;
-
-    private DogsHandler dogsHandler;
-    private OwnersHandler ownersHandler;
-
-    private DataRepository() {
-        dogsHandler = DogsHandler.getInstance();
-        ownersHandler = OwnersHandler.getInstance();
+    private DataRepository(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource) {
+        this.ownersDataSource = ownersDataSource;
+        this.dogsDataSource = dogsDataSource;
     }
 
-    public static DataRepository get() {
-        if (dataRepository == null) {
-            dataRepository = new DataRepository();
-        }
-        return dataRepository;
+    public static DataRepository get(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource) {
+        return new DataRepository(ownersDataSource, dogsDataSource);
+    }
+
+    public List<Dog> getDogs(Owner owner) {
+        return dogsDataSource.getOwnerDogs(owner);
     }
 
     public List<Owner> getOwners(Context context) {
-        ownersDataSource = OwnersDataSource.getInstance(context);
-        ownersHandler.setOwners(ownersDataSource.getOwners(context));
-        return ownersHandler.getOwners();
-    }
-
-    public List<Dog> getDogs(Context context) {
-        dogsDataSource = DogsDataSource.getInstance(context);
-        dogsHandler.setDogs(dogsDataSource.getDogs(context));
-        return dogsHandler.getDogs();
-    }
-
-    public List<Dog> getOwnerDogs(Owner owner) {
-        return dogsHandler.getOwnerDogs(owner);
+        return ownersDataSource.getOwners(context);
     }
 }
