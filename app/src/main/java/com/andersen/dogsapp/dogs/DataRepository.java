@@ -4,10 +4,8 @@ import java.util.List;
 
 import android.content.Context;
 
-import com.andersen.dogsapp.dogs.data.DogsHandler;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.OwnersHandler;
 
 public class DataRepository {
     private IOwnersDataSource ownersDataSource;
