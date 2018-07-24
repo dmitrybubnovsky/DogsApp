@@ -38,8 +38,9 @@ public class DogOwnersListActivity extends AppCompatActivity {
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
         // sqlite имплементация
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(this);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(this);
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 

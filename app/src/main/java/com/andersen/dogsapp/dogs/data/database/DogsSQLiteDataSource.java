@@ -18,19 +18,18 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     private DogsCursorWrapper dogsCursor;
     private List<Dog> dogs;
 
-    private DogsSQLiteDataSource(Context context) {
-        loadDogs(context);
+    private DogsSQLiteDataSource(DBHelper dbHelper) {
+        loadDogs(dbHelper);
     }
 
-    public static DogsSQLiteDataSource getInstance(Context context) {
+    public static DogsSQLiteDataSource getInstance(DBHelper dbHelper) {
         if (dogsDataSource == null) {
-            dogsDataSource = new DogsSQLiteDataSource(context);
+            dogsDataSource = new DogsSQLiteDataSource(dbHelper);
         }
         return dogsDataSource;
     }
 
-    private void loadDogs(Context context) {
-        DBHelper dbHelper = DBHelper.getInstance(context);
+    private void loadDogs(DBHelper dbHelper) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         dogs = new ArrayList<>();
         try {

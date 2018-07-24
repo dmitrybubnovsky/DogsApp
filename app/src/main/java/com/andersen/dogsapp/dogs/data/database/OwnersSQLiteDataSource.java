@@ -23,13 +23,13 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private OwnersCursorWrapper ownersCursor;
     private List<Owner> owners;
 
-    private OwnersSQLiteDataSource(Context context) {
-        loadOwners(context);
+    private OwnersSQLiteDataSource(DBHelper dbHelper) {
+        loadOwners(dbHelper);
     }
 
-    public static OwnersSQLiteDataSource getInstance(Context context) {
+    public static OwnersSQLiteDataSource getInstance(DBHelper dbHelper) {
         if (ownersDataSource == null) {
-            ownersDataSource = new OwnersSQLiteDataSource(context);
+            ownersDataSource = new OwnersSQLiteDataSource(dbHelper);
         }
         return ownersDataSource;
     }
@@ -39,8 +39,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return owners;
     }
 
-    private void loadOwners(Context context) {
-        DBHelper dbHelper = DBHelper.getInstance(context);
+    private void loadOwners(DBHelper dbHelper) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         addSomeDB(dbHelper);
@@ -115,9 +114,10 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
             addDog(dbHelper, 124, "Muhtar", DogKind.POCKET_BEAGLE, "shepherd", 201, 55, 65);
             addDog(dbHelper, 125, "Leopold", DogKind.STANDARD_SCHNAUZER, "shepherd", 201, 55, 65);
         }
+        cursor.close();
     }
 
-    private long addOwner(DBHelper dbHelper, int id, String name, String surname, String preferedKind, String dogsIds) {
+    private void addOwner(DBHelper dbHelper, int id, String name, String surname, String preferedKind, String dogsIds) {
         ContentValues cv = new ContentValues();
         cv.put(OwnerTable.ID, id);
         cv.put(OwnerTable.NAME, name);
@@ -125,10 +125,10 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
         cv.put(OwnerTable.DOGS_IDS, dogsIds);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        return db.insert(OwnerTable.TABLE_NAME, null, cv);
+        db.insert(OwnerTable.TABLE_NAME, null, cv);
     }
 
-    private long addDog(DBHelper dbHelper, int id, String name, String kind, String image, int age, int weight, int tall) {
+    private void addDog(DBHelper dbHelper, int id, String name, String kind, String image, int age, int weight, int tall) {
         ContentValues cv = new ContentValues();
         cv.put(DogTable.ID, id);
         cv.put(DogTable.NAME, name);
@@ -138,6 +138,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         cv.put(DogTable.WEIGHT, weight);
         cv.put(DogTable.TALL, tall);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        return db.insert(DogTable.TABLE_NAME, null, cv);
+        db.insert(DogTable.TABLE_NAME, null, cv);
     }
 }
