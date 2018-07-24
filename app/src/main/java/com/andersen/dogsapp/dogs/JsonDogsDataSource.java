@@ -2,8 +2,9 @@ package com.andersen.dogsapp.dogs;
 
 import android.content.Context;
 
-import com.andersen.dogsapp.dogs.data.DogsData;
+import com.andersen.dogsapp.dogs.data.json.DogsData;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.json.JsonParser;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
