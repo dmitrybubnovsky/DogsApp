@@ -2,8 +2,8 @@ package com.andersen.dogsapp.dogs.data.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.andersen.dogsapp.dogs.Dog;
-import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.wrappers.DogsCursorWrapper;
@@ -15,7 +15,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     private DogsCursorWrapper dogsCursor;
     private List<Dog> dogs;
     private SQLiteDatabase db;
-
 
     private DogsSQLiteDataSource(DBHelper dbHelper) {
         db = dbHelper.getWritableDatabase();
@@ -33,7 +32,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         dogs = new ArrayList<>();
         try {
             dogsCursor = queryDogs();
-            dogsCursor.moveToNext();
+            dogsCursor.moveToFirst();
             while (!dogsCursor.isAfterLast()) {
                 dogs.add(dogsCursor.getDog());
                 dogsCursor.moveToNext();
@@ -54,7 +53,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                 null,
                 null
         );
-        return new DogsCursorWrapper(cursor);
+        DogsCursorWrapper dogsCursor = new DogsCursorWrapper(cursor);
+        return dogsCursor;
     }
 
     // temporary implementation.
@@ -78,5 +78,17 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
             }
         }
         throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
+    }
+
+    public Dog getDog(Cursor cursor) {
+        Dog dog = new Dog();
+        dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
+        dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
+        dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+        dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
+        dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
+        dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
+        dog.setDogWeight(cursor.getInt(cursor.getColumnIndex(DogTable.WEIGHT)));
+        return dog;
     }
 }

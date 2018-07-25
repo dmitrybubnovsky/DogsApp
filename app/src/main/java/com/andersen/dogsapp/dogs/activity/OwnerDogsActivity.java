@@ -1,20 +1,19 @@
 package com.andersen.dogsapp.dogs.activity;
 
 import java.util.List;
-import android.util.Log;
+
 import android.os.Bundle;
 import android.content.Intent;
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.Dog;
-import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import android.support.v7.widget.Toolbar;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
 import com.andersen.dogsapp.dogs.DataRepository;
 import android.support.v7.widget.GridLayoutManager;
-import com.andersen.dogsapp.dogs.JsonDogsDataSource;
-import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
+
 import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;

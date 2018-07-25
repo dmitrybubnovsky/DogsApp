@@ -2,7 +2,7 @@ package com.andersen.dogsapp.dogs.data.database.wrappers;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
 public class OwnersCursorWrapper extends CursorWrapper {

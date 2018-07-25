@@ -1,9 +1,7 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.data.entities;
 
 import android.os.Parcelable;
 import android.os.Parcel;
-
-import java.util.ArrayList;
 
 public class Owner implements Parcelable {
     private int ownerId;

@@ -11,9 +11,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
-import com.andersen.dogsapp.dogs.JsonDogsDataSource;
-import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
-import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
@@ -57,7 +55,6 @@ public class DogOwnersListActivity extends AppCompatActivity {
             itemView.setOnClickListener(view -> openOwnerDogs(owner));
             containerLinLayout.addView(itemView);
         }
-
     }
 
     private void openOwnerDogs(Owner owner) {

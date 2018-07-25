@@ -1,6 +1,6 @@
 package com.andersen.dogsapp.dogs.data;
 
-import com.andersen.dogsapp.dogs.Owner;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 import java.util.List;
 

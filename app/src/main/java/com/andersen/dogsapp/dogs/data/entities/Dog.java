@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.data.entities;
 
 import android.content.Context;
 import android.content.res.Resources;

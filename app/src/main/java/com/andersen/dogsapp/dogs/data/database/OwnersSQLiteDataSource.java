@@ -3,7 +3,10 @@ package com.andersen.dogsapp.dogs.data.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.andersen.dogsapp.dogs.Owner;
+import android.support.annotation.NonNull;
+
+import com.andersen.dogsapp.dogs.data.database.wrappers.DogsCursorWrapper;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.DogKind;
 import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
@@ -38,11 +41,10 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
 
     private void loadOwners() {
         addSomeDB();
-
         owners = new ArrayList<>();
         ownersCursor = queryOwners();
         try {
-            ownersCursor.moveToNext();
+            ownersCursor.moveToFirst();
             while (!ownersCursor.isAfterLast()) {
                 owners.add(ownersCursor.getOwner());
                 ownersCursor.moveToNext();
@@ -52,6 +54,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         }
     }
 
+    @NonNull
     private OwnersCursorWrapper queryOwners() {
         Cursor cursor = db.query(
                 OwnerTable.TABLE_NAME,
@@ -63,7 +66,9 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
                 null,
                 null
         );
-        return new OwnersCursorWrapper(cursor);
+//        cursor.close();
+        OwnersCursorWrapper ownersCursor = new OwnersCursorWrapper(cursor);
+        return new OwnersCursorWrapper(ownersCursor);
     }
 
     private void addSomeDB() {
@@ -79,7 +84,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
             addOwner(8, "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
             addOwner(9, "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
             addOwner(10, "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
-
             addDog(101, "Palkan", DogKind.AMERICAN_FOXHOUND, "american_foxhound", 201, 55, 65);
             addDog(102, "Drujok", DogKind.AFGHAN_HOUND, "afghan_hound", 201, 55, 65);
             addDog(103, "Sharik", DogKind.AMERICAN_BULLDOG, "american_bulldog", 201, 55, 65);

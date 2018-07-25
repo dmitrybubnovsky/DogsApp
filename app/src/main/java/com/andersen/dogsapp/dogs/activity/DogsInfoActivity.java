@@ -9,12 +9,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String TAG = "#";
-
     public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
 
     @Override
