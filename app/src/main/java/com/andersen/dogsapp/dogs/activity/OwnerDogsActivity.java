@@ -14,14 +14,14 @@ import android.support.v7.app.AppCompatActivity;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import android.support.v7.widget.GridLayoutManager;
 
-import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
+import com.andersen.dogsapp.dogs.RecyclerViewDogsAdapter;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
-public class OwnerDogsActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
+public class OwnerDogsActivity extends AppCompatActivity implements RecyclerViewDogsAdapter.ItemListener {
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
@@ -54,7 +54,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, ownerDogs, this);
+        RecyclerViewDogsAdapter adapter = new RecyclerViewDogsAdapter(this, ownerDogs, this);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
 
         OwnerDogsActivity.DogsSpanSizeLookup dogsSpanSizeLookup = new OwnerDogsActivity.DogsSpanSizeLookup();

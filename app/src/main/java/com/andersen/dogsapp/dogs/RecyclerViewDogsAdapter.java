@@ -15,12 +15,12 @@ import com.andersen.dogsapp.dogs.data.entities.Dog;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
     private ItemListener listener;
 
-    public RecyclerViewAdapter(Context context, List<Dog> dogs, ItemListener listener) {
+    public RecyclerViewDogsAdapter(Context context, List<Dog> dogs, ItemListener listener) {
         this.context = context;
         this.dogs = dogs;
         this.listener = listener;
@@ -63,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewDogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
         return new ViewHolder(view);
     }
