@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.wrappers.DogsCursorWrapper;
 import java.util.ArrayList;
@@ -54,6 +54,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                 null
         );
         DogsCursorWrapper dogsCursor = new DogsCursorWrapper(cursor);
+        cursor.close();
         return dogsCursor;
     }
 

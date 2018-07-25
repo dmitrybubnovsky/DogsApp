@@ -5,10 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
-import com.andersen.dogsapp.dogs.data.database.wrappers.DogsCursorWrapper;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.DogKind;
-import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 import com.andersen.dogsapp.dogs.data.database.wrappers.OwnersCursorWrapper;
@@ -68,7 +67,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         );
 //        cursor.close();
         OwnersCursorWrapper ownersCursor = new OwnersCursorWrapper(cursor);
-        return new OwnersCursorWrapper(ownersCursor);
+        return ownersCursor;
     }
 
     private void addSomeDB() {
