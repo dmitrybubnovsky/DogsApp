@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.recyclerviewers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,12 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerView
 
         private void initViews (View view){
             ownerFullNameTextView = AppTextView.newInstance(itemView, R.id.owner_fullname_item_textview)
-                    .style(context, R.style.BoldRobotoThin15sp)
+                    .style(context, R.style.TextViewTitleItem)
                     .build();
             preferredKindTextView = AppTextView.newInstance(itemView, R.id.preffered_dog_item_textview)
                     .style(context, R.style.BoldRobotoThin13sp)

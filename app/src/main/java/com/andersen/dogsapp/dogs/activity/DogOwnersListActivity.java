@@ -1,19 +1,16 @@
 package com.andersen.dogsapp.dogs.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.AppTextView;
-import com.andersen.dogsapp.dogs.RecyclerViewDogsAdapter;
-import com.andersen.dogsapp.dogs.RecyclerViewOwnersAdapter;
+import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
+import com.andersen.dogsapp.dogs.recyclerviewers.RecyclerViewOwnersAdapter;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
@@ -51,10 +48,14 @@ public class DogOwnersListActivity extends AppCompatActivity
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
+        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
+
         RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewOwnersAdapter ownersAdapter = new RecyclerViewOwnersAdapter(this, owners, this);
+        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         ownersRecyclerView.setAdapter(ownersAdapter);
+
     }
 
     @Override

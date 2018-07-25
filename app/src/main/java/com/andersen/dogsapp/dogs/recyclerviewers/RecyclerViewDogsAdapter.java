@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.recyclerviewers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 
 import java.util.List;

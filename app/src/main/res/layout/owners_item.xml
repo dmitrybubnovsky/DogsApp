@@ -48,11 +48,4 @@
         android:layout_below="@id/preffered_dog_title_textview"
         android:layout_toRightOf="@id/quantity_title_textivew"
         android:layout_margin="@dimen/margin_8dp"/>
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:background="@color/colorCustomYellow"
-        android:layout_below="@id/dogs_quantity_item_textview"/>
-
 </RelativeLayout>
