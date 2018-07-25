@@ -3,8 +3,6 @@ package com.andersen.dogsapp.dogs.data.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.andersen.dogsapp.dogs.data.database.tables.ClassTable;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
