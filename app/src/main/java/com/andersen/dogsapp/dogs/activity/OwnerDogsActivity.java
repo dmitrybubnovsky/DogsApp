@@ -2,11 +2,14 @@ package com.andersen.dogsapp.dogs.activity;
 
 import java.util.List;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.content.Intent;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import android.support.v7.widget.GridLayoutManager;
 
+import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.recyclerviewers.RecyclerViewDogsAdapter;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
@@ -35,6 +39,8 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_dogs_list_recyclerview);
 
+        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
+
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
         // json имплементация
@@ -55,11 +61,11 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerViewDogsAdapter adapter = new RecyclerViewDogsAdapter(this, ownerDogs, this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        OwnerDogsActivity.DogsSpanSizeLookup dogsSpanSizeLookup = new OwnerDogsActivity.DogsSpanSizeLookup();
-        layoutManager.setSpanSizeLookup(dogsSpanSizeLookup);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+
         recyclerView.setAdapter(adapter);
     }
 
