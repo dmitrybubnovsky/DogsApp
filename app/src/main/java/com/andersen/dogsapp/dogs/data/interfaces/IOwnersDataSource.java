@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data.get_entities_interfaces;
+package com.andersen.dogsapp.dogs.data.interfaces;
 
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 

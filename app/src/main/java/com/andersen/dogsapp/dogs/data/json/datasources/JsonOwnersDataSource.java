@@ -1,8 +1,8 @@
-package com.andersen.dogsapp.dogs.data.json_data_sources;
+package com.andersen.dogsapp.dogs.data.json.datasources;
 
 import android.content.Context;
 
-import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.json.OwnersData;
 import com.andersen.dogsapp.dogs.data.json.JsonParser;

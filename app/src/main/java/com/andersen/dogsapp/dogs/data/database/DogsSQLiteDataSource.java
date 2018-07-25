@@ -4,15 +4,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
-import com.andersen.dogsapp.dogs.data.database.wrappers.DogsCursorWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DogsSQLiteDataSource implements IDogsDataSource {
     private static DogsSQLiteDataSource dogsDataSource;
-    private DogsCursorWrapper dogsCursor;
     private List<Dog> dogs;
     private SQLiteDatabase db;
 
@@ -30,32 +28,27 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
     private void loadDogs() {
         dogs = new ArrayList<>();
+        Cursor cursor = null;
         try {
-            dogsCursor = queryDogs();
-            dogsCursor.moveToFirst();
-            while (!dogsCursor.isAfterLast()) {
-                dogs.add(dogsCursor.getDog());
-                dogsCursor.moveToNext();
+            cursor = db.query(
+                    DogTable.TABLE_NAME,null,null,null,null,null,
+                    null,null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Dog dog = new Dog();
+                dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
+                dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
+                dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
+                dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
+                dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
+                dog.setDogWeight(cursor.getInt(cursor.getColumnIndex(DogTable.WEIGHT)));
+                dogs.add(dog);
+                cursor.moveToNext();
             }
         } finally {
-            dogsCursor.close();
+            cursor.close();
         }
-    }
-
-    private DogsCursorWrapper queryDogs() {
-        Cursor cursor = db.query(
-                DogTable.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        DogsCursorWrapper dogsCursor = new DogsCursorWrapper(cursor);
-        cursor.close();
-        return dogsCursor;
     }
 
     // temporary implementation.
@@ -79,17 +72,5 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
             }
         }
         throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
-    }
-
-    public Dog getDog(Cursor cursor) {
-        Dog dog = new Dog();
-        dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
-        dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
-        dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
-        dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
-        dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
-        dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
-        dog.setDogWeight(cursor.getInt(cursor.getColumnIndex(DogTable.WEIGHT)));
-        return dog;
     }
 }

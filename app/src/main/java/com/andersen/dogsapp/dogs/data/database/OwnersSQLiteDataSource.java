@@ -3,14 +3,11 @@ package com.andersen.dogsapp.dogs.data.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
-
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.DogKind;
-import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
-import com.andersen.dogsapp.dogs.data.database.wrappers.OwnersCursorWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +15,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private static OwnersSQLiteDataSource ownersDataSource;
 
     private SQLiteDatabase db;
-    private OwnersCursorWrapper ownersCursor;
     private List<Owner> owners;
 
     private OwnersSQLiteDataSource(DBHelper dbHelper) {
@@ -40,39 +36,42 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
 
     private void loadOwners() {
         addSomeDB();
+        Cursor cursor = null;
         owners = new ArrayList<>();
-        ownersCursor = queryOwners();
         try {
-            ownersCursor.moveToFirst();
-            while (!ownersCursor.isAfterLast()) {
-                owners.add(ownersCursor.getOwner());
-                ownersCursor.moveToNext();
+            cursor = db.query(
+                    OwnerTable.TABLE_NAME,
+                    null, null, null, null, null, null, null);
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Owner owner = new Owner();
+                owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
+                owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
+                owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
+                owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
+                String dogsIdsString = cursor.getString(cursor.getColumnIndex(OwnerTable.DOGS_IDS));
+                owner.setDogsIds(getIntArrayFromString(dogsIdsString));
+                owners.add(owner);
+                cursor.moveToNext();
             }
         } finally {
-            ownersCursor.close();
+            cursor.close();
         }
     }
 
-    @NonNull
-    private OwnersCursorWrapper queryOwners() {
-        Cursor cursor = db.query(
-                OwnerTable.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-//        cursor.close();
-        OwnersCursorWrapper ownersCursor = new OwnersCursorWrapper(cursor);
-        return ownersCursor;
+    // converts string of ints like "2 3 4" to int[] like new int[]{2,3,4}
+    private int[] getIntArrayFromString(String dogIdsString) {
+        String[] arrayStrings = dogIdsString.split(" ");
+        int[] dogsIds = new int[arrayStrings.length];
+        for (int i = 0; i < dogsIds.length; i++) {
+            dogsIds[i] = Integer.parseInt(arrayStrings[i]);
+        }
+        return dogsIds;
     }
 
     private void addSomeDB() {
-        Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null,null,null,null,null);
-        if( cursor.getCount() == 0) {
+        Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null, null, null);
+        if (cursor.getCount() == 0) {
             addOwner(1, "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
             addOwner(2, "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
             addOwner(3, "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");

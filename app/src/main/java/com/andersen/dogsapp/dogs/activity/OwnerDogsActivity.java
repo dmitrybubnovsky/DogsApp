@@ -15,8 +15,8 @@ import com.andersen.dogsapp.dogs.data.DataRepository;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
-import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IDogsDataSource;
-import com.andersen.dogsapp.dogs.data.get_entities_interfaces.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
