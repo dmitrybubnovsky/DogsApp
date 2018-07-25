@@ -50,6 +50,7 @@ public class DogOwnersListActivity extends AppCompatActivity
 
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
 
+
         RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewOwnersAdapter ownersAdapter = new RecyclerViewOwnersAdapter(this, owners, this);

@@ -39,7 +39,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_dogs_list_recyclerview);
 
-        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
+        Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
 
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
