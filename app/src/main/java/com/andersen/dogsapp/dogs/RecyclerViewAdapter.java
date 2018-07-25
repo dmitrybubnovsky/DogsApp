@@ -26,7 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogNameTextView;
         private TextView dogKindTextView;
         private ImageView dogImageView;
@@ -43,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             initViews(view);
         }
 
-        private void initViews (View view){
+        private void initViews(View view) {
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin15sp)
                     .build();
