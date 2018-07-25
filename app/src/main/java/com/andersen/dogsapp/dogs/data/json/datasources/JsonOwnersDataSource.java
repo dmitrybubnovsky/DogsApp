@@ -1,7 +1,9 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.data.json.datasources;
+
 import android.content.Context;
 
-import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.json.OwnersData;
 import com.andersen.dogsapp.dogs.data.json.JsonParser;
 import com.google.gson.annotations.Expose;
@@ -35,13 +37,13 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
     }
 
     private void loadOwners(Context context) {
-        try {
-            InputStream inputStream = context.getAssets().open("owners.json");
-            JsonParser jsonParser = JsonParser.newInstance();
-            OwnersData ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
-            owners = ownersData.getOwners();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            try {
+                InputStream inputStream = context.getAssets().open("owners.json");
+                JsonParser jsonParser = JsonParser.newInstance();
+                OwnersData ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
+                owners = ownersData.getOwners();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }

@@ -1,40 +1,34 @@
 package com.andersen.dogsapp.dogs.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.AppTextView;
-import com.andersen.dogsapp.dogs.DataRepository;
-import com.andersen.dogsapp.dogs.Dog;
-import com.andersen.dogsapp.dogs.DogToolBar;
-
 import java.util.List;
 
-import com.andersen.dogsapp.dogs.JsonDogsDataSource;
-import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
-import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
-import com.andersen.dogsapp.dogs.data.IDogsDataSource;
-import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+import android.os.Bundle;
+import android.content.Intent;
+import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
+import android.support.v7.widget.Toolbar;
+import com.andersen.dogsapp.dogs.DogToolBar;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
+import com.andersen.dogsapp.dogs.data.DataRepository;
+import android.support.v7.widget.GridLayoutManager;
 
-import android.widget.Toast;
-import android.util.Log;
+import com.andersen.dogsapp.dogs.RecyclerViewAdapter;
+import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.database.DBHelper;
+import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
 public class OwnerDogsActivity extends AppCompatActivity implements RecyclerViewAdapter.ItemListener {
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
-    private DataRepository dataRepository;
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +38,13 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
         // json имплементация
-        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        // sqlite имплементация
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 

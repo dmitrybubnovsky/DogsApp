@@ -8,33 +8,29 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.DataRepository;
-import com.andersen.dogsapp.dogs.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String TAG = "#";
-
     public static final String EXTRA_DOG = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.dog";
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_info);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.dog_sound);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_detail_info);
         setSupportActionBar(toolbar);
 
         Dog dog = getIntent().getParcelableExtra(EXTRA_DOG);
-        initViews(dog);
+        initViews(dog, mediaPlayer);
     }
 
-    private void initViews(Dog dog) {
+    private void initViews(Dog dog, MediaPlayer mediaPlayer) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
         dogsPhoto.setImageResource(dog.getDogImageId(this));
 

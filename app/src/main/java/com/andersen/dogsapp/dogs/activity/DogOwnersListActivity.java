@@ -7,18 +7,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
-import com.andersen.dogsapp.dogs.DataRepository;
-import com.andersen.dogsapp.dogs.Dog;
+import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
-import com.andersen.dogsapp.dogs.JsonDogsDataSource;
-import com.andersen.dogsapp.dogs.JsonOwnersDataSource;
-import com.andersen.dogsapp.dogs.Owner;
-import com.andersen.dogsapp.dogs.data.IDogsDataSource;
-import com.andersen.dogsapp.dogs.data.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
+import com.andersen.dogsapp.dogs.data.database.DBHelper;
+import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
 import java.util.List;
 
@@ -31,8 +29,14 @@ public class DogOwnersListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owners_list);
 
-        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+//      json имплементация
+//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        // sqlite имплементация
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 

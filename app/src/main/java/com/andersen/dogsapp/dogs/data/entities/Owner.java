@@ -1,9 +1,7 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.data.entities;
 
 import android.os.Parcelable;
 import android.os.Parcel;
-
-import java.util.ArrayList;
 
 public class Owner implements Parcelable {
     private int ownerId;
@@ -11,6 +9,9 @@ public class Owner implements Parcelable {
     private String ownerSurname;
     private String preferedDogsKind;
     private int[] dogsIds;
+
+    public Owner() {
+    }
 
     public int getOwnerId() {
         return ownerId;
@@ -30,6 +31,26 @@ public class Owner implements Parcelable {
 
     public int getDogsQuantity() {
         return dogsIds.length;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public void setOwnerSurname(String ownerSurname) {
+        this.ownerSurname = ownerSurname;
+    }
+
+    public void setPreferedDogsKind(String preferedDogsKind) {
+        this.preferedDogsKind = preferedDogsKind;
+    }
+
+    public void setDogsIds(int[] dogsIds) {
+        this.dogsIds = dogsIds;
     }
 
     @Override

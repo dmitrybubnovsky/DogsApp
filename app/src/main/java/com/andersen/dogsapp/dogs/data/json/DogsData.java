@@ -1,8 +1,6 @@
 package com.andersen.dogsapp.dogs.data.json;
 
-import android.util.Log;
-
-import com.andersen.dogsapp.dogs.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +12,6 @@ public class DogsData {
     private List<Dog> dogs;
 
     public List<Dog> getDogs() {
-        Log.d("# DogsData. getDogs", "" + dogs.size());
         return dogs;
     }
 }
