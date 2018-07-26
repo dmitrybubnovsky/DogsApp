@@ -26,6 +26,15 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         this.listener = listener;
     }
 
+    public OwnersAdapter() {
+    }
+
+    public void setOwners(Context context, List<Owner> owners, IRecyclerItemListener listener) {
+        this.context = context;
+        this.owners = owners;
+        this.listener = listener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ownerFullNameTextView;
         private TextView preferredKindTextView;

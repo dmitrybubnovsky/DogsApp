@@ -9,14 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.database.DBHelper;
+import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     EditText ownerNameEditText;
     EditText ownerSurnameEditText;
     EditText preferredKindEditText;
 
-    public static Intent newIntent (Context context, Class<?> activityClass){
-        Intent i = new Intent (context, activityClass);
+    public static Intent newIntent(Context context, Class<?> activityClass) {
+        Intent i = new Intent(context, activityClass);
         return i;
     }
 
@@ -30,18 +33,26 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
         Button button = findViewById(R.id.add_owner_button);
 
-        button.setOnClickListener(view ->{
+        button.setOnClickListener(view -> {
             Intent intent = new Intent();
-//            intent.putExtra();
-            setResult(RESULT_OK, intent);
+            if (addOwner(this) != -1) {
+//                intent.putExtra();
+                setResult(RESULT_OK);
+//                setResult(RESULT_OK, intent);
+            } else {
+                setResult(RESULT_CANCELED);
+            }
             finish();
         });
 
     }
 
-    public void addOwner(){
+    public long addOwner(Context context) {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
+        DBHelper dbHelper = DBHelper.getInstance(context);
+        OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        return ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
     }
 }

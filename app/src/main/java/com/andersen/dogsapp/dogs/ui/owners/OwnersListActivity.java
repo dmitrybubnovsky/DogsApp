@@ -24,13 +24,17 @@ import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class OwnersListActivity extends MenuActivity
-        implements IRecyclerItemListener<Owner> {
+public class OwnersListActivity extends MenuActivity implements IRecyclerItemListener<Owner> {
     public final int REQUEST_CODE_NEW_OWNER = 1;
+    private RecyclerView ownersRecyclerView;
+    private DataRepository dataRepository;
+    private OwnersAdapter ownersAdapter;
+    private List<Owner> owners;
 
 
     @Override
@@ -49,9 +53,11 @@ public class OwnersListActivity extends MenuActivity
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_NEW_OWNER:
-
+                    updateUI();
                     break;
             }
+        } else {
+            Toast.makeText(this, "RESULT IS NOT OK", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -64,30 +70,30 @@ public class OwnersListActivity extends MenuActivity
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
-        // sqlite имплементация
-        DBHelper dbHelper = DBHelper.getInstance(this);
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
-
-        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
-
-        List<Owner> owners = dataRepository.getOwners();
-
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
 
-        if (owners == null){
-            Toast.makeText(this, "There is no any dog owner yet", Toast.LENGTH_SHORT).show();
-        } else {
-            RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
-            ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ownersRecyclerView = findViewById(R.id.owners_recycler_view);
+        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
 
-            OwnersAdapter ownersAdapter = new OwnersAdapter(this, owners, this);
-            ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-            ownersRecyclerView.setAdapter(ownersAdapter);
-        }
+        // sqlite имплементация
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
+
+        dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
+
+        updateUI();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     @Override
@@ -95,5 +101,22 @@ public class OwnersListActivity extends MenuActivity
         Intent intent = new Intent(getApplicationContext(), DogsListActivity.class);
         intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
         startActivity(intent);
+    }
+
+    private void updateUI(){
+        owners = dataRepository.getOwners();
+
+        if (owners == null){
+            Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
+            startActivity(intent);
+            Toast.makeText(this, "There is no any dog owner yet", Toast.LENGTH_SHORT).show();
+        } else {
+            if( ownersAdapter == null){
+                ownersAdapter = new OwnersAdapter(this, owners, this);
+                ownersRecyclerView.setAdapter(ownersAdapter);
+            } else {
+                ownersAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

@@ -35,13 +35,14 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     private void loadOwners() {
-//        addSomeDB();
+        addSomeDB();
         Cursor cursor = null;
         owners = new ArrayList<>();
         try {
             cursor = db.query(
                     OwnerTable.TABLE_NAME,
                     null, null, null, null, null, null, null);
+            // проверяем БД, если там пусто то список владельцев null
             if(cursor.getCount() == 0 || !cursor.moveToNext()){
                 owners = null;
             } else {
@@ -58,7 +59,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
                     cursor.moveToNext();
                 }
             }
-
         } finally {
             cursor.close();
         }
@@ -66,24 +66,17 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
 
     // converts string of ints like "2 3 4" to int[] like new int[]{2,3,4}
     private int[] getIntArrayFromString(String dogIdsString) {
-        String[] arrayStrings = dogIdsString.split(" ");
-        int[] dogsIds = new int[arrayStrings.length];
-        for (int i = 0; i < dogsIds.length; i++) {
-            dogsIds[i] = Integer.parseInt(arrayStrings[i]);
+        if (dogIdsString == null){
+            return new int[0];
+        } else {
+            String[] arrayStrings = dogIdsString.split(" ");
+            int[] dogsIds = new int[arrayStrings.length];
+            for (int i = 0; i < dogsIds.length; i++) {
+                dogsIds[i] = Integer.parseInt(arrayStrings[i]);
+            }
+            return dogsIds;
         }
-        return dogsIds;
     }
-
-//    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
-//        ContentValues cv = new ContentValues();
-//        cv.put(OwnerTable.ID, id);
-//        cv.put(OwnerTable.NAME, name);
-//        cv.put(OwnerTable.SURNAME, surname);
-//        cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
-//        cv.put(OwnerTable.DOGS_IDS, dogsIds);
-//        db.insert(OwnerTable.TABLE_NAME, null, cv);
-//    }
-
 
     private void addOwner(String name, String surname, String preferedKind, String dogsIds) {
         ContentValues cv = new ContentValues();
@@ -94,12 +87,12 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         db.insert(OwnerTable.TABLE_NAME, null, cv);
     }
 
-    private void addOwner(String name, String surname, String preferedKind) {
+    public long addOwner(String name, String surname, String preferedKind) {
         ContentValues cv = new ContentValues();
         cv.put(OwnerTable.NAME, name);
         cv.put(OwnerTable.SURNAME, surname);
         cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
-        db.insert(OwnerTable.TABLE_NAME, null, cv);
+        return db.insert(OwnerTable.TABLE_NAME, null, cv);
     }
 
     private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
