@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.AppTextView;
+import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 

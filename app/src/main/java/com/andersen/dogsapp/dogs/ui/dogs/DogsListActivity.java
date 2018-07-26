@@ -13,7 +13,7 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 
-import com.andersen.dogsapp.dogs.DogToolBar;
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
