@@ -19,9 +19,9 @@ import java.util.List;
 public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
-    private ItemListener listener;
+    private IRecyclerItemListener listener;
 
-    public RecyclerViewDogsAdapter(Context context, List<Dog> dogs, ItemListener listener) {
+    public RecyclerViewDogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
         this.dogs = dogs;
         this.listener = listener;
@@ -38,7 +38,7 @@ public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDo
             super(view);
             view.setOnClickListener(view1 -> {
                 if (listener != null) {
-                    listener.onItemClick(dog);
+                    listener.onRecyclerItemClick(dog);
                 }
             });
             initViews(view);
@@ -77,9 +77,5 @@ public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDo
     @Override
     public int getItemCount() {
         return dogs.size();
-    }
-
-    public interface ItemListener {
-        void onItemClick(Dog dog);
     }
 }

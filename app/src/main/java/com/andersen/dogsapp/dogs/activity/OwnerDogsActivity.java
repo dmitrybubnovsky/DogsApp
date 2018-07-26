@@ -18,6 +18,7 @@ import com.andersen.dogsapp.dogs.data.DataRepository;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
+import com.andersen.dogsapp.dogs.recyclerviewers.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.recyclerviewers.RecyclerViewDogsAdapter;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
@@ -25,7 +26,7 @@ import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
-public class OwnerDogsActivity extends AppCompatActivity implements RecyclerViewDogsAdapter.ItemListener {
+public class OwnerDogsActivity extends AppCompatActivity implements IRecyclerItemListener{
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
@@ -70,17 +71,11 @@ public class OwnerDogsActivity extends AppCompatActivity implements RecyclerView
     }
 
     @Override
-    public void onItemClick(Dog dog) {
+    public void onRecyclerItemClick(Object object) {
+        Dog dog = (Dog)object;
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);
-    }
-
-    private static class DogsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
-        @Override
-        public int getSpanSize(int position) {
-            return (position % 3 == 0) ? 2 : 1;
-        }
     }
 }
 

@@ -16,14 +16,11 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import java.util.List;
 
 public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerViewOwnersAdapter.ViewHolder> {
-//public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerViewOwnersAdapter.ViewHolder> {
     private Context context;
     private List<Owner> owners;
     private IRecyclerItemListener listener;
-//    private OwnerListener listener;
 
     public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
-//    public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, OwnerListener listener) {
         this.context = context;
         this.owners = owners;
         this.listener = listener;
@@ -40,7 +37,7 @@ public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerView
             super(view);
             view.setOnClickListener(view1 -> {
                 if (listener != null) {
-                    listener.onItemClick(owner);
+                    listener.onRecyclerItemClick(owner);
                 }
             });
             initViews(view);
@@ -80,9 +77,5 @@ public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemCount() {
         return owners.size();
-    }
-
-    public interface OwnerListener {
-        void onItemClick(Owner owner);
     }
 }

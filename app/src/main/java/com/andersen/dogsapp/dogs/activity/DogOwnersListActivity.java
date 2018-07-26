@@ -60,7 +60,7 @@ public class DogOwnersListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(Object object) {
+    public void onRecyclerItemClick(Object object) {
         Owner owner = (Owner)object;
         Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
         intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
