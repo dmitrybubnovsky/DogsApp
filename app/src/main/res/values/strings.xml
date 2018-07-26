@@ -16,11 +16,11 @@
     <string name="owner_name_hint">Name</string>
     <string name="owner_surname_hint">Surname</string>
     <string name="prefered_dog_hint">Favourite dogs kind</string>
-    <string name="add_title_button">ADD</string>
+    <string name="add_title_button">Add</string>
 
-    <string name="toolbar_title_owners_list">OWNERS LIST</string>
-    <string name="toolbar_title_dogs_list">DOGS LIST</string>
-    <string name="toolbar_title_detail_info">DOGS INFO</string>
+    <string name="toolbar_title_owners_list">Owners list</string>
+    <string name="toolbar_title_dogs_list">Dogs list</string>
+    <string name="toolbar_title_detail_info">Dogs info</string>
 
     <string name="weight_measure">kg</string>
     <string name="tall_measure">cm</string>

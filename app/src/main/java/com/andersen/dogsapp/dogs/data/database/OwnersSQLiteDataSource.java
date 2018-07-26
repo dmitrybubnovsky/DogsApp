@@ -79,6 +79,12 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         db.insert(OwnerTable.TABLE_NAME, null, cv);
     }
 
+
+//    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
+//
+//        addOwner( id,  name,  surname,  preferedKind, dogsIds);
+//    }
+
     private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
         ContentValues cv = new ContentValues();
         cv.put(DogTable.ID, id);

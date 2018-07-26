@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(OwnerTable.NAME).append(" TEXT,")
             .append(OwnerTable.SURNAME).append(" TEXT,")
             .append(OwnerTable.PREFERED_DOGS_KIND).append(" TEXT,")
-            .append(OwnerTable.DOGS_IDS).append(" TEXT);").toString();
+            .append(OwnerTable.DOGS_IDS).append(" TEXT DEFAULT 1);").toString();
 
     // CREATE DOGS TABLE
     private static final String CREATE_TABLE_DOG_QUERY = new StringBuilder()
