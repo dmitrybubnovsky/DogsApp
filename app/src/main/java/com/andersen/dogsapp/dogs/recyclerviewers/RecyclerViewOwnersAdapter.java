@@ -16,11 +16,14 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import java.util.List;
 
 public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerViewOwnersAdapter.ViewHolder> {
+//public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerViewOwnersAdapter.ViewHolder> {
     private Context context;
     private List<Owner> owners;
-    private OwnerListener listener;
+    private IRecyclerItemListener listener;
+//    private OwnerListener listener;
 
-    public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, OwnerListener listener) {
+    public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
+//    public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, OwnerListener listener) {
         this.context = context;
         this.owners = owners;
         this.listener = listener;

@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
+import com.andersen.dogsapp.dogs.recyclerviewers.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.recyclerviewers.RecyclerViewOwnersAdapter;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
@@ -25,7 +26,8 @@ import java.util.List;
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity
-        implements RecyclerViewOwnersAdapter.OwnerListener {
+        implements IRecyclerItemListener{
+//        implements RecyclerViewOwnersAdapter.OwnerListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +52,16 @@ public class DogOwnersListActivity extends AppCompatActivity
 
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
 
-
         RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewOwnersAdapter ownersAdapter = new RecyclerViewOwnersAdapter(this, owners, this);
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         ownersRecyclerView.setAdapter(ownersAdapter);
-
     }
 
     @Override
-    public void onItemClick(Owner owner) {
+    public void onItemClick(Object object) {
+        Owner owner = (Owner)object;
         Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
         intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
         startActivity(intent);
