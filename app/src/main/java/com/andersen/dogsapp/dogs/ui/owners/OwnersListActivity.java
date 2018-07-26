@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.activity;
+package com.andersen.dogsapp.dogs.ui.owners;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -9,9 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
-import com.andersen.dogsapp.dogs.recyclerviewers.IRecyclerItemListener;
-import com.andersen.dogsapp.dogs.recyclerviewers.RecyclerViewOwnersAdapter;
+import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
+import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.DogToolBar;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
@@ -20,12 +19,13 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
+import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class DogOwnersListActivity extends AppCompatActivity
+public class OwnersListActivity extends AppCompatActivity
         implements IRecyclerItemListener<Owner>{
 
     @Override
@@ -54,15 +54,15 @@ public class DogOwnersListActivity extends AppCompatActivity
         RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        RecyclerViewOwnersAdapter ownersAdapter = new RecyclerViewOwnersAdapter(this, owners, this);
+        OwnersAdapter ownersAdapter = new OwnersAdapter(this, owners, this);
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         ownersRecyclerView.setAdapter(ownersAdapter);
     }
 
     @Override
     public void onRecyclerItemClick(Owner owner) {
-        Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
-        intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
+        Intent intent = new Intent(getApplicationContext(), DogsListActivity.class);
+        intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
         startActivity(intent);
     }
 }

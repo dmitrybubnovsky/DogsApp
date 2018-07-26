@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dogs.activity.MainActivity">
+        <activity android:name=".dogs.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -17,16 +17,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dogs.activity.DogOwnersListActivity"
+            android:name=".dogs.ui.owners.OwnersListActivity"
             android:theme="@style/MainDogApp"/>
         <activity
-            android:name=".dogs.activity.OwnerDogsActivity"
+            android:name=".dogs.ui.dogs.DogsListActivity"
             android:theme="@style/MainDogApp"/>
         <activity
-            android:name=".dogs.activity.DogsInfoActivity"
+            android:name=".dogs.ui.dogs.DogsInfoActivity"
             android:theme="@style/MainDogApp"/>
         <activity
-            android:name=".dogs.activity.MainAppDescriptionActivity"
+            android:name=".dogs.ui.MainAppDescriptionActivity"
             android:theme="@style/NoActionBar"/>
     </application>
 

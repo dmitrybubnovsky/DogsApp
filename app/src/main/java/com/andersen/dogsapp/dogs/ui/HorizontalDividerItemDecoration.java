@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.recyclerviewers;
+package com.andersen.dogsapp.dogs.ui;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;

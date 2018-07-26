@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.activity;
+package com.andersen.dogsapp.dogs.ui.dogs;
 
 import java.util.List;
 
@@ -20,18 +20,17 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.andersen.dogsapp.dogs.data.DataRepository;
 
-import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
-import com.andersen.dogsapp.dogs.recyclerviewers.IRecyclerItemListener;
-import com.andersen.dogsapp.dogs.recyclerviewers.RecyclerViewDogsAdapter;
+import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
+import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
-public class OwnerDogsActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
+public class DogsListActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
     public static final String TAG = "#";
-    public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
+    public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.DogsListActivity.owner";
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -64,7 +63,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements IRecyclerIte
         setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerViewDogsAdapter adapter = new RecyclerViewDogsAdapter(this, ownerDogs, this);
+        DogsAdapter adapter = new DogsAdapter(this, ownerDogs, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(layoutManager);

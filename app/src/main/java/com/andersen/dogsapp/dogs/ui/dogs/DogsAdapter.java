@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.recyclerviewers;
+package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,15 +12,16 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
 import java.util.List;
 
-public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDogsAdapter.ViewHolder> {
+public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
 
-    public RecyclerViewDogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
+    public DogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
         this.dogs = dogs;
         this.listener = listener;
@@ -61,7 +62,7 @@ public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDo
     }
 
     @Override
-    public RecyclerViewDogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
         return new ViewHolder(view);
     }

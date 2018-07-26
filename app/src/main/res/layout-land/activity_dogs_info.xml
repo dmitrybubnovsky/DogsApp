@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dogs.activity.DogsInfoActivity">
+    tools:context=".dogs.ui.dogs.DogsInfoActivity">
 
     <include
         android:id="@+id/toolbar_dogs_app"

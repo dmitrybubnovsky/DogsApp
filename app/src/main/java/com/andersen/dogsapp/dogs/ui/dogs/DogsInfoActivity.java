@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.activity;
+package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
