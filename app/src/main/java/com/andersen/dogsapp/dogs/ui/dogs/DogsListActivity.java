@@ -28,9 +28,32 @@ import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
-public class DogsListActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
+public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
+    public final int REQUEST_CODE_NEW_OWNER = 1;
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.DogsListActivity.owner";
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.add_new_menu_item:
+                Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
+                startActivityForResult(intent, REQUEST_CODE_NEW_OWNER);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_NEW_OWNER:
+
+                    break;
+            }
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

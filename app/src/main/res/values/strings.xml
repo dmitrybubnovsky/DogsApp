@@ -11,6 +11,11 @@
     <string name="woof_btn_title">WOOF!</string>
     <string name="text_view_title_preff_dog">Favourite kind of dog: </string>
 
+    <string name="owner_name_hint">Name</string>
+    <string name="owner_surname_hint">Surname</string>
+    <string name="prefered_dog_hint">Favourite dogs kind</string>
+    <string name="add_title_button">ADD</string>
+
     <string name="toolbar_title_owners_list">OWNERS LIST</string>
     <string name="toolbar_title_dogs_list">DOGS LIST</string>
     <string name="toolbar_title_detail_info">DOGS INFO</string>

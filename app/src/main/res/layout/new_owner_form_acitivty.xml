@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="16dp"
+              android:orientation="vertical"
+              android:gravity="center">
+    <EditText
+        android:id="@+id/owner_name_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/owner_name_hint"
+        />
+
+    <EditText
+        android:id="@+id/surname_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/owner_surname_hint"
+        />
+
+    <EditText
+        android:id="@+id/preferred_kind_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/prefered_dog_hint"
+        />
+
+    <Button
+        android:id="@+id/add_owner_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:text="@string/add_title_button"
+        />
+</LinearLayout>
