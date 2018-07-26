@@ -6,27 +6,22 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dogs.activity.DogOwnersListActivity">
+    tools:context=".dogs.ui.owners.OwnersListActivity">
 
     <include android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
 
-    <ScrollView
-        android:id="@+id/owners_scroll_view"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="@dimen/margin_8dp"
-        android:layout_marginStart="@dimen/margin_8dp"
-        android:layout_marginTop="@dimen/margin_8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_dogs_app">
 
-        <LinearLayout
-            android:id="@+id/owners_container"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/owners_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-    </ScrollView>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

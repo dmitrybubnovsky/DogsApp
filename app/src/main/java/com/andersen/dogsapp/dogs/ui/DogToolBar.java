@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.ui;
 
 import android.app.Activity;
 import android.support.v7.widget.Toolbar;

@@ -21,6 +21,14 @@ public class Owner implements Parcelable {
         return ownerName + " " + ownerSurname;
     }
 
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public String getOwnerSurname() {
+        return ownerSurname;
+    }
+
     public String getPreferedDogsKind() {
         return preferedDogsKind;
     }

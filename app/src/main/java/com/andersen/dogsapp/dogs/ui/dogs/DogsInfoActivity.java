@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.activity;
+package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.DogToolBar;
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
     public static final String TAG = "#";

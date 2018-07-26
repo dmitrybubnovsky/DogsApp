@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.data.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
@@ -11,6 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TAG = "# DBHelper";
     private static final String DB_NAME = "doggy_dogg.db";
     private static final int VERSION = 1;
+
     // CREATE OWNERS TABLE
     private static final String CREATE_TABLE_OWNER_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(OwnerTable.TABLE_NAME).append(" (")

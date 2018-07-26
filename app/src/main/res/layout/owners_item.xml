@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/owners_item_relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_colors">
 
     <TextView
-        android:id="@+id/owner_name_textview"
+        android:id="@+id/owner_fullname_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_marginBottom="@dimen/margin_8dp"
-        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_8dp"
         android:layout_alignParentStart="true"
         android:textColor="@color/text_view_colors"/>
 
@@ -20,17 +22,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
-        android:layout_below="@id/owner_name_textview"
+        android:layout_below="@id/owner_fullname_item_textview"
         android:text="@string/text_view_title_preff_dog"/>
 
     <TextView
-        android:id="@+id/preffered_dog_textview"
+        android:id="@+id/preffered_dog_item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
         style="@style/BoldRobotoThin13sp"
         android:layout_toRightOf="@+id/preffered_dog_title_textview"
-        android:layout_below="@id/owner_name_textview"/>
+        android:layout_below="@id/owner_fullname_item_textview"/>
 
     <TextView
         android:id="@+id/quantity_title_textivew"
@@ -40,17 +42,10 @@
         android:layout_below="@id/preffered_dog_title_textview"
         android:text="@string/text_view_title_dogs_quantity"/>
     <TextView
-        android:id="@+id/quantity_textview"
+        android:id="@+id/dogs_quantity_item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/preffered_dog_title_textview"
         android:layout_toRightOf="@id/quantity_title_textivew"
         android:layout_margin="@dimen/margin_8dp"/>
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line_height"
-        android:background="@color/colorCustomYellow"
-        android:layout_below="@id/quantity_textview"/>
-
 </RelativeLayout>

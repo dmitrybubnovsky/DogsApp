@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.activity;
+package com.andersen.dogsapp.dogs.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
