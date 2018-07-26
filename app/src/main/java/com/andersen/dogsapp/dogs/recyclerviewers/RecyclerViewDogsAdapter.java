@@ -19,7 +19,7 @@ import java.util.List;
 public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
-    private IRecyclerItemListener <Dog> listener;
+    private IRecyclerItemListener<Dog> listener;
 
     public RecyclerViewDogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
@@ -27,11 +27,10 @@ public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDo
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogNameTextView;
         private TextView dogKindTextView;
         private ImageView dogImageView;
-        private RelativeLayout relativeLayout;
         private Dog dog;
 
         public ViewHolder(View view) {
@@ -44,7 +43,7 @@ public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDo
             initViews(view);
         }
 
-        private void initViews (View view){
+        private void initViews(View view) {
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin15sp)
                     .build();
@@ -52,7 +51,6 @@ public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDo
                     .style(context, R.style.BoldRobotoThin13sp)
                     .build();
             dogImageView = view.findViewById(R.id.dog_recycler_image_view);
-            relativeLayout = view.findViewById(R.id.recycler_item_relativeLayout);
         }
 
         private void setData(Dog dog) {

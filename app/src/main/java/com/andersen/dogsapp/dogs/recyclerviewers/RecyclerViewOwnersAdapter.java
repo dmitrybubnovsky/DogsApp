@@ -18,7 +18,7 @@ import java.util.List;
 public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerViewOwnersAdapter.ViewHolder> {
     private Context context;
     private List<Owner> owners;
-    private IRecyclerItemListener <Owner> listener;
+    private IRecyclerItemListener<Owner> listener;
 
     public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
         this.context = context;
@@ -26,11 +26,10 @@ public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerView
         this.listener = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ownerFullNameTextView;
         private TextView preferredKindTextView;
         private TextView dogsQuantityTextView;
-        private RelativeLayout relativeLayout;
         private Owner owner;
 
         public ViewHolder(View view) {
@@ -43,7 +42,7 @@ public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerView
             initViews(view);
         }
 
-        private void initViews (View view){
+        private void initViews(View view) {
             ownerFullNameTextView = AppTextView.newInstance(itemView, R.id.owner_fullname_item_textview)
                     .style(context, R.style.TextViewTitleItem)
                     .build();
@@ -51,14 +50,13 @@ public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerView
                     .style(context, R.style.BoldRobotoThin13sp)
                     .build();
             dogsQuantityTextView = view.findViewById(R.id.dogs_quantity_item_textview);
-            relativeLayout = view.findViewById(R.id.owners_item_relativeLayout);
         }
 
         private void setData(Owner owner) {
             this.owner = owner;
             ownerFullNameTextView.setText(owner.getOwnerFullName());
             preferredKindTextView.setText(owner.getPreferedDogsKind());
-            dogsQuantityTextView.setText(""+owner.getDogsQuantity());
+            dogsQuantityTextView.setText("" + owner.getDogsQuantity());
 
         }
     }

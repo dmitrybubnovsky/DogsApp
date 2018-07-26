@@ -27,7 +27,6 @@ import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity
         implements IRecyclerItemListener<Owner>{
-//        implements RecyclerViewOwnersAdapter.OwnerListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

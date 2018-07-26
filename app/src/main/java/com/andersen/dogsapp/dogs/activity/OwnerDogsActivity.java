@@ -5,17 +5,20 @@ import java.util.List;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.content.Intent;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+
 import com.andersen.dogsapp.dogs.DogToolBar;
+
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.app.AppCompatActivity;
+
 import com.andersen.dogsapp.dogs.data.DataRepository;
-import android.support.v7.widget.GridLayoutManager;
 
 import com.andersen.dogsapp.dogs.recyclerviewers.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.recyclerviewers.IRecyclerItemListener;
@@ -26,7 +29,7 @@ import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 
-public class OwnerDogsActivity extends AppCompatActivity implements IRecyclerItemListener<Dog>{
+public class OwnerDogsActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.OwnerDogsActivity.owner";
 
@@ -71,7 +74,7 @@ public class OwnerDogsActivity extends AppCompatActivity implements IRecyclerIte
     }
 
     @Override
-    public void onRecyclerItemClick (Dog dog) {
+    public void onRecyclerItemClick(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);

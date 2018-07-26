@@ -2,10 +2,12 @@ package com.andersen.dogsapp.dogs.data.database;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         Cursor cursor = null;
         try {
             cursor = db.query(
-                    DogTable.TABLE_NAME,null,null,null,null,null,
-                    null,null);
+                    DogTable.TABLE_NAME, null, null, null, null, null,
+                    null, null);
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Dog dog = new Dog();

@@ -7,7 +7,8 @@ import android.view.View;
 
 public class HorizontalDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable divider;
-    public  HorizontalDividerItemDecoration(Drawable divider){
+
+    public HorizontalDividerItemDecoration(Drawable divider) {
         this.divider = divider;
     }
 
@@ -18,14 +19,14 @@ public class HorizontalDividerItemDecoration extends RecyclerView.ItemDecoration
 
         int childCount = parent.getChildCount();
 
-        for(int i = 0; i < childCount; i++){
+        for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
             RecyclerView.LayoutParams params =
-                    (RecyclerView.LayoutParams)child.getLayoutParams();
+                    (RecyclerView.LayoutParams) child.getLayoutParams();
             int top = child.getBottom() + params.bottomMargin;
             int bottom = top + divider.getIntrinsicHeight();
 
-            divider.setBounds(left,top,right,bottom);
+            divider.setBounds(left, top, right, bottom);
             divider.draw(c);
         }
     }
