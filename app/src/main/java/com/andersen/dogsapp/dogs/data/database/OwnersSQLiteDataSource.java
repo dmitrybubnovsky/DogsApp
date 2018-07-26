@@ -69,6 +69,28 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return dogsIds;
     }
 
+    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
+        ContentValues cv = new ContentValues();
+        cv.put(OwnerTable.ID, id);
+        cv.put(OwnerTable.NAME, name);
+        cv.put(OwnerTable.SURNAME, surname);
+        cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
+        cv.put(OwnerTable.DOGS_IDS, dogsIds);
+        db.insert(OwnerTable.TABLE_NAME, null, cv);
+    }
+
+    private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
+        ContentValues cv = new ContentValues();
+        cv.put(DogTable.ID, id);
+        cv.put(DogTable.NAME, name);
+        cv.put(DogTable.KIND, kind);
+        cv.put(DogTable.IMAGE, image);
+        cv.put(DogTable.AGE, age);
+        cv.put(DogTable.WEIGHT, weight);
+        cv.put(DogTable.TALL, tall);
+        db.insert(DogTable.TABLE_NAME, null, cv);
+    }
+
     private void addSomeDB() {
         Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null, null, null);
         if (cursor.getCount() == 0) {
@@ -109,27 +131,5 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
             addDog(125, "Leopold", DogKind.STAFFORD, "staffordshire", 16, 55, 65);
         }
         cursor.close();
-    }
-
-    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
-        ContentValues cv = new ContentValues();
-        cv.put(OwnerTable.ID, id);
-        cv.put(OwnerTable.NAME, name);
-        cv.put(OwnerTable.SURNAME, surname);
-        cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
-        cv.put(OwnerTable.DOGS_IDS, dogsIds);
-        db.insert(OwnerTable.TABLE_NAME, null, cv);
-    }
-
-    private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
-        ContentValues cv = new ContentValues();
-        cv.put(DogTable.ID, id);
-        cv.put(DogTable.NAME, name);
-        cv.put(DogTable.KIND, kind);
-        cv.put(DogTable.IMAGE, image);
-        cv.put(DogTable.AGE, age);
-        cv.put(DogTable.WEIGHT, weight);
-        cv.put(DogTable.TALL, tall);
-        db.insert(DogTable.TABLE_NAME, null, cv);
     }
 }

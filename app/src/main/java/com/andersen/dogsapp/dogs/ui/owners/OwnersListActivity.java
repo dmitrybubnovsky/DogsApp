@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
@@ -19,14 +20,39 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
+import com.andersen.dogsapp.dogs.ui.MenuActivity;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
 import java.util.List;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
-public class OwnersListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<Owner>{
+public class OwnersListActivity extends MenuActivity
+        implements IRecyclerItemListener<Owner> {
+    public final int REQUEST_CODE_NEW_OWNER = 1;
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.add_new_menu_item:
+                Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
+                startActivityForResult(intent, REQUEST_CODE_NEW_OWNER);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_NEW_OWNER:
+
+                    break;
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

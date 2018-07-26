@@ -10,7 +10,9 @@
     <string name="text_view_title_dogs_quantity">Количество собак: </string>
     <string name="woof_btn_title">Голос</string>
     <string name="text_view_title_preff_dog">Любимая порода: </string>
-    <string name="voice_btn_title">ГОЛОС!</string>
+    <string name="voice_btn_title">Голос!</string>
+
+    <string name="add_item_menu">Добавить</string>
 
     <string name="owner_name_hint">Имя</string>
     <string name="owner_surname_hint">Фамилия</string>

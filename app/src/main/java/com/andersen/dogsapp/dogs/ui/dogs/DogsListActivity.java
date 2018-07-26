@@ -16,7 +16,7 @@ import android.support.v7.widget.Toolbar;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.andersen.dogsapp.dogs.data.DataRepository;
 
@@ -27,9 +27,10 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
+import com.andersen.dogsapp.dogs.ui.MenuActivity;
 
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
-    public final int REQUEST_CODE_NEW_OWNER = 1;
+    public final int REQUEST_CODE_NEW_DOG = 2;
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.DogsListActivity.owner";
 
@@ -37,8 +38,8 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.add_new_menu_item:
-                Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
-                startActivityForResult(intent, REQUEST_CODE_NEW_OWNER);
+//                Intent intent = NewDogFormAcitivty.newIntent(getApplicationContext(), NewDogFormAcitivty.class);
+//                startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -48,7 +49,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_CODE_NEW_OWNER:
+                case REQUEST_CODE_NEW_DOG:
 
                     break;
             }
