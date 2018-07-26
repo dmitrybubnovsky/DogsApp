@@ -18,7 +18,7 @@ import java.util.List;
 public class RecyclerViewOwnersAdapter extends RecyclerView.Adapter<RecyclerViewOwnersAdapter.ViewHolder> {
     private Context context;
     private List<Owner> owners;
-    private IRecyclerItemListener listener;
+    private IRecyclerItemListener <Owner> listener;
 
     public RecyclerViewOwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
         this.context = context;

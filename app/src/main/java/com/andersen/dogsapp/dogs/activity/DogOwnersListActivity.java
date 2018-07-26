@@ -26,7 +26,7 @@ import java.util.List;
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class DogOwnersListActivity extends AppCompatActivity
-        implements IRecyclerItemListener{
+        implements IRecyclerItemListener<Owner>{
 //        implements RecyclerViewOwnersAdapter.OwnerListener {
 
     @Override
@@ -54,14 +54,14 @@ public class DogOwnersListActivity extends AppCompatActivity
 
         RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         RecyclerViewOwnersAdapter ownersAdapter = new RecyclerViewOwnersAdapter(this, owners, this);
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         ownersRecyclerView.setAdapter(ownersAdapter);
     }
 
     @Override
-    public void onRecyclerItemClick(Object object) {
-        Owner owner = (Owner)object;
+    public void onRecyclerItemClick(Owner owner) {
         Intent intent = new Intent(getApplicationContext(), OwnerDogsActivity.class);
         intent.putExtra(OwnerDogsActivity.EXTRA_OWNER, owner);
         startActivity(intent);

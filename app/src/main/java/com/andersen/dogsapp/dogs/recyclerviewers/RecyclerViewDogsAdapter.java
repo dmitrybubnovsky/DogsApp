@@ -19,7 +19,7 @@ import java.util.List;
 public class RecyclerViewDogsAdapter extends RecyclerView.Adapter<RecyclerViewDogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
-    private IRecyclerItemListener listener;
+    private IRecyclerItemListener <Dog> listener;
 
     public RecyclerViewDogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
