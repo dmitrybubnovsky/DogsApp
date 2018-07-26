@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
@@ -77,12 +78,16 @@ public class OwnersListActivity extends MenuActivity
 
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
 
-        RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
-        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (owners == null){
+            Toast.makeText(this, "There is no any dog owner yet", Toast.LENGTH_SHORT).show();
+        } else {
+            RecyclerView ownersRecyclerView = findViewById(R.id.owners_recycler_view);
+            ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        OwnersAdapter ownersAdapter = new OwnersAdapter(this, owners, this);
-        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-        ownersRecyclerView.setAdapter(ownersAdapter);
+            OwnersAdapter ownersAdapter = new OwnersAdapter(this, owners, this);
+            ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+            ownersRecyclerView.setAdapter(ownersAdapter);
+        }
     }
 
     @Override

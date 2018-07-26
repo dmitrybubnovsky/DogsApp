@@ -16,11 +16,12 @@ public class DBHelper extends SQLiteOpenHelper {
     // CREATE OWNERS TABLE
     private static final String CREATE_TABLE_OWNER_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(OwnerTable.TABLE_NAME).append(" (")
-            .append(OwnerTable.ID).append(" INTEGER,")
-            .append(OwnerTable.NAME).append(" TEXT,")
-            .append(OwnerTable.SURNAME).append(" TEXT,")
-            .append(OwnerTable.PREFERED_DOGS_KIND).append(" TEXT,")
-            .append(OwnerTable.DOGS_IDS).append(" TEXT DEFAULT 1);").toString();
+            .append(OwnerTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
+//            .append(OwnerTable.ID).append(" INTEGER,")
+            .append(OwnerTable.NAME).append(" TEXT NOT NULL,")
+            .append(OwnerTable.SURNAME).append(" TEXT NOT NULL,")
+            .append(OwnerTable.PREFERED_DOGS_KIND).append(" TEXT NOT NULL,")
+            .append(OwnerTable.DOGS_IDS).append(" TEXT);").toString();
 
     // CREATE DOGS TABLE
     private static final String CREATE_TABLE_DOG_QUERY = new StringBuilder()

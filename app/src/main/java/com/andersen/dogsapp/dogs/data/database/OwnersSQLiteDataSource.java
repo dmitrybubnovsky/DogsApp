@@ -35,25 +35,30 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     private void loadOwners() {
-        addSomeDB();
+//        addSomeDB();
         Cursor cursor = null;
         owners = new ArrayList<>();
         try {
             cursor = db.query(
                     OwnerTable.TABLE_NAME,
                     null, null, null, null, null, null, null);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                Owner owner = new Owner();
-                owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
-                owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
-                owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
-                owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
-                String dogsIdsString = cursor.getString(cursor.getColumnIndex(OwnerTable.DOGS_IDS));
-                owner.setDogsIds(getIntArrayFromString(dogsIdsString));
-                owners.add(owner);
-                cursor.moveToNext();
+            if(cursor.getCount() == 0 || !cursor.moveToNext()){
+                owners = null;
+            } else {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    Owner owner = new Owner();
+                    owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
+                    owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
+                    owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
+                    owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
+                    String dogsIdsString = cursor.getString(cursor.getColumnIndex(OwnerTable.DOGS_IDS));
+                    owner.setDogsIds(getIntArrayFromString(dogsIdsString));
+                    owners.add(owner);
+                    cursor.moveToNext();
+                }
             }
+
         } finally {
             cursor.close();
         }
@@ -69,9 +74,19 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return dogsIds;
     }
 
-    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
+//    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
+//        ContentValues cv = new ContentValues();
+//        cv.put(OwnerTable.ID, id);
+//        cv.put(OwnerTable.NAME, name);
+//        cv.put(OwnerTable.SURNAME, surname);
+//        cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
+//        cv.put(OwnerTable.DOGS_IDS, dogsIds);
+//        db.insert(OwnerTable.TABLE_NAME, null, cv);
+//    }
+
+
+    private void addOwner(String name, String surname, String preferedKind, String dogsIds) {
         ContentValues cv = new ContentValues();
-        cv.put(OwnerTable.ID, id);
         cv.put(OwnerTable.NAME, name);
         cv.put(OwnerTable.SURNAME, surname);
         cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
@@ -79,11 +94,13 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         db.insert(OwnerTable.TABLE_NAME, null, cv);
     }
 
-
-//    private void addOwner(int id, String name, String surname, String preferedKind, String dogsIds) {
-//
-//        addOwner( id,  name,  surname,  preferedKind, dogsIds);
-//    }
+    private void addOwner(String name, String surname, String preferedKind) {
+        ContentValues cv = new ContentValues();
+        cv.put(OwnerTable.NAME, name);
+        cv.put(OwnerTable.SURNAME, surname);
+        cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
+        db.insert(OwnerTable.TABLE_NAME, null, cv);
+    }
 
     private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
         ContentValues cv = new ContentValues();
@@ -100,16 +117,16 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private void addSomeDB() {
         Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null, null, null);
         if (cursor.getCount() == 0) {
-            addOwner(1, "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
-            addOwner(2, "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
-            addOwner(3, "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
-            addOwner(4, "Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
-            addOwner(5, "Garry", "Potter", DogKind.MUNSTERLANDER, "111");
-            addOwner(6, "Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
-            addOwner(7, "Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
-            addOwner(8, "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
-            addOwner(9, "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
-            addOwner(10, "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
+            addOwner( "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
+            addOwner( "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
+            addOwner( "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
+            addOwner( "Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
+            addOwner( "Garry", "Potter", DogKind.MUNSTERLANDER, "111");
+            addOwner( "Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
+            addOwner( "Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
+            addOwner( "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
+            addOwner( "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
+            addOwner( "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
             addDog(101, "Palkan", DogKind.AMERICAN_FOXHOUND, "american_foxhound", 35, 55, 65);
             addDog(102, "Drujok", DogKind.AFGHAN_HOUND, "afghan_hound", 21, 55, 65);
             addDog(103, "Sharik", DogKind.AMERICAN_BULLDOG, "american_bulldog", 38, 55, 65);
