@@ -13,6 +13,8 @@ public class Owner implements Parcelable {
     public Owner() {
     }
 
+
+
     public int getOwnerId() {
         return ownerId;
     }

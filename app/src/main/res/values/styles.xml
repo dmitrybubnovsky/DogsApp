@@ -34,6 +34,13 @@
         <item name="android:textColor">@color/colorPrimaryDirty</item>
     </style>
 
+    <style name="BoldRobotoThin35sp" parent="MainDogApp">
+        <item name="android:textSize">35sp</item>
+        <item name="android:fontFamily">@font/roboto_thin</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDirty</item>
+    </style>
+
     <style name="BoldRobotoThin13sp" parent="MainDogApp">
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">@font/roboto_thin</item>

@@ -5,13 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
+import android.util.Log;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
+import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
+import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity;
+
+import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     EditText ownerNameEditText;
@@ -28,26 +35,24 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_owner_form_acitivty);
 
+//        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_owner, colorCustomBlueGrey);
+//        setSupportActionBar(toolbar);
+
         ownerNameEditText = findViewById(R.id.owner_name_edittext);
         ownerSurnameEditText = findViewById(R.id.surname_edittext);
         preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
         Button button = findViewById(R.id.add_owner_button);
 
         button.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            if (addOwner(this) != -1) {
-//                intent.putExtra();
-                setResult(RESULT_OK);
-//                setResult(RESULT_OK, intent);
-            } else {
-                setResult(RESULT_CANCELED);
-            }
-            finish();
+            Owner owner = addOwner(this);
+            Intent intent = new Intent(this, DogsListActivity.class);
+            intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
+            startActivity(intent);
         });
 
     }
 
-    public long addOwner(Context context) {
+    public Owner addOwner(Context context) {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
@@ -55,7 +60,8 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         // change it to DataRepository method addOwner
         DBHelper dbHelper = DBHelper.getInstance(context);
         OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-
-        return ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
+        long addedOwnerRaw = ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
+        Owner owner = ownersSQLiteDataSource.getOwnerById(addedOwnerRaw);
+        return owner;
     }
 }

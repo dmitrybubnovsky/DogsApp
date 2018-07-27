@@ -13,10 +13,13 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 
+import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.dogs.data.DataRepository;
 
@@ -28,6 +31,7 @@ import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
+import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormAcitivty;
 
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
     public final int REQUEST_CODE_NEW_DOG = 2;
@@ -66,9 +70,18 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_dogs_list_recyclerview);
 
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
+        setSupportActionBar(toolbar);
+
         Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
 
         Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+        if (owner.getDogsIds().length == 0){
+            Toast.makeText(this, "There is no any dog owner yet", Toast.LENGTH_SHORT).show();
+            Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
+            intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
+            startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
+        }
 
         // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
@@ -83,8 +96,11 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         List<Dog> ownerDogs = dataRepository.getDogs(owner);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());
-        setSupportActionBar(toolbar);
+        TextView ownerName =  AppTextView.newInstance(this, R.id.owner_name_detail_textview)
+                .style(this, R.style.BoldRobotoThin35sp)
+                .build();
+
+        ownerName.setText("" + owner.getOwnerFullName());
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         DogsAdapter adapter = new DogsAdapter(this, ownerDogs, this);
@@ -92,7 +108,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-
         recyclerView.setAdapter(adapter);
     }
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="16dp"
+              android:orientation="vertical"
+              android:gravity="center">
+    <EditText
+        android:id="@+id/dog_name_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/dog_name_hint"
+        />
+
+    <EditText
+        android:id="@+id/dog_kind_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/dog_kind_hint"
+        />
+
+
+    <EditText
+        android:id="@+id/dog_age_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/dog_age_hint"
+        />
+
+    <EditText
+        android:id="@+id/dog_tall_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/dog_tall_hint"
+        />
+
+
+    <EditText
+        android:id="@+id/dog_weight_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:ems="10"
+        android:hint="@string/dog_weight_hint"
+        />
+
+    <Button
+        android:id="@+id/add_owner_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_8dp"
+        android:text="@string/add_title_button"
+        />
+</LinearLayout>

@@ -20,8 +20,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         ConstraintLayout rootLayout = findViewById(R.id.root_layout);
         rootLayout.setOnClickListener(view -> startActivity(new Intent(this, OwnersListActivity.class)));
 
-        TextView descriptionTextView = findViewById(R.id.app_description_textview);
         TextView appNameTextView = findViewById(R.id.app_name_textview);
+        TextView descriptionTextView = findViewById(R.id.app_description_textview);
 
         setTypeFonts(this, descriptionTextView, appNameTextView);
     }

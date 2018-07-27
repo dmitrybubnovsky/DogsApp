@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs.data.database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -57,6 +58,22 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         }
         // закрываю БД
         DatabaseManager.getInstance().closeDB();
+    }
+
+    // для формы
+    public long addDog(int dogId, int dogAge, int dogTall, int dogWeight, String dogImageString, String dogName, String dogKind) {
+        db = DatabaseManager.getInstance().openDB();
+        ContentValues cv = new ContentValues();
+        cv.put(DogTable.NAME, dogName);
+        cv.put(DogTable.KIND, dogKind);
+        cv.put(DogTable.AGE, dogAge);
+        cv.put(DogTable.TALL, dogTall);
+        cv.put(DogTable.IMAGE, dogImageString);
+        cv.put(DogTable.WEIGHT, dogWeight);
+
+        long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
+        DatabaseManager.getInstance().closeDB();
+        return insertResult;
     }
 
     // temporary implementation.

@@ -34,7 +34,8 @@
         <activity
             android:name=".dogs.ui.MenuActivity"
             android:theme="@style/MainDogApp"/>
-
+        <activity android:name=".dogs.ui.dogs.NewDogFormActivity">
+        </activity>
     </application>
 
 </manifest>
