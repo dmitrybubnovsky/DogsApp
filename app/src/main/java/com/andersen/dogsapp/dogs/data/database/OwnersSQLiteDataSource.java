@@ -119,7 +119,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         db.insert(DogTable.TABLE_NAME, null, cv);
     }
 
-    private void addSomeDB() {
+    public void addSomeDB() {
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null, null, null);
         ContentValues cv = new ContentValues();
