@@ -13,11 +13,12 @@ import java.util.List;
 
 public class DogsSQLiteDataSource implements IDogsDataSource {
     private static DogsSQLiteDataSource dogsDataSource;
+
     private List<Dog> dogs;
     private SQLiteDatabase db;
 
     private DogsSQLiteDataSource(DBHelper dbHelper) {
-        db = dbHelper.getWritableDatabase();
+       // DatabaseManager.initInstance(dbHelper);
         loadDogs();
     }
 
@@ -29,6 +30,9 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     }
 
     private void loadDogs() {
+        // открываю БД
+        db = DatabaseManager.getInstance().openDB();
+
         dogs = new ArrayList<>();
         Cursor cursor = null;
         try {
@@ -51,6 +55,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         } finally {
             cursor.close();
         }
+        // закрываю БД
+        DatabaseManager.getInstance().closeDB();
     }
 
     // temporary implementation.
@@ -68,6 +74,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
     // temporary implementation.
     private Dog getDogById(int dogId) {
+        loadDogs();
         for (Dog dog : dogs) {
             if (dog.getDogId() == dogId) {
                 return dog;

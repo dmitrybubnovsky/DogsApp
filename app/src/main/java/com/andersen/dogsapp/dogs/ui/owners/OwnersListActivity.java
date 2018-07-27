@@ -80,19 +80,16 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
 
         // sqlite имплементация
-        DBHelper dbHelper = DBHelper.getInstance(this);
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
 
-        dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 
         updateUI();
 
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
+
         updateUI();
     }
 
@@ -104,6 +101,11 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     }
 
     private void updateUI(){
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
+
+        dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
         owners = dataRepository.getOwners();
 
         if (owners == null){
