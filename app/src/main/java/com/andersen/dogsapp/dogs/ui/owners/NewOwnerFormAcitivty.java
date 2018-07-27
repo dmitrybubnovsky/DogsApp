@@ -51,8 +51,11 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
+
+        // change it to DataRepository method addOwner
         DBHelper dbHelper = DBHelper.getInstance(context);
         OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+
         return ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
     }
 }

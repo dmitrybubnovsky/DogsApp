@@ -32,20 +32,36 @@ import java.util.List;
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class OwnersListActivity extends MenuActivity implements IRecyclerItemListener<Owner> {
-    public static final String TAG = "#";
+    private static final String TAG = "#";
     public final int REQUEST_CODE_NEW_OWNER = 1;
+
     private RecyclerView ownersRecyclerView;
-    private DataRepository dataRepository;
     private OwnersAdapter ownersAdapter;
-
-    private DBHelper dbHelper;
-    private IOwnersDataSource iOwnersDataSource;
-    private IDogsDataSource iDogsDataSource;
-
-
-
     private List<Owner> owners;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_owners_list);
+//      json имплементация
+//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
+        setSupportActionBar(toolbar);
+
+        initRecyclerView();
+
+        updateUI();
+    }
+
+    public void initRecyclerView(){
+        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
+
+        ownersRecyclerView = findViewById(R.id.owners_recycler_view);
+        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -60,52 +76,16 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult");
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_NEW_OWNER:
-                    Log.d(TAG, "onActivityResult. update. owners.size() "+owners.size());
-                    updateUI();
+
                     break;
             }
         } else {
-            Toast.makeText(this, "RESULT IS NOT OK", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "RESULT IS NOT OK. You've not added an owner", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owners_list);
-
-//      json имплементация
-//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
-
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
-        setSupportActionBar(toolbar);
-
-        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
-
-        // TODO in separate in init method
-        dbHelper = DBHelper.getInstance(this);
-        iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
-
-        // добавляем тестовю БД владельцев и собак
-        // OwnersSQLiteDataSource.getInstance(dbHelper).addSomeDB();
-
-        dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
-        owners = dataRepository.getOwners();
-
-        ownersRecyclerView = findViewById(R.id.owners_recycler_view);
-        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-
-        ownersAdapter = new OwnersAdapter(this, owners, this);
-        ownersRecyclerView.setAdapter(ownersAdapter);
-
-//        updateUI();
-
     }
 
     @Override
@@ -122,9 +102,16 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     }
 
     private void updateUI(){
-        Log.d(TAG, "called update. owners.size() ");
+//        Log.d(TAG, "called update. owners.size() ");
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
 
+        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
         owners = dataRepository.getOwners();
+
+        // добавляем тестовую БД владельцев и собак
+        // OwnersSQLiteDataSource.getInstance(dbHelper).addSomeDB();
 
         if (owners == null){
             Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
@@ -134,11 +121,11 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
             if( ownersAdapter == null){
                 ownersAdapter = new OwnersAdapter(this, owners, this);
                 ownersRecyclerView.setAdapter(ownersAdapter);
-                Log.d(TAG, "new OwnersAdapter(this, owners = "+owners.size()+", this)");
+//                Log.d(TAG, "new OwnersAdapter(this, owners = "+owners.size()+", this)");
             } else {
                 ownersAdapter.initAdapter(this, owners, this);
                 ownersAdapter.notifyDataSetChanged();
-                Log.d(TAG, "notifyDatas owners.size() "+owners.size());
+//                Log.d(TAG, "notifyDatas owners.size() "+owners.size());
             }
         }
     }
