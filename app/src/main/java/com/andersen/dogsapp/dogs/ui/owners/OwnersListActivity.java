@@ -33,7 +33,6 @@ import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class OwnersListActivity extends MenuActivity implements IRecyclerItemListener<Owner> {
     private static final String TAG = "#";
-    public final int REQUEST_CODE_NEW_OWNER = 1;
 
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
@@ -68,24 +67,10 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         switch(item.getItemId()){
             case R.id.add_new_menu_item:
                 Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
-                startActivityForResult(intent, REQUEST_CODE_NEW_OWNER);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult");
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_NEW_OWNER:
-
-                    break;
-            }
-        } else {
-            Toast.makeText(this, "RESULT IS NOT OK. You've not added an owner", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
