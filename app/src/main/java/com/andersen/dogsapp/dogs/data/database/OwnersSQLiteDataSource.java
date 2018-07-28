@@ -122,8 +122,8 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     // для тестовой БД
-    private void addOwner(ContentValues cv, String name, String surname, String preferedKind, String dogsIds) {
-//        ContentValues cv = new ContentValues();
+    private void addOwner(String name, String surname, String preferedKind, String dogsIds) {
+        ContentValues cv = new ContentValues();
         cv.put(OwnerTable.NAME, name);
         cv.put(OwnerTable.SURNAME, surname);
         cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
@@ -132,8 +132,8 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     // для тестовой БД
-    private void addDog(ContentValues cv, int id, String name, String kind, String image, int age, int weight, int tall) {
-//        ContentValues cv = new ContentValues();
+    private void addDog(int id, String name, String kind, String image, int age, int weight, int tall) {
+        ContentValues cv = new ContentValues();
         cv.put(DogTable.ID, id);
         cv.put(DogTable.NAME, name);
         cv.put(DogTable.KIND, kind);
@@ -147,43 +147,42 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     public void addSomeDB() {
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null, null, null);
-        ContentValues cv = new ContentValues();
         if (cursor.getCount() == 0) {
-            addOwner(cv, "Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
-            addOwner(cv, "Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
-            addOwner(cv, "Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
-            addOwner(cv, "Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
-            addOwner(cv, "Garry", "Potter", DogKind.MUNSTERLANDER, "111");
-            addOwner(cv, "Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
-            addOwner(cv, "Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
-            addOwner(cv, "James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
-            addOwner(cv, "Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
-            addOwner(cv, "Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
-            addDog(cv, 101, "Palkan", DogKind.AMERICAN_FOXHOUND, "american_foxhound", 35, 55, 65);
-            addDog(cv, 102, "Drujok", DogKind.AFGHAN_HOUND, "afghan_hound", 21, 55, 65);
-            addDog(cv, 103, "Sharik", DogKind.AMERICAN_BULLDOG, "american_bulldog", 38, 55, 65);
-            addDog(cv, 104, "Greezly", DogKind.AUSTRALIAN, "australiancattle", 35, 55, 65);
-            addDog(cv, 105, "Mickey", DogKind.BELGIAN, "belgiantervuren", 29, 55, 65);
-            addDog(cv, 106, "Plooto", DogKind.BERGER_PICKARD, "berger_picard", 31, 55, 65);
-            addDog(cv, 107, "Muhtar", DogKind.BOLOGNESE, "bolognese", 33, 55, 65);
-            addDog(cv, 108, "Kachtanka", DogKind.BOXER, "boxer", 38, 55, 65);
-            addDog(cv, 109, "Leopold", DogKind.BULL_TERRIER, "bullterrier", 32, 55, 65);
-            addDog(cv, 110, "Barboss", DogKind.CHESAPEAKE, "chesapeake_bay_retriever", 38, 55, 65);
-            addDog(cv, 111, "Joochka", DogKind.CHINOOK, "chinook", 38, 55, 65);
-            addDog(cv, 112, "Belka", DogKind.DOGOARGENTINO, "dogoargentino", 36, 55, 65);
-            addDog(cv, 113, "Strelka", DogKind.ENGLISH_COONHOUND, "english_coonhound", 38, 55, 65);
-            addDog(cv, 114, "Laika", DogKind.GERMAN_SHEPHERD, "german_shepherd", 37, 55, 65);
-            addDog(cv, 115, "Palma", DogKind.ICELANDIC, "icelandicsheepdog", 30, 55, 65);
-            addDog(cv, 116, "Gerda", DogKind.KOMONDOR, "komondor", 39, 55, 65);
-            addDog(cv, 117, "Sally", DogKind.MUDI, "mudi", 38, 55, 65);
-            addDog(cv, 118, "Joochka", DogKind.MUNSTERLANDER, "munsterlander_pointer", 38, 55, 65);
-            addDog(cv, 119, "Kachtanka", DogKind.PHARAONHOUND, "pharaohhound", 38, 55, 65);
-            addDog(cv, 120, "Pluto", DogKind.POCKET_BEAGLE, "pocket_beagle", 27, 55, 65);
-            addDog(cv, 121, "Strelka", DogKind.PUG, "pug", 38, 55, 65);
-            addDog(cv, 122, "Mickey", DogKind.SAINT_BERNARD, "saint_bernard", 41, 55, 65);
-            addDog(cv, 123, "Greazy", DogKind.SCOTTISH, "scottishterrier", 26, 55, 65);
-            addDog(cv, 124, "Muhtar", DogKind.SIBERIAN_HUSKY, "siberian_husky", 27, 55, 65);
-            addDog(cv, 125, "Leopold", DogKind.STAFFORD, "staffordshire", 16, 55, 65);
+            addOwner("Andy", "Garcia", DogKind.AMERICAN_FOXHOUND, "102 103");
+            addOwner("Tom", "Cruis", DogKind.BERGER_PICKARD, "101");
+            addOwner("Robert", "De Niro", DogKind.CHESAPEAKE, "104 105 106");
+            addOwner("Al", "Pacino", DogKind.ENGLISH_COONHOUND, "107 108 109 110");
+            addOwner("Garry", "Potter", DogKind.MUNSTERLANDER, "111");
+            addOwner("Will", "Smith", DogKind.SAINT_BERNARD, "112 113 114 116");
+            addOwner("Snejana", "Denisovna", DogKind.GERMAN_SHEPHERD, "117 118");
+            addOwner("James", "Bond", DogKind.SIBERIAN_HUSKY, "119");
+            addOwner("Christian", "Baile", DogKind.POCKET_BEAGLE, "120 121 122");
+            addOwner("Anjelina", "Jolie", DogKind.WATER_SPANIEL, "123 124 125");
+            addDog(101, "Palkan", DogKind.AMERICAN_FOXHOUND, "american_foxhound", 35, 55, 65);
+            addDog(102, "Drujok", DogKind.AFGHAN_HOUND, "afghan_hound", 21, 55, 65);
+            addDog(103, "Sharik", DogKind.AMERICAN_BULLDOG, "american_bulldog", 38, 55, 65);
+            addDog(104, "Greezly", DogKind.AUSTRALIAN, "australiancattle", 35, 55, 65);
+            addDog(105, "Mickey", DogKind.BELGIAN, "belgiantervuren", 29, 55, 65);
+            addDog(106, "Plooto", DogKind.BERGER_PICKARD, "berger_picard", 31, 55, 65);
+            addDog(107, "Muhtar", DogKind.BOLOGNESE, "bolognese", 33, 55, 65);
+            addDog(108, "Kachtanka", DogKind.BOXER, "boxer", 38, 55, 65);
+            addDog(109, "Leopold", DogKind.BULL_TERRIER, "bullterrier", 32, 55, 65);
+            addDog(110, "Barboss", DogKind.CHESAPEAKE, "chesapeake_bay_retriever", 38, 55, 65);
+            addDog(111, "Joochka", DogKind.CHINOOK, "chinook", 38, 55, 65);
+            addDog(112, "Belka", DogKind.DOGOARGENTINO, "dogoargentino", 36, 55, 65);
+            addDog(113, "Strelka", DogKind.ENGLISH_COONHOUND, "english_coonhound", 38, 55, 65);
+            addDog(114, "Laika", DogKind.GERMAN_SHEPHERD, "german_shepherd", 37, 55, 65);
+            addDog(115, "Palma", DogKind.ICELANDIC, "icelandicsheepdog", 30, 55, 65);
+            addDog(116, "Gerda", DogKind.KOMONDOR, "komondor", 39, 55, 65);
+            addDog(117, "Sally", DogKind.MUDI, "mudi", 38, 55, 65);
+            addDog(118, "Joochka", DogKind.MUNSTERLANDER, "munsterlander_pointer", 38, 55, 65);
+            addDog(119, "Kachtanka", DogKind.PHARAONHOUND, "pharaohhound", 38, 55, 65);
+            addDog(120, "Pluto", DogKind.POCKET_BEAGLE, "pocket_beagle", 27, 55, 65);
+            addDog(121, "Strelka", DogKind.PUG, "pug", 38, 55, 65);
+            addDog(122, "Mickey", DogKind.SAINT_BERNARD, "saint_bernard", 41, 55, 65);
+            addDog(123, "Greazy", DogKind.SCOTTISH, "scottishterrier", 26, 55, 65);
+            addDog(124, "Muhtar", DogKind.SIBERIAN_HUSKY, "siberian_husky", 27, 55, 65);
+            addDog(125, "Leopold", DogKind.STAFFORD, "staffordshire", 16, 55, 65);
         }
         cursor.close();
         DatabaseManager.getInstance().closeDB();

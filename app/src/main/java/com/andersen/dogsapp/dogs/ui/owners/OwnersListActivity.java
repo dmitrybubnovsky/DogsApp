@@ -51,6 +51,8 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 
         initRecyclerView();
 
+        OwnersSQLiteDataSource.getInstance(DBHelper.getInstance(this)).addSomeDB();
+
         updateUI();
     }
 
@@ -113,5 +115,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 //                Log.d(TAG, "notifyDatas owners.size() "+owners.size());
             }
         }
+
+
     }
 }
