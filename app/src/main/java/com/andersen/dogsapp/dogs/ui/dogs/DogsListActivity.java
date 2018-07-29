@@ -39,6 +39,8 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.DogsListActivity.owner";
 
     Owner owner;
+    DogsAdapter adapter;
+    List<Dog> ownerDogs;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -57,7 +59,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
             switch (requestCode) {
                 case REQUEST_CODE_NEW_DOG:
                     owner = getIntent().getParcelableExtra(EXTRA_OWNER);
-
+//                    updateUI();
                     Toast.makeText(getApplicationContext(), ""+owner.getOwnerFullName()+"+ now has a new dog)",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -72,6 +74,12 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateUI();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_dogs_list_recyclerview);
@@ -81,43 +89,48 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
-        Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
 // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
         // sqlite имплементация
+        updateUI();
+
+        TextView ownerName =  AppTextView.newInstance(this, R.id.owner_name_detail_textview)
+                .style(this, R.style.BoldRobotoThin35sp)
+                .text("" + owner.getOwnerFullName())
+                .build();
+    }
+
+    public void updateUI(){
+        Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
         DBHelper dbHelper = DBHelper.getInstance(this);
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
-
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 
-        List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
+        ownerDogs = dataRepository.getOwnerDogs(owner);
 
         // если owner без единой собаки
         if ( ownerDogs.size() == 0){
-//        if (owner.getDogsIds().length == 0){
             Toast.makeText(this, "DogsListActivity:Owner doesn't have any dog", Toast.LENGTH_SHORT).show();
             Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
             intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
             startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
+        } else {
+            RecyclerView recyclerView = findViewById(R.id.recycler_view);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+
+            if( adapter == null ){
+                adapter = new DogsAdapter(this, ownerDogs, this);
+                recyclerView.setAdapter(adapter);
+            } else {
+                adapter.initAdapter(this, ownerDogs, this);
+                adapter.notifyDataSetChanged();
+            }
         }
-
-
-        TextView ownerName =  AppTextView.newInstance(this, R.id.owner_name_detail_textview)
-                .style(this, R.style.BoldRobotoThin35sp)
-                .build();
-
-        ownerName.setText("" + owner.getOwnerFullName());
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        DogsAdapter adapter = new DogsAdapter(this, ownerDogs, this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-        recyclerView.setAdapter(adapter);
     }
 
     @Override

@@ -109,10 +109,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
                 Log.d(TAG, "notifyDatas "+dogs.size());
                 ownersAdapter.initAdapter(this, owners, dogs, this);
                 ownersAdapter.notifyDataSetChanged();
-//                Log.d(TAG, "notifyDatas owners.size() "+owners.size());
             }
         }
-
-
     }
 }
