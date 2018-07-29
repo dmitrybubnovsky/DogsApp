@@ -30,6 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
         android:ems="10"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
         android:hint="@string/dog_age_hint"
         />
 
@@ -39,6 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
         android:ems="10"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
         android:hint="@string/dog_tall_hint"
         />
 
@@ -49,6 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
         android:ems="10"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
         android:hint="@string/dog_weight_hint"
         />
 
