@@ -17,6 +17,7 @@ import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +32,13 @@ import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
-import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormAcitivty;
 
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
     public final int REQUEST_CODE_NEW_DOG = 2;
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.DogsListActivity.owner";
+
+    Owner owner;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -54,9 +56,13 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_NEW_DOG:
+                    owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
+                    Toast.makeText(getApplicationContext(), ""+owner.getOwnerFullName()+"+ now has a new dog)",Toast.LENGTH_LONG).show();
                     break;
             }
+        } else {
+            Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
         }
     }
 
@@ -70,20 +76,13 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_dogs_list_recyclerview);
 
+        owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
         setSupportActionBar(toolbar);
 
         Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
-
-        Owner owner = getIntent().getParcelableExtra(EXTRA_OWNER);
-        if (owner.getDogsIds().length == 0){
-            Toast.makeText(this, "There is no any dog owner yet", Toast.LENGTH_SHORT).show();
-            Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
-            intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
-            startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
-        }
-
-        // json имплементация
+// json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
@@ -94,7 +93,17 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 
-        List<Dog> ownerDogs = dataRepository.getDogs(owner);
+        List<Dog> ownerDogs = dataRepository.getOwnerDogs(owner);
+
+        // если owner без единой собаки
+        if ( ownerDogs.size() == 0){
+//        if (owner.getDogsIds().length == 0){
+            Toast.makeText(this, "DogsListActivity:Owner doesn't have any dog", Toast.LENGTH_SHORT).show();
+            Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
+            intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
+            startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
+        }
+
 
         TextView ownerName =  AppTextView.newInstance(this, R.id.owner_name_detail_textview)
                 .style(this, R.style.BoldRobotoThin35sp)

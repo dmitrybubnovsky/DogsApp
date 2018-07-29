@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IDogsDataSource {
     List<Dog> getOwnerDogs(Owner owner);
+
+    List<Dog> getDogs();
 }

@@ -5,22 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.util.Log;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
-import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity;
-
-import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
+    public static final String TAG = "#";
     EditText ownerNameEditText;
     EditText ownerSurnameEditText;
     EditText preferredKindEditText;
@@ -60,8 +56,11 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         // change it to DataRepository method addOwner
         DBHelper dbHelper = DBHelper.getInstance(context);
         OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        long addedOwnerRaw = ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
-        Owner owner = ownersSQLiteDataSource.getOwnerById(addedOwnerRaw);
+        ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
+        Owner owner = ownersSQLiteDataSource.getLastAddedOwner();
+
+        String res= (owner == null)?"null":owner.getOwnerName();
+        Log.d(TAG, "NewOwnerActivity EXTRA_OWNER = "+res);
         return owner;
     }
 }

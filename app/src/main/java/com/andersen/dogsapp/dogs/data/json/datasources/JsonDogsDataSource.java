@@ -34,15 +34,22 @@ public class JsonDogsDataSource implements IDogsDataSource {
         return dogsDataSource;
     }
 
+    // Этот метод ничего не делает
+    @Override
+    public List<Dog> getDogs() {
+        return null;
+    }
+
     @Override
     public List<Dog> getOwnerDogs(Owner owner) {
-        List<Dog> ownerDogs = new ArrayList<>();
-        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for (int i = 0; i < dogsQuantity; i++) {
-            ownerDogs.add(getDogById(dogsIds[i]));
-        }
-        return ownerDogs;
+//        List<Dog> ownerDogs = new ArrayList<>();
+//        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
+//        int dogsQuantity = owner.getDogsQuantity();
+//        for (int i = 0; i < dogsQuantity; i++) {
+//            ownerDogs.add(getDogById(dogsIds[i]));
+//        }
+//        return ownerDogs;
+        return null;
     }
 
     private Dog getDogById(int dogId) {

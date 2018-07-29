@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -18,29 +19,34 @@ import java.util.List;
 public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder> {
     private Context context;
     private List<Owner> owners;
+    private List<Dog> dogs;
+
     private IRecyclerItemListener<Owner> listener;
 
-    public OwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
+    public OwnersAdapter(Context context, List<Owner> owners, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
         this.owners = owners;
+        this.dogs = dogs;
         this.listener = listener;
     }
 
     public OwnersAdapter() {
     }
 
-    public void initAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
+    public void initAdapter(Context context, List<Owner> owners, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
         this.owners.clear();
         this.owners = owners;
+        this.dogs.clear();
+        this.dogs = dogs;
         this.listener = listener;
     }
-
-    public void setOwners(Context context, List<Owner> owners, IRecyclerItemListener listener) {
-        this.context = context;
-        this.owners = owners;
-        this.listener = listener;
-    }
+//
+//    public void setOwners(Context context, List<Owner> owners, IRecyclerItemListener listener) {
+//        this.context = context;
+//        this.owners = owners;
+//        this.listener = listener;
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ownerFullNameTextView;
@@ -70,11 +76,20 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
 
         private void setData(Owner owner) {
             this.owner = owner;
+            int ownerId = owner.getOwnerId();
             ownerFullNameTextView.setText(owner.getOwnerFullName());
             preferredKindTextView.setText(owner.getPreferedDogsKind());
-            dogsQuantityTextView.setText("" + owner.getDogsQuantity());
+            dogsQuantityTextView.setText("" + getDogsQuantity(ownerId, dogs));
 
         }
+    }
+
+    private int getDogsQuantity(int ownerId, List<Dog> dogs){
+        int count = 0;
+        for (Dog dog : dogs){
+            if (dog.getOwnerId() == ownerId) count++;
+        }
+        return count;
     }
 
     @Override

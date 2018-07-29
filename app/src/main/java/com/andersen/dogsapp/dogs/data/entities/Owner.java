@@ -8,7 +8,7 @@ public class Owner implements Parcelable {
     private String ownerName;
     private String ownerSurname;
     private String preferedDogsKind;
-    private int[] dogsIds;
+//    private int[] dogsIds;
 
     public Owner() {
     }
@@ -35,13 +35,13 @@ public class Owner implements Parcelable {
         return preferedDogsKind;
     }
 
-    public int[] getDogsIds() {
-        return dogsIds;
-    }
+//    public int[] getDogsIds() {
+//        return dogsIds;
+//    }
 
-    public int getDogsQuantity() {
-        return dogsIds.length;
-    }
+//    public int getDogsQuantity() {
+//        return dogsIds.length;
+//    }
 
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
@@ -59,9 +59,9 @@ public class Owner implements Parcelable {
         this.preferedDogsKind = preferedDogsKind;
     }
 
-    public void setDogsIds(int[] dogsIds) {
-        this.dogsIds = dogsIds;
-    }
+//    public void setDogsIds(int[] dogsIds) {
+//        this.dogsIds = dogsIds;
+//    }
 
     @Override
     public int describeContents() {
@@ -74,7 +74,7 @@ public class Owner implements Parcelable {
         parcelInstance.writeString(ownerName);
         parcelInstance.writeString(ownerSurname);
         parcelInstance.writeString(preferedDogsKind);
-        parcelInstance.writeIntArray(dogsIds);
+//        parcelInstance.writeIntArray(dogsIds);
     }
 
 
@@ -95,7 +95,7 @@ public class Owner implements Parcelable {
         ownerName = parcelInstance.readString();
         ownerSurname = parcelInstance.readString();
         preferedDogsKind = parcelInstance.readString();
-        dogsIds = parcelInstance.createIntArray();
+//        dogsIds = parcelInstance.createIntArray();
     }
 }
 

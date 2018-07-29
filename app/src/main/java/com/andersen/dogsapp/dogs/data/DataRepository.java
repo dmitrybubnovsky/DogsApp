@@ -20,8 +20,12 @@ public class DataRepository {
         return new DataRepository(ownersDataSource, dogsDataSource);
     }
 
-    public List<Dog> getDogs(Owner owner) {
+    public List<Dog> getOwnerDogs(Owner owner) {
         return dogsDataSource.getOwnerDogs(owner);
+    }
+
+    public List<Dog> getDogs() {
+        return dogsDataSource.getDogs();
     }
 
     public List<Owner> getOwners() {

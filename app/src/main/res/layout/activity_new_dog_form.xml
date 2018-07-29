@@ -53,7 +53,7 @@
         />
 
     <Button
-        android:id="@+id/add_owner_button"
+        android:id="@+id/add_dog_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8dp"
