@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.ui.owners;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import java.util.List;
 
 public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder> {
+    public static final String TAG = "#";
     private Context context;
     private List<Owner> owners;
     private List<Dog> dogs;
@@ -41,12 +43,6 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         this.dogs = dogs;
         this.listener = listener;
     }
-//
-//    public void setOwners(Context context, List<Owner> owners, IRecyclerItemListener listener) {
-//        this.context = context;
-//        this.owners = owners;
-//        this.listener = listener;
-//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView ownerFullNameTextView;
@@ -79,7 +75,8 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
             int ownerId = owner.getOwnerId();
             ownerFullNameTextView.setText(owner.getOwnerFullName());
             preferredKindTextView.setText(owner.getPreferedDogsKind());
-            dogsQuantityTextView.setText("" + getDogsQuantity(ownerId, dogs));
+            int dogsQuantity = getDogsQuantity(ownerId, dogs);
+            dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
 
         }
     }
@@ -88,7 +85,13 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         int count = 0;
         for (Dog dog : dogs){
             if (dog.getOwnerId() == ownerId) count++;
+
+            Log.d(TAG, "getDogsQuantity: dogs.size = "+dogs.size()
+                    +" ownerId = "+ownerId
+                    +" dog.getOwnerId() = "+dog.getOwnerId());
+
         }
+        Log.d(TAG, "getDogsQuantity: count = "+count);
         return count;
     }
 

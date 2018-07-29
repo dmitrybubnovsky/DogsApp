@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -48,8 +49,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         setSupportActionBar(toolbar);
 
         initRecyclerView();
-
-//        OwnersSQLiteDataSource.getInstance(DBHelper.getInstance(this)).addSomeDB();
 
         updateUI();
     }
@@ -95,6 +94,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
         owners = dataRepository.getOwners();
         dogs = dataRepository.getDogs();
+        Log.d(TAG, "update "+dogs.size());
 
         if (owners == null){
             Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
@@ -106,6 +106,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
                 ownersRecyclerView.setAdapter(ownersAdapter);
 //                Log.d(TAG, "new OwnersAdapter(this, owners = "+owners.size()+", this)");
             } else {
+                Log.d(TAG, "notifyDatas "+dogs.size());
                 ownersAdapter.initAdapter(this, owners, dogs, this);
                 ownersAdapter.notifyDataSetChanged();
 //                Log.d(TAG, "notifyDatas owners.size() "+owners.size());

@@ -43,6 +43,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         Log.d(TAG, "NewDogActivity EXTRA_OWNER = "+res);
 
         int ownerId = owner.getOwnerId();
+        Log.d(TAG, "NewDogActivity: EXTRA_NEW_OWNER Id = "+ownerId);
 
         initViews();
 
@@ -70,10 +71,15 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     public void initViews() {
         dogNameEditText = findViewById(R.id.dog_name_edittext);
+        dogNameEditText.setText("Chuck");
         dogKindEditText = findViewById(R.id.dog_kind_edittext);
+        dogKindEditText.setText("German Sheepdog");
         dogAgeEditText = findViewById(R.id.dog_age_edittext);
+        dogAgeEditText.setText(""+11);
         dogTallEditText = findViewById(R.id.dog_tall_edittext);
+        dogTallEditText.setText(""+55);
         dogWeightEditText = findViewById(R.id.dog_weight_edittext);
+        dogWeightEditText.setText(""+60);
         addDogButton = findViewById(R.id.add_dog_button);
     }
 }

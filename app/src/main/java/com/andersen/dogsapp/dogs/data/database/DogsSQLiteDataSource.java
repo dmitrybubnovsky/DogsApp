@@ -47,6 +47,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     Dog dog = new Dog();
                     dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
                     dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
+                    dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
                     dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
                     dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
                     dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
@@ -87,6 +88,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     Dog dog = new Dog();
                     dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
                     dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
+                    dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
                     dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
                     dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
                     dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
@@ -109,7 +111,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 //    public long addDog(int ownerID, int dogAge, int dogTall, int dogWeight, String dogImageString, String dogName, String dogKind) {
         db = DatabaseManager.getInstance().openDB();
         ContentValues cv = new ContentValues();
-        cv.put(DogTable.OWNER_ID, ownerID);
+        cv.put(DogTable.OWNER_ID, ownerID);  Log.d(TAG, "addDog: OWNER_ID " + ownerID);
         cv.put(DogTable.AGE, dogAge);
         cv.put(DogTable.TALL, dogTall);
         cv.put(DogTable.WEIGHT, dogWeight);
@@ -121,25 +123,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         DatabaseManager.getInstance().closeDB();
         if(insertResult == -1) {Log.d(TAG, "DogsSQLite: insert Dog has failed. Houston we have a problem!");}
     }
-
-    // temporary implementation.
-    // TODO: add new appropriate database and change to query request
-//    @Override
-//    public List<Dog> getOwnerDogs(Owner owner) {
-//        List<Dog> ownerDogs = new ArrayList<>();
-//        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
-//        int dogsQuantity = owner.getDogsQuantity();
-//        for (int i = 0; i < dogsQuantity; i++) {
-//            ownerDogs.add(getDogById(dogsIds[i]));
-//        }
-//        return ownerDogs;
-//    }
-
-//    @Override
-//    public List<Dog> getOwnerDogs(Owner owner) {
-//        loadDogs(owner.getOwnerId());
-//        return dogs;
-//    }
 
     // temporary implementation.
     private Dog getDogById(int dogId) {
