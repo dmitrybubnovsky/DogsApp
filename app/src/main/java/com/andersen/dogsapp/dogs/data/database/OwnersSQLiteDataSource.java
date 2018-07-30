@@ -91,6 +91,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     }
 
     // для формы
+    @Override
     public long addOwner(String name, String surname, String preferedKind) {
         db = DatabaseManager.getInstance().openDB();
         ContentValues cv = new ContentValues();

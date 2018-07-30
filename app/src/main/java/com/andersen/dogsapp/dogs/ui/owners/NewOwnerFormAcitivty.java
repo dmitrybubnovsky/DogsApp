@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
@@ -21,6 +22,7 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
+    DataRepository dataRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,14 +49,14 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         });
     }
 
-    private Owner addOwner(Context context, EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
+    private Owner addOwner (Context context, EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
 
         DBHelper dbHelper = DBHelper.getInstance(context);
         OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
+        DataRepository.get().addOwner(ownerName, ownerSurname, preferredDogKind);
         Owner owner = ownersSQLiteDataSource.getLastAddedOwner();
 
         String res = (owner == null) ? "null" : owner.getOwnerName();

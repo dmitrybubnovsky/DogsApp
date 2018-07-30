@@ -79,6 +79,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     private void updateUI() {
         owners = DataRepository.get().getOwners();
         dogs = DataRepository.get().getDogs();
+        dogs = DataRepository.get().getDogs();
 
         if (owners.size() == 0) {
             Intent intent = new Intent(this, NewOwnerFormAcitivty.class);

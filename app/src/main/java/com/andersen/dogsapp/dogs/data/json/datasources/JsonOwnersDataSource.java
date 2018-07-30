@@ -36,6 +36,12 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
         return owners;
     }
 
+    @Override
+    public long addOwner(String ownerName, String ownerKind, String ownerPreferredKind) {
+        // Nothing implemented
+        return 0;
+    }
+
     private void loadOwners(Context context) {
             try {
                 InputStream inputStream = context.getAssets().open("owners.json");
