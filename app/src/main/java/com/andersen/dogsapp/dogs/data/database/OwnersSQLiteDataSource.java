@@ -92,21 +92,21 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
 
     // для формы
     @Override
-    public long addOwner(String name, String surname, String preferedKind) {
+    public Owner addOwner(Owner owner) {
         db = DatabaseManager.getInstance().openDB();
         ContentValues cv = new ContentValues();
-        cv.put(OwnerTable.NAME, name);
-        cv.put(OwnerTable.SURNAME, surname);
-        cv.put(OwnerTable.PREFERED_DOGS_KIND, preferedKind);
+        cv.put(OwnerTable.NAME, owner.getOwnerName());
+        cv.put(OwnerTable.SURNAME, owner.getOwnerSurname());
+        cv.put(OwnerTable.PREFERED_DOGS_KIND, owner.getPreferedDogsKind());
         long insertResult = db.insert(OwnerTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
 
-        // TEST
         if (insertResult != -1) {
-            Log.d(TAG, "addOwner: new owners is inserted. Raw "+insertResult);
+            owner.setOwnerId((int)insertResult);
+            return owner;
         } else {
-            Log.d(TAG, "addOwner: Owners was NOT added");
+            Log.d(TAG, "OwnersSQLiteDataSource. addOwner: Owners was NOT added");
+            return new Owner();
         }
-        return insertResult;
     }
 }

@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.data.entities;
 import android.os.Parcelable;
 import android.os.Parcel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Owner implements Parcelable {
@@ -26,7 +27,12 @@ public class Owner implements Parcelable {
     public Owner() {
     }
 
-
+    public Owner(String ownerName, String ownerSurname, String preferedDogsKind) {
+        this.ownerName = ownerName;
+        this.ownerSurname = ownerSurname;
+        this.preferedDogsKind = preferedDogsKind;
+        dogs = new ArrayList<>(0);
+    }
 
     public int getOwnerId() {
         return ownerId;

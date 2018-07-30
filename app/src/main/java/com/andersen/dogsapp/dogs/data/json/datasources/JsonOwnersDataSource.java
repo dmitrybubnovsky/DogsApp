@@ -37,9 +37,9 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
     }
 
     @Override
-    public long addOwner(String ownerName, String ownerKind, String ownerPreferredKind) {
+    public Owner addOwner(Owner owner) {
         // Nothing implemented
-        return 0;
+        return new Owner();
     }
 
     private void loadOwners(Context context) {

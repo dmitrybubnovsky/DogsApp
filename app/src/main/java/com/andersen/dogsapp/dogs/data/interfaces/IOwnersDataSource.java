@@ -8,5 +8,5 @@ import java.util.List;
 public interface IOwnersDataSource {
     List<Owner> getOwners();
 
-    long addOwner(String ownerName, String ownerKind, String ownerPreferredKind);
+    Owner addOwner(Owner owner);
 }

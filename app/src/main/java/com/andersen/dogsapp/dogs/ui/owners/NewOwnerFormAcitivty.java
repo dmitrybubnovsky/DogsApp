@@ -22,7 +22,6 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
-    DataRepository dataRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,26 +40,21 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         Button button = findViewById(R.id.add_owner_button);
 
         button.setOnClickListener(view -> {
-            Owner owner = addOwner(this, ownerNameEditText,
-                    ownerSurnameEditText, preferredKindEditText);
+            Owner owner = addOwner(ownerNameEditText, ownerSurnameEditText, preferredKindEditText);
             Intent intent = new Intent(this, DogsListActivity.class);
             intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
             startActivity(intent);
         });
     }
 
-    private Owner addOwner (Context context, EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
+    private Owner addOwner (EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
+        Owner owner = new Owner(ownerName, ownerSurname, preferredDogKind);
+        owner = DataRepository.get().addOwner(owner);
 
-        DBHelper dbHelper = DBHelper.getInstance(context);
-        OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        DataRepository.get().addOwner(ownerName, ownerSurname, preferredDogKind);
-        Owner owner = ownersSQLiteDataSource.getLastAddedOwner();
-
-        String res = (owner == null) ? "null" : owner.getOwnerName();
-        Log.d(TAG, "NewOwnerActivity EXTRA_OWNER = " + res);
+        Log.d(TAG, "NewOwnerActivity EXTRA_OWNER = " + ((owner == null) ? "null" : owner.getOwnerName()));
         return owner;
     }
 

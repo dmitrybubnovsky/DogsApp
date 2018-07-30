@@ -38,8 +38,8 @@ public class DataRepository {
         return dogsDataSource.getDogs();
     }
 
-    public long addOwner(String ownerName, String ownerKind, String ownerPreferredKind){
-        return ownersDataSource.addOwner(ownerName, ownerKind, ownerPreferredKind);
+    public Owner addOwner(Owner owner){
+        return ownersDataSource.addOwner(owner);
     }
 
     public List<Owner> getOwners() {

@@ -88,7 +88,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
                 case REQUEST_CODE_NEW_DOG:
                     owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 //                    updateUI();
-                    Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + "+ now has a new dog)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + " now has a new dog)", Toast.LENGTH_LONG).show();
                     break;
             }
         } else {
