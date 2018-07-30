@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.ui.owners;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,8 +26,6 @@ import com.andersen.dogsapp.dogs.ui.MenuActivity;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
 import java.util.List;
-
-import android.util.Log;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 

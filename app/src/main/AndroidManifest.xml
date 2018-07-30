@@ -33,9 +33,6 @@
             android:name=".dogs.ui.MainAppDescriptionActivity"
             android:theme="@style/NoActionBar"/>
         <activity
-            android:name=".dogs.ui.MenuActivity"
-            android:theme="@style/MainDogApp"/>
-        <activity
             android:name=".dogs.ui.dogs.NewDogFormActivity"
             android:theme="@style/MainDogApp"/>
     </application>

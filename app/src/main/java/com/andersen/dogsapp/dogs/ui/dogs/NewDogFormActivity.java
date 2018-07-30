@@ -25,8 +25,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String TAG = "#";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -45,7 +45,6 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
             intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
             startActivity(intent);
         });
-
     }
 
     private Owner addOwner(Context context, EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {

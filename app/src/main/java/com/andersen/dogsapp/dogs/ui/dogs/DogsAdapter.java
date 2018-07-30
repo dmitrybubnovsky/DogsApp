@@ -52,7 +52,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
         private void initViews(View view) {
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
-                    .style(context, R.style.BoldRobotoThin15sp)
+                    .style(context, R.style.TextViewTitleItem)
                     .build();
             dogKindTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin13sp)
