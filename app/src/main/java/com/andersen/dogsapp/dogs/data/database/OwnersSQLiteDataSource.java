@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
@@ -59,7 +60,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return owner;
     }
 
-    private void loadOwners() {
+    private void loadOwners() { //List<Dog> dogs
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = null;
         owners = new ArrayList<>();

@@ -25,6 +25,12 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String TAG = "#";
 
+    private EditText dogNameEditText;
+    private EditText dogKindEditText;
+    private EditText dogAgeEditText;
+    private EditText dogTallEditText;
+    private EditText dogWeightEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +45,18 @@ public class NewDogFormActivity extends AppCompatActivity {
         int ownerId = owner.getOwnerId();
         Log.d(TAG, "NewDogActivity: EXTRA_NEW_OWNER Id = " + ownerId);
 
-        EditText dogNameEditText = findViewById(R.id.dog_name_edittext);
-        EditText dogKindEditText = findViewById(R.id.dog_kind_edittext);
-        EditText dogAgeEditText = findViewById(R.id.dog_age_edittext);
-        EditText dogTallEditText = findViewById(R.id.dog_tall_edittext);
-        EditText dogWeightEditText = findViewById(R.id.dog_weight_edittext);
+        dogNameEditText = findViewById(R.id.dog_name_edittext);
+        dogKindEditText = findViewById(R.id.dog_kind_edittext);
+        dogAgeEditText = findViewById(R.id.dog_age_edittext);
+        dogTallEditText = findViewById(R.id.dog_tall_edittext);
+        dogWeightEditText = findViewById(R.id.dog_weight_edittext);
 
         // TEST EditTexts' FILLING
-        testingFillEditText(dogNameEditText, dogKindEditText, dogAgeEditText, dogTallEditText,
-                dogWeightEditText);
+        testingFillEditText();
 
         Button addDogButton = findViewById(R.id.add_dog_button);
         addDogButton.setOnClickListener(view -> {
-            addDog(this, ownerId, dogNameEditText, dogKindEditText, dogAgeEditText,
-                    dogTallEditText, dogWeightEditText);
+            addDog(this, ownerId);
             Intent intent = new Intent(this, DogsListActivity.class);
             intent.putExtra(EXTRA_OWNER, owner);
             setResult(RESULT_OK, intent);
@@ -60,9 +64,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
     }
 
-    private void addDog(Context context, int ownerID, EditText dogNameEditText,
-                        EditText dogKindEditText, EditText dogAgeEditText, EditText dogTallEditText,
-                        EditText dogWeightEditText) {
+    private void addDog(Context context, int ownerID) {
         String dogName = dogNameEditText.getText().toString();
         String dogKind = dogKindEditText.getText().toString();
         int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
@@ -77,12 +79,10 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     // TEST EditTexts' FILLING
-    private void testingFillEditText(EditText dogNameEditText, EditText dogKindEditText,
-                                     EditText dogAgeEditText, EditText dogTallEditText,
-                                     EditText dogWeightEditText) {
+    private void testingFillEditText() {
         dogNameEditText.setText(SomeDog.get().name());
         dogKindEditText.setText(SomeDog.get().kind());
-        dogAgeEditText.setText("" + 11);
+        dogAgeEditText.setText(""+SomeDog.get().age());
         dogWeightEditText.setText("" + 60);
         dogTallEditText.setText("" + 55);
     }

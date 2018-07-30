@@ -77,19 +77,8 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     }
 
     private void updateUI() {
-        DBHelper dbHelper = DBHelper.getInstance(this);
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
-
-        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
-        owners = dataRepository.getOwners();
-
-        /*
-         * вытаскиваем всех собак из БД для recycler-адаптера,
-         * в адаптере по dogOwnerId пробегаем по всей БД собак
-         * и собираем список собак данного владельца
-         */
-        dogs = dataRepository.getDogs();
+        owners = DataRepository.get().getOwners();
+        dogs = DataRepository.get().getDogs();
 
         if (owners.size() == 0) {
             Intent intent = new Intent(this, NewOwnerFormAcitivty.class);

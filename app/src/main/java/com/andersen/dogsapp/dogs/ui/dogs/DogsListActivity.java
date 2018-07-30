@@ -98,12 +98,8 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
     private void updateUI() {
         Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
-        DBHelper dbHelper = DBHelper.getInstance(this);
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
-        DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
 
-        ownerDogs = dataRepository.getOwnerDogs(owner);
+        ownerDogs = DataRepository.get().getOwnerDogs(owner);
 
         // если owner без единой собаки
         if (ownerDogs.size() == 0) {

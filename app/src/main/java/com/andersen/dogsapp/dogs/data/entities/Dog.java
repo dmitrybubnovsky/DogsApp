@@ -11,6 +11,15 @@ public class Dog implements Parcelable {
     private int dogAge;
     private int dogTall;
     private int dogWeight;
+    private Owner owner;
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 
     private String dogImageString;
     private String dogName;

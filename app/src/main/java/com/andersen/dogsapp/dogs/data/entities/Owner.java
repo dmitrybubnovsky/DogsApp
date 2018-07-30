@@ -3,12 +3,25 @@ package com.andersen.dogsapp.dogs.data.entities;
 import android.os.Parcelable;
 import android.os.Parcel;
 
+import java.util.List;
+
 public class Owner implements Parcelable {
     private int ownerId;
     private String ownerName;
     private String ownerSurname;
     private String preferedDogsKind;
-//    private int[] dogsIds;
+    private List<Dog> dogs;
+
+    public List<Dog> getDogs() {
+        return dogs;
+    }
+
+    public void setDogs(List<Dog> dogs) {
+        this.dogs = dogs;
+        for (Dog dog:dogs) {
+            dog.setOwner(this);
+        }
+    }
 
     public Owner() {
     }

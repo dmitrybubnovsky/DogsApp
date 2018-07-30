@@ -24,12 +24,11 @@ public class DatabaseManager {
             throw new IllegalStateException(DatabaseManager.class.getSimpleName() +
                     " is not initialized, call initInstance(..) method first.");
         }
-
         return instance;
     }
 
     public synchronized SQLiteDatabase openDB() {
-        if(openCounter.incrementAndGet() == 1) {
+        if (openCounter.incrementAndGet() == 1) {
             // открываем БД
             sqliteDB = dbHelper.getWritableDatabase();
         }
@@ -37,7 +36,7 @@ public class DatabaseManager {
     }
 
     public synchronized void closeDB() {
-        if(openCounter.decrementAndGet() == 0) {
+        if (openCounter.decrementAndGet() == 0) {
             // закрываем БД
             sqliteDB.close();
         }
