@@ -1,32 +1,44 @@
 package com.andersen.dogsapp.dogs.data;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class DogKind {
-    public static final String AFGHAN_HOUND = "Afghan hound";
-    public static final String AMERICAN_BULLDOG = "American bulldog";
-    public static final String AMERICAN_FOXHOUND = "American foxhound";
-    public static final String AUSTRALIAN = "Australian cattle";
-    public static final String BELGIAN = "Belgian tevruren";
-    public static final String BERGER_PICKARD = "Berger pickard";
-    public static final String BOLOGNESE = "Bolognese";
-    public static final String BOXER = "American bulldog";
-    public static final String BULL_TERRIER = "Bull terrier";
-    public static final String CHESAPEAKE = "Chesapeake";
-    public static final String CHINOOK = "Chinook";
-    public static final String DOGOARGENTINO = "Argentino";
-    public static final String ENGLISH_COONHOUND = "English coonhound";
-    public static final String GERMAN_SHEPHERD = "German shepherd";
-    public static final String ICELANDIC = "Icelandic sheepdog";
-    public static final String KOMONDOR = "Komondor";
-    public static final String MUDI = "Mudi";
-    public static final String MUNSTERLANDER = "Munsterlander";
-    public static final String PHARAONHOUND = "Pharaon hound";
-    public static final String POCKET_BEAGLE = "Pocket beagle";
-    public static final String PUG = "Pug";
-    public static final String SAINT_BERNARD = "Saint bernard";
-    public static final String SCOTTISH = "Scottish terrier";
-    public static final String SHEPHERD = "Shepherd";
-    public static final String SIBERIAN_HUSKY = "Siberian husky";
-    public static final String STAFFORD = "Staffordshire terrier";
-    public static final String STANDARD_SCHNAUZER = "Standard schnauzer";
-    public static final String WATER_SPANIEL = "Water spaniel";
+    private static DogKind instance;
+
+    private final String[] TITLES = new String[]{"Afghan hound", "American bulldog", "American foxhound",
+            "Australian cattle", "Belgian tevruren", "Berger pickard", "Bolognese", "American bulldog",
+            "Bull terrier", "Chesapeake", "Chinook", "Argentino", "English coonhound", "German shepherd",
+            "Icelandic sheepdog", "Komondor", "Mudi", "Munsterlander", "Pharaon hound", "Pocket beagle",
+            "Pug", "Saint bernard", "Scottish terrier", "Shepherd", "Siberian husky",
+            "Staffordshire terrier", "Standard schnauzer", "Water spaniel"};
+
+    private final String[] IMAGE_FILES = new String[]{"afghan_hound", "american_bulldog", "american_foxhound",
+            "australiancattle", "belgiantevruren", "berger_pickard", "bolognese", "american_bulldog",
+            "bullterrier", "chesapeake", "chinook", "dogoargentino", "english_coonhound", "german_shepherd",
+            "icelandicsheepdog", "komondor", "mudi", "munsterlander_pointer", "pharaonhound", "pocket_beagle",
+            "pug", "saint_bernard", "scottishterrier", "shepherd", "siberian_husky",
+            "staffordshireterrier", "standard_schnauzer", "water_spaniel"};
+
+    private List<String> kindsList = Arrays.asList(TITLES);
+    private List<String> kindImagesList = Arrays.asList(IMAGE_FILES);
+
+
+    private DogKind(){
+    }
+
+    public static DogKind get() {
+        if (instance == null) {
+            instance = new DogKind();
+        }
+        return instance;
+    }
+
+    public List<String> kindsList(){
+        return instance.kindsList;
+    }
+
+    public List<String> imagesList(){
+        return instance.kindImagesList;
+    }
 }

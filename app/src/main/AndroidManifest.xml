@@ -15,6 +15,7 @@
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -33,6 +34,10 @@
         <activity
             android:name=".dogs.ui.dogs.NewDogFormActivity"
             android:theme="@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.ui.dogskinds.DogsKindSelectorActivity"
+            android:theme="@style/MainDogApp"/>
+        </activity>
     </application>
 
 </manifest>
