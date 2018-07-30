@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
@@ -31,8 +33,8 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_owner_form_acitivty);
 
-//        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_owner, colorCustomBlueGrey);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_owner);
+        setSupportActionBar(toolbar);
 
         ownerNameEditText = findViewById(R.id.owner_name_edittext);
         ownerSurnameEditText = findViewById(R.id.surname_edittext);

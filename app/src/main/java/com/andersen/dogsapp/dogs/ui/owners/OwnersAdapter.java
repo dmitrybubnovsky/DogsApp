@@ -32,9 +32,6 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         this.listener = listener;
     }
 
-    public OwnersAdapter() {
-    }
-
     public void initAdapter(Context context, List<Owner> owners, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
         this.owners.clear();
@@ -85,13 +82,7 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         int count = 0;
         for (Dog dog : dogs){
             if (dog.getOwnerId() == ownerId) count++;
-
-            Log.d(TAG, "getDogsQuantity: dogs.size = "+dogs.size()
-                    +" ownerId = "+ownerId
-                    +" dog.getOwnerId() = "+dog.getOwnerId());
-
         }
-        Log.d(TAG, "getDogsQuantity: count = "+count);
         return count;
     }
 

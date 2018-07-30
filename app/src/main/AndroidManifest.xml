@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dogs.ui.MainActivity">
+        <activity
+            android:name=".dogs.ui.MainActivity"
+            android:theme="@style/MainDogApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -34,8 +35,9 @@
         <activity
             android:name=".dogs.ui.MenuActivity"
             android:theme="@style/MainDogApp"/>
-        <activity android:name=".dogs.ui.dogs.NewDogFormActivity">
-        </activity>
+        <activity
+            android:name=".dogs.ui.dogs.NewDogFormActivity"
+            android:theme="@style/MainDogApp"/>
     </application>
 
 </manifest>

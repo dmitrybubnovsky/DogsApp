@@ -17,18 +17,16 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_OWNER_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(OwnerTable.TABLE_NAME).append(" (")
             .append(OwnerTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
-            .append(OwnerTable.NAME).append(" TEXT NOT NULL,")
-            .append(OwnerTable.SURNAME).append(" TEXT NOT NULL,")
-            .append(OwnerTable.PREFERED_DOGS_KIND).append(" TEXT NOT NULL);").toString();
-//            .append(OwnerTable.DOGS_IDS).append(" TEXT);").toString();
+            .append(OwnerTable.NAME).append(" TEXT DEFAULT 'Unknown',")
+            .append(OwnerTable.SURNAME).append(" TEXT DEFAULT 'Unknown',")
+            .append(OwnerTable.PREFERED_DOGS_KIND).append(" TEXT DEFAULT 'homeless');").toString();
 
     // CREATE DOGS TABLE
     private static final String CREATE_TABLE_DOG_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(DogTable.TABLE_NAME).append("(")
             .append(DogTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
             .append(DogTable.OWNER_ID).append(" INTEGER,") // NOT NULL
-//            .append(DogTable.ID).append(" INTEGER,")
-            .append(DogTable.NAME).append(" TEXT,")
+            .append(DogTable.NAME).append(" TEXT ,")
             .append(DogTable.KIND).append(" TEXT,")
             .append(DogTable.IMAGE).append(" TEXT DEFAULT 'new_dog',")
             .append(DogTable.TALL).append(" INTEGER,")

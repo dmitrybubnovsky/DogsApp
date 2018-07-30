@@ -29,6 +29,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
     public void initAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
+        this.dogs.clear();
         this.dogs = dogs;
         this.listener = listener;
     }

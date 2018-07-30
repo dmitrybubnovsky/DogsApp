@@ -13,6 +13,11 @@ import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 
+import android.support.v7.widget.Toolbar;
+
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
+
+
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 
 public class NewDogFormActivity extends AppCompatActivity {
@@ -35,15 +40,15 @@ public class NewDogFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dog_form);
-//        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog, colorCustomBlueGrey);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
+        setSupportActionBar(toolbar);
 
         Owner owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
-        String res= (owner == null)?"null":owner.getOwnerName();
-        Log.d(TAG, "NewDogActivity EXTRA_OWNER = "+res);
+        String res = (owner == null) ? "null" : owner.getOwnerName();
+        Log.d(TAG, "NewDogActivity EXTRA_OWNER = " + res);
 
         int ownerId = owner.getOwnerId();
-        Log.d(TAG, "NewDogActivity: EXTRA_NEW_OWNER Id = "+ownerId);
+        Log.d(TAG, "NewDogActivity: EXTRA_NEW_OWNER Id = " + ownerId);
 
         initViews();
 
@@ -80,8 +85,8 @@ public class NewDogFormActivity extends AppCompatActivity {
         // TEST FORM FILLING
         dogNameEditText.setText("Chuck");
         dogKindEditText.setText("German Sheepdog");
-        dogAgeEditText.setText(""+11);
-        dogWeightEditText.setText(""+60);
-        dogTallEditText.setText(""+55);
+        dogAgeEditText.setText("" + 11);
+        dogWeightEditText.setText("" + 60);
+        dogTallEditText.setText("" + 55);
     }
 }

@@ -52,29 +52,25 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
             owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
             owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
             owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
-//            String dogsIdsString = cursor.getString(cursor.getColumnIndex(OwnerTable.DOGS_IDS));
-//            owner.setDogsIds(getIntArrayFromString(dogsIdsString));
         }finally{
             cursor.close();
+            DatabaseManager.getInstance().closeDB();
         }
-        DatabaseManager.getInstance().closeDB();
-        Log.d(TAG,"owner name "+ owner.getOwnerFullName());
         return owner;
     }
 
     private void loadOwners() {
         db = DatabaseManager.getInstance().openDB();
-        //  addSomeDB();
         Cursor cursor = null;
         owners = new ArrayList<>();
         try {
             cursor = db.query(
                     OwnerTable.TABLE_NAME,
                     null, null, null, null, null, null, null);
-            // проверяем БД, если там пусто то список владельцев null
+            // проверяем БД, если там пусто то список владельцев пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
-                owners = null;
-                Log.d("#", "loadOwners: owners = null");
+                owners.clear();
+                Log.d("#", "loadOwners: cursor is empty");
             } else {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -88,22 +84,9 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
                 }
             }
         } finally {
-            Log.d(TAG, " ----- Owners DB has "+cursor.getCount()+" rows");
-
             cursor.close();
+            DatabaseManager.getInstance().closeDB();
         }
-
-        Cursor cursor1 = null;
-        try {
-            cursor1 = db.query(DogTable.TABLE_NAME, null, null, null, null, null, null, null);
-            Log.d(TAG, "-------- Dogs DB has "+cursor1.getCount()+" rows");
-
-        } finally {
-            cursor1.close();
-        }
-
-
-        DatabaseManager.getInstance().closeDB();
     }
 
     // для формы
@@ -123,18 +106,5 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
             Log.d(TAG, "addOwner: Owners was NOT added");
         }
         return insertResult;
-    }
-
-    // для тестовой БД autoincrement
-    private void addDog(int ownerId, String name, String kind, String image, int age, int weight, int tall) {
-        ContentValues cv = new ContentValues();
-        cv.put(DogTable.OWNER_ID, ownerId);
-        cv.put(DogTable.NAME, name);
-        cv.put(DogTable.KIND, kind);
-        cv.put(DogTable.IMAGE, image);
-        cv.put(DogTable.AGE, age);
-        cv.put(DogTable.WEIGHT, weight);
-        cv.put(DogTable.TALL, tall);
-        db.insert(DogTable.TABLE_NAME, null, cv);
     }
 }

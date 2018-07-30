@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -26,6 +25,8 @@ import com.andersen.dogsapp.dogs.ui.MenuActivity;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
 import java.util.List;
+
+import android.util.Log;
 
 import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
@@ -53,7 +54,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         updateUI();
     }
 
-    public void initRecyclerView(){
+    private void initRecyclerView() {
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
 
         ownersRecyclerView = findViewById(R.id.owners_recycler_view);
@@ -63,7 +64,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add_new_menu_item:
                 Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
                 startActivity(intent);
@@ -85,28 +86,30 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         startActivity(intent);
     }
 
-    private void updateUI(){
-//        Log.d(TAG, "called update. owners.size() ");
+    private void updateUI() {
         DBHelper dbHelper = DBHelper.getInstance(this);
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
 
         DataRepository dataRepository = DataRepository.get(iOwnersDataSource, iDogsDataSource);
         owners = dataRepository.getOwners();
-        dogs = dataRepository.getDogs();
-        Log.d(TAG, "update "+dogs.size());
 
-        if (owners == null){
+        /*
+         * вытаскиваем всех собак из БД для recycler-адаптера,
+         * в адаптере по dogOwnerId пробегаем по всей БД собак
+         * и собираем список собак данного владельца
+         */
+        dogs = dataRepository.getDogs();
+
+        if (owners.size() == 0) {
             Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
             startActivity(intent);
-            Toast.makeText(this, "There is no any dog owner yet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
         } else {
-            if( ownersAdapter == null){
+            if (ownersAdapter == null) {
                 ownersAdapter = new OwnersAdapter(this, owners, dogs, this);
                 ownersRecyclerView.setAdapter(ownersAdapter);
-//                Log.d(TAG, "new OwnersAdapter(this, owners = "+owners.size()+", this)");
             } else {
-                Log.d(TAG, "notifyDatas "+dogs.size());
                 ownersAdapter.initAdapter(this, owners, dogs, this);
                 ownersAdapter.notifyDataSetChanged();
             }

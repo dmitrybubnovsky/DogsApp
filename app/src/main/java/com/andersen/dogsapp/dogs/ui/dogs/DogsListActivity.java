@@ -36,21 +36,47 @@ import com.andersen.dogsapp.dogs.ui.MenuActivity;
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
     public final int REQUEST_CODE_NEW_DOG = 2;
     public static final String TAG = "#";
-    public static final String EXTRA_OWNER = "com.andersen.dogsapp.dogs.activity.DogsListActivity.owner";
+    public static final String EXTRA_OWNER = "extra_owner";
 
-    Owner owner;
-    DogsAdapter adapter;
-    List<Dog> ownerDogs;
+    private Owner owner;
+    private DogsAdapter adapter;
+    private List<Dog> ownerDogs;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_owner_dogs_list_recyclerview);
+
+        owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
+        setSupportActionBar(toolbar);
+// json имплементация
+//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
+//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+
+        // sqlite имплементация
+        updateUI();
+
+        AppTextView.newInstance(this, R.id.owner_name_detail_textview)
+                .style(this, R.style.BoldRobotoThin35sp)
+                .text("" + owner.getOwnerFullName())
+                .build();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateUI();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add_new_menu_item:
                 Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
                 intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
                 startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
-//                Intent intent = NewDogFormAcitivty.newIntent(getApplicationContext(), NewDogFormAcitivty.class);
-//                startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -63,7 +89,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
                 case REQUEST_CODE_NEW_DOG:
                     owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 //                    updateUI();
-                    Toast.makeText(getApplicationContext(), ""+owner.getOwnerFullName()+"+ now has a new dog)",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + "+ now has a new dog)", Toast.LENGTH_LONG).show();
                     break;
             }
         } else {
@@ -71,41 +97,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        updateUI();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_dogs_list_recyclerview);
-
-        owner = getIntent().getParcelableExtra(EXTRA_OWNER);
-
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
-        setSupportActionBar(toolbar);
-
-// json имплементация
-//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
-
-        // sqlite имплементация
-        updateUI();
-
-        TextView ownerName =  AppTextView.newInstance(this, R.id.owner_name_detail_textview)
-                .style(this, R.style.BoldRobotoThin35sp)
-                .text("" + owner.getOwnerFullName())
-                .build();
-    }
-
-    public void updateUI(){
+    private void updateUI() {
         Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
         DBHelper dbHelper = DBHelper.getInstance(this);
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
@@ -115,8 +107,8 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         ownerDogs = dataRepository.getOwnerDogs(owner);
 
         // если owner без единой собаки
-        if ( ownerDogs.size() == 0){
-            Toast.makeText(this, "DogsListActivity:Owner doesn't have any dog", Toast.LENGTH_SHORT).show();
+        if (ownerDogs.size() == 0) {
+            Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
             Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
             intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
             startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
@@ -126,7 +118,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
 
-            if( adapter == null ){
+            if (adapter == null) {
                 adapter = new DogsAdapter(this, ownerDogs, this);
                 recyclerView.setAdapter(adapter);
             } else {
