@@ -16,17 +16,11 @@ import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
+import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
+import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
-    EditText ownerNameEditText;
-    EditText ownerSurnameEditText;
-    EditText preferredKindEditText;
-
-    public static Intent newIntent(Context context, Class<?> activityClass) {
-        Intent i = new Intent(context, activityClass);
-        return i;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,13 +30,17 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_owner);
         setSupportActionBar(toolbar);
 
-        ownerNameEditText = findViewById(R.id.owner_name_edittext);
-        ownerSurnameEditText = findViewById(R.id.surname_edittext);
-        preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
+        EditText ownerNameEditText = findViewById(R.id.owner_name_edittext);
+        EditText ownerSurnameEditText = findViewById(R.id.surname_edittext);
+        EditText preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
+        // just for test
+        testingFillEditText(ownerNameEditText, ownerSurnameEditText, preferredKindEditText);
+
         Button button = findViewById(R.id.add_owner_button);
 
         button.setOnClickListener(view -> {
-            Owner owner = addOwner(this);
+            Owner owner = addOwner(this, ownerNameEditText,
+                    ownerSurnameEditText, preferredKindEditText);
             Intent intent = new Intent(this, DogsListActivity.class);
             intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
             startActivity(intent);
@@ -50,19 +48,24 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
 
     }
 
-    public Owner addOwner(Context context) {
+    private Owner addOwner(Context context, EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
 
-        // change it to DataRepository method addOwner
         DBHelper dbHelper = DBHelper.getInstance(context);
         OwnersSQLiteDataSource ownersSQLiteDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
         ownersSQLiteDataSource.addOwner(ownerName, ownerSurname, preferredDogKind);
         Owner owner = ownersSQLiteDataSource.getLastAddedOwner();
 
-        String res= (owner == null)?"null":owner.getOwnerName();
-        Log.d(TAG, "NewOwnerActivity EXTRA_OWNER = "+res);
+        String res = (owner == null) ? "null" : owner.getOwnerName();
+        Log.d(TAG, "NewOwnerActivity EXTRA_OWNER = " + res);
         return owner;
+    }
+
+    private void testingFillEditText(EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
+        ownerNameEditText.setText(SomeOwner.get().name());
+        ownerSurnameEditText.setText(SomeOwner.get().surname());
+        preferredKindEditText.setText(SomeDog.get().kind());
     }
 }

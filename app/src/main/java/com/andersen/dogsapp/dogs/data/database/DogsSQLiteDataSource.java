@@ -35,7 +35,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     private void loadDogs() {
         // открываю БД
         db = DatabaseManager.getInstance().openDB();
-        dogs = new ArrayList<>(); // TODO: check: dogs.clear()
+        dogs = new ArrayList<>();
         Cursor cursor = null;
         try {
             cursor = db.query(DogTable.TABLE_NAME, null, null,
@@ -108,7 +108,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
     // для формы
     public void addDog(int ownerID, int dogAge, int dogTall, int dogWeight, String dogName, String dogKind) {
-//    public long addDog(int ownerID, int dogAge, int dogTall, int dogWeight, String dogImageString, String dogName, String dogKind) {
         db = DatabaseManager.getInstance().openDB();
         ContentValues cv = new ContentValues();
         cv.put(DogTable.OWNER_ID, ownerID);  Log.d(TAG, "addDog: OWNER_ID " + ownerID);
@@ -122,16 +121,5 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
         if(insertResult == -1) {Log.d(TAG, "DogsSQLite: insert Dog has failed. Houston we have a problem!");}
-    }
-
-    // temporary implementation.
-    private Dog getDogById(int dogId) {
-        loadDogs();
-        for (Dog dog : dogs) {
-            if (dog.getDogId() == dogId) {
-                return dog;
-            }
-        }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
     }
 }

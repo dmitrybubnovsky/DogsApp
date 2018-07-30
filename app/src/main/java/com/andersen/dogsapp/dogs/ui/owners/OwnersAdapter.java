@@ -78,9 +78,9 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         }
     }
 
-    private int getDogsQuantity(int ownerId, List<Dog> dogs){
+    private int getDogsQuantity(int ownerId, List<Dog> dogs) {
         int count = 0;
-        for (Dog dog : dogs){
+        for (Dog dog : dogs) {
             if (dog.getOwnerId() == ownerId) count++;
         }
         return count;

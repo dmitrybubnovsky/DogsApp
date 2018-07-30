@@ -45,7 +45,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 //      json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
-
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
@@ -54,19 +53,11 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         updateUI();
     }
 
-    private void initRecyclerView() {
-        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
-
-        ownersRecyclerView = findViewById(R.id.owners_recycler_view);
-        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_menu_item:
-                Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
+                Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
                 startActivity(intent);
                 break;
         }
@@ -102,7 +93,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         dogs = dataRepository.getDogs();
 
         if (owners.size() == 0) {
-            Intent intent = NewOwnerFormAcitivty.newIntent(getApplicationContext(), NewOwnerFormAcitivty.class);
+            Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
             startActivity(intent);
             Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
         } else {
@@ -114,5 +105,13 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
                 ownersAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    private void initRecyclerView() {
+        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
+
+        ownersRecyclerView = findViewById(R.id.owners_recycler_view);
+        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
     }
 }

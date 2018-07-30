@@ -74,7 +74,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_menu_item:
-                Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
+                Intent intent = new Intent(this, NewDogFormActivity.class);
                 intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
                 startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
                 break;
@@ -109,7 +109,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         // если owner без единой собаки
         if (ownerDogs.size() == 0) {
             Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
-            Intent intent = NewDogFormActivity.newIntent(this, NewDogFormActivity.class);
+            Intent intent = new Intent(this, NewDogFormActivity.class);
             intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
             startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
         } else {
