@@ -1,6 +1,5 @@
 package com.andersen.dogsapp.dogs.ui.owners;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +11,6 @@ import android.widget.EditText;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
-import com.andersen.dogsapp.dogs.data.database.DBHelper;
-import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
@@ -26,7 +23,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_owner_form_acitivty);
+        setContentView(R.layout.acitivty_new_owner_form);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_owner);
         setSupportActionBar(toolbar);
