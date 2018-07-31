@@ -37,24 +37,25 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return owners;
     }
 
-    public Owner getLastAddedOwner() {
-        db = DatabaseManager.getInstance().openDB();
-        Owner owner = new Owner();
-        Cursor cursor = null;
-        try {
-            cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null,
-                    null, OwnerTable.ID+" DESC", "1");
-            cursor.moveToFirst();
-            owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
-            owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
-            owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
-            owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
-        }finally{
-            cursor.close();
-            DatabaseManager.getInstance().closeDB();
-        }
-        return owner;
-    }
+//  TODO DELETE
+//    public Owner getLastAddedOwner() {
+//        db = DatabaseManager.getInstance().openDB();
+//        Owner owner = new Owner();
+//        Cursor cursor = null;
+//        try {
+//            cursor = db.query(OwnerTable.TABLE_NAME, null, null, null, null,
+//                    null, OwnerTable.ID+" DESC", "1");
+//            cursor.moveToFirst();
+//            owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
+//            owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
+//            owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
+//            owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
+//        }finally{
+//            cursor.close();
+//            DatabaseManager.getInstance().closeDB();
+//        }
+//        return owner;
+//    }
 
     private void loadOwners() { //List<Dog> dogs
         db = DatabaseManager.getInstance().openDB();

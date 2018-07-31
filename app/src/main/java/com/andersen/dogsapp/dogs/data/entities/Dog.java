@@ -15,6 +15,7 @@ public class Dog implements Parcelable {
     private String dogImageString;
     private String dogName;
     private String dogKind;
+    private DogKind dogKindInfo;
 
     public Owner getOwner() {
         return owner;
@@ -89,6 +90,7 @@ public class Dog implements Parcelable {
         dest.writeString(dogImageString);
         dest.writeString(dogName);
         dest.writeString(dogKind);
+        dest.writeParcelable(dogKindInfo, flags);
     }
 
     public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {
@@ -112,6 +114,7 @@ public class Dog implements Parcelable {
         dogImageString = parcelInstance.readString();
         dogName = parcelInstance.readString();
         dogKind = parcelInstance.readString();
+        dogKindInfo = parcelInstance.readParcelable(DogKind.class.getClassLoader());
     }
 
     public void setDogOwnerId(int dogOwnerId) {

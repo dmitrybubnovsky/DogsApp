@@ -19,7 +19,7 @@
     <string name="add_title_button">Add</string>
 
     <string name="dog_name_hint">Name</string>
-    <string name="dog_kind_hint">Kind</string>
+    <string name="dog_kind_hint">Select dog kind</string>
     <string name="dog_weight_hint">Weight</string>
     <string name="dog_age_hint">Age</string>
     <string name="dog_tall_hint">Tall</string>

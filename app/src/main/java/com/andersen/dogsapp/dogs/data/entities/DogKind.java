@@ -35,6 +35,9 @@ public class DogKind implements Parcelable {
         }
     };
 
+    public DogKind() {
+    }
+
     private DogKind(Parcel parcelInstance) {
         kind = parcelInstance.readString();
         imageString = parcelInstance.readString();

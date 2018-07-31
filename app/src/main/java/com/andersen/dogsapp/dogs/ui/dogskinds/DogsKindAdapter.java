@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DogKindSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
@@ -23,34 +24,30 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     public static final String TAG = "#";
 
     private Context context;
-    private IRecyclerItemListener<Dog> listener;
+    private IRecyclerItemListener<DogKind> listener;
     private DogKindSource instance;
     private List<String> kinds;
     private List<String> images;
-    private Dog dog;
 
 
-    public DogsKindAdapter(Context context, Dog dog, IRecyclerItemListener listener) {
+    public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
         instance = DogKindSource.get();
         kinds = instance.kindsList();
         images = instance.imagesList();
         this.listener = listener;
-        this.dog = dog;
-        Log.d(TAG, dog.getDogName());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogKindTextView;
         private ImageView dogKindImageView;
-        public Dog dogItem;
+        public DogKind dogKindInfo;
 
         public ViewHolder(View view) {
             super(view);
-            Log.d(TAG, "viewholder constructor:");
-            view.setOnClickListener(view1 -> {
+            view.setOnClickListener((View view1) -> {
                 if (listener != null) {
-                    listener.onRecyclerItemClick(dogItem);
+                    listener.onRecyclerItemClick(dogKindInfo);
                 }
             });
             initViews(view);
@@ -64,14 +61,13 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         }
 
         private void setData(Context context, int position){
-            Log.d(TAG, "setData position:"+position);
-            Log.d(TAG, "kinds.get(position):"+kinds.get(position));
-
             dogKindTextView.setText(kinds.get(position));
             dogKindImageView.setImageResource(getImageId(context, images.get(position)));
-            dogItem = dog;
-            dogItem.setDogKind(kinds.get(position));
-            dogItem.setDogImageString(images.get(position));
+            dogKindInfo = new DogKind();
+            dogKindInfo.setKind(kinds.get(position));
+            dogKindInfo.setImageString(images.get(position));
+            Log.d(TAG, "___dogKindInfo."+dogKindInfo.getKind());
+            Log.d(TAG, "___dogKindInfo."+dogKindInfo.getImageString());
         }
     }
 

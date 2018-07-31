@@ -33,7 +33,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     public final int REQUEST_CODE_DOG_KIND = 103;
 
     public static final String EXTRA_NEW_OWNER = "new owner dog";
-    public static final String EXTRA_DOG_FOR_KIND = "new owner dog";
+    public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
     public static final String TAG = "#";
 
     private EditText dogNameEditText;
@@ -53,9 +53,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
-        int ownerId = owner.getOwnerId();
 
-        // TEST
 //        String res = (owner == null) ? "null" : owner.getOwnerName();
 //        Log.d(TAG, "NewDogActivity EXTRA_OWNER = " + res);
 //        Log.d(TAG, "NewDogActivity: EXTRA_NEW_OWNER Id = " + ownerId);
@@ -72,7 +70,9 @@ public class NewDogFormActivity extends AppCompatActivity {
         // TEST EditTexts' FILLING
 
 //        dogKindEditText.setEnabled(false);
-        dogKindSelectTextview.setOnClickListener(new View.OnClickListener(){
+        dogKindEditText.setFocusable(false);
+        dogKindEditText.setClickable(true);
+        dogKindEditText.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
@@ -83,7 +83,7 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         Button addDogButton = findViewById(R.id.add_dog_button);
         addDogButton.setOnClickListener(view -> {
-            addDog(this, dog);
+            addDog(dog);
 
             Intent intent = new Intent(this, DogsListActivity.class);
             intent.putExtra(EXTRA_OWNER, owner);
@@ -92,25 +92,20 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
     }
 
-    private void addDog(Context context, Dog dog) {
-
-
-        DBHelper dbHelper = DBHelper.getInstance(context);
-        // лезет в БД
+    private void addDog(Dog dog) {
         this.dog = DataRepository.get().addDog(dog);
 //        dogsSQLiteDataSource.addDog(ownerID, dogAge, dogTall, dogWeight, dogName, dogKind);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_DOG_KIND:
-                    dog = getIntent().getParcelableExtra(EXTRA_SELECTED_KIND);
-//                    Log.d(TAG,"onActivityResult dog "+dog.getDogName());
-//                    Log.d(TAG,"onActivityResult dog "+dog.getDogKind());
-//                    updateUI();
-//                    Toast.makeText(getApplicationContext(), "" + dog.getDogKind() + " ", Toast.LENGTH_LONG).show();
+                    dog = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+                    dogKindEditText.setText(dog.getDogKind()); // !!!!!!!
+                    Log.d(TAG,"dog    "+dog.getDogKind());
                     break;
             }
         } else {
@@ -129,7 +124,6 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     // TEST EditTexts' FILLING
     private void testingFillEditText() {
-        dogKindEditText.setText(SomeDog.get().kind()); // !!!!!!!
 
         dogNameEditText.setText(SomeDog.get().name());
         dogAgeEditText.setText(""+SomeDog.get().age());

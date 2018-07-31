@@ -11,13 +11,16 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoActivity;
+import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity;
+import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormAcitivty;
 
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_DOG_FOR_KIND;
 
-public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
+public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<DogKind> {
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private Dog dog;
@@ -36,18 +39,20 @@ public class DogsKindsListActivity extends AppCompatActivity implements IRecycle
         RecyclerView recyclerView = findViewById(R.id.dogs_kinds_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        DogsKindAdapter adapter = new DogsKindAdapter(this, dog, this);
+        DogsKindAdapter adapter = new DogsKindAdapter(this, this);
         recyclerView.setAdapter(adapter);
 
     }
 
     @Override
-    public void onRecyclerItemClick(Dog dog) {
+    public void onRecyclerItemClick(DogKind dogKind) {
+        Log.d(TAG,"onRecyclerItemClick dogKind.getKind " + dogKind.getKind());
+
+        dog.setDogKind(dogKind.getKind());
+        dog.setDogImageString(dogKind.getImageString());
         Intent intent = new Intent();
-        Log.d(TAG,"onRecyclerItemClick dog "+dog.getDogName());
-        Log.d(TAG,"onRecyclerItemClick dog "+dog.getDogKind());
-        Log.d(TAG,"onRecyclerItemClick dog "+dog.getDogImageString());
         intent.putExtra(EXTRA_SELECTED_KIND, dog);
+        Log.d(TAG,"putExtra dog " + dog.getDogKind());
         setResult(RESULT_OK, intent);
         finish();
     }
