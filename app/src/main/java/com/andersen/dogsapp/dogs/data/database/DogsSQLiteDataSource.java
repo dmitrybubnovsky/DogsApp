@@ -107,7 +107,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     }
 
     // для формы
-//    public void addDog(int ownerID, int dogAge, int dogTall, int dogWeight, String dogName) {
     @Override
     public Dog addDog(Dog dog) {
         db = DatabaseManager.getInstance().openDB();

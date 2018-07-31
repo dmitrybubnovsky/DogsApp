@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_below="@id/toolbar_dogs_app">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="top|center_horizontal">
-    <include
-        android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_name"
@@ -69,4 +70,4 @@
         android:text="@string/add_title_button"/>
 </LinearLayout>
 </ScrollView>
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
