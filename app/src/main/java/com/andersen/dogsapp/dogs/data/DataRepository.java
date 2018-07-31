@@ -42,6 +42,10 @@ public class DataRepository {
         return ownersDataSource.addOwner(owner);
     }
 
+    public Dog addDog(Dog dog){
+        return dogsDataSource.addDog(dog);
+    }
+
     public List<Owner> getOwners() {
         List<Owner> owners = ownersDataSource.getOwners();
         for (Owner owner : owners){

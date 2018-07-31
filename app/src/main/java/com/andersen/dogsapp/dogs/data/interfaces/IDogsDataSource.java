@@ -9,4 +9,6 @@ public interface IDogsDataSource {
     List<Dog> getOwnerDogs(Owner owner);
 
     List<Dog> getDogs();
+
+    Dog addDog(Dog dog);
 }

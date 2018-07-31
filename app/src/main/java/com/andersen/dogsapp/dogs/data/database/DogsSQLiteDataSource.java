@@ -107,19 +107,28 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     }
 
     // для формы
-    public void addDog(int ownerID, int dogAge, int dogTall, int dogWeight, String dogName, String dogKind) {
+//    public void addDog(int ownerID, int dogAge, int dogTall, int dogWeight, String dogName) {
+    @Override
+    public Dog addDog(Dog dog) {
         db = DatabaseManager.getInstance().openDB();
         ContentValues cv = new ContentValues();
-        cv.put(DogTable.OWNER_ID, ownerID);  Log.d(TAG, "addDog: OWNER_ID " + ownerID);
-        cv.put(DogTable.AGE, dogAge);
-        cv.put(DogTable.TALL, dogTall);
-        cv.put(DogTable.WEIGHT, dogWeight);
+        cv.put(DogTable.OWNER_ID, dog.getOwnerId());  Log.d(TAG, "addDog: DOG_ID " + dog.getDogId());
+        cv.put(DogTable.AGE, dog.getDogAge());
+        cv.put(DogTable.TALL, dog.getDogTall());
+        cv.put(DogTable.WEIGHT, dog.getDogWeight());
 //        cv.put(DogTable.IMAGE, dogImageString);
-        cv.put(DogTable.NAME, dogName);
-        cv.put(DogTable.KIND, dogKind);
+        cv.put(DogTable.NAME, dog.getDogName());
+//        cv.put(DogTable.KIND, dogKind);
 
         long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
-        if(insertResult == -1) {Log.d(TAG, "DogsSQLite: insert Dog has failed. Houston we have a problem!");}
+
+        if (insertResult != -1) {
+            dog.setDogId((int)insertResult);
+            return dog;
+        } else {
+            Log.d(TAG, "DogsSQLiteDataSource. addDog: Dog was NOT added");
+            return new Dog();
+        }
     }
 }

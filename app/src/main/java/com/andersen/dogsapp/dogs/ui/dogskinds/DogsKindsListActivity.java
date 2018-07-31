@@ -15,7 +15,6 @@ import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoActivity;
 
 public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
-    public final int REQUEST_CODE_DOG_KIND = 103;
     public static final String TAG = "#";
     public static final String EXTRA_DOG_KIND = "extra_dog_kind";
     private Dog dog;

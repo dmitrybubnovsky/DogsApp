@@ -27,6 +27,15 @@ public class Dog implements Parcelable {
     public Dog() {
     }
 
+    public Dog(String dogName, Owner owner, int dogOwnerId, int dogAge, int dogTall, int dogWeight) {
+        this.dogName = dogName;
+        this.owner = owner;
+        this.dogOwnerId = dogOwnerId;
+        this.dogAge = dogAge;
+        this.dogTall = dogTall;
+        this.dogWeight = dogWeight;
+    }
+
     public int getOwnerId() {
         return dogOwnerId;
     }

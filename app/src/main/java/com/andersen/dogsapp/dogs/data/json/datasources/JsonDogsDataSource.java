@@ -27,12 +27,19 @@ public class JsonDogsDataSource implements IDogsDataSource {
         loadDogs(context);
     }
 
+    @Override
+    public Dog addDog(Dog dog) {
+        // Zero implementation
+        return new Dog();
+    }
+
     public static JsonDogsDataSource getInstance(Context context) {
         if (dogsDataSource == null) {
             dogsDataSource = new JsonDogsDataSource(context);
         }
         return dogsDataSource;
     }
+
 
     // Этот метод ничего не делает
     @Override

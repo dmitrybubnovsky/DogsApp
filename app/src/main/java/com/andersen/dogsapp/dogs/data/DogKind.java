@@ -14,11 +14,11 @@ public class DogKind {
             "Staffordshire terrier", "Standard schnauzer", "Water spaniel"};
 
     private final String[] IMAGE_FILES = new String[]{"afghan_hound", "american_bulldog", "american_foxhound",
-            "australiancattle", "belgiantevruren", "berger_pickard", "bolognese", "american_bulldog",
+            "australiancattle", "belgiantervuren", "berger_picard", "bolognese", "american_bulldog",
             "bullterrier", "chesapeake", "chinook", "dogoargentino", "english_coonhound", "german_shepherd",
             "icelandicsheepdog", "komondor", "mudi", "munsterlander_pointer", "pharaonhound", "pocket_beagle",
             "pug", "saint_bernard", "scottishterrier", "shepherd", "siberian_husky",
-            "staffordshireterrier", "standard_schnauzer", "water_spaniel"};
+            "staffordshire", "standard_schnauzer", "water_spaniel"};
 
     private List<String> kindsList = Arrays.asList(TITLES);
     private List<String> kindImagesList = Arrays.asList(IMAGE_FILES);
