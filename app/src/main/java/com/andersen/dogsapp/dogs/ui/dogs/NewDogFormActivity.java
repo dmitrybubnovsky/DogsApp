@@ -41,7 +41,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     private EditText dogAgeEditText;
     private EditText dogTallEditText;
     private EditText dogWeightEditText;
-    private TextView dogKindSelectTextview;
     private Owner owner;
     private Dog dog;
 
@@ -55,8 +54,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
 
 //        String res = (owner == null) ? "null" : owner.getOwnerName();
-//        Log.d(TAG, "NewDogActivity EXTRA_OWNER = " + res);
-//        Log.d(TAG, "NewDogActivity: EXTRA_NEW_OWNER Id = " + ownerId);
 
         initView();
         testingFillEditText();
@@ -65,31 +62,37 @@ public class NewDogFormActivity extends AppCompatActivity {
         int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
         int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
         int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
+        // вытащили owner'a из EXTRA и добавляем собачке в БД Dog
         dog = new Dog(dogName, owner, owner.getOwnerId(), dogAge, dogTall, dogWeight);
+        Log.d(TAG, "!!!  dog.getDogKind " + dog.getOwner().getOwnerName());
 
-        // TEST EditTexts' FILLING
-
-//        dogKindEditText.setEnabled(false);
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
-                intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
-                startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-            }
+        dogKindEditText.setOnClickListener(view -> {
+            startDogsKindsListActivity(dog);
         });
 
         Button addDogButton = findViewById(R.id.add_dog_button);
         addDogButton.setOnClickListener(view -> {
-            addDog(dog);
-
-            Intent intent = new Intent(this, DogsListActivity.class);
-            intent.putExtra(EXTRA_OWNER, owner);
-            setResult(RESULT_OK, intent);
-            finish();
+            // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
+            if (dog.getDogKind() == null) {
+                startDogsKindsListActivity(dog);
+                String toast = getResources().getString(R.string.specify_kind_please_toast);
+                Toast.makeText(getApplicationContext(),toast,Toast.LENGTH_LONG).show();
+            } else {
+                addDog(dog);
+                Intent intent = new Intent(this, DogsListActivity.class);
+                intent.putExtra(EXTRA_OWNER, owner);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         });
+    }
+
+    private void startDogsKindsListActivity(Dog dog){
+        Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
+        intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
+        startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
     }
 
     private void addDog(Dog dog) {
@@ -105,7 +108,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                 case REQUEST_CODE_DOG_KIND:
                     dog = data.getParcelableExtra(EXTRA_SELECTED_KIND);
                     dogKindEditText.setText(dog.getDogKind()); // !!!!!!!
-                    Log.d(TAG,"dog    "+dog.getDogKind());
+                    Log.d(TAG, "!!!  dog.getDogKind " + dog.getDogKind());
                     break;
             }
         } else {
@@ -113,20 +116,19 @@ public class NewDogFormActivity extends AppCompatActivity {
         }
     }
 
-    private void initView(){
+    private void initView() {
         dogNameEditText = findViewById(R.id.dog_name_edittext);
         dogKindEditText = findViewById(R.id.dog_kind_edittext);
         dogAgeEditText = findViewById(R.id.dog_age_edittext);
         dogTallEditText = findViewById(R.id.dog_tall_edittext);
         dogWeightEditText = findViewById(R.id.dog_weight_edittext);
-        dogKindSelectTextview = findViewById(R.id.dog_kind_select_textview);
     }
 
     // TEST EditTexts' FILLING
     private void testingFillEditText() {
 
         dogNameEditText.setText(SomeDog.get().name());
-        dogAgeEditText.setText(""+SomeDog.get().age());
+        dogAgeEditText.setText("" + SomeDog.get().age());
         dogWeightEditText.setText("" + 60);
         dogTallEditText.setText("" + 55);
     }
