@@ -116,9 +116,9 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         cv.put(DogTable.AGE, dog.getDogAge());
         cv.put(DogTable.TALL, dog.getDogTall());
         cv.put(DogTable.WEIGHT, dog.getDogWeight());
-//        cv.put(DogTable.IMAGE, dogImageString);
+        cv.put(DogTable.IMAGE, dog.getDogImageString());
         cv.put(DogTable.NAME, dog.getDogName());
-//        cv.put(DogTable.KIND, dogKind);
+        cv.put(DogTable.KIND, dog.getDogKind());
 
         long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();

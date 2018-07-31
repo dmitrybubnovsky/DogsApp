@@ -48,7 +48,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());
         setSupportActionBar(toolbar);
 // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
@@ -56,11 +56,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         // sqlite имплементация
         updateUI();
-
-        AppTextView.newInstance(this, R.id.owner_name_detail_textview)
-                .style(this, R.style.BoldRobotoThin35sp)
-                .text("" + owner.getOwnerFullName())
-                .build();
     }
 
     @Override
@@ -86,9 +81,9 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_NEW_DOG:
-                    owner = getIntent().getParcelableExtra(EXTRA_OWNER);
+                    owner = data.getParcelableExtra(EXTRA_OWNER);
 //                    updateUI();
-                    Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + " now has a new dog)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + " now has a new dog", Toast.LENGTH_LONG).show();
                     break;
             }
         } else {
