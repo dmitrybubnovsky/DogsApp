@@ -35,9 +35,9 @@
             android:name=".dogs.ui.dogs.NewDogFormActivity"
             android:theme="@style/MainDogApp"/>
         <activity
-            android:name=".dogs.ui.dogskinds.DogsKindSelectorActivity"
+            android:name=".dogs.ui.dogskinds.DogsKindsListActivity"
             android:theme="@style/MainDogApp"/>
-        </activity>
+
     </application>
 
 </manifest>
