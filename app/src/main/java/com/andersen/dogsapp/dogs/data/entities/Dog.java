@@ -58,6 +58,10 @@ public class Dog implements Parcelable {
         return resourceId;
     }
 
+    public String getDogImageString() {
+        return dogImageString;
+    }
+
     public int getDogAge() {
         return dogAge;
     }

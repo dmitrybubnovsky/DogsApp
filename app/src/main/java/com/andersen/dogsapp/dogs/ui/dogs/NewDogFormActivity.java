@@ -18,6 +18,7 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindAdapter;
@@ -26,12 +27,13 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
-import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_DOG_KIND;
+import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
 
 public class NewDogFormActivity extends AppCompatActivity {
     public final int REQUEST_CODE_DOG_KIND = 103;
 
     public static final String EXTRA_NEW_OWNER = "new owner dog";
+    public static final String EXTRA_DOG_FOR_KIND = "new owner dog";
     public static final String TAG = "#";
 
     private EditText dogNameEditText;
@@ -74,7 +76,7 @@ public class NewDogFormActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
-                intent.putExtra(EXTRA_DOG_KIND, dog);
+                intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
                 startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
             }
         });
@@ -94,10 +96,26 @@ public class NewDogFormActivity extends AppCompatActivity {
 
 
         DBHelper dbHelper = DBHelper.getInstance(context);
-        DogsSQLiteDataSource dogsSQLiteDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
         // лезет в БД
         this.dog = DataRepository.get().addDog(dog);
 //        dogsSQLiteDataSource.addDog(ownerID, dogAge, dogTall, dogWeight, dogName, dogKind);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_DOG_KIND:
+                    dog = getIntent().getParcelableExtra(EXTRA_SELECTED_KIND);
+//                    Log.d(TAG,"onActivityResult dog "+dog.getDogName());
+//                    Log.d(TAG,"onActivityResult dog "+dog.getDogKind());
+//                    updateUI();
+//                    Toast.makeText(getApplicationContext(), "" + dog.getDogKind() + " ", Toast.LENGTH_LONG).show();
+                    break;
+            }
+        } else {
+            Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
+        }
     }
 
     private void initView(){

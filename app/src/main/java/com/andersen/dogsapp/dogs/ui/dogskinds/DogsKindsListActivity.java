@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
@@ -14,9 +15,11 @@ import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoActivity;
 
+import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_DOG_FOR_KIND;
+
 public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<Dog> {
     public static final String TAG = "#";
-    public static final String EXTRA_DOG_KIND = "extra_dog_kind";
+    public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private Dog dog;
 
     @Override
@@ -24,7 +27,7 @@ public class DogsKindsListActivity extends AppCompatActivity implements IRecycle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_kind_selector);
 
-        dog = getIntent().getParcelableExtra(EXTRA_DOG_KIND);
+        dog = getIntent().getParcelableExtra(EXTRA_DOG_FOR_KIND);
 
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
@@ -41,8 +44,11 @@ public class DogsKindsListActivity extends AppCompatActivity implements IRecycle
     @Override
     public void onRecyclerItemClick(Dog dog) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_DOG_KIND, dog);
+        Log.d(TAG,"onRecyclerItemClick dog "+dog.getDogName());
+        Log.d(TAG,"onRecyclerItemClick dog "+dog.getDogKind());
+        Log.d(TAG,"onRecyclerItemClick dog "+dog.getDogImageString());
+        intent.putExtra(EXTRA_SELECTED_KIND, dog);
         setResult(RESULT_OK, intent);
-        startActivity(intent);
+        finish();
     }
 }

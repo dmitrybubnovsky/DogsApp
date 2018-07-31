@@ -3,8 +3,8 @@ package com.andersen.dogsapp.dogs.data;
 import java.util.Arrays;
 import java.util.List;
 
-public class DogKind {
-    private static DogKind instance;
+public class DogKindSource {
+    private static DogKindSource instance;
 
     private final String[] TITLES = new String[]{"Afghan hound", "American bulldog", "American foxhound",
             "Australian cattle", "Belgian tevruren", "Berger pickard", "Bolognese", "American bulldog",
@@ -24,12 +24,12 @@ public class DogKind {
     private List<String> kindImagesList = Arrays.asList(IMAGE_FILES);
 
 
-    private DogKind(){
+    private DogKindSource(){
     }
 
-    public static DogKind get() {
+    public static DogKindSource get() {
         if (instance == null) {
-            instance = new DogKind();
+            instance = new DogKindSource();
         }
         return instance;
     }
