@@ -1,5 +1,8 @@
 package com.andersen.dogsapp.dogs.data;
 
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,9 +25,22 @@ public class DogKindSource {
 
     private List<String> kindsList = Arrays.asList(TITLES);
     private List<String> kindImagesList = Arrays.asList(IMAGE_FILES);
+    private List<DogKind> dogKindsList;
 
 
     private DogKindSource() {
+        dogKindsList = new ArrayList<>();
+        for (int i=0;i<kindsList.size();i++){
+            DogKind dogKind = new DogKind(TITLES[i], IMAGE_FILES[i]);
+            dogKindsList.add(dogKind);
+        }
+    }
+
+    public static List<DogKind> getList() {
+        if (instance == null) {
+            instance = new DogKindSource();
+        }
+        return instance.dogKindsList;
     }
 
     public static DogKindSource get() {

@@ -46,13 +46,8 @@ public class DogsKindsListActivity extends AppCompatActivity implements IRecycle
 
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
-        Log.d(TAG,"onRecyclerItemClick dogKind.getKind " + dogKind.getKind());
-
-//        dog.setDogKind(dogKind.getKind());
-//        dog.setDogImageString(dogKind.getImageString());
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
-//        Log.d(TAG,"putExtra dog " + dog.getDogKind());
         setResult(RESULT_OK, intent);
         finish();
     }

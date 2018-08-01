@@ -25,16 +25,12 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
-    private DogKindSource instance;
-    private List<String> kinds;
-    private List<String> images;
+    private List<DogKind> dogsKinds;
 
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-        instance = DogKindSource.get();
-        kinds = instance.kindsList();
-        images = instance.imagesList();
+        dogsKinds = DogKindSource.getList();
         this.listener = listener;
     }
 
@@ -61,13 +57,11 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         }
 
         private void setData(Context context, int position){
-            dogKindTextView.setText(kinds.get(position));
-            dogKindImageView.setImageResource(getImageId(context, images.get(position)));
+            dogKindTextView.setText(dogsKinds.get(position).getKind());
+            dogKindImageView.setImageResource(getImageId(context, dogsKinds.get(position).getImageString()));
             dogKindInfo = new DogKind();
-            dogKindInfo.setKind(kinds.get(position));
-            dogKindInfo.setImageString(images.get(position));
-            Log.d(TAG, "___dogKindInfo."+dogKindInfo.getKind());
-            Log.d(TAG, "___dogKindInfo."+dogKindInfo.getImageString());
+            dogKindInfo.setKind(dogsKinds.get(position).getKind());
+            dogKindInfo.setImageString(dogsKinds.get(position).getImageString());
         }
     }
 
@@ -90,6 +84,6 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return kinds.size();
+        return dogsKinds.size();
     }
 }
