@@ -21,7 +21,7 @@ public class DataRepository {
     }
 
     public static void init(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource) {
-        if (instance == null){
+        if (instance == null) {
             instance = new DataRepository(ownersDataSource, dogsDataSource);
         }
     }
@@ -38,17 +38,17 @@ public class DataRepository {
         return dogsDataSource.getDogs();
     }
 
-    public Owner addOwner(Owner owner){
+    public Owner addOwner(Owner owner) {
         return ownersDataSource.addOwner(owner);
     }
 
-    public Dog addDog(Dog dog){
+    public Dog addDog(Dog dog) {
         return dogsDataSource.addDog(dog);
     }
 
     public List<Owner> getOwners() {
         List<Owner> owners = ownersDataSource.getOwners();
-        for (Owner owner : owners){
+        for (Owner owner : owners) {
             owner.setDogs(getOwnerDogs(owner));
         }
         return owners;

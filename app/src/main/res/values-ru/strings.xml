@@ -14,6 +14,12 @@
     <string name="prefered_dog_hint">Любимая порода собаки</string>
     <string name="add_title_button">Добавить</string>
 
+    <string name="dog_name_hint">Кличка</string>
+    <string name="dog_kind_hint">Порода</string>
+    <string name="dog_weight_hint">Вес</string>
+    <string name="dog_age_hint">Возраст</string>
+    <string name="dog_tall_hint">Высота в холке</string>
+
     <string name="specify_kind_please_toast">Пожалуйста, укажите породу собаки!</string>
 
     <string name="toolbar_title_owners_list">Список собаководов</string>
@@ -28,9 +34,4 @@
     <string name="text_view_title_age">Возраст: </string>
     <string name="text_view_title_weight">Вес: </string>
     <string name="text_view_title_tall">Рост: </string>
-
-    <string name="btn_search">Вперед</string>
-    <string name="first_text_view">Первое текствью</string>
-    <string name="second_text_view">Второе текствью</string>
-    <string name="third_text_view">Третье текствью</string>
 </resources>

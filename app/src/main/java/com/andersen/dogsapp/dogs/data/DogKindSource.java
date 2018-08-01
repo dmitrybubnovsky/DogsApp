@@ -24,7 +24,7 @@ public class DogKindSource {
     private List<String> kindImagesList = Arrays.asList(IMAGE_FILES);
 
 
-    private DogKindSource(){
+    private DogKindSource() {
     }
 
     public static DogKindSource get() {
@@ -34,11 +34,11 @@ public class DogKindSource {
         return instance;
     }
 
-    public List<String> kindsList(){
+    public List<String> kindsList() {
         return instance.kindsList;
     }
 
-    public List<String> imagesList(){
+    public List<String> imagesList() {
         return instance.kindImagesList;
     }
 }

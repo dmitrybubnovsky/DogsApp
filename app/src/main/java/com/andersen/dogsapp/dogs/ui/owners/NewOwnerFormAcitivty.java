@@ -31,6 +31,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         EditText ownerNameEditText = findViewById(R.id.owner_name_edittext);
         EditText ownerSurnameEditText = findViewById(R.id.surname_edittext);
         EditText preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
+
         // just for test
         testingFillEditText(ownerNameEditText, ownerSurnameEditText, preferredKindEditText);
 
@@ -44,20 +45,18 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         });
     }
 
-    private Owner addOwner (EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
+    private Owner addOwner(EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
         Owner owner = new Owner(ownerName, ownerSurname, preferredDogKind);
         owner = DataRepository.get().addOwner(owner);
-
-        Log.d(TAG, "NewOwnerActivity EXTRA_OWNER = " + ((owner == null) ? "null" : owner.getOwnerName()));
         return owner;
     }
 
     private void testingFillEditText(EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
         ownerNameEditText.setText(SomeOwner.get().name());
-        ownerSurnameEditText.setText(SomeOwner.get().surname());
+//        ownerSurnameEditText.setText(SomeOwner.get().surname());
         preferredKindEditText.setText(SomeDog.get().kind());
     }
 }

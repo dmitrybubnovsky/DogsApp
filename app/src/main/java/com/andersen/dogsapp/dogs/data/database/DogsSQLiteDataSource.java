@@ -66,7 +66,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     }
 
     @Override
-    public List<Dog> getDogs(){
+    public List<Dog> getDogs() {
         loadDogs();
         return dogs;
     }
@@ -111,7 +111,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     public Dog addDog(Dog dog) {
         db = DatabaseManager.getInstance().openDB();
         ContentValues cv = new ContentValues();
-        cv.put(DogTable.OWNER_ID, dog.getOwnerId());  Log.d(TAG, "addDog: DOG_ID " + dog.getDogId());
+        cv.put(DogTable.OWNER_ID, dog.getOwnerId());
+        Log.d(TAG, "addDog: DOG_ID " + dog.getDogId());
         cv.put(DogTable.AGE, dog.getDogAge());
         cv.put(DogTable.TALL, dog.getDogTall());
         cv.put(DogTable.WEIGHT, dog.getDogWeight());
@@ -123,7 +124,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         DatabaseManager.getInstance().closeDB();
 
         if (insertResult != -1) {
-            dog.setDogId((int)insertResult);
+            dog.setDogId((int) insertResult);
             return dog;
         } else {
             Log.d(TAG, "DogsSQLiteDataSource. addDog: Dog was NOT added");

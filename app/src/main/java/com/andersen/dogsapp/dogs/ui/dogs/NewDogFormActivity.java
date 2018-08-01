@@ -52,13 +52,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         testingFillEditText();
         createDogModelFromInputDatas();
 
-//        initDogKindEditText(dog);
-
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(view -> {
-            startDogsKindsListActivity(dog);
-        });
+        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
+
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
@@ -70,7 +67,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
     }
 
-    private void createDogModelFromInputDatas(){
+    private void createDogModelFromInputDatas() {
         String dogName = dogNameEditText.getText().toString();
         int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
         int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
@@ -79,12 +76,12 @@ public class NewDogFormActivity extends AppCompatActivity {
         dog = new Dog(dogName, owner, owner.getOwnerId(), dogAge, dogTall, dogWeight);
     }
 
-    private void startDogsKindsListActivity(Dog dog){
+    private void startDogsKindsListActivity(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
         intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
         startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
         String toast = getResources().getString(R.string.specify_kind_please_toast);
-        Toast.makeText(getApplicationContext(),toast,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_LONG).show();
     }
 
     private void addDogToDataBase(Dog dog) {
@@ -103,7 +100,6 @@ public class NewDogFormActivity extends AppCompatActivity {
                 case REQUEST_CODE_DOG_KIND:
                     dog = data.getParcelableExtra(EXTRA_SELECTED_KIND);
                     dogKindEditText.setText(dog.getDogKind()); // !!!!!!!
-                    Log.d(TAG, "!!!  dog.getDogKind " + dog.getDogKind());
                     break;
             }
         } else {
@@ -124,7 +120,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private void testingFillEditText() {
         dogNameEditText.setText(SomeDog.get().name());
         dogAgeEditText.setText("" + SomeDog.get().age());
-        dogWeightEditText.setText("" + 60);
-        dogTallEditText.setText("" + 55);
+        dogWeightEditText.setText("" + SomeDog.get().weight());
+        dogTallEditText.setText("" + SomeDog.get().tall());
     }
 }
