@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DogKindSource;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -30,7 +28,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-        dogsKinds = DogKindSource.getList();
+        dogsKinds = DogKindSource.getDogKinds();
         this.listener = listener;
     }
 
