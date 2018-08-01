@@ -30,7 +30,7 @@
     <string name="toolbar_title_add_owner">Add new owner</string>
     <string name="toolbar_title_add_dog">Add new dog</string>
     <string name="toolbar_title_dogs_list">Dogs list</string>
-    <string name="toolbar_title_kinds_list">Dogs kinds</string>
+    <string name="toolbar_title_kinds_list">Choose dog kind</string>
     <string name="toolbar_title_detail_info">Dogs info</string>
 
     <string name="weight_measure">kg</string>
