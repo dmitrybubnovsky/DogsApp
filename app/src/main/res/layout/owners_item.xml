@@ -11,41 +11,42 @@
         android:id="@+id/owner_fullname_item_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="@dimen/margin_8dp"
         android:layout_marginLeft="@dimen/margin_8dp"
-        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:textColor="@color/text_view_colors"/>
 
     <TextView
         android:id="@+id/preffered_dog_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_8dp"
         android:layout_below="@id/owner_fullname_item_textview"
+        android:layout_margin="@dimen/margin_8dp"
         android:text="@string/text_view_title_preff_dog"/>
 
     <TextView
         android:id="@+id/preffered_dog_item_textview"
+        style="@style/BoldRobotoThin13sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/owner_fullname_item_textview"
         android:layout_margin="@dimen/margin_8dp"
-        style="@style/BoldRobotoThin13sp"
-        android:layout_toRightOf="@+id/preffered_dog_title_textview"
-        android:layout_below="@id/owner_fullname_item_textview"/>
+        android:layout_toRightOf="@+id/preffered_dog_title_textview"/>
 
     <TextView
         android:id="@+id/quantity_title_textivew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_8dp"
         android:layout_below="@id/preffered_dog_title_textview"
+        android:layout_margin="@dimen/margin_8dp"
         android:text="@string/text_view_title_dogs_quantity"/>
+
     <TextView
         android:id="@+id/dogs_quantity_item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/preffered_dog_title_textview"
-        android:layout_toRightOf="@id/quantity_title_textivew"
-        android:layout_margin="@dimen/margin_8dp"/>
+        android:layout_margin="@dimen/margin_8dp"
+        android:layout_toRightOf="@id/quantity_title_textivew"/>
 </RelativeLayout>

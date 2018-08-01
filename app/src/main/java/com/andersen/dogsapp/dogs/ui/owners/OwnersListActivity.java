@@ -46,6 +46,8 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
+        ownersAdapter = new OwnersAdapter(this, this);
+
         initRecyclerView();
 
         updateUI();
@@ -83,14 +85,10 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
             startActivity(intent);
             Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
         } else {
-            if (ownersAdapter == null) {
-                ownersAdapter = new OwnersAdapter(this, owners, this);
-                ownersRecyclerView.setAdapter(ownersAdapter);
-            } else {
-                ownersAdapter.initAdapter(this, owners, this);
-                ownersAdapter.notifyDataSetChanged();
-            }
+            ownersAdapter.setOwners(owners);
+            ownersAdapter.notifyDataSetChanged();
         }
+        ownersRecyclerView.setAdapter(ownersAdapter);
     }
 
     private void initRecyclerView() {

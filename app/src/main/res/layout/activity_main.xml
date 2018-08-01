@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
+
     <Button
+        android:id="@+id/start_app_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:text="@string/btn_start_dogs"
-        android:padding="@dimen/margin_8dp"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/start_app_button">
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:padding="@dimen/margin_8dp"
+        android:text="@string/btn_start_dogs">
     </Button>
 </LinearLayout>

@@ -53,7 +53,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
-
         updateUI();
     }
 
@@ -122,7 +121,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         startActivity(intent);
     }
 
-    private void addNewDogActivity(){
+    private void addNewDogActivity() {
         Intent intent = new Intent(this, NewDogFormActivity.class);
         intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
         startActivityForResult(intent, REQUEST_CODE_NEW_DOG);

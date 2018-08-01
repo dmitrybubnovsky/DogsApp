@@ -20,6 +20,10 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
 
+    private EditText ownerNameEditText;
+    private EditText ownerSurnameEditText;
+    private EditText preferredKindEditText;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,24 +32,24 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_owner);
         setSupportActionBar(toolbar);
 
-        EditText ownerNameEditText = findViewById(R.id.owner_name_edittext);
-        EditText ownerSurnameEditText = findViewById(R.id.surname_edittext);
-        EditText preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
+        ownerNameEditText = findViewById(R.id.owner_name_edittext);
+        ownerSurnameEditText = findViewById(R.id.surname_edittext);
+        preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
 
         // just for test
-        testingFillEditText(ownerNameEditText, ownerSurnameEditText, preferredKindEditText);
+        testingFillEditText();
 
         Button button = findViewById(R.id.add_owner_button);
 
         button.setOnClickListener(view -> {
-            Owner owner = addOwner(ownerNameEditText, ownerSurnameEditText, preferredKindEditText);
+            Owner owner = addOwner();
             Intent intent = new Intent(this, DogsListActivity.class);
             intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
             startActivity(intent);
         });
     }
 
-    private Owner addOwner(EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
+    private Owner addOwner() {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
@@ -54,9 +58,9 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         return owner;
     }
 
-    private void testingFillEditText(EditText ownerNameEditText, EditText ownerSurnameEditText, EditText preferredKindEditText) {
+    private void testingFillEditText() {
         ownerNameEditText.setText(SomeOwner.get().name());
-//        ownerSurnameEditText.setText(SomeOwner.get().surname());
+//      ownerSurnameEditText.setText(SomeOwner.get().surname());
         preferredKindEditText.setText(SomeDog.get().kind());
     }
 }

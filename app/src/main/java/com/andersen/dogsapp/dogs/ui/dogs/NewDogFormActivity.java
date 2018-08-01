@@ -57,13 +57,13 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogKindEditText.setClickable(true);
         dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
 
-
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity(dog);
             } else {
-                addDogToDataBase(dog);
+                this.dog = DataRepository.get().addDog(dog);
+                backToDogListActivity();
             }
         });
     }
@@ -84,11 +84,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
     }
 
-    private void addDogToDataBase(Dog dog) {
-        this.dog = DataRepository.get().addDog(dog);
+    private void backToDogListActivity() {
         Intent intent = new Intent(this, DogsListActivity.class);
         intent.putExtra(EXTRA_OWNER, owner);
-        setResult(RESULT_OK, intent);
+//        setResult(RESULT_OK, intent);
         finish();
     }
 

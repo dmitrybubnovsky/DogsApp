@@ -8,7 +8,8 @@
     tools:context=".dogs.ui.dogs.DogsListActivity">
 
     <include
-        android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
+        android:id="@+id/toolbar_dogs_app"
+        layout="@layout/toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +23,6 @@
             android:id="@+id/dogs_kinds_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar_dogs_app"
             android:scrollbars="vertical"/>
     </RelativeLayout>
 
