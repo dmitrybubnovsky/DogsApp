@@ -65,8 +65,8 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         updateUI();
     }
 
@@ -87,8 +87,8 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         } else {
             ownersAdapter.setOwners(owners);
             ownersAdapter.notifyDataSetChanged();
+            ownersRecyclerView.setAdapter(ownersAdapter);
         }
-        ownersRecyclerView.setAdapter(ownersAdapter);
     }
 
     private void initRecyclerView() {
