@@ -54,7 +54,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
 
-        // sqlite имплементация
         updateUI();
     }
 
@@ -99,9 +98,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         // если owner без единой собаки
         if (ownerDogs.size() == 0) {
             Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, NewDogFormActivity.class);
-            intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
-            startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
+            addNewDogActivity();
         } else {
             RecyclerView recyclerView = findViewById(R.id.recycler_view);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -123,6 +120,12 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         Intent intent = new Intent(getApplicationContext(), DogsInfoActivity.class);
         intent.putExtra(DogsInfoActivity.EXTRA_DOG, dog);
         startActivity(intent);
+    }
+
+    private void addNewDogActivity(){
+        Intent intent = new Intent(this, NewDogFormActivity.class);
+        intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
+        startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
     }
 }
 

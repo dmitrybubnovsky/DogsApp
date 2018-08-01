@@ -17,24 +17,37 @@ public class Dog implements Parcelable {
     private String dogKind;
     private DogKind dogKindInfo;
 
+
+    public Dog() {
+    }
+
+    private Dog(Parcel parcelInstance) {
+        dogId = parcelInstance.readInt();
+        dogOwnerId = parcelInstance.readInt();
+        dogAge = parcelInstance.readInt();
+        dogTall = parcelInstance.readInt();
+        dogWeight = parcelInstance.readInt();
+        dogImageString = parcelInstance.readString();
+        dogName = parcelInstance.readString();
+        dogKind = parcelInstance.readString();
+        dogKindInfo = parcelInstance.readParcelable(DogKind.class.getClassLoader());
+    }
+
+    public Dog(String dogName, Owner owner, int dogAge, int dogTall, int dogWeight) {
+        this.dogName = dogName;
+        this.owner = owner;
+        this.dogOwnerId = owner.getOwnerId();
+        this.dogAge = dogAge;
+        this.dogTall = dogTall;
+        this.dogWeight = dogWeight;
+    }
+
     public Owner getOwner() {
         return owner;
     }
 
     public void setOwner(Owner owner) {
         this.owner = owner;
-    }
-
-    public Dog() {
-    }
-
-    public Dog(String dogName, Owner owner, int dogOwnerId, int dogAge, int dogTall, int dogWeight) {
-        this.dogName = dogName;
-        this.owner = owner;
-        this.dogOwnerId = dogOwnerId;
-        this.dogAge = dogAge;
-        this.dogTall = dogTall;
-        this.dogWeight = dogWeight;
     }
 
     public int getOwnerId() {
@@ -93,30 +106,6 @@ public class Dog implements Parcelable {
         dest.writeParcelable(dogKindInfo, flags);
     }
 
-    public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {
-        @Override
-        public Dog createFromParcel(Parcel source) {
-            return new Dog(source);
-        }
-
-        @Override
-        public Dog[] newArray(int size) {
-            return new Dog[size];
-        }
-    };
-
-    private Dog(Parcel parcelInstance) {
-        dogId = parcelInstance.readInt();
-        dogOwnerId = parcelInstance.readInt();
-        dogAge = parcelInstance.readInt();
-        dogTall = parcelInstance.readInt();
-        dogWeight = parcelInstance.readInt();
-        dogImageString = parcelInstance.readString();
-        dogName = parcelInstance.readString();
-        dogKind = parcelInstance.readString();
-        dogKindInfo = parcelInstance.readParcelable(DogKind.class.getClassLoader());
-    }
-
     public void setDogOwnerId(int dogOwnerId) {
         this.dogOwnerId = dogOwnerId;
     }
@@ -148,6 +137,18 @@ public class Dog implements Parcelable {
     public void setDogKind(String dogKind) {
         this.dogKind = dogKind;
     }
+
+    public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {
+        @Override
+        public Dog createFromParcel(Parcel source) {
+            return new Dog(source);
+        }
+
+        @Override
+        public Dog[] newArray(int size) {
+            return new Dog[size];
+        }
+    };
 }
 
 

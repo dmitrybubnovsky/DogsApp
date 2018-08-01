@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 import android.support.v7.widget.Toolbar;
@@ -73,15 +74,14 @@ public class NewDogFormActivity extends AppCompatActivity {
         int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
         int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
         // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель
-        dog = new Dog(dogName, owner, owner.getOwnerId(), dogAge, dogTall, dogWeight);
+        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
     }
 
     private void startDogsKindsListActivity(Dog dog) {
         Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
         intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
         startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-        String toast = getResources().getString(R.string.specify_kind_please_toast);
-        Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
     }
 
     private void addDogToDataBase(Dog dog) {
@@ -98,8 +98,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_DOG_KIND:
-                    dog = data.getParcelableExtra(EXTRA_SELECTED_KIND);
-                    dogKindEditText.setText(dog.getDogKind()); // !!!!!!!
+                    DogKind dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+                    dog.setDogKind(dogKind.getKind());
+                    dog.setDogImageString(dogKind.getImageString());
+                    dogKindEditText.setText(dogKind.getKind());
                     break;
             }
         } else {
