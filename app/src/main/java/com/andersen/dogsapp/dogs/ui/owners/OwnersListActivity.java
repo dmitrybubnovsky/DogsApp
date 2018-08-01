@@ -35,7 +35,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
     private List<Owner> owners;
-    private List<Dog> dogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +77,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 
     private void updateUI() {
         owners = DataRepository.get().getOwners();
-        dogs = DataRepository.get().getDogs();
-        dogs = DataRepository.get().getDogs();
 
         if (owners.size() == 0) {
             Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
@@ -87,10 +84,10 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
             Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
         } else {
             if (ownersAdapter == null) {
-                ownersAdapter = new OwnersAdapter(this, owners, dogs, this);
+                ownersAdapter = new OwnersAdapter(this, owners, this);
                 ownersRecyclerView.setAdapter(ownersAdapter);
             } else {
-                ownersAdapter.initAdapter(this, owners, dogs, this);
+                ownersAdapter.initAdapter(this, owners, this);
                 ownersAdapter.notifyDataSetChanged();
             }
         }

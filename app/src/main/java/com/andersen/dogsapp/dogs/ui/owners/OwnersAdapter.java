@@ -21,23 +21,19 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
     public static final String TAG = "#";
     private Context context;
     private List<Owner> owners;
-    private List<Dog> dogs;
 
     private IRecyclerItemListener<Owner> listener;
 
-    public OwnersAdapter(Context context, List<Owner> owners, List<Dog> dogs, IRecyclerItemListener listener) {
+    public OwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
         this.context = context;
         this.owners = owners;
-        this.dogs = dogs;
         this.listener = listener;
     }
 
-    public void initAdapter(Context context, List<Owner> owners, List<Dog> dogs, IRecyclerItemListener listener) {
+    public void initAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
         this.context = context;
         this.owners.clear();
         this.owners = owners;
-        this.dogs.clear();
-        this.dogs = dogs;
         this.listener = listener;
     }
 
