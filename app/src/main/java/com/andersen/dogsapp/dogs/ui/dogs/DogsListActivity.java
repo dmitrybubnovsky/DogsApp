@@ -57,8 +57,8 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         updateUI();
     }
 
