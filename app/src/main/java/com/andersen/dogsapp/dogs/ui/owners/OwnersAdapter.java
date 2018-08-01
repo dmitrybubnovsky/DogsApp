@@ -69,21 +69,12 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
 
         private void setData(Owner owner) {
             this.owner = owner;
-            int ownerId = owner.getOwnerId();
             ownerFullNameTextView.setText(owner.getOwnerFullName());
             preferredKindTextView.setText(owner.getPreferedDogsKind());
-            int dogsQuantity = getDogsQuantity(ownerId, dogs);
+            int dogsQuantity = owner.getDogs().size();
             dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
 
         }
-    }
-
-    private int getDogsQuantity(int ownerId, List<Dog> dogs) {
-        int count = 0;
-        for (Dog dog : dogs) {
-            if (dog.getOwnerId() == ownerId) count++;
-        }
-        return count;
     }
 
     @Override

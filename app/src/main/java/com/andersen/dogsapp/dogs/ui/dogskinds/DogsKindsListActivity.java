@@ -23,25 +23,19 @@ import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_DOG_FOR
 public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<DogKind> {
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
-    private Dog dog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dogs_kind_selector);
 
-        dog = getIntent().getParcelableExtra(EXTRA_DOG_FOR_KIND);
-
-
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
         setSupportActionBar(toolbar);
 
         RecyclerView recyclerView = findViewById(R.id.dogs_kinds_recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DogsKindAdapter adapter = new DogsKindAdapter(this, this);
         recyclerView.setAdapter(adapter);
-
     }
 
     @Override
