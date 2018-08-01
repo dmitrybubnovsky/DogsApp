@@ -37,6 +37,9 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "extra_owner";
 
+    private Drawable divider;
+    private RecyclerView recyclerView;
+
     private Owner owner;
     private DogsAdapter adapter;
     private List<Dog> ownerDogs;
@@ -90,27 +93,20 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     }
 
     private void updateUI() {
-        Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
-
         ownerDogs = DataRepository.get().getOwnerDogs(owner);
 
-        // если owner без единой собаки
         if (ownerDogs.size() == 0) {
             Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
             addNewDogActivity();
         } else {
-            RecyclerView recyclerView = findViewById(R.id.recycler_view);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-
+            initRecyclerView();
             if (adapter == null) {
                 adapter = new DogsAdapter(this, ownerDogs, this);
-                recyclerView.setAdapter(adapter);
             } else {
                 adapter.initAdapter(this, ownerDogs, this);
                 adapter.notifyDataSetChanged();
             }
+            recyclerView.setAdapter(adapter);
         }
     }
 
@@ -125,6 +121,14 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         Intent intent = new Intent(this, NewDogFormActivity.class);
         intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
         startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
+    }
+
+    private void initRecyclerView(){
+        divider = getResources().getDrawable(R.drawable.dogs_divider);
+        recyclerView = findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
     }
 }
 
