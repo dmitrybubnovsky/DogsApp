@@ -115,6 +115,14 @@ public class Dog implements Parcelable {
         this.dogKind = dogKind;
     }
 
+    public int getDogId() {
+        return dogId;
+    }
+
+    public String getPhotoFileName(){
+        return "IMG_"+getDogId()+".jpg";
+    }
+
     @Override
     public int describeContents() {
         return 0;

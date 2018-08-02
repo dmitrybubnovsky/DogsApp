@@ -15,6 +15,7 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
@@ -38,6 +39,8 @@ public class NewDogFormActivity extends AppCompatActivity {
     private EditText dogTallEditText;
     private EditText dogWeightEditText;
     private Button addDogButton;
+    private Button takePhotoButton;
+    private ImageView photoDogImageView;
     private Owner owner;
     private Dog dog;
 
@@ -58,6 +61,9 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
         dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
+
+        photoDogImageView = findViewById(R.id.dog_photo_imageview);
+        takePhotoButton = findViewById(R.id.take_photo_button);
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
