@@ -17,7 +17,6 @@ public class Dog implements Parcelable {
     private String dogKind;
     private DogKind dogKindInfo;
 
-
     public Dog() {
     }
 
