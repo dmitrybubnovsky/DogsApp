@@ -19,7 +19,6 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
 public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
-
     private EditText ownerNameEditText;
     private EditText ownerSurnameEditText;
     private EditText preferredKindEditText;
@@ -40,7 +39,6 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         testingFillEditText();
 
         Button button = findViewById(R.id.add_owner_button);
-
         button.setOnClickListener(view -> {
             Owner owner = addOwner();
             Intent intent = new Intent(this, DogsListActivity.class);
@@ -60,7 +58,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
 
     private void testingFillEditText() {
         ownerNameEditText.setText(SomeOwner.get().name());
-//      ownerSurnameEditText.setText(SomeOwner.get().surname());
+        ownerSurnameEditText.setText(SomeOwner.get().surname());
         preferredKindEditText.setText(SomeDog.get().kind());
     }
 }

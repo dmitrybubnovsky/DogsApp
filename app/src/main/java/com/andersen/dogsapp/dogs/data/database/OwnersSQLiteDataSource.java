@@ -15,7 +15,6 @@ import java.util.List;
 public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private static OwnersSQLiteDataSource ownersDataSource;
     private static final String TAG = "#";
-
     private SQLiteDatabase db;
     private List<Owner> owners;
 
@@ -48,7 +47,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
             // проверяем БД, если там пусто то список владельцев пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
                 owners.clear();
-                Log.d("#", "loadOwners: cursor is empty");
             } else {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -71,6 +69,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     @Override
     public Owner addOwner(Owner owner) {
         db = DatabaseManager.getInstance().openDB();
+
         ContentValues cv = new ContentValues();
         cv.put(OwnerTable.NAME, owner.getOwnerName());
         cv.put(OwnerTable.SURNAME, owner.getOwnerSurname());
@@ -79,7 +78,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         DatabaseManager.getInstance().closeDB();
 
         if (insertResult != -1) {
-            owner.setOwnerId((int)insertResult);
+            owner.setOwnerId((int) insertResult);
             return owner;
         } else {
             Log.d(TAG, "OwnersSQLiteDataSource. addOwner: Owners was NOT added");

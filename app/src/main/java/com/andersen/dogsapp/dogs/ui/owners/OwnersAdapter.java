@@ -21,7 +21,6 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
     public static final String TAG = "#";
     private Context context;
     private List<Owner> owners;
-
     private IRecyclerItemListener<Owner> listener;
 
     public OwnersAdapter(Context context, IRecyclerItemListener listener) {

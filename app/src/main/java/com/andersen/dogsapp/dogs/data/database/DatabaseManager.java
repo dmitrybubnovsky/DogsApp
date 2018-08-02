@@ -6,10 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DatabaseManager {
-    private AtomicInteger openCounter = new AtomicInteger();
-
     private static DatabaseManager instance;
     private static SQLiteOpenHelper dbHelper;
+    private AtomicInteger openCounter = new AtomicInteger();
     private SQLiteDatabase sqliteDB;
 
     public static synchronized void initInstance(SQLiteOpenHelper helper) {

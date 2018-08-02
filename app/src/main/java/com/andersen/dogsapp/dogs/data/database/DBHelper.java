@@ -33,15 +33,15 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(DogTable.WEIGHT).append(" INTEGER,")
             .append(DogTable.AGE).append(" INTEGER);").toString();
 
+    private DBHelper(Context context) {
+        super(context, DB_NAME, null, VERSION);
+    }
+
     public static DBHelper getInstance(Context context) {
         if (dbHelper == null) {
             dbHelper = new DBHelper(context);
         }
         return dbHelper;
-    }
-
-    private DBHelper(Context context) {
-        super(context, DB_NAME, null, VERSION);
     }
 
     @Override

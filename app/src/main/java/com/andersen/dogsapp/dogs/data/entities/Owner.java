@@ -11,7 +11,26 @@ public class Owner implements Parcelable {
     private String ownerName;
     private String ownerSurname;
     private String preferedDogsKind;
-    private List<Dog> dogs;
+    private List<Dog> dogs = new ArrayList<>();
+
+    public Owner() {
+    }
+
+    private Owner(Parcel parcelInstance) {
+        ownerId = parcelInstance.readInt();
+        ownerName = parcelInstance.readString();
+        ownerSurname = parcelInstance.readString();
+        preferedDogsKind = parcelInstance.readString();
+        dogs = new ArrayList<>();
+        parcelInstance.readList(dogs, Dog.class.getClassLoader());
+    }
+
+    public Owner(String ownerName, String ownerSurname, String preferedDogsKind) {
+        this.ownerName = ownerName;
+        this.ownerSurname = ownerSurname;
+        this.preferedDogsKind = preferedDogsKind;
+        dogs = new ArrayList<>(0);
+    }
 
     public List<Dog> getDogs() {
         return dogs;
@@ -24,14 +43,8 @@ public class Owner implements Parcelable {
         }
     }
 
-    public Owner() {
-    }
-
-    public Owner(String ownerName, String ownerSurname, String preferedDogsKind) {
-        this.ownerName = ownerName;
-        this.ownerSurname = ownerSurname;
-        this.preferedDogsKind = preferedDogsKind;
-        dogs = new ArrayList<>(0);
+    public void addDog(Dog dog){
+        dogs.add(dog);
     }
 
     public int getOwnerId() {
@@ -81,8 +94,8 @@ public class Owner implements Parcelable {
         parcelInstance.writeString(ownerName);
         parcelInstance.writeString(ownerSurname);
         parcelInstance.writeString(preferedDogsKind);
+        parcelInstance.writeList(dogs);
     }
-
 
     public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
         @Override
@@ -95,12 +108,5 @@ public class Owner implements Parcelable {
             return new Owner[size];
         }
     };
-
-    private Owner(Parcel parcelInstance) {
-        ownerId = parcelInstance.readInt();
-        ownerName = parcelInstance.readString();
-        ownerSurname = parcelInstance.readString();
-        preferedDogsKind = parcelInstance.readString();
-    }
 }
 

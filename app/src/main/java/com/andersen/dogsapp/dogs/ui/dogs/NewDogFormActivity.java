@@ -25,12 +25,10 @@ import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
 
 public class NewDogFormActivity extends AppCompatActivity {
-    public final int REQUEST_CODE_DOG_KIND = 103;
-
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
     public static final String TAG = "#";
-
+    public final int REQUEST_CODE_DOG_KIND = 103;
     private EditText dogNameEditText;
     private EditText dogKindEditText;
     private EditText dogAgeEditText;
@@ -44,6 +42,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dog_form);
+
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
 
@@ -62,7 +61,8 @@ public class NewDogFormActivity extends AppCompatActivity {
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity(dog);
             } else {
-                this.dog = DataRepository.get().addDog(dog);
+                dog = DataRepository.get().addDog(dog);
+                owner.addDog(dog);
                 backToDogListActivity();
             }
         });
@@ -85,15 +85,14 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     private void backToDogListActivity() {
-        Intent intent = new Intent(this, DogsListActivity.class);
+        Intent intent = new Intent();
         intent.putExtra(EXTRA_OWNER, owner);
-//        setResult(RESULT_OK, intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_DOG_KIND:

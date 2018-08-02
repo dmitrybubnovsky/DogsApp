@@ -16,7 +16,6 @@ import java.util.List;
 public class DogsSQLiteDataSource implements IDogsDataSource {
     private static final String TAG = "#";
     private static DogsSQLiteDataSource dogsDataSource;
-
     private List<Dog> dogs;
     private SQLiteDatabase db;
 
@@ -36,6 +35,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         // открываю БД
         db = DatabaseManager.getInstance().openDB();
         dogs = new ArrayList<>();
+
         Cursor cursor = null;
         try {
             cursor = db.query(DogTable.TABLE_NAME, null, null,
@@ -73,11 +73,15 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
     @Override
     public List<Dog> getOwnerDogs(Owner owner) {
-        int dogOwnerId = owner.getOwnerId();
         // открываю БД
         db = DatabaseManager.getInstance().openDB();
-        List<Dog> ownerDogs = new ArrayList<>(); // TODO: check: dogs.clear()
+
+        int dogOwnerId = owner.getOwnerId();
+
+        List<Dog> ownerDogs = new ArrayList<>();
+
         Cursor cursor = null;
+
         try {
             cursor = db.query(DogTable.TABLE_NAME, null, DogTable.OWNER_ID + "=?",
                     new String[]{String.valueOf(dogOwnerId)}, null, null, null,
@@ -110,9 +114,9 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     @Override
     public Dog addDog(Dog dog) {
         db = DatabaseManager.getInstance().openDB();
+
         ContentValues cv = new ContentValues();
         cv.put(DogTable.OWNER_ID, dog.getOwnerId());
-        Log.d(TAG, "addDog: DOG_ID " + dog.getDogId());
         cv.put(DogTable.AGE, dog.getDogAge());
         cv.put(DogTable.TALL, dog.getDogTall());
         cv.put(DogTable.WEIGHT, dog.getDogWeight());

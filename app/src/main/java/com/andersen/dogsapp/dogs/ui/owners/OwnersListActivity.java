@@ -31,7 +31,6 @@ import static com.andersen.dogsapp.R.color.colorCustomBlueGrey;
 
 public class OwnersListActivity extends MenuActivity implements IRecyclerItemListener<Owner> {
     private static final String TAG = "#";
-
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
     private List<Owner> owners;
@@ -54,27 +53,9 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_new_menu_item:
-                Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         updateUI();
-    }
-
-    @Override
-    public void onRecyclerItemClick(Owner owner) {
-        Intent intent = new Intent(getApplicationContext(), DogsListActivity.class);
-        intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
-        startActivity(intent);
     }
 
     private void updateUI() {
@@ -91,9 +72,26 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new_menu_item:
+                Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRecyclerItemClick(Owner owner) {
+        Intent intent = new Intent(getApplicationContext(), DogsListActivity.class);
+        intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
+        startActivity(intent);
+    }
+
     private void initRecyclerView() {
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
-
         ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));

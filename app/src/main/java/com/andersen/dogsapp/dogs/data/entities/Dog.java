@@ -54,10 +54,6 @@ public class Dog implements Parcelable {
         return dogOwnerId;
     }
 
-    public int getDogId() {
-        return dogId;
-    }
-
     public String getDogName() {
         return dogName;
     }
@@ -86,24 +82,6 @@ public class Dog implements Parcelable {
 
     public int getDogWeight() {
         return dogWeight;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(dogId);
-        dest.writeInt(dogOwnerId);
-        dest.writeInt(dogAge);
-        dest.writeInt(dogTall);
-        dest.writeInt(dogWeight);
-        dest.writeString(dogImageString);
-        dest.writeString(dogName);
-        dest.writeString(dogKind);
-        dest.writeParcelable(dogKindInfo, flags);
     }
 
     public void setDogOwnerId(int dogOwnerId) {
@@ -136,6 +114,24 @@ public class Dog implements Parcelable {
 
     public void setDogKind(String dogKind) {
         this.dogKind = dogKind;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(dogId);
+        dest.writeInt(dogOwnerId);
+        dest.writeInt(dogAge);
+        dest.writeInt(dogTall);
+        dest.writeInt(dogWeight);
+        dest.writeString(dogImageString);
+        dest.writeString(dogName);
+        dest.writeString(dogKind);
+        dest.writeParcelable(dogKindInfo, flags);
     }
 
     public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {

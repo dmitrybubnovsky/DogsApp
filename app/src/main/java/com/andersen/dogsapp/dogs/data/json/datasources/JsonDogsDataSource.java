@@ -51,7 +51,6 @@ public class JsonDogsDataSource implements IDogsDataSource {
         return dogsDataSource;
     }
 
-
     // Этот метод ничего не делает
     @Override
     public List<Dog> getDogs() {

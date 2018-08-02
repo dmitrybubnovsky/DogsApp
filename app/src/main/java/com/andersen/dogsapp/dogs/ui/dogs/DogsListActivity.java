@@ -36,10 +36,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     public final int REQUEST_CODE_NEW_DOG = 2;
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "extra_owner";
-
-    private Drawable divider;
     private RecyclerView recyclerView;
-
     private Owner owner;
     private DogsAdapter adapter;
     private List<Dog> ownerDogs;
@@ -56,7 +53,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
-        updateUI();
+        initRecyclerView();
     }
 
     @Override
@@ -79,27 +76,27 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_NEW_DOG:
-                    owner = data.getParcelableExtra(EXTRA_OWNER);
-//                    updateUI();
-                    Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + " now has a new dog", Toast.LENGTH_LONG).show();
-                    break;
+        if (requestCode == REQUEST_CODE_NEW_DOG) {
+            if (resultCode == RESULT_OK) {
+                owner = data.getParcelableExtra(EXTRA_OWNER);
+                Toast.makeText(getApplicationContext(), "" + owner.getOwnerFullName() + " now has a new dog", Toast.LENGTH_LONG).show();
+            } else {
+                Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
             }
         } else {
-            Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
+            Log.d(TAG, "requestCode != REQUEST_CODE_NEW_DOG");
         }
     }
 
     private void updateUI() {
+        Log.d(TAG, "updateUI ownerId " + owner.getOwnerId() + " name " + owner.getOwnerName());
         ownerDogs = DataRepository.get().getOwnerDogs(owner);
 
         if (ownerDogs.size() == 0) {
+            Log.d(TAG, "updateUI. ownerDogs.size() == " + ownerDogs.size());
             Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
             addNewDogActivity();
         } else {
-            initRecyclerView();
             if (adapter == null) {
                 adapter = new DogsAdapter(this, ownerDogs, this);
             } else {
@@ -123,11 +120,11 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         startActivityForResult(intent, REQUEST_CODE_NEW_DOG);
     }
 
-    private void initRecyclerView(){
-        divider = getResources().getDrawable(R.drawable.dogs_divider);
+    private void initRecyclerView() {
+        Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
+
         recyclerView = findViewById(R.id.recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
     }
 }

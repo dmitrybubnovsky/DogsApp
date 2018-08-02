@@ -20,11 +20,9 @@ import java.util.List;
 
 public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHolder> {
     public static final String TAG = "#";
-
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
     private List<DogKind> dogsKinds;
-
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;

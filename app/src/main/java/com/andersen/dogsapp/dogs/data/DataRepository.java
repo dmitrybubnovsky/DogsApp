@@ -11,7 +11,6 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 
 public class DataRepository {
     private static DataRepository instance;
-
     private IOwnersDataSource ownersDataSource;
     private IDogsDataSource dogsDataSource;
 

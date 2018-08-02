@@ -7,8 +7,7 @@ public class SomeDog {
 
     private final String[] NAME = {"Juchka", "Palkan", "Kashtanka", "Belka", "Strelka", "Plooto"};
     private final String[] KIND = {"Afghan hound", "American bulldog", "American foxhound",
-            "Australian cattle", "Belgian tevruren", "Berger pickard", "Bolognese", "American bulldog",
-            "Bull terrier", "Chesapeake", "Chinook", "Argentino", "English coonhound", "German shepherd",
+            "Australian cattle", "Belgian tevruren", "Berger pickard", "Bolognese", "Bull terrier", "Chesapeake", "Chinook", "Argentino", "English coonhound", "German shepherd",
             "Icelandic sheepdog", "Komondor", "Mudi", "Munsterlander", "Pharaon hound", "Pocket beagle",
             "Pug", "Saint bernard", "Scottish terrier", "Shepherd", "Siberian husky",
             "Staffordshire terrier", "Standard schnauzer", "Water spaniel"};
