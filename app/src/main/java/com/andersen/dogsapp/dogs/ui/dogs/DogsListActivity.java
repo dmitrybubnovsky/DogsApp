@@ -57,7 +57,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         super.onResume();
         ownerDogs = DataRepository.get().getOwnerDogs(owner);
 
-        if (ownerDogs.size() == 0) {
+        if (ownerDogs.isEmpty()) {
             openAddNewDogScreen();
         } else {
             updateUI();
