@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.PictureUtils;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -110,7 +112,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
     }
 
-    public File getPhotoFile(Context context, Dog dog){
+    public File getPhotoFile(Context context, Dog dog) {
         File filesDir = context.getFilesDir();
 //        UUID uuid = new UUID()
         return new File(filesDir, dog.getPhotoFileName());
@@ -132,17 +134,30 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_DOG_KIND:
-                    DogKind dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
-                    dog.setDogKind(dogKind.getKind());
-                    dog.setDogImageString(dogKind.getImageString());
-                    dogKindEditText.setText(dogKind.getKind());
-                    break;
+        if (requestCode == REQUEST_CODE_DOG_KIND) {
+            if (resultCode == RESULT_OK) {
+                DogKind dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+                dog.setDogKind(dogKind.getKind());
+                dog.setDogImageString(dogKind.getImageString());
+                dogKindEditText.setText(dogKind.getKind());
+            } else {
+                Log.d(TAG, "REQUEST_CODE_DOG_KIND. RESULT was NOT");
             }
+        } else if (requestCode == REQUEST_PHOTO) {
+            Uri uri = FileProvider.getUriForFile(this,"com.andersen.dogsapp.fileprovider",photoFile);
+            this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updatePhotoView();
         } else {
-            Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
+            Log.d(TAG, "REQUEST_PHOTO. RESULT was NOT");
+        }
+    }
+
+    private void updatePhotoView(){
+        if (photoFile == null || !photoFile.exists()) {
+            photoDogImageView.setImageDrawable(null);
+        } else {
+            Bitmap bitmap = PictureUtils.getScaledBitmap(photoFile.getPath(), this);
+            photoDogImageView.setImageBitmap(bitmap);
         }
     }
 

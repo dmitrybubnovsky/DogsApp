@@ -20,7 +20,7 @@ public class PictureUtils {
         float srcWidth = options.outWidth;
         float srcHeight = options.outHeight;
         // Figure out how much to scale down by
-        int inSampleSize = 1;
+        int inSampleSize = 2;
         if (srcHeight > destHeight || srcWidth > destWidth) {
             float heightScale = srcHeight / destHeight;
             float widthScale = srcWidth / destWidth;
