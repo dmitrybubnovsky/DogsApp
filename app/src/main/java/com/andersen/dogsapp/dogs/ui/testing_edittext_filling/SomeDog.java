@@ -26,7 +26,7 @@ public class SomeDog {
 
     public String kind() {
         Random r = new Random();
-        return KIND[r.nextInt(28)];
+        return KIND[r.nextInt(KIND.length-1)];
     }
 
     public int weight() {

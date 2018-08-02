@@ -21,13 +21,16 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
 
-    public DogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
+    public DogsAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-        this.dogs = dogs;
         this.listener = listener;
     }
 
-    public void initAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
+    public void setList(List<Dog> dogs) {
+        this.dogs = dogs;
+    }
+
+    public void initAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
         this.dogs = dogs;
         this.listener = listener;

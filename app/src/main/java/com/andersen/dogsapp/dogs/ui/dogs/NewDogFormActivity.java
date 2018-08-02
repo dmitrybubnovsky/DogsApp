@@ -2,6 +2,11 @@ package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +29,8 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 
 
 import java.io.File;
+import java.util.List;
+import java.util.UUID;
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
@@ -31,18 +38,23 @@ import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA
 public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
+    public static final int REQUEST_PHOTO = 201;
     public static final String TAG = "#";
     public final int REQUEST_CODE_DOG_KIND = 103;
+
     private EditText dogNameEditText;
     private EditText dogKindEditText;
     private EditText dogAgeEditText;
     private EditText dogTallEditText;
     private EditText dogWeightEditText;
     private Button addDogButton;
-    private Button takePhotoButton;
-    private ImageView photoDogImageView;
     private Owner owner;
     private Dog dog;
+
+    private Button takePhotoButton;
+    private ImageView photoDogImageView;
+    private File photoFile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +64,20 @@ public class NewDogFormActivity extends AppCompatActivity {
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
 
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
 
         initViews();
         testingFillEditText();
-        createDogModelFromInputDatas();
+//        createDogModelFromInputDatas();
+        String dogName = dogNameEditText.getText().toString();
+        int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
+        int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
+        int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
+        // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель
+        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
+        Log.d(TAG, "" + dog.getDogId());
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
@@ -64,6 +85,18 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         photoDogImageView = findViewById(R.id.dog_photo_imageview);
         takePhotoButton = findViewById(R.id.take_photo_button);
+        photoFile = getPhotoFile(this, dog); // TODO сделать генерацию стрингов для собачек
+        takePhotoButton.setOnClickListener(view -> {
+            Uri uri = FileProvider.getUriForFile(this, "com.andersen.dogsapp.fileprovider", photoFile);
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            List<ResolveInfo> cameraActivities = this.getPackageManager()
+                    .queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo activity : cameraActivities) {
+                this.grantUriPermission(activity.activityInfo.packageName,
+                        uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+            startActivityForResult(captureImage, REQUEST_PHOTO);
+        });
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
@@ -77,13 +110,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
     }
 
-    private void createDogModelFromInputDatas() {
-        String dogName = dogNameEditText.getText().toString();
-        int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
-        int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
-        int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
-        // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель
-        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
+    public File getPhotoFile(Context context, Dog dog){
+        File filesDir = context.getFilesDir();
+//        UUID uuid = new UUID()
+        return new File(filesDir, dog.getPhotoFileName());
     }
 
     private void startDogsKindsListActivity(Dog dog) {
@@ -133,8 +163,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogTallEditText.setText("" + SomeDog.get().tall());
     }
 
-    public File getPhotoFile(Context context, Dog dog){
-        File filesDir = context.getFilesDir();
-        return new File(filesDir, dog.getPhotoFileName());
+    private void createDogModelFromInputDatas() {
     }
 }

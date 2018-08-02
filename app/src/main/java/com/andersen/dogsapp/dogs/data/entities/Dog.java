@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.os.Parcelable;
 import android.os.Parcel;
 
+import java.util.UUID;
+
 public class Dog implements Parcelable {
     private int dogId;
     private int dogOwnerId;
@@ -120,6 +122,7 @@ public class Dog implements Parcelable {
     }
 
     public String getPhotoFileName(){
+        UUID uuid = UUID.randomUUID();
         return "IMG_"+getDogId()+".jpg";
     }
 
