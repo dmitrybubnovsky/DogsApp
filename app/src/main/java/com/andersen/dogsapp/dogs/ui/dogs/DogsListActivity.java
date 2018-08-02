@@ -13,7 +13,6 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 
-import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 import android.support.v7.widget.RecyclerView;
@@ -25,11 +24,6 @@ import com.andersen.dogsapp.dogs.data.DataRepository;
 
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
-import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
-import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.database.DBHelper;
-import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
-import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
 
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
@@ -95,7 +89,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         if (ownerDogs.size() == 0) {
             Log.d(TAG, "updateUI. ownerDogs.size() == " + ownerDogs.size());
             Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
-            addNewDogActivity();
+            openAddNewDogScreen();
         } else {
             if (adapter == null) {
                 adapter = new DogsAdapter(this, ownerDogs, this);
@@ -114,7 +108,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         startActivity(intent);
     }
 
-    private void addNewDogActivity() {
+    private void openAddNewDogScreen() {
         Intent intent = new Intent(this, NewDogFormActivity.class);
         intent.putExtra(NewDogFormActivity.EXTRA_NEW_OWNER, owner);
         startActivityForResult(intent, REQUEST_CODE_NEW_DOG);

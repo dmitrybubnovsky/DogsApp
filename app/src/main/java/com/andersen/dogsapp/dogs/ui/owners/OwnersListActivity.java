@@ -3,7 +3,6 @@ package com.andersen.dogsapp.dogs.ui.owners;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,17 +10,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
-import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.database.DBHelper;
-import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
-import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
@@ -48,8 +41,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         ownersAdapter = new OwnersAdapter(this, this);
 
         initRecyclerView();
-
-        updateUI();
     }
 
     @Override
@@ -61,15 +52,19 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     private void updateUI() {
         owners = DataRepository.get().getOwners();
 
-        if (owners.size() == 0) {
-            Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
-            startActivity(intent);
-            Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
+        if (owners.isEmpty()) {
+            openAddNewOwnerScreen();
         } else {
             ownersAdapter.setOwners(owners);
             ownersAdapter.notifyDataSetChanged();
             ownersRecyclerView.setAdapter(ownersAdapter);
         }
+    }
+
+    private void openAddNewOwnerScreen(){
+        Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
+        startActivity(intent);
+        Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
     }
 
     @Override
