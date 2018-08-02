@@ -53,11 +53,15 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         }
 
         private void setData(Context context, int position){
-            dogKindTextView.setText(dogsKinds.get(position).getKind());
-            dogKindImageView.setImageResource(getImageId(context, dogsKinds.get(position).getImageString()));
+            String dogKind = dogsKinds.get(position).getKind();
+            dogKindTextView.setText(dogKind);
+
+            String imageResourceString = dogsKinds.get(position).getImageString();
+            dogKindImageView.setImageResource(getImageId(context, imageResourceString));
+
             dogKindInfo = new DogKind();
-            dogKindInfo.setKind(dogsKinds.get(position).getKind());
-            dogKindInfo.setImageString(dogsKinds.get(position).getImageString());
+            dogKindInfo.setKind(dogKind);
+            dogKindInfo.setImageString(imageResourceString);
         }
     }
 
