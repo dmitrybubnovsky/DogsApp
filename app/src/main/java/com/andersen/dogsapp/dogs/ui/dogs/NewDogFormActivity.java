@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 
+
+import java.io.File;
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
@@ -122,5 +125,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogAgeEditText.setText("" + SomeDog.get().age());
         dogWeightEditText.setText("" + SomeDog.get().weight());
         dogTallEditText.setText("" + SomeDog.get().tall());
+    }
+
+    public File getPhotoFile(Context context, Dog dog){
+        File filesDir = context.getFilesDir();
+        return new File(filesDir, dog.getPhotoFileName());
     }
 }
