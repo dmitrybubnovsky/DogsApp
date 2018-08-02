@@ -47,13 +47,27 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
+        adapter = new DogsAdapter(this, this);
+
         initRecyclerView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        ownerDogs = DataRepository.get().getOwnerDogs(owner);
+
+        if (ownerDogs.size() == 0) {
+            openAddNewDogScreen();
+        } else {
+            updateUI();
+        }
+    }
+
+    private void updateUI() {
+        adapter.setList(ownerDogs);
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -79,25 +93,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
             }
         } else {
             Log.d(TAG, "requestCode != REQUEST_CODE_NEW_DOG");
-        }
-    }
-
-    private void updateUI() {
-        Log.d(TAG, "updateUI ownerId " + owner.getOwnerId() + " name " + owner.getOwnerName());
-        ownerDogs = DataRepository.get().getOwnerDogs(owner);
-
-        if (ownerDogs.size() == 0) {
-            Log.d(TAG, "updateUI. ownerDogs.size() == " + ownerDogs.size());
-            Toast.makeText(this, "Пока собак нет", Toast.LENGTH_LONG).show();
-            openAddNewDogScreen();
-        } else {
-            if (adapter == null) {
-                adapter = new DogsAdapter(this, ownerDogs, this);
-            } else {
-                adapter.initAdapter(this, ownerDogs, this);
-                adapter.notifyDataSetChanged();
-            }
-            recyclerView.setAdapter(adapter);
         }
     }
 
