@@ -46,22 +46,22 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
-    }
-
-    private void updateUI() {
         owners = DataRepository.get().getOwners();
-
         if (owners.isEmpty()) {
             openAddNewOwnerScreen();
         } else {
-            ownersAdapter.setOwners(owners);
-            ownersAdapter.notifyDataSetChanged();
-            ownersRecyclerView.setAdapter(ownersAdapter);
+            // только если owners is NOT empty
+            updateUI();
         }
     }
 
-    private void openAddNewOwnerScreen(){
+    private void updateUI() {
+        ownersAdapter.setOwners(owners); // owners НЕ должен быть empty
+        ownersAdapter.notifyDataSetChanged();
+        ownersRecyclerView.setAdapter(ownersAdapter);
+    }
+
+    private void openAddNewOwnerScreen() {
         Intent intent = new Intent(this, NewOwnerFormAcitivty.class);
         startActivity(intent);
         Toast.makeText(this, "Список владельцев пуст", Toast.LENGTH_LONG).show();
