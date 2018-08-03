@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.ui.dogs;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import java.util.List;
 
 public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
+    private static final String TAG = "# DogsAdapter";
     private Context context;
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
@@ -32,7 +34,6 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
     public void initAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-        this.dogs = dogs;
         this.listener = listener;
     }
 
@@ -66,7 +67,13 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
-            dogImageView.setImageResource(dog.getDogImageId(context));
+            try{
+                dogImageView.setImageResource(dog.getDogImageId(context));
+            } catch (NullPointerException e) {
+                Log.d(TAG, "Houston! setData() method has a problem with");
+
+            }
+
         }
     }
 

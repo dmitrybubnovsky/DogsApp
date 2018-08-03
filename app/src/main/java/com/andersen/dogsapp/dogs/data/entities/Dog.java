@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Parcelable;
 import android.os.Parcel;
+import android.util.Log;
 
 import java.util.UUID;
 
@@ -65,6 +66,7 @@ public class Dog implements Parcelable {
 
     public int getDogImageId(Context context) {
         Resources resources = context.getResources();
+        Log.d("#", ""+dogImageString);
         int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
         return resourceId;
     }
@@ -121,8 +123,8 @@ public class Dog implements Parcelable {
         return dogId;
     }
 
+    // TODO this method must be changed
     public String getPhotoFileName(){
-        UUID uuid = UUID.randomUUID();
         return "IMG_"+getDogId()+".jpg";
     }
 

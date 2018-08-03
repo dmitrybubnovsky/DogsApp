@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs;
+package com.andersen.dogsapp.dogs.camera;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -24,8 +24,7 @@ public class PictureUtils {
         if (srcHeight > destHeight || srcWidth > destWidth) {
             float heightScale = srcHeight / destHeight;
             float widthScale = srcWidth / destWidth;
-            inSampleSize = Math.round(heightScale > widthScale ? heightScale :
-                    widthScale);
+            inSampleSize = Math.round(heightScale > widthScale ? heightScale : widthScale);
         }
         options = new BitmapFactory.Options();
         options.inSampleSize = inSampleSize;

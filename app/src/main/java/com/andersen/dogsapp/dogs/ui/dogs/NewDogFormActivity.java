@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.PictureUtils;
+import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -32,7 +32,6 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 
 import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
@@ -114,7 +113,6 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     public File getPhotoFile(Context context, Dog dog) {
         File filesDir = context.getFilesDir();
-//        UUID uuid = new UUID()
         return new File(filesDir, dog.getPhotoFileName());
     }
 
