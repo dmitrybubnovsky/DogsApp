@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private Button takePhotoButton;
     private ImageView photoDogImageView;
     private File photoFile;
+    private DogKind dogKind;
 
 
     @Override
@@ -86,9 +88,11 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         photoDogImageView = findViewById(R.id.dog_photo_imageview);
         takePhotoButton = findViewById(R.id.take_photo_button);
-        photoFile = getPhotoFile(this, dog); // TODO сделать генерацию стрингов для собачек
+        photoFile = getPhotoFile(this);
         takePhotoButton.setOnClickListener(view -> {
+
             Uri uri = FileProvider.getUriForFile(this, "com.andersen.dogsapp.fileprovider", photoFile);
+
             captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             List<ResolveInfo> cameraActivities = this.getPackageManager()
                     .queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
@@ -102,6 +106,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
             if (dog.getDogKind() == null) {
+
                 startDogsKindsListActivity(dog);
             } else {
                 dog = DataRepository.get().addDog(dog);
@@ -111,9 +116,11 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
     }
 
-    public File getPhotoFile(Context context, Dog dog) {
+    public File getPhotoFile(Context context) {
         File filesDir = context.getFilesDir();
-        return new File(filesDir, dog.getPhotoFileName());
+        String timeStamp = String.valueOf("dog_" + System.currentTimeMillis()) + ".jpg";
+
+        return new File(filesDir, timeStamp);
     }
 
     private void startDogsKindsListActivity(Dog dog) {
@@ -134,15 +141,20 @@ public class NewDogFormActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_DOG_KIND) {
             if (resultCode == RESULT_OK) {
-                DogKind dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
-                dog.setDogKind(dogKind.getKind());
-                dog.setDogImageString(dogKind.getImageString());
-                dogKindEditText.setText(dogKind.getKind());
+                dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+
+                String dogKindString = dogKind.getKind();
+                dog.setDogKind(dogKindString);
+                dogKindEditText.setText(dogKindString);
+
+                if (dog.getDogKind() == null) {
+                    dog.setDogImageString(dogKind.getImageString());
+                }
             } else {
                 Log.d(TAG, "REQUEST_CODE_DOG_KIND. RESULT was NOT");
             }
         } else if (requestCode == REQUEST_PHOTO) {
-            Uri uri = FileProvider.getUriForFile(this,"com.andersen.dogsapp.fileprovider",photoFile);
+            Uri uri = FileProvider.getUriForFile(this, "com.andersen.dogsapp.fileprovider", photoFile);
             this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updatePhotoView();
         } else {
@@ -150,10 +162,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         }
     }
 
-    private void updatePhotoView(){
-        if (photoFile == null || !photoFile.exists()) {
-            photoDogImageView.setImageDrawable(null);
-        } else {
+    private void updatePhotoView() {
+        if (photoFile != null || photoFile.exists()) {
+            dog.setDogImageString(photoFile.getPath());
+            Log.d(TAG, "dir#"+photoFile.getPath().toString());
             Bitmap bitmap = PictureUtils.getScaledBitmap(photoFile.getPath(), this);
             photoDogImageView.setImageBitmap(bitmap);
         }
