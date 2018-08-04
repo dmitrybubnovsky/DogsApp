@@ -155,10 +155,10 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_CODE_DOG_KIND) {
             if (resultCode == RESULT_OK) {
-                dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+                dogKind = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
 
                 String dogKindString = dogKind.getKind();
                 dog.setDogKind(dogKindString);
@@ -172,21 +172,30 @@ public class NewDogFormActivity extends AppCompatActivity {
             Uri uri = FileProvider.getUriForFile(this,
                     "com.andersen.dogsapp.fileprovider", photoFile);
             this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            setFilePathString();
             updatePhotoView();
             hasPhoto = true; // TODO handle in onSaveInstanceState !!!
 //            Log.d(TAG, "hasPhoto = "+hasPhoto);
-        } // else { Log.d(TAG, "REQUEST_CAMERA. RESULT was NOT"); }
+        } else if (requestCode == REQUEST_CODE_PREVIEW){
+            photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+            updatePhotoView();
+        }
+
+    }
+
+    private void setFilePathString() {
+        if (photoFile != null || photoFile.exists()) {
+            photoFilePathString = photoFile.getPath();
+        }
     }
 
     private void updatePhotoView() {
-        if (photoFile != null || photoFile.exists()) {
-            photoFilePathString = photoFile.getPath();
-            // назначить собачке фотку
-            dog.setDogImageString(photoFilePathString);
+        // назначить собачке фотку
+        dog.setDogImageString(photoFilePathString);
 //            Log.d(TAG, "dir#" + photoFilePathString);
-            Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
-            photoDogImageView.setImageBitmap(bitmap);
-        }
+        Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
+        photoDogImageView.setImageBitmap(bitmap);
+
     }
 
     private void initViews() {

@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,9 +21,13 @@ import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import java.io.File;
 import java.util.List;
 
+import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.REQUEST_CAMERA;
 
 public class DogPhotoPreviewActivity extends AppCompatActivity {
+    public static final String TAG = "#";
+
+
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     public final int REQUEST_CODE_PREVIEW = 204;
 
@@ -40,21 +45,36 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
 
         dogPhotoPreImageview = findViewById(R.id.dog_photo_pre_imageview);
         cancelButton = findViewById(R.id.cancel_button);
-        savePhotoButton = findViewById(R.id.save_photo_button);
 
-        photoFile = getPhotoFile(this);
         newPphotoButton = findViewById(R.id.new_photo_button);
         newPphotoButton.setOnClickListener(view -> {
+            photoFile = getPhotoFile(this);
             startCamera();
         });
 
+        savePhotoButton = findViewById(R.id.save_photo_button);
+        savePhotoButton.setOnClickListener(view -> {
+            setFilePathString();
+            updatePhotoView();
+            Log.d(TAG, "saveButton "+photoFilePathString);
+            backToNewDogFormActivity(photoFilePathString);
+        });
+
         Intent intent = getIntent();
-        photoFilePathString = intent.getStringExtra(NewDogFormActivity.EXTRA_FILE_PATH);
+        photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+        Log.d(TAG, "intent "+photoFilePathString);
 
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         dogPhotoPreImageview.setImageBitmap(bitmap);
 
 
+    }
+
+    private void backToNewDogFormActivity(String photoFilePathString){
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void startCamera() {
@@ -81,16 +101,20 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
             Uri uri = FileProvider.getUriForFile(this,
                     "com.andersen.dogsapp.fileprovider", photoFile);
             this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            setFilePathString();
             updatePhotoView();
 //            Log.d(TAG, "hasPhoto = "+hasPhoto);
         } // else { Log.d(TAG, "REQUEST_CAMERA. RESULT was NOT"); }
     }
 
     private void updatePhotoView() {
-        if (photoFile != null || photoFile.exists()) {
-            photoFilePathString = photoFile.getPath();
             Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
             dogPhotoPreImageview.setImageBitmap(bitmap);
+    }
+
+    private void setFilePathString() {
+        if (photoFile != null || photoFile.exists()) {
+            photoFilePathString = photoFile.getPath();
         }
     }
 }
