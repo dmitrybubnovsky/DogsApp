@@ -57,12 +57,14 @@ public class NewDogFormActivity extends AppCompatActivity {
     private ImageView photoDogImageView;
     private File photoFile;
     private DogKind dogKind;
+    private boolean hasImage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dog_form);
+        hasImage = false;
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
@@ -90,7 +92,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         takePhotoButton = findViewById(R.id.take_photo_button);
         photoFile = getPhotoFile(this);
         takePhotoButton.setOnClickListener(view -> {
-
             Uri uri = FileProvider.getUriForFile(this, "com.andersen.dogsapp.fileprovider", photoFile);
 
             captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -106,9 +107,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
             if (dog.getDogKind() == null) {
-
                 startDogsKindsListActivity(dog);
             } else {
+                // добавляем собачку в БД
+                // и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DataRepository.get().addDog(dog);
                 owner.addDog(dog);
                 backToDogListActivity();

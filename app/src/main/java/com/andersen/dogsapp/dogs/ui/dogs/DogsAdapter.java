@@ -79,7 +79,6 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             } catch (NullPointerException e) {
                 Log.d(TAG, "Houston! setData() method has a problem with");
             }
-
         }
     }
 
