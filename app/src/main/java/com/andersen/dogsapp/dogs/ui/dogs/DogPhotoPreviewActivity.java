@@ -43,8 +43,14 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_photo_preview);
 
+        Intent intent = getIntent();
+        photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+        Log.d(TAG, "intent "+photoFilePathString);
+
         dogPhotoPreImageview = findViewById(R.id.dog_photo_pre_imageview);
+
         cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(view -> backToNewDogFormActivity(intent.getStringExtra(EXTRA_FILE_PATH)));
 
         newPphotoButton = findViewById(R.id.new_photo_button);
         newPphotoButton.setOnClickListener(view -> {
@@ -53,16 +59,13 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         });
 
         savePhotoButton = findViewById(R.id.save_photo_button);
+
         savePhotoButton.setOnClickListener(view -> {
             setFilePathString();
             updatePhotoView();
             Log.d(TAG, "saveButton "+photoFilePathString);
             backToNewDogFormActivity(photoFilePathString);
         });
-
-        Intent intent = getIntent();
-        photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
-        Log.d(TAG, "intent "+photoFilePathString);
 
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         dogPhotoPreImageview.setImageBitmap(bitmap);
@@ -98,13 +101,17 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
-            Uri uri = FileProvider.getUriForFile(this,
-                    "com.andersen.dogsapp.fileprovider", photoFile);
-            this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            setFilePathString();
-            updatePhotoView();
+            if(resultCode == RESULT_OK){
+                Uri uri = FileProvider.getUriForFile(this,
+                        "com.andersen.dogsapp.fileprovider", photoFile);
+                this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                setFilePathString();
+                updatePhotoView();
 //            Log.d(TAG, "hasPhoto = "+hasPhoto);
-        } // else { Log.d(TAG, "REQUEST_CAMERA. RESULT was NOT"); }
+            } else {
+                updatePhotoView();
+            }
+        }
     }
 
     private void updatePhotoView() {
