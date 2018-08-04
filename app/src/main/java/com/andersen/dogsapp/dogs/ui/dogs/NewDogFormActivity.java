@@ -42,6 +42,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
     public static final int REQUEST_PHOTO = 201;
     public static final String TAG = "#";
+
     public final int REQUEST_CODE_DOG_KIND = 103;
 
     private EditText dogNameEditText;
@@ -58,13 +59,14 @@ public class NewDogFormActivity extends AppCompatActivity {
     private File photoFile;
     private DogKind dogKind;
     private boolean hasImage;
+    private boolean hasPhoto;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dog_form);
-        hasImage = false;
+        hasPhoto = false;
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
@@ -149,25 +151,21 @@ public class NewDogFormActivity extends AppCompatActivity {
                 dog.setDogKind(dogKindString);
                 dogKindEditText.setText(dogKindString);
 
-                if (dog.getDogKind() == null) {
+                if (!hasPhoto) {
                     dog.setDogImageString(dogKind.getImageString());
                 }
-            } else {
-                Log.d(TAG, "REQUEST_CODE_DOG_KIND. RESULT was NOT");
-            }
+            } // else { Log.d(TAG, "REQUEST_CODE_DOG_KIND. RESULT was NOT"); }
         } else if (requestCode == REQUEST_PHOTO) {
             Uri uri = FileProvider.getUriForFile(this, "com.andersen.dogsapp.fileprovider", photoFile);
             this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updatePhotoView();
-        } else {
-            Log.d(TAG, "REQUEST_PHOTO. RESULT was NOT");
-        }
+            hasPhoto = true;
+        } // else { Log.d(TAG, "REQUEST_PHOTO. RESULT was NOT"); }
     }
 
     private void updatePhotoView() {
         if (photoFile != null || photoFile.exists()) {
-            dog.setDogImageString(photoFile.getPath());
-            Log.d(TAG, "dir#"+photoFile.getPath().toString());
+            dog.setDogImageString(photoFile.getPath());                           Log.d(TAG, "dir#"+photoFile.getPath().toString());
             Bitmap bitmap = PictureUtils.getScaledBitmap(photoFile.getPath(), this);
             photoDogImageView.setImageBitmap(bitmap);
         }

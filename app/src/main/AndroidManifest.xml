@@ -11,14 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
-            android:authorities="com.andersen.dogsapp.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.andersen.dogsapp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files"/>
         </provider>
+
         <activity
             android:name=".dogs.ui.MainAppDescriptionActivity"
             android:theme="@style/NoActionBar">
@@ -46,7 +47,8 @@
         <activity
             android:name=".dogs.ui.dogskinds.DogsKindsListActivity"
             android:theme="@style/MainDogApp"/>
-
+        <activity android:name=".dogs.ui.dogs.DogPhotoPreviewActivity">
+        </activity>
     </application>
 
 </manifest>
