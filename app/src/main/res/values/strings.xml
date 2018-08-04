@@ -38,8 +38,12 @@
     <string name="age_year_measure">yrs</string>
     <string name="age_months_measure">months</string>
 
-    <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="voice_btn_title">VOICE!</string>
+    <string name="start_camera_btn_title">Camera</string>
+    <string name="cancel_btn_title">Cancel</string>
+    <string name="save_photo_btn_title">Save</string>
+
+    <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="text_view_app_description">This app dedicated to Dog-fanciers. It contains the list of dog-owners with detailed information of their pet including its name, type of dog, weight, age and tall</string>
     <string name="text_view_title_kind">Kind of dog: </string>
     <string name="text_view_title_age">Age: </string>

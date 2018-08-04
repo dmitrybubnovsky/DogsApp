@@ -6,6 +6,9 @@
     <string name="woof_btn_title">Голос</string>
     <string name="text_view_title_preff_dog">Любимая порода: </string>
     <string name="voice_btn_title">Голос!</string>
+    <string name="start_camera_btn_title">Камера</string>
+    <string name="cancel_btn_title">Отмена</string>
+    <string name="save_photo_btn_title">Сохранить</string>
 
     <string name="add_item_menu">Добавить</string>
 
