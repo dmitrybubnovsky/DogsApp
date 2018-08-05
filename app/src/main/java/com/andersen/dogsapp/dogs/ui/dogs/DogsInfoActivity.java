@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.ui.DogImageView;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 public class DogsInfoActivity extends AppCompatActivity {
@@ -28,12 +30,13 @@ public class DogsInfoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Dog dog = getIntent().getParcelableExtra(EXTRA_DOG);
-        initViews(dog, mediaPlayer);
+        initViews(this, dog, mediaPlayer);
     }
 
-    private void initViews(Dog dog, MediaPlayer mediaPlayer) {
+    private void initViews(Context context, Dog dog, MediaPlayer mediaPlayer) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageResource(dog.getDogImageId(this));
+//        dogsPhoto.setImageResource(dog.getDogImageId(this));
+        dogsPhoto = DogImageView.setDogImage(context, dogsPhoto, dog);
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());

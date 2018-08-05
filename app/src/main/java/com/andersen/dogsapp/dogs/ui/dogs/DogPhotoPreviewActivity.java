@@ -79,8 +79,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
 
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         dogPhotoPreImageview.setImageBitmap(bitmap);
-
-
     }
 
     private void backToNewDogFormActivity(String photoFilePathString){
@@ -118,7 +116,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
                 setFilePathString();
                 updatePhotoView();
                 savePhotoButton.setEnabled(true);
-
 //            Log.d(TAG, "hasPhoto = "+hasPhoto);
             } else {
                 updatePhotoView();

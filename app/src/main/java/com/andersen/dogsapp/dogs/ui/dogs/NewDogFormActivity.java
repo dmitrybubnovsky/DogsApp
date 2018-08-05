@@ -48,7 +48,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     private final String BUNDLE_HAS_PHOTO = "hasPhoto";
     public final int REQUEST_CODE_DOG_KIND = 202;
     public final int REQUEST_CODE_PREVIEW = 203;
-
     private EditText dogNameEditText;
     private EditText dogKindEditText;
     private EditText dogAgeEditText;
@@ -57,7 +56,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     private Button addDogButton;
     private Owner owner;
     private Dog dog;
-
     private ImageView photoDogImageView;
     private File photoFile;
     private DogKind dogKind;
@@ -88,20 +86,13 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         initViews();
         testingFillEditText();
-//        createDogModelFromInputDatas();
-        String dogName = dogNameEditText.getText().toString();
-        int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
-        int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
-        int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
-        // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель
-        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
+        createDogModelWithInputDatas();
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
         dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
 
         photoDogImageView = findViewById(R.id.dog_photo_imageview);
-        photoFile = getPhotoFile(this);
         photoDogImageView.setOnClickListener(view -> {
             if (hasPhoto) {
                 startPhotoPreviewActivity(photoFilePathString);
@@ -111,7 +102,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
 
         addDogButton.setOnClickListener(view -> {
-
             // если порода собаки еще не установлена, то переход в список пород
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity(dog);
@@ -127,6 +117,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     private void startCamera() {
+        photoFile = getPhotoFile(this);
         Uri uri = FileProvider.getUriForFile(this,
                 "com.andersen.dogsapp.fileprovider", photoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -185,18 +176,25 @@ public class NewDogFormActivity extends AppCompatActivity {
                         "com.andersen.dogsapp.fileprovider", photoFile);
                 this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 setFilePathString();
+                dog.setDogImageString(photoFilePathString);
                 updatePhotoView();
-                hasPhoto = true; // TODO handle in onSaveInstanceState !!!
+                hasPhoto = true;
             } else {
+                hasPhoto = false;
                 Log.d(TAG, "REQUEST_CAMERA RESULT WAS NOT OK");
             }
         } else if (requestCode == REQUEST_CODE_PREVIEW) {
             if (resultCode == RESULT_OK) {
                 photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+                Log.d(TAG, "REQUEST_CODE_PREVIEW OK photoFilePathString" + photoFilePathString);
+
                 updatePhotoView();
             } else {
                 Log.d(TAG, "REQUEST_CODE_PREVIEW RESULT WAS NOT OK");
+                updatePhotoView();
+                Log.d(TAG, "REQUEST_CODE_PREVIEW NOT ok photoFilePathString" + photoFilePathString);
             }
+            dog.setDogImageString(photoFilePathString);
         }
 
     }
@@ -209,8 +207,7 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     private void updatePhotoView() {
         // назначить собачке фотку
-        dog.setDogImageString(photoFilePathString);
-//            Log.d(TAG, "dir#" + photoFilePathString);
+        Log.d(TAG, "updatePhotoView()   photoFilePathString" + photoFilePathString);
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         photoDogImageView.setImageBitmap(bitmap);
 
@@ -233,6 +230,12 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogTallEditText.setText("" + SomeDog.get().tall());
     }
 
-    private void createDogModelFromInputDatas() {
+    private void createDogModelWithInputDatas() {
+        String dogName = dogNameEditText.getText().toString();
+        int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
+        int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
+        int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
+        // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель Dog
+        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
     }
 }

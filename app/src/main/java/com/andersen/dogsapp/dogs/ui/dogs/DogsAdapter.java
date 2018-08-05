@@ -2,11 +2,8 @@ package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.camera.PictureUtils;
+import com.andersen.dogsapp.dogs.ui.DogImageView;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -72,17 +69,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
-            try{
-                int dogImageId = dog.getDogImageId(context);
-                if (dogImageId != 0){
-                    dogImageView.setImageResource(dogImageId);
-                } else {
-                    Bitmap bitmap = PictureUtils.getScaledBitmap(dog.getDogImageString(), (AppCompatActivity)context);
-                    dogImageView.setImageBitmap(bitmap);
-                }
-            } catch (NullPointerException e) {
-                Log.d(TAG, "Houston! setData() method has a problem");
-            }
+            dogImageView = DogImageView.setDogImage(context, dogImageView, dog);
         }
     }
 
