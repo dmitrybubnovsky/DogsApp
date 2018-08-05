@@ -73,11 +73,15 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
             try{
-//                dogImageView.setImageResource(dog.getDogImageId(context));
-                Bitmap bitmap = PictureUtils.getScaledBitmap(dog.getDogImageString(), (AppCompatActivity)context);
-                dogImageView.setImageBitmap(bitmap);
+                int dogImageId = dog.getDogImageId(context);
+                if (dogImageId != 0){
+                    dogImageView.setImageResource(dogImageId);
+                } else {
+                    Bitmap bitmap = PictureUtils.getScaledBitmap(dog.getDogImageString(), (AppCompatActivity)context);
+                    dogImageView.setImageBitmap(bitmap);
+                }
             } catch (NullPointerException e) {
-                Log.d(TAG, "Houston! setData() method has a problem with");
+                Log.d(TAG, "Houston! setData() method has a problem");
             }
         }
     }

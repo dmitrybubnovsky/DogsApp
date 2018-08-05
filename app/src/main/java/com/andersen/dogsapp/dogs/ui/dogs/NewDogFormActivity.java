@@ -44,6 +44,8 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
     public static final String EXTRA_FILE_PATH = "EXTRA_FILE_PATH";
     public static final int REQUEST_CAMERA = 201;
+    private final String BUNDLE_PHOTO_FILE_PATH = "photoFilePathString";
+    private final String BUNDLE_HAS_PHOTO = "hasPhoto";
     public final int REQUEST_CODE_DOG_KIND = 202;
     public final int REQUEST_CODE_PREVIEW = 203;
 
@@ -56,19 +58,28 @@ public class NewDogFormActivity extends AppCompatActivity {
     private Owner owner;
     private Dog dog;
 
-    private Button takePhotoButton;
     private ImageView photoDogImageView;
     private File photoFile;
     private DogKind dogKind;
     private String photoFilePathString;
     private boolean hasPhoto;
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean(BUNDLE_HAS_PHOTO, hasPhoto);
+        savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dog_form);
         hasPhoto = false;
+        if(savedInstanceState != null){
+            photoFilePathString = savedInstanceState.getString(BUNDLE_PHOTO_FILE_PATH);
+            hasPhoto = savedInstanceState.getBoolean(BUNDLE_HAS_PHOTO);
+        }
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
@@ -84,14 +95,12 @@ public class NewDogFormActivity extends AppCompatActivity {
         int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
         // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель
         dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
-        Log.d(TAG, "" + dog.getDogId());
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
         dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
 
         photoDogImageView = findViewById(R.id.dog_photo_imageview);
-        takePhotoButton = findViewById(R.id.take_photo_button);
         photoFile = getPhotoFile(this);
         photoDogImageView.setOnClickListener(view -> {
             if (hasPhoto) {
@@ -102,10 +111,12 @@ public class NewDogFormActivity extends AppCompatActivity {
         });
 
         addDogButton.setOnClickListener(view -> {
-            // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
+
+            // если порода собаки еще не установлена, то переход в список пород
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity(dog);
             } else {
+
                 // добавляем собачку в БД
                 // и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DataRepository.get().addDog(dog);
@@ -169,16 +180,23 @@ public class NewDogFormActivity extends AppCompatActivity {
                 }
             } // else { Log.d(TAG, "REQUEST_CODE_DOG_KIND. RESULT was NOT"); }
         } else if (requestCode == REQUEST_CAMERA) {
-            Uri uri = FileProvider.getUriForFile(this,
-                    "com.andersen.dogsapp.fileprovider", photoFile);
-            this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            setFilePathString();
-            updatePhotoView();
-            hasPhoto = true; // TODO handle in onSaveInstanceState !!!
-//            Log.d(TAG, "hasPhoto = "+hasPhoto);
-        } else if (requestCode == REQUEST_CODE_PREVIEW){
-            photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
-            updatePhotoView();
+            if (resultCode == RESULT_OK) {
+                Uri uri = FileProvider.getUriForFile(this,
+                        "com.andersen.dogsapp.fileprovider", photoFile);
+                this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                setFilePathString();
+                updatePhotoView();
+                hasPhoto = true; // TODO handle in onSaveInstanceState !!!
+            } else {
+                Log.d(TAG, "REQUEST_CAMERA RESULT WAS NOT OK");
+            }
+        } else if (requestCode == REQUEST_CODE_PREVIEW) {
+            if (resultCode == RESULT_OK) {
+                photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+                updatePhotoView();
+            } else {
+                Log.d(TAG, "REQUEST_CODE_PREVIEW RESULT WAS NOT OK");
+            }
         }
 
     }

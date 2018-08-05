@@ -66,7 +66,7 @@ public class Dog implements Parcelable {
 
     public int getDogImageId(Context context) {
         Resources resources = context.getResources();
-        Log.d("#", ""+dogImageString);
+        Log.d("#", "dogImageString   = "+dogImageString);
 
         int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
         return resourceId;
@@ -122,11 +122,6 @@ public class Dog implements Parcelable {
 
     public int getDogId() {
         return dogId;
-    }
-
-    // TODO this method must be changed
-    public String getPhotoFileName(){
-        return "IMG_"+getDogId()+".jpg";
     }
 
     @Override

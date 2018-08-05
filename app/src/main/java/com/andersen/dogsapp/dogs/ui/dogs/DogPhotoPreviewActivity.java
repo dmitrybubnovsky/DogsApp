@@ -26,7 +26,7 @@ import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.REQUEST_CAMER
 
 public class DogPhotoPreviewActivity extends AppCompatActivity {
     public static final String TAG = "#";
-
+    private final String BUNDLE_PHOTO_FILE_PATH = "photoFilePathString";
 
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     public final int REQUEST_CODE_PREVIEW = 204;
@@ -39,9 +39,19 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
     private String photoFilePathString;
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_photo_preview);
+
+        if (savedInstanceState != null) {
+            photoFilePathString = savedInstanceState.getString(BUNDLE_PHOTO_FILE_PATH);
+        }
 
         Intent intent = getIntent();
         photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
@@ -59,7 +69,7 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         });
 
         savePhotoButton = findViewById(R.id.save_photo_button);
-
+        savePhotoButton.setEnabled(false);
         savePhotoButton.setOnClickListener(view -> {
             setFilePathString();
             updatePhotoView();
@@ -107,6 +117,8 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
                 this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 setFilePathString();
                 updatePhotoView();
+                savePhotoButton.setEnabled(true);
+
 //            Log.d(TAG, "hasPhoto = "+hasPhoto);
             } else {
                 updatePhotoView();
