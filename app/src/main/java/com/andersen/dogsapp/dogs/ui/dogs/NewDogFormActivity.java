@@ -46,6 +46,9 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final int REQUEST_CAMERA = 201;
     private final String BUNDLE_PHOTO_FILE_PATH = "photoFilePathString";
     private final String BUNDLE_HAS_PHOTO = "hasPhoto";
+    private final String BUNDLE_DOGKIND= "dogKind";
+    private final String BUNDLE_DOG= "dog";
+
     public final int REQUEST_CODE_DOG_KIND = 202;
     public final int REQUEST_CODE_PREVIEW = 203;
     private EditText dogNameEditText;
@@ -67,24 +70,33 @@ public class NewDogFormActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putBoolean(BUNDLE_HAS_PHOTO, hasPhoto);
         savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
+        savedInstanceState.putParcelable(BUNDLE_DOGKIND, dogKind);
+        savedInstanceState.putParcelable(BUNDLE_DOG, dog);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dog_form);
-        hasPhoto = false;
-        if(savedInstanceState != null){
-            photoFilePathString = savedInstanceState.getString(BUNDLE_PHOTO_FILE_PATH);
-            hasPhoto = savedInstanceState.getBoolean(BUNDLE_HAS_PHOTO);
-        }
-
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
 
+        initViews();
+
+        hasPhoto = false;
+        dogKind = new DogKind();
+
         owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
 
-        initViews();
+        if(savedInstanceState != null){
+            photoFilePathString = savedInstanceState.getString(BUNDLE_PHOTO_FILE_PATH);
+            hasPhoto = savedInstanceState.getBoolean(BUNDLE_HAS_PHOTO);
+            dogKind = savedInstanceState.getParcelable(BUNDLE_DOGKIND);
+            dog = savedInstanceState.getParcelable(BUNDLE_DOG);
+            setDogKindTitleAndImage();
+            Log.d(TAG, "dog name "+ dog.getDogName());
+        }
+
         testingFillEditText();
         createDogModelWithInputDatas();
 
@@ -106,7 +118,6 @@ public class NewDogFormActivity extends AppCompatActivity {
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity(dog);
             } else {
-
                 // добавляем собачку в БД
                 // и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DataRepository.get().addDog(dog);
@@ -161,15 +172,8 @@ public class NewDogFormActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_DOG_KIND) {
             if (resultCode == RESULT_OK) {
                 dogKind = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
-
-                String dogKindString = dogKind.getKind();
-                dog.setDogKind(dogKindString);
-                dogKindEditText.setText(dogKindString);
-
-                if (!hasPhoto) {
-                    dog.setDogImageString(dogKind.getImageString());
-                }
-            } // else { Log.d(TAG, "REQUEST_CODE_DOG_KIND. RESULT was NOT"); }
+                setDogKindTitleAndImage();
+            }
         } else if (requestCode == REQUEST_CAMERA) {
             if (resultCode == RESULT_OK) {
                 Uri uri = FileProvider.getUriForFile(this,
@@ -196,7 +200,6 @@ public class NewDogFormActivity extends AppCompatActivity {
             }
             dog.setDogImageString(photoFilePathString);
         }
-
     }
 
     private void setFilePathString() {
@@ -210,7 +213,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         Log.d(TAG, "updatePhotoView()   photoFilePathString" + photoFilePathString);
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         photoDogImageView.setImageBitmap(bitmap);
-
     }
 
     private void initViews() {
@@ -222,14 +224,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogWeightEditText = findViewById(R.id.dog_weight_edittext);
     }
 
-    // TEST EditTexts' FILLING
-    private void testingFillEditText() {
-        dogNameEditText.setText(SomeDog.get().name());
-        dogAgeEditText.setText("" + SomeDog.get().age());
-        dogWeightEditText.setText("" + SomeDog.get().weight());
-        dogTallEditText.setText("" + SomeDog.get().tall());
-    }
-
     private void createDogModelWithInputDatas() {
         String dogName = dogNameEditText.getText().toString();
         int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
@@ -237,5 +231,22 @@ public class NewDogFormActivity extends AppCompatActivity {
         int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
         // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель Dog
         dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
+    }
+
+    public void setDogKindTitleAndImage (){
+        String dogKindString = dogKind.getKind();
+        dog.setDogKind(dogKindString);
+        dogKindEditText.setText(dogKindString);
+        if (!hasPhoto) {
+            dog.setDogImageString(dogKind.getImageString());
+        }
+    }
+
+    // TEST EditTexts' FILLING
+    private void testingFillEditText() {
+        dogNameEditText.setText(SomeDog.get().name());
+        dogAgeEditText.setText("" + SomeDog.get().age());
+        dogWeightEditText.setText("" + SomeDog.get().weight());
+        dogTallEditText.setText("" + SomeDog.get().tall());
     }
 }
