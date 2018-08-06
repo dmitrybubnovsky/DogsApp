@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
@@ -35,12 +36,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
     private String photoFilePathString;
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_photo_preview);
@@ -56,7 +51,11 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         dogPhotoPreImageview = findViewById(R.id.dog_photo_pre_imageview);
 
         cancelButton = findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(view -> backToNewDogFormActivity(intent.getStringExtra(EXTRA_FILE_PATH)));
+        cancelButton.setOnClickListener(view -> {
+            // присвоить старое значение, которое пришло в интенте
+            photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+            backToNewDogFormActivity();
+        });
 
         newPphotoButton = findViewById(R.id.new_photo_button);
         newPphotoButton.setOnClickListener(view -> {
@@ -70,14 +69,36 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
             setFilePathString();
             updatePhotoView();
             Log.d(TAG, "saveButton " + photoFilePathString);
-            backToNewDogFormActivity(photoFilePathString);
+            backToNewDogFormActivity();
         });
 
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         dogPhotoPreImageview.setImageBitmap(bitmap);
     }
 
-    private void backToNewDogFormActivity(String photoFilePathString) {
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CAMERA) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = FileProvider.getUriForFile(this,
+                        "com.andersen.dogsapp.fileprovider", photoFile);
+                this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                setFilePathString();
+                updatePhotoView();
+                savePhotoButton.setEnabled(true);
+            } else {
+                updatePhotoView();
+            }
+        }
+    }
+
+    private void backToNewDogFormActivity() {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
         setResult(RESULT_OK, intent);
@@ -100,23 +121,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         File filesDir = context.getFilesDir();
         String timeStamp = String.valueOf("dog_" + System.currentTimeMillis()) + ".jpg";
         return new File(filesDir, timeStamp);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CAMERA) {
-            if (resultCode == RESULT_OK) {
-                Uri uri = FileProvider.getUriForFile(this,
-                        "com.andersen.dogsapp.fileprovider", photoFile);
-                this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                setFilePathString();
-                updatePhotoView();
-                savePhotoButton.setEnabled(true);
-//            Log.d(TAG, "hasPhoto = "+hasPhoto);
-            } else {
-                updatePhotoView();
-            }
-        }
     }
 
     private void updatePhotoView() {

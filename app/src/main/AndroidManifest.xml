@@ -47,7 +47,9 @@
         <activity
             android:name=".dogs.ui.dogskinds.DogsKindsListActivity"
             android:theme="@style/MainDogApp"/>
-        <activity android:name=".dogs.ui.dogs.DogPhotoPreviewActivity">
+        <activity
+            android:name=".dogs.ui.dogs.DogPhotoPreviewActivity"
+            android:configChanges="orientation">
         </activity>
     </application>
 
