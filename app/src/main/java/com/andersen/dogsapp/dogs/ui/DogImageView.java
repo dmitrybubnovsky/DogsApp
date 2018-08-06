@@ -23,7 +23,7 @@ public class DogImageView {
                 Bitmap bitmap = PictureUtils.getScaledBitmap(dog.getDogImageString(), (AppCompatActivity) context);
                 imageView.setImageBitmap(bitmap);
             } catch (NullPointerException e) {
-                Log.d("#", "Houston! setData() method has a problem");
+                Log.d("#", "setData() method has a problem");
             }
         }
         return imageView;

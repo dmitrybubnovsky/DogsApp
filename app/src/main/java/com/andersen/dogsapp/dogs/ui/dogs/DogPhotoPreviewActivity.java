@@ -80,7 +80,7 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         }
     }
 
-    private void initViews(){
+    private void initViews() {
         dogPhotoPreImageview = findViewById(R.id.dog_photo_pre_imageview);
         cancelButton = findViewById(R.id.cancel_button);
         newPphotoButton = findViewById(R.id.new_photo_button);

@@ -28,15 +28,9 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         this.listener = listener;
     }
 
-    public void setList(List<Dog> dogs){
+    public void setList(List<Dog> dogs) {
         this.dogs = dogs;
     }
-
-//
-//    public void initAdapter(Context context, IRecyclerItemListener listener) {
-//        this.context = context;
-//        this.listener = listener;
-//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogNameTextView;
