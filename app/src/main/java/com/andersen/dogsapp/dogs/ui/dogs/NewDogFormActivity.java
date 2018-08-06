@@ -54,12 +54,12 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
+        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity());
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
             if (dog.getDogKind() == null) {
-                startDogsKindsListActivity(dog);
+                startDogsKindsListActivity();
             } else {
                 dog = DataRepository.get().addDog(dog);
                 owner.addDog(dog);
@@ -77,7 +77,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
     }
 
-    private void startDogsKindsListActivity(Dog dog) {
+    private void startDogsKindsListActivity() {
         Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
         intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
         startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
@@ -93,17 +93,15 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_DOG_KIND:
-                    DogKind dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
-                    dog.setDogKind(dogKind.getKind());
-                    dog.setDogImageString(dogKind.getImageString());
-                    dogKindEditText.setText(dogKind.getKind());
-                    break;
+        if (requestCode == REQUEST_CODE_DOG_KIND) {
+            if (resultCode == RESULT_OK) {
+                DogKind dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+                dog.setDogKind(dogKind.getKind());
+                dog.setDogImageString(dogKind.getImageString());
+                dogKindEditText.setText(dogKind.getKind());
+            } else {
+                Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
             }
-        } else {
-            Log.d(TAG, "RESULT was NOT OK in NewDogActivity");
         }
     }
 

@@ -15,12 +15,13 @@ import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder> {
     public static final String TAG = "#";
     private Context context;
-    private List<Owner> owners;
+    private List<Owner> owners = new ArrayList<>();
     private IRecyclerItemListener<Owner> listener;
 
     public OwnersAdapter(Context context, IRecyclerItemListener listener) {
@@ -64,7 +65,6 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
             preferredKindTextView.setText(owner.getPreferedDogsKind());
             int dogsQuantity = owner.getDogs().size();
             dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
-
         }
     }
 
