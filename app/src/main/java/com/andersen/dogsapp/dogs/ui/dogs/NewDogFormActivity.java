@@ -67,12 +67,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_add_dog);
         setSupportActionBar(toolbar);
 
-        initViews();
-
         hasPhoto = false;
         owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
 
-
+        initViews();
         testingFillEditText();
         createDogModelWithInputDatas();
 
