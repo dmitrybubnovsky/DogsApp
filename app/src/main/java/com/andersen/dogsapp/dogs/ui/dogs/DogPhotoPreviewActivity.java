@@ -43,11 +43,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
 
-        if (savedInstanceState != null) {
-            photoFilePathString = savedInstanceState.getString(BUNDLE_PHOTO_FILE_PATH);
-        }
-        Log.d(TAG, "intent " + photoFilePathString);
-
         dogPhotoPreImageview = findViewById(R.id.dog_photo_pre_imageview);
 
         cancelButton = findViewById(R.id.cancel_button);
@@ -73,12 +68,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
 
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
         dogPhotoPreImageview.setImageBitmap(bitmap);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
     }
 
     @Override

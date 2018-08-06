@@ -43,6 +43,7 @@
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogs.NewDogFormActivity"
+            android:configChanges="orientation"
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogskinds.DogsKindsListActivity"

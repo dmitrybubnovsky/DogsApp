@@ -44,10 +44,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
     public static final String EXTRA_FILE_PATH = "EXTRA_FILE_PATH";
     public static final int REQUEST_CAMERA = 201;
-    private final String BUNDLE_PHOTO_FILE_PATH = "photoFilePathString";
-    private final String BUNDLE_HAS_PHOTO = "hasPhoto";
-    private final String BUNDLE_DOGKIND = "dogKind";
-    private final String BUNDLE_DOG = "dog";
     public final int REQUEST_CODE_DOG_KIND = 202;
     public final int REQUEST_CODE_PREVIEW = 203;
     private EditText dogNameEditText;
@@ -74,17 +70,8 @@ public class NewDogFormActivity extends AppCompatActivity {
         initViews();
 
         hasPhoto = false;
-        dogKind = new DogKind();
         owner = getIntent().getParcelableExtra(EXTRA_NEW_OWNER);
 
-        if (savedInstanceState != null) {
-            photoFilePathString = savedInstanceState.getString(BUNDLE_PHOTO_FILE_PATH);
-            hasPhoto = savedInstanceState.getBoolean(BUNDLE_HAS_PHOTO);
-            dogKind = savedInstanceState.getParcelable(BUNDLE_DOGKIND);
-            dog = savedInstanceState.getParcelable(BUNDLE_DOG);
-            updatePhotoView();
-            setDogKindTitleAndImage();
-        }
 
         testingFillEditText();
         createDogModelWithInputDatas();
@@ -112,15 +99,6 @@ public class NewDogFormActivity extends AppCompatActivity {
                 backToDogListActivity();
             }
         });
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean(BUNDLE_HAS_PHOTO, hasPhoto);
-        savedInstanceState.putString(BUNDLE_PHOTO_FILE_PATH, photoFilePathString);
-        savedInstanceState.putParcelable(BUNDLE_DOGKIND, dogKind);
-        savedInstanceState.putParcelable(BUNDLE_DOG, dog);
     }
 
     @Override
