@@ -21,7 +21,7 @@ public class SomeDog {
 
     public String name() {
         Random r = new Random();
-        return NAME[r.nextInt(6)];
+        return NAME[r.nextInt(NAME.length-1)];
     }
 
     public String kind() {

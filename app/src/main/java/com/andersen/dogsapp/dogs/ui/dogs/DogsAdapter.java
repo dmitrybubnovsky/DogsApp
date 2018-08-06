@@ -1,6 +1,5 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import java.util.List;
 public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private static final String TAG = "# DogsAdapter";
     private Context context;
-    private Activity activity;
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
 
@@ -30,9 +28,10 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         this.listener = listener;
     }
 
-    public void setList(List<Dog> dogs) {
+    public void setList(List<Dog> dogs){
         this.dogs = dogs;
     }
+
 //
 //    public void initAdapter(Context context, IRecyclerItemListener listener) {
 //        this.context = context;

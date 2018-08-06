@@ -65,7 +65,6 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
             preferredKindTextView.setText(owner.getPreferedDogsKind());
             int dogsQuantity = owner.getDogs().size();
             dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
-
         }
     }
 
