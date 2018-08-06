@@ -58,7 +58,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     private void updateUI() {
         ownersAdapter.setOwners(owners); // owners НЕ должен быть empty
         ownersAdapter.notifyDataSetChanged();
-        ownersRecyclerView.setAdapter(ownersAdapter);
     }
 
     private void openAddNewOwnerScreen() {
@@ -90,5 +89,6 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         ownersRecyclerView = findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+        ownersRecyclerView.setAdapter(ownersAdapter);
     }
 }

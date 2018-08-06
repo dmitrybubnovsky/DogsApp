@@ -67,7 +67,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     private void updateUI() {
         adapter.setList(ownerDogs);
         adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -115,5 +114,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+        recyclerView.setAdapter(adapter);
     }
 }

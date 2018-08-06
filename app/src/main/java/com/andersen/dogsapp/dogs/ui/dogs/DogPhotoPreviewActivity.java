@@ -68,7 +68,6 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
         savePhotoButton.setOnClickListener(view -> {
             setFilePathString();
             updatePhotoView();
-            Log.d(TAG, "saveButton " + photoFilePathString);
             backToNewDogFormActivity();
         });
 
@@ -90,11 +89,11 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
                         "com.andersen.dogsapp.fileprovider", photoFile);
                 this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 setFilePathString();
-                updatePhotoView();
                 savePhotoButton.setEnabled(true);
             } else {
-                updatePhotoView();
+                Log.d(TAG, "DogPhotoPreview. REQUEST_CAMERA NOT OK");
             }
+            updatePhotoView();
         }
     }
 
