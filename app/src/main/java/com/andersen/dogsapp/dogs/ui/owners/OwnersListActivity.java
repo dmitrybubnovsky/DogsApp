@@ -90,6 +90,5 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         ownersRecyclerView.setAdapter(ownersAdapter);
-
     }
 }
