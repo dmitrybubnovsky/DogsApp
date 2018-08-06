@@ -114,7 +114,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         recyclerView.setAdapter(adapter);
-
     }
 }
 
