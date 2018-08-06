@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.support.v4.content.res.ResourcesCompat;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListActivity;
 
@@ -20,8 +21,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         ConstraintLayout rootLayout = findViewById(R.id.root_layout);
         rootLayout.setOnClickListener(view -> startActivity(new Intent(this, OwnersListActivity.class)));
 
-        TextView descriptionTextView = findViewById(R.id.app_description_textview);
         TextView appNameTextView = findViewById(R.id.app_name_textview);
+        TextView descriptionTextView = findViewById(R.id.app_description_textview);
 
         setTypeFonts(this, descriptionTextView, appNameTextView);
     }

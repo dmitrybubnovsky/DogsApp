@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;

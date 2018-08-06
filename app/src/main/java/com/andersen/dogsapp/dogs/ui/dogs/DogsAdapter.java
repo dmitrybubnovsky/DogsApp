@@ -21,7 +21,16 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
 
-    public DogsAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
+    public DogsAdapter(Context context, IRecyclerItemListener listener) {
+        this.context = context;
+        this.listener = listener;
+    }
+
+    public void setList(List<Dog> dogs){
+        this.dogs = dogs;
+    }
+
+    public void initAdapter(Context context, List<Dog> dogs, IRecyclerItemListener listener) {
         this.context = context;
         this.dogs = dogs;
         this.listener = listener;
@@ -45,7 +54,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
         private void initViews(View view) {
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
-                    .style(context, R.style.BoldRobotoThin15sp)
+                    .style(context, R.style.TextViewTitleItem)
                     .build();
             dogKindTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin13sp)

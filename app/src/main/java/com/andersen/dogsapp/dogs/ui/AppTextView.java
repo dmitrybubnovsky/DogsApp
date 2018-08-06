@@ -8,20 +8,20 @@ import android.widget.TextView;
 public class AppTextView {
     private TextView textView;
 
-    public static AppTextView newInstance(Activity activity, int id) {
-        return new AppTextView(activity, id);
-    }
-
-    public static AppTextView newInstance(View rootView, int id) {
-        return new AppTextView(rootView, id);
-    }
-
     private AppTextView(Activity activity, int id) {
         this.textView = activity.findViewById(id);
     }
 
     private AppTextView(View rootView, int id) {
         this.textView = rootView.findViewById(id);
+    }
+
+    public static AppTextView newInstance(Activity activity, int id) {
+        return new AppTextView(activity, id);
+    }
+
+    public static AppTextView newInstance(View rootView, int id) {
+        return new AppTextView(rootView, id);
     }
 
     public AppTextView text(String text) {

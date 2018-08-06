@@ -31,19 +31,25 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
         return ownersDataSource;
     }
 
+    private void loadOwners(Context context) {
+        try {
+            InputStream inputStream = context.getAssets().open("owners.json");
+            JsonParser jsonParser = JsonParser.newInstance();
+            OwnersData ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
+            owners = ownersData.getOwners();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<Owner> getOwners() {
         return owners;
     }
 
-    private void loadOwners(Context context) {
-            try {
-                InputStream inputStream = context.getAssets().open("owners.json");
-                JsonParser jsonParser = JsonParser.newInstance();
-                OwnersData ownersData = jsonParser.parseInputStream(inputStream, OwnersData.class);
-                owners = ownersData.getOwners();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    // Этот метод ничего не делает
+    @Override
+    public Owner addOwner(Owner owner) {
+        return new Owner();
     }
 }

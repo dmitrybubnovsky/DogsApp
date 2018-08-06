@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".dogs.ui.dogs.DogsInfoActivity">
 
-    <include android:id="@+id/toolbar_dogs_app" layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar_dogs_app"
+        layout="@layout/toolbar"/>
 
 
     <TextView

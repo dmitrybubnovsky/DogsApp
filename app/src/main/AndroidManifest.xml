@@ -3,13 +3,16 @@
           package="com.andersen.dogsapp">
 
     <application
+        android:name=".dogs.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".dogs.ui.MainActivity">
+        <activity
+            android:name=".dogs.ui.MainAppDescriptionActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -20,14 +23,21 @@
             android:name=".dogs.ui.owners.OwnersListActivity"
             android:theme="@style/MainDogApp"/>
         <activity
+            android:name=".dogs.ui.owners.NewOwnerFormAcitivty"
+            android:theme="@style/MainDogApp"/>
+        <activity
             android:name=".dogs.ui.dogs.DogsListActivity"
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogs.DogsInfoActivity"
             android:theme="@style/MainDogApp"/>
         <activity
-            android:name=".dogs.ui.MainAppDescriptionActivity"
-            android:theme="@style/NoActionBar"/>
+            android:name=".dogs.ui.dogs.NewDogFormActivity"
+            android:theme="@style/MainDogApp"/>
+        <activity
+            android:name=".dogs.ui.dogskinds.DogsKindsListActivity"
+            android:theme="@style/MainDogApp"/>
+
     </application>
 
 </manifest>

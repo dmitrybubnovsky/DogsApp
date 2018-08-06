@@ -3,27 +3,34 @@ package com.andersen.dogsapp.dogs.ui.owners;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder> {
+    public static final String TAG = "#";
     private Context context;
-    private List<Owner> owners;
+    private List<Owner> owners = new ArrayList<>();
     private IRecyclerItemListener<Owner> listener;
 
-    public OwnersAdapter(Context context, List<Owner> owners, IRecyclerItemListener listener) {
+    public OwnersAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-        this.owners = owners;
         this.listener = listener;
+    }
+
+    public void setOwners(List<Owner> owners) {
+        this.owners = owners;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,8 +63,8 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
             this.owner = owner;
             ownerFullNameTextView.setText(owner.getOwnerFullName());
             preferredKindTextView.setText(owner.getPreferedDogsKind());
-            dogsQuantityTextView.setText("" + owner.getDogsQuantity());
-
+            int dogsQuantity = owner.getDogs().size();
+            dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
         }
     }
 

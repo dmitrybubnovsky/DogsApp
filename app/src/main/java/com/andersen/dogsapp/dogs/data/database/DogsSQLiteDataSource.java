@@ -1,7 +1,9 @@
 package com.andersen.dogsapp.dogs.data.database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
@@ -12,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DogsSQLiteDataSource implements IDogsDataSource {
+    private static final String TAG = "#";
     private static DogsSQLiteDataSource dogsDataSource;
     private List<Dog> dogs;
     private SQLiteDatabase db;
 
     private DogsSQLiteDataSource(DBHelper dbHelper) {
-        db = dbHelper.getWritableDatabase();
         loadDogs();
     }
 
@@ -28,51 +30,109 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         return dogsDataSource;
     }
 
+
     private void loadDogs() {
+        // открываю БД
+        db = DatabaseManager.getInstance().openDB();
         dogs = new ArrayList<>();
+
         Cursor cursor = null;
         try {
-            cursor = db.query(
-                    DogTable.TABLE_NAME, null, null, null, null, null,
-                    null, null);
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                Dog dog = new Dog();
-                dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
-                dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
-                dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
-                dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
-                dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
-                dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
-                dog.setDogWeight(cursor.getInt(cursor.getColumnIndex(DogTable.WEIGHT)));
-                dogs.add(dog);
-                cursor.moveToNext();
+            cursor = db.query(DogTable.TABLE_NAME, null, null,
+                    null, null, null, null,
+                    null);
+            if (cursor.getCount() != 0) {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    Dog dog = new Dog();
+                    dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
+                    dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
+                    dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
+                    dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                    dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
+                    dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
+                    dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
+                    dog.setDogWeight(cursor.getInt(cursor.getColumnIndex(DogTable.WEIGHT)));
+                    dogs.add(dog);
+                    cursor.moveToNext();
+                }
+            } else {
+                Log.d(TAG, "loadDogs. cursor.count == 0");
             }
         } finally {
             cursor.close();
+            DatabaseManager.getInstance().closeDB();
         }
     }
 
-    // temporary implementation.
-    // TODO: add new appropriate database and change to query request
+    @Override
+    public List<Dog> getDogs() {
+        loadDogs();
+        return dogs;
+    }
+
     @Override
     public List<Dog> getOwnerDogs(Owner owner) {
+        // открываю БД
+        db = DatabaseManager.getInstance().openDB();
+
+        int dogOwnerId = owner.getOwnerId();
+
         List<Dog> ownerDogs = new ArrayList<>();
-        int[] dogsIds = owner.getDogsIds(); // get array of dogs' ids on single owner
-        int dogsQuantity = owner.getDogsQuantity();
-        for (int i = 0; i < dogsQuantity; i++) {
-            ownerDogs.add(getDogById(dogsIds[i]));
+
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(DogTable.TABLE_NAME, null, DogTable.OWNER_ID + "=?",
+                    new String[]{String.valueOf(dogOwnerId)}, null, null, null,
+                    null);
+            if (cursor.getCount() != 0) {
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    Dog dog = new Dog();
+                    dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
+                    dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
+                    dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
+                    dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                    dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
+                    dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
+                    dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
+                    dog.setDogWeight(cursor.getInt(cursor.getColumnIndex(DogTable.WEIGHT)));
+                    ownerDogs.add(dog);
+                    cursor.moveToNext();
+                }
+            }
+        } finally {
+            cursor.close();
+            // закрываю БД
+            DatabaseManager.getInstance().closeDB();
+            return ownerDogs;
         }
-        return ownerDogs;
     }
 
-    // temporary implementation.
-    private Dog getDogById(int dogId) {
-        for (Dog dog : dogs) {
-            if (dog.getDogId() == dogId) {
-                return dog;
-            }
+    // для формы
+    @Override
+    public Dog addDog(Dog dog) {
+        db = DatabaseManager.getInstance().openDB();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DogTable.OWNER_ID, dog.getOwnerId());
+        cv.put(DogTable.AGE, dog.getDogAge());
+        cv.put(DogTable.TALL, dog.getDogTall());
+        cv.put(DogTable.WEIGHT, dog.getDogWeight());
+        cv.put(DogTable.IMAGE, dog.getDogImageString());
+        cv.put(DogTable.NAME, dog.getDogName());
+        cv.put(DogTable.KIND, dog.getDogKind());
+
+        long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
+        DatabaseManager.getInstance().closeDB();
+
+        if (insertResult != -1) {
+            dog.setDogId((int) insertResult);
+            return dog;
+        } else {
+            Log.d(TAG, "DogsSQLiteDataSource. addDog: Dog was NOT added");
+            return new Dog();
         }
-        throw new IndexOutOfBoundsException("Class DataRepository. Method getDogById. Not acceptable Id");
     }
 }
