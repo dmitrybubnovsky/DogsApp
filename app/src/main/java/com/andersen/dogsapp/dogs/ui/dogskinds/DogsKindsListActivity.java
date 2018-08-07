@@ -8,18 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
-import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoActivity;
-import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity;
-import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormAcitivty;
-
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_DOG_FOR_KIND;
 
 public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<DogKind> {
     public static final String TAG = "#";

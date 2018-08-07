@@ -43,7 +43,6 @@ public class WebDataSource implements IBreedsDataSource {
         return webDataSource;
     }
 
-
     @Override
     public List<DogKind> getDogsKinds() {
         queryGETDogsKinds();
