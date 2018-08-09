@@ -10,6 +10,10 @@ public class DogKind implements Parcelable {
     public DogKind() {
     }
 
+    public DogKind(String kind) {
+        this.kind = kind;
+    }
+
     public DogKind(String kind, String imageString) {
         this.kind = kind;
         this.imageString = imageString;

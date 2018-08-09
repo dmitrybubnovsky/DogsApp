@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs.data.json;
 
+import android.util.Log;
+
 import com.andersen.dogsapp.dogs.data.entities.DogBreed;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.google.gson.JsonDeserializationContext;
@@ -7,36 +9,30 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BreedDeserializer implements JsonDeserializer<Map<String, List<String>>> {
-//public class BreedDeserializer implements JsonDeserializer<Map<DogBreed, List<DogBreed>>> {
-
+public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
+    public static final String TAG = "#";
     @Override
-    public Map<String, List<String>> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        final JsonObject jsonObject = json.getAsJsonObject();
+    public List<DogKind> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        final JsonObject jsonObject = (JsonObject) json.getAsJsonObject().get("message");
 
-//        Map<String, List<String>> dogBreeds = context.deserialize(jsonObject.get("message"), Map<String, List<String>>);
-        Map<String, List<String>> dogBreeds = new HashMap<>();
 
-        return dogBreeds;
+        List<String> breedsListString = new ArrayList<>(jsonObject.keySet());
+
+        List<DogKind> dogKinds = new ArrayList<>();
+        for (String breedString : breedsListString){
+            dogKinds.add(new DogKind(breedString));
+        }
+        Log.d(TAG, " finished breedsListString " + dogKinds.size());
+        return dogKinds;
     }
-//
-//    @Override
-//    public Map<DogBreed, List<DogBreed>> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-//        final JsonObject jsonObject = json.getAsJsonObject();
-//
-//        Map<DogBreed, List<DogBreed>> dogBreeds = context.deserialize(jsonObject.get("message"), DogBreed.class);
-//
-//        return dogBreeds;
-//    }
-
-
-
 
 
 }

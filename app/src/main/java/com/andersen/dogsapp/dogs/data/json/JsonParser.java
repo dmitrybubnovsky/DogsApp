@@ -2,8 +2,10 @@ package com.andersen.dogsapp.dogs.data.json;
 
 import android.util.Log;
 
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -11,6 +13,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class JsonParser {
     private static JsonParser jsonParser;
@@ -67,4 +73,18 @@ public class JsonParser {
         inputStream.close();
         return gson.fromJson(new String(buffer, "UTF-8"), classType);
     }
+
+    public List<DogKind> parseBreeds(String json) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Type type = new TypeToken<List<DogKind>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(type, new BreedDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        List<DogKind> dogKinds = gson.fromJson(json, type);
+        return dogKinds;
+    }
+
+
+
 }
