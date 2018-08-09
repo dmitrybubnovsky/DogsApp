@@ -1,8 +1,5 @@
 package com.andersen.dogsapp.dogs.data;
 
-import android.app.Activity;
-import android.provider.ContactsContract;
-
 import java.util.List;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -11,9 +8,9 @@ import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.json.DogsKindsData;
+import com.andersen.dogsapp.dogs.data.interfaces.IOnCallback;
 
-public class DataRepository {
+public class DataRepository{  // implements IOnCallback
     private static DataRepository instance;
     private IOwnersDataSource ownersDataSource;
     private IDogsDataSource dogsDataSource;
@@ -37,7 +34,13 @@ public class DataRepository {
 
     public List<DogKind> getDogKinds(){
         return iBreedsDataSource.getDogsKinds();
+
     }
+
+//    @Override
+//    public void breedsCallBack(List<DogKind> dogKinds) {
+//        return dogKinds;
+//    }
 
     public List<Dog> getOwnerDogs(Owner owner) {
         return dogsDataSource.getOwnerDogs(owner);

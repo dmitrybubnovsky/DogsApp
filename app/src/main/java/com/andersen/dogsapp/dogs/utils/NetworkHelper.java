@@ -6,7 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-public class NetWorkHelper {
+public class NetworkHelper {
     public static final String TAG = "#";
 
     public static boolean hasNetWorkAccess(Context context) {

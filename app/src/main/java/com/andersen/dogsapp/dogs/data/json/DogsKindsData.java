@@ -7,12 +7,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DogsKindsData {
-    @SerializedName("dogsKinds")
+    @SerializedName("message")
     @Expose
     private List<DogKind> dogsKinds;
 
     public List<DogKind> getDogsKinds() {
         return dogsKinds;
     }
-
 }
