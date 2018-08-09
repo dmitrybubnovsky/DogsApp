@@ -4,6 +4,6 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 
 import java.util.List;
 
-public interface IOnCallback {
-    List<DogKind> breedsCallBack();
+public interface IBreedsOnCallback {
+    void breedsCallBack(List<DogKind> dogKinds);
 }

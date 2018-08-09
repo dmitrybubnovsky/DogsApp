@@ -1,12 +1,10 @@
 package com.andersen.dogsapp.dogs.data.interfaces;
 
-import android.app.Activity;
-import android.content.Context;
-
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.List;
 
 public interface IBreedsDataSource {
-    List<DogKind> getDogsKinds();
+    void getDogsKinds(ICallback<List<DogKind>> responseCallback);
 }

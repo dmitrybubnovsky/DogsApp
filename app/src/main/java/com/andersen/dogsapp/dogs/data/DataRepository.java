@@ -8,13 +8,14 @@ import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.interfaces.IOnCallback;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
-public class DataRepository{  // implements IOnCallback
+public class DataRepository {  // implements IBreedsOnCallback
     private static DataRepository instance;
     private IOwnersDataSource ownersDataSource;
     private IDogsDataSource dogsDataSource;
     private IBreedsDataSource iBreedsDataSource;
+
 
     private DataRepository(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource iBreedsDataSource) {
         this.ownersDataSource = ownersDataSource;
@@ -32,13 +33,13 @@ public class DataRepository{  // implements IOnCallback
         return instance;
     }
 
-    public List<DogKind> getDogKinds(){
-        return iBreedsDataSource.getDogsKinds();
-
+    public void getDogKinds(ICallback<List<DogKind>> callback){
+        iBreedsDataSource.getDogsKinds(callback);
     }
 
 //    @Override
-//    public void breedsCallBack(List<DogKind> dogKinds) {
+//    public List<DogKind> breedsCallBack() {
+//
 //        return dogKinds;
 //    }
 

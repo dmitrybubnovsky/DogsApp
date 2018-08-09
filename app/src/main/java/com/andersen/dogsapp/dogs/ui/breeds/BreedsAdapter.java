@@ -13,12 +13,13 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DogKindSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.interfaces.IBreedsOnCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
 import java.util.List;
 
-public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder> {
+public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder>{
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
@@ -26,8 +27,12 @@ public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder
 
     public BreedsAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-        dogsKinds = DogKindSource.getDogKinds();
+//        dogsKinds = DogKindSource.getDogKinds();
         this.listener = listener;
+    }
+
+    public void setBreeds(List<DogKind> dogsKinds) {
+        this.dogsKinds = dogsKinds;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,11 +61,13 @@ public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder
             String dogKind = dogsKinds.get(position).getKind();
             dogKindTextView.setText(dogKind);
 
-            String imageResourceString = dogsKinds.get(position).getImageString();
+//            String imageResourceString = dogsKinds.get(position).getImageString();
+            String imageResourceString = "new_dog.jpg";
             dogKindImageView.setImageResource(getImageId(context, imageResourceString));
 
             dogKindInfo = new DogKind();
             dogKindInfo.setKind(dogKind);
+//            dogKindInfo.setImageString(imageResourceString);
             dogKindInfo.setImageString(imageResourceString);
         }
     }

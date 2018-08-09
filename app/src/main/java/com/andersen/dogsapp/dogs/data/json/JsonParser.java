@@ -66,15 +66,8 @@ public class JsonParser {
         return gson.fromJson(new String(buffer, "UTF-8"), classType);
     }
 
-    public <T> T parseStream(InputStream inputStream, Class<T> classType) throws IOException {
-//        int size = inputStream.available();
-        byte[] buffer = new byte[1024];
-        inputStream.read(buffer);
-        inputStream.close();
-        return gson.fromJson(new String(buffer, "UTF-8"), classType);
-    }
-
-    public List<DogKind> parseBreeds(String json) {
+    private List<DogKind> parseBreeds(String json) throws IOException {
+//    public List<DogKind> parseBreeds(String json) {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
         Type type = new TypeToken<List<DogKind>>(){}.getType();
@@ -83,6 +76,31 @@ public class JsonParser {
 
         List<DogKind> dogKinds = gson.fromJson(json, type);
         return dogKinds;
+    }
+
+    public List<DogKind> readBreedsInputStream(InputStream inputStream) throws IOException {
+        String json;
+//        int size = inputStream.available();
+        byte[] buffer = new byte[1024];
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedOutputStream out = null;
+        try {
+            int length = 0;
+            out = new BufferedOutputStream(byteArrayOutputStream);
+            while ((length = inputStream.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+            out.flush();
+            json = byteArrayOutputStream.toString();
+            return parseBreeds(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
     }
 
 

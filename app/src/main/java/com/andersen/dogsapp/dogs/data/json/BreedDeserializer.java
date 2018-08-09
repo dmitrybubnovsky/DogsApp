@@ -23,7 +23,6 @@ public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
     public List<DogKind> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final JsonObject jsonObject = (JsonObject) json.getAsJsonObject().get("message");
 
-
         List<String> breedsListString = new ArrayList<>(jsonObject.keySet());
 
         List<DogKind> dogKinds = new ArrayList<>();
@@ -33,6 +32,4 @@ public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
         Log.d(TAG, " finished breedsListString " + dogKinds.size());
         return dogKinds;
     }
-
-
 }
