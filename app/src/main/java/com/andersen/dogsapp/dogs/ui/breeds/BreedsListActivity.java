@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.util.List;
 
-public class BreedsListActivity extends AppCompatActivity implements IRecyclerItemListener<DogKind>, IBreedsOnCallback {
+public class BreedsListActivity extends AppCompatActivity implements IRecyclerItemListener<DogKind>{
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     public static final int SHOW_PROGRESS_BAR = 1;
@@ -29,7 +30,6 @@ public class BreedsListActivity extends AppCompatActivity implements IRecyclerIt
 
     private List<DogKind> dogKinds;
 
-    private TextView textView;
     private ProgressBar progressBar;
 
     private BreedsAdapter adapter;
@@ -40,19 +40,10 @@ public class BreedsListActivity extends AppCompatActivity implements IRecyclerIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breeds_list); //
-        Log.d(TAG, "BreedsListActivity "+ Thread.currentThread().getName());
 
         progressBar = findViewById(R.id.get_breeds_progress_bar);
 
         networkOk = NetworkManager.hasNetWorkAccess(this);
-
-
-// START TEST
-        textView = findViewById(R.id.textview);
-//        textView.setOnClickListener(view -> {
-//
-//        });
-// END TEST
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
         setSupportActionBar(toolbar);
@@ -60,12 +51,16 @@ public class BreedsListActivity extends AppCompatActivity implements IRecyclerIt
         recyclerView = findViewById(R.id.breeds_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BreedsAdapter(this, this);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (dogKinds == null){
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
         DataRepository.get().getDogKinds(list -> {
             dogKinds = list;
             Log.d(TAG, "onResume() dogKinds.size()"+dogKinds.size());
@@ -79,6 +74,7 @@ public class BreedsListActivity extends AppCompatActivity implements IRecyclerIt
         Log.d(TAG, "updateUI()"+dogKinds.size());
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -87,11 +83,6 @@ public class BreedsListActivity extends AppCompatActivity implements IRecyclerIt
         intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    public void breedsCallBack(List<DogKind> dogBreeds) {
-
     }
 }
 

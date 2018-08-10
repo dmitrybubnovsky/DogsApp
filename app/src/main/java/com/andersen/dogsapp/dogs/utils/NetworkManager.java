@@ -1,13 +1,9 @@
 package com.andersen.dogsapp.dogs.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-
-import com.andersen.dogsapp.dogs.data.json.JsonParser;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -49,12 +45,8 @@ public class NetworkManager {
                 Log.d(TAG, "responseCode is "+responseCode);
             }
 
-            // получаем ответ в inputStream
             inputStream = conn.getInputStream();
 
-//            Log.d(TAG, "inputStream " + ( (inputStream == null) ? " == null" : " not null " ));
-//            Log.d(TAG, "strOutStream "+strOutStream);
-//            Log.d(TAG, "WebBreeds dogKinds "+dogKinds.size());
             return inputStream;
         } catch (IOException e) {
             e.printStackTrace();
