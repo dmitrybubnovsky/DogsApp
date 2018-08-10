@@ -2,20 +2,16 @@ package com.andersen.dogsapp.dogs.data.json;
 
 import android.util.Log;
 
-import com.andersen.dogsapp.dogs.data.entities.DogBreed;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
     public static final String TAG = "#";
