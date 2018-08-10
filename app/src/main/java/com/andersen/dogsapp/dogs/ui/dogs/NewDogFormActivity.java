@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
+import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
@@ -59,7 +60,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
             if (dog.getDogKind() == null) {
-                startDogsKindsListActivity();
+                    startDogsKindsListActivity();
             } else {
                 dog = DataRepository.get().addDog(dog);
                 owner.addDog(dog);
@@ -78,9 +79,15 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     private void startDogsKindsListActivity() {
-        Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-        Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
+
+        // Если сети нет, то список пород НЕ открываем
+        if(!NetworkManager.hasNetWorkAccess(this)) {
+            Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
+            Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void backToDogListActivity() {

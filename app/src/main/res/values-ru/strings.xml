@@ -29,6 +29,8 @@
     <string name="toolbar_title_add_dog">Добавить собаку</string>
     <string name="toolbar_title_kinds_list">Выберите породу собаки</string>
 
+    <string name="no_network_toast">ПОДКЛЮЧЕНИЕ К СЕТИ ОТСУТСТВУЕТ</string>
+
     <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="text_view_app_description">Это приложение для собаководов. Оно состоит из списка владельцев домашних животных и детальной информации об их домашних любимцах, включая имя, породу, возраст и рост питомца.</string>
     <string name="text_view_title_kind">Порода: </string>

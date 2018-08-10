@@ -62,12 +62,11 @@ public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder
             dogKindTextView.setText(dogKind);
 
 //            String imageResourceString = dogsKinds.get(position).getImageString();
-            String imageResourceString = "new_dog.jpg";
+            String imageResourceString = "chinook";
             dogKindImageView.setImageResource(getImageId(context, imageResourceString));
 
             dogKindInfo = new DogKind();
             dogKindInfo.setKind(dogKind);
-//            dogKindInfo.setImageString(imageResourceString);
             dogKindInfo.setImageString(imageResourceString);
         }
     }
