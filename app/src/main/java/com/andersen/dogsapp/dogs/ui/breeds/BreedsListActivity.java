@@ -6,19 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.interfaces.IBreedsOnCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
-import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.util.List;
 
@@ -73,7 +68,7 @@ public class BreedsListActivity extends AppCompatActivity implements IRecyclerIt
     }
 
     private void initViews(){
-        progressBar = findViewById(R.id.get_breeds_progress_bar);
+        progressBar = findViewById(R.id.network_breeds_progress_bar);
         recyclerView = findViewById(R.id.breeds_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BreedsAdapter(this, this);

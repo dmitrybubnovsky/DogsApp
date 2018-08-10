@@ -5,11 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".dogs.ui.dogs.DogsListActivity">
+    tools:context=".dogs.ui.breeds.BreedsListActivity">
 
     <include
         android:id="@+id/toolbar_dogs_app"
         layout="@layout/toolbar"/>
+
+    <ProgressBar
+        android:id="@+id/network_breeds_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_dogs_app">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/dogs_kinds_recycler_view"
+            android:id="@+id/breeds_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
