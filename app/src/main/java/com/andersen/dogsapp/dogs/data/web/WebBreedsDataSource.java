@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
+import com.andersen.dogsapp.dogs.data.json.BreedDeserializer;
 import com.andersen.dogsapp.dogs.data.json.JsonParser;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.DogBreedsAPI;
 import com.andersen.dogsapp.dogs.utils.NetworkManager;
@@ -11,9 +12,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +28,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Query;
 
 public class WebBreedsDataSource implements IBreedsDataSource {
-    private final String BASE_URL = "https://dog.ceo/api";
-    private final String URL_BREEDS_ALL = "https://dog.ceo/api";
-
     private static final String TAG = "#";
+
+    private final String BASE_URL = "https://dog.ceo/api/";
+    private final String URL_BREEDS_ALL = "/breeds/list/all";
+
     private static WebBreedsDataSource webBreedsDataSource;
 
-    private Gson mGson = new GsonBuilder().create();
-    private Retrofit retrofit = new Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
-            .build();
-    private DogBreedsAPI breedsAPI = retrofit.create(DogBreedsAPI.class);
+    private Retrofit retrofit;
+    private DogBreedsAPI breedsAPI;
 
     @SerializedName("dogKinds")
     @Expose
@@ -44,7 +44,15 @@ public class WebBreedsDataSource implements IBreedsDataSource {
 
 
     private WebBreedsDataSource() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(buildGsonConverter())
+                .build();
+
+        breedsAPI = retrofit.create(DogBreedsAPI.class);
+
         dogKinds = new ArrayList<>();
+
     }
 
 
@@ -57,12 +65,12 @@ public class WebBreedsDataSource implements IBreedsDataSource {
 
     @Override
     public void getDogsKinds(ICallback<List<DogKind>> callback) {
-        breedsAPI.getBreeds(URL_BREEDS_ALL).enqueue(new Callback<List<DogKind>>() {
+        breedsAPI.getBreeds("").enqueue(new Callback<List<DogKind>>() {
             @Override
             public void onResponse(Call<List<DogKind>> call, Response<List<DogKind>> response) {
                 dogKinds = response.body();
                 Log.d(TAG, ""+dogKinds.size());
-                callback.
+                callback.onResponse(dogKinds);
             }
 
             @Override
@@ -70,6 +78,17 @@ public class WebBreedsDataSource implements IBreedsDataSource {
 
             }
         });
+    }
+
+    private static GsonConverterFactory buildGsonConverter() {
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Type type = new TypeToken<List<DogKind>>() {}.getType();
+        gsonBuilder.registerTypeAdapter(type, new BreedDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        return GsonConverterFactory.create(gson);
     }
 
 //    @Override

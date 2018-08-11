@@ -8,6 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface DogBreedsAPI {
-    @GET("")
+    @GET("breeds/list/all")
     Call<List<DogKind>> getBreeds(String url);
 }

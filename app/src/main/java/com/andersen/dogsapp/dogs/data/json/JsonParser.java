@@ -40,8 +40,7 @@ public class JsonParser {
     private List<DogKind> parseBreeds(String json) {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Type type = new TypeToken<List<DogKind>>() {
-        }.getType();
+        Type type = new TypeToken<List<DogKind>>() {}.getType();
         gsonBuilder.registerTypeAdapter(type, new BreedDeserializer());
         Gson gson = gsonBuilder.create();
 
