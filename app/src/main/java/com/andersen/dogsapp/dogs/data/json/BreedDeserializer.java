@@ -26,7 +26,7 @@ public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
         for (String breedString : breedsListString) {
             dogKinds.add(new DogKind(breedString));
         }
-        Log.d(TAG, " finished breedsListString " + dogKinds.size());
+        Log.d(TAG, "deserialize returns dogKinds with size " + dogKinds.size()+" elements");
         return dogKinds;
     }
 }

@@ -31,7 +31,7 @@ public class WebBreedsDataSource implements IBreedsDataSource {
     private static final String TAG = "#";
 
     private final String BASE_URL = "https://dog.ceo/api/";
-    private final String URL_BREEDS_ALL = "/breeds/list/all";
+    private final String URL_BREEDS_ALL = "breeds/list/all";
 
     private static WebBreedsDataSource webBreedsDataSource;
 
@@ -50,9 +50,8 @@ public class WebBreedsDataSource implements IBreedsDataSource {
                 .build();
 
         breedsAPI = retrofit.create(DogBreedsAPI.class);
-
+        Log.d(TAG, ""+retrofit.getClass().toString());
         dogKinds = new ArrayList<>();
-
     }
 
 
@@ -65,9 +64,11 @@ public class WebBreedsDataSource implements IBreedsDataSource {
 
     @Override
     public void getDogsKinds(ICallback<List<DogKind>> callback) {
-        breedsAPI.getBreeds("").enqueue(new Callback<List<DogKind>>() {
+        Call<List<DogKind>> call = breedsAPI.getBreeds();
+        call.enqueue(new Callback<List<DogKind>>() {
             @Override
             public void onResponse(Call<List<DogKind>> call, Response<List<DogKind>> response) {
+                Log.d(TAG,"response " + response.body().size());
                 dogKinds = response.body();
                 Log.d(TAG, ""+dogKinds.size());
                 callback.onResponse(dogKinds);

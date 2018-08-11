@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface DogBreedsAPI {
     @GET("breeds/list/all")
-    Call<List<DogKind>> getBreeds(String url);
+    Call<List<DogKind>> getBreeds();
 }
