@@ -13,13 +13,15 @@ import android.widget.ProgressBar;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
 
 import java.util.List;
 
-public class DogsKindsListActivity extends AppCompatActivity implements IRecyclerItemListener<DogKind> {
+public class DogsKindsListActivity extends AppCompatActivity
+        implements IRecyclerItemListener<DogKind> {
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
 
@@ -47,13 +49,18 @@ public class DogsKindsListActivity extends AppCompatActivity implements IRecycle
         } else {
             progressBar.setVisibility(View.INVISIBLE);
         }
-        DataRepository.get().getDogKinds(list -> {
-            dogKinds = list;
-            runOnUiThread(() -> updateUI());
-        });
+        updateUI();
     }
 
+
     private void updateUI() {
+        DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+            @Override
+            public void onResponse(List<DogKind> dogKinds) {
+
+            }
+        });
+
         adapter.setBreeds(dogKinds);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
