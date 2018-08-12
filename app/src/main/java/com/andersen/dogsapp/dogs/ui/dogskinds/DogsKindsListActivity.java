@@ -44,23 +44,22 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+            @Override
+            public void onResponseICallback(List<DogKind> dogBreeds) {
+                dogKinds = dogBreeds;
+                runOnUiThread( () -> updateUI());
+            }
+        });
+    }
+
+
+    private void updateUI() {
         if (dogKinds == null) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.INVISIBLE);
         }
-        DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
-            @Override
-            public void onResponse(List<DogKind> dogBreeds) {
-                dogKinds = dogBreeds;
-                runOnUiThread( () -> updateUI());
-            }
-        });
-        updateUI();
-    }
-
-
-    private void updateUI() {
         adapter.setBreeds(dogKinds);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
