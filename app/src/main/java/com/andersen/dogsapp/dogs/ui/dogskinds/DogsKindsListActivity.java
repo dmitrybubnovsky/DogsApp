@@ -33,7 +33,7 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_breeds_list); 
+        setContentView(R.layout.activity_breeds_list);
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
         setSupportActionBar(toolbar);
@@ -48,7 +48,7 @@ public class DogsKindsListActivity extends AppCompatActivity
             @Override
             public void onResponseICallback(List<DogKind> dogBreeds) {
                 dogKinds = dogBreeds;
-                runOnUiThread( () -> updateUI());
+                runOnUiThread(() -> updateUI());
             }
         });
     }
@@ -65,7 +65,7 @@ public class DogsKindsListActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
         progressBar.setVisibility(View.INVISIBLE);
     }
-    
+
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
         Intent intent = new Intent();
@@ -74,7 +74,7 @@ public class DogsKindsListActivity extends AppCompatActivity
         finish();
     }
 
-    private void initViews(){
+    private void initViews() {
         progressBar = findViewById(R.id.network_breeds_progress_bar);
         recyclerView = findViewById(R.id.breeds_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

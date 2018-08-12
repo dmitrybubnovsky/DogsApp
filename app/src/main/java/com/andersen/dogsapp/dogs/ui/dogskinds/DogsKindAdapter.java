@@ -18,7 +18,7 @@ import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
 import java.util.List;
 
-public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHolder>{
+public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHolder> {
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
@@ -56,7 +56,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             dogKindImageView = view.findViewById(R.id.dog_kind_image_view);
         }
 
-        private void setData(Context context, int position){
+        private void setData(Context context, int position) {
             String dogKind = dogsKinds.get(position).getKind();
             dogKindTextView.setText(dogKind);
 

@@ -1,6 +1,7 @@
 package com.andersen.dogsapp.dogs.data.web;
 
 import android.util.Log;
+
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.json.BreedDeserializer;
@@ -77,7 +78,8 @@ public class WebBreedsDataSource implements IBreedsDataSource {
 
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Type type = new TypeToken<List<DogKind>>() {}.getType();
+        Type type = new TypeToken<List<DogKind>>() {
+        }.getType();
         gsonBuilder.registerTypeAdapter(type, new BreedDeserializer());
         Gson gson = gsonBuilder.create();
         return GsonConverterFactory.create(gson);
