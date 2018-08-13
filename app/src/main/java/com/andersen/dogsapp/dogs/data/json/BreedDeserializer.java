@@ -1,7 +1,5 @@
 package com.andersen.dogsapp.dogs.data.json;
 
-import android.util.Log;
-
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -14,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
-    public static final String TAG = "#";
+    private static final String TAG = "#";
 
     @Override
     public List<DogKind> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -26,7 +24,6 @@ public class BreedDeserializer implements JsonDeserializer<List<DogKind>> {
         for (String breedString : breedsListString) {
             dogKinds.add(new DogKind(breedString));
         }
-        Log.d(TAG, "deserialize returns dogKinds with size " + dogKinds.size() + " elements");
         return dogKinds;
     }
 }

@@ -2,10 +2,10 @@ package com.andersen.dogsapp.dogs.data.json.datasources;
 
 import android.content.Context;
 
-import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.json.OwnersData;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.json.JsonParser;
+import com.andersen.dogsapp.dogs.data.json.OwnersData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -31,6 +31,11 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
         return ownersDataSource;
     }
 
+    @Override
+    public List<Owner> getOwners() {
+        return owners;
+    }
+
     private void loadOwners(Context context) {
         try {
             InputStream inputStream = context.getAssets().open("owners.json");
@@ -40,11 +45,6 @@ public class JsonOwnersDataSource implements IOwnersDataSource {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Owner> getOwners() {
-        return owners;
     }
 
     // Этот метод ничего не делает

@@ -60,7 +60,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то отправляемся в DogsKindsListActivity
             if (dog.getDogKind() == null) {
-                    startDogsKindsListActivity();
+                startDogsKindsListActivity();
             } else {
                 dog = DataRepository.get().addDog(dog);
                 owner.addDog(dog);
@@ -74,6 +74,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
         int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
         int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
+
         // вытащили owner'a из EXTRA и добавляем его с остальными данными в модель
         dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
     }
@@ -81,7 +82,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private void startDogsKindsListActivity() {
 
         // Если сети нет, то список пород НЕ открываем
-        if(!NetworkManager.hasNetWorkAccess(this)) {
+        if (!NetworkManager.hasNetWorkAccess(this)) {
             Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);

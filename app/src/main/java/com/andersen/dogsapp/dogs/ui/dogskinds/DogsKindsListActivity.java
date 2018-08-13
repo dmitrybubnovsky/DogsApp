@@ -57,7 +57,6 @@ public class DogsKindsListActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (dogKinds == null){
-            Log.d(TAG, "dogKinds null");
             DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
                 @Override
                 public void onResponseICallback(List<DogKind> dogBreeds) {
@@ -70,14 +69,13 @@ public class DogsKindsListActivity extends AppCompatActivity
         }
     }
 
-
     private void updateUI() {
-        if(progressBar != null && dogKinds != null){
-            progressBar.setVisibility(View.INVISIBLE);
-        }
         adapter.setBreeds(dogKinds);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
+        if(progressBar != null && dogKinds != null){
+            progressBar.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
