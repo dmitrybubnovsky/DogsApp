@@ -1,16 +1,23 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -38,7 +45,7 @@ import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA
 
 public class NewDogFormActivity extends AppCompatActivity {
     public static final String TAG = "#";
-
+    private static final int PERMISSION_REQUEST_CODE = 111;
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String EXTRA_DOG_FOR_KIND = "EXTRA_DOG_FOR_KIND";
@@ -79,10 +86,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
 
         photoDogImageView.setOnClickListener(view -> {
-            if (hasPhoto) {
-                startPhotoPreviewActivity(photoFilePathString);
+            if (hasPermission()){
+                startCameraOrPreview(photoFilePathString);
             } else {
-                startCamera();
+                requestPermissionWithRationale();
             }
         });
 
@@ -98,6 +105,111 @@ public class NewDogFormActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void startCameraOrPreview(String photoFilePathString){
+        if (hasPhoto) {
+            startPhotoPreviewActivity(photoFilePathString);
+        } else {
+            startCamera();
+        }
+    }
+
+    public boolean hasPermission(){
+        int permission = 0;
+        String[] permissionsArray = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        for (String permissionString : permissionsArray){
+            permission = checkCallingOrSelfPermission(permissionString);
+            if (!(permission == PackageManager.PERMISSION_GRANTED)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void requestPermissions(){
+        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            requestPermissions(permissions,PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean allowed = true;
+
+        switch (requestCode){
+            case PERMISSION_REQUEST_CODE:
+                for (int permissionResult : grantResults){
+                    // if user granted all permissions.
+                    allowed = allowed && (permissionResult == PackageManager.PERMISSION_GRANTED);
+                }
+                break;
+            default:
+                // if user not granted permissions.
+                allowed = false;
+                break;
+        }
+
+        if (allowed){
+            startCameraOrPreview(photoFilePathString);
+        }
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    Toast.makeText(this, "Storage Permissions denied.", Toast.LENGTH_SHORT).show();
+                } else {
+                    showNoStoragePermissionSnackbar();
+                }
+            }
+        }
+    }
+
+    public void showNoStoragePermissionSnackbar() {
+        Snackbar.make(this.findViewById(R.id.new_dog_form_root), "Storage permission isn't granted" , Snackbar.LENGTH_LONG)
+                .setAction("SETTINGS", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openApplicationSettings();
+
+                        Toast.makeText(getApplicationContext(),
+                                "Open Permissions and grant the Storage permission",
+                                Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                })
+                .show();
+    }
+
+    public void openApplicationSettings() {
+        Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(appSettingsIntent, PERMISSION_REQUEST_CODE);
+    }
+
+
+
+    public void requestPermissionWithRationale() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            // TODO add in all language strings
+            final String message = "Storage permission is needed to show files count";
+
+            Snackbar.make(this.findViewById(R.id.new_dog_form_root), message, Snackbar.LENGTH_LONG)
+                    .setAction("GRANT", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            requestPermissions();
+                        }
+                    })
+                    .show();
+        } else {
+            requestPermissions();
+        }
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -127,6 +239,9 @@ public class NewDogFormActivity extends AppCompatActivity {
             }
             updatePhotoView();
             dog.setDogImageString(photoFilePathString);
+        } else if (requestCode == PERMISSION_REQUEST_CODE){
+            startCameraOrPreview(photoFilePathString);
+//            return;
         }
     }
 

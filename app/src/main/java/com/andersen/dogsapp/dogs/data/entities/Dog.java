@@ -64,14 +64,6 @@ public class Dog implements Parcelable {
         return dogKind;
     }
 
-    public int getDogImageId(Context context) {
-        Resources resources = context.getResources();
-        Log.d("#", "dogImageString   = "+dogImageString);
-
-        int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
-        return resourceId;
-    }
-
     public String getDogImageString() {
         return dogImageString;
     }

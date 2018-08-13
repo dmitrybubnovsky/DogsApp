@@ -62,7 +62,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
-            dogImageView = DogImageUtils.setDogImage(context, dogImageView, dog);
+            dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dog.getDogImageString()));
         }
     }
 

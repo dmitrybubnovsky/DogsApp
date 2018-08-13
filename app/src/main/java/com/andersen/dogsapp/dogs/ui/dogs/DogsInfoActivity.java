@@ -35,8 +35,7 @@ public class DogsInfoActivity extends AppCompatActivity {
 
     private void initViews(Context context, Dog dog, MediaPlayer mediaPlayer) {
         ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-//        dogsPhoto.setImageResource(dog.getDogImageId(this));
-        dogsPhoto = DogImageUtils.setDogImage(context, dogsPhoto, dog);
+        dogsPhoto.setImageDrawable(DogImageUtils.getDogImage(context, dog.getDogImageString()));
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());

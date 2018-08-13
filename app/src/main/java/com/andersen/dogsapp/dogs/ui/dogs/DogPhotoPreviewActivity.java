@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
@@ -29,7 +28,7 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private File photoFile;
     private Button cancelButton;
-    private Button newPphotoButton;
+    private Button newPhotoButton;
     private Button savePhotoButton;
     private ImageView dogPhotoPreImageview;
     private String photoFilePathString;
@@ -49,7 +48,7 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
             backToNewDogFormActivity();
         });
 
-        newPphotoButton.setOnClickListener(view -> {
+        newPhotoButton.setOnClickListener(view -> {
             photoFile = getPhotoFile(this);
             startCamera();
         });
@@ -83,7 +82,7 @@ public class DogPhotoPreviewActivity extends AppCompatActivity {
     private void initViews() {
         dogPhotoPreImageview = findViewById(R.id.dog_photo_pre_imageview);
         cancelButton = findViewById(R.id.cancel_button);
-        newPphotoButton = findViewById(R.id.new_photo_button);
+        newPhotoButton = findViewById(R.id.new_photo_button);
         savePhotoButton = findViewById(R.id.save_photo_button);
         savePhotoButton.setEnabled(false);
     }

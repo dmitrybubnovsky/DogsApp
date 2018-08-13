@@ -1,31 +1,29 @@
 package com.andersen.dogsapp.dogs.ui;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-//import android.widget.imageView;
 
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
 
 public class DogImageUtils {
 
-    public static ImageView setDogImage(Context context, ImageView imageView, Dog dog) {
-        int dogImageId = dog.getDogImageId(context);
-        if (dogImageId != 0) {
-            imageView.setImageResource(dogImageId);
+    public static Drawable getDogImage(Context context, String dogImageString) {
+        final int VALID_RESOURCE_ID = 0;
+        Drawable dogImageDrawable;
+        Resources resources = context.getResources();
+        int dogImageResId = resources.getIdentifier(dogImageString, "drawable",
+                context.getPackageName());
+        if (dogImageResId != VALID_RESOURCE_ID) {
+            dogImageDrawable = context.getResources().getDrawable(dogImageResId);
         } else {
-            try {
-                Bitmap bitmap = PictureUtils.getScaledBitmap(dog.getDogImageString(), (AppCompatActivity) context);
-                imageView.setImageBitmap(bitmap);
-            } catch (NullPointerException e) {
-                Log.d("#", "setData() method has a problem");
-            }
+            Bitmap bitmap = PictureUtils.getScaledBitmap(dogImageString, (AppCompatActivity) context);
+            dogImageDrawable = new BitmapDrawable(resources, bitmap);
         }
-        return imageView;
+        return dogImageDrawable;
     }
 }
