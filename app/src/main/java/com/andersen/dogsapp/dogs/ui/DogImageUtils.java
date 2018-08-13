@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 
-public class DogImageView {
+public class DogImageUtils {
 
     public static ImageView setDogImage(Context context, ImageView imageView, Dog dog) {
         int dogImageId = dog.getDogImageId(context);
