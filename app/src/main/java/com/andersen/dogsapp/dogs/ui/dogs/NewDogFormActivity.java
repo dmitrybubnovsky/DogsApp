@@ -44,8 +44,8 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int PERMISSION_STORAGE_REQUEST = 114;
     private static final int PERMISSION_CAMERA_REQUEST = 116;
-    private static final String [] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
-    private static final String [] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
+    private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     public static final String EXTRA_NEW_OWNER = "new owner dog";
@@ -102,14 +102,30 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         photoDogImageView.setOnClickListener(view -> {
             if (hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Log.d(TAG," 111");
+                Log.d(TAG, " 111");
                 startCameraOrPreview(photoFilePathString);
             } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                requestPermissionWithRationaleStorage();
+                requestPermissionWithRationale(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        R.string.need_storage_access_snackbar,
+                        STORAGE_PERMISSIONS, PERMISSION_STORAGE_REQUEST);
             } else if (!hasPermission(Manifest.permission.CAMERA)) {
-                requestPermissionWithRationaleCamera();
+                requestPermissionWithRationale(Manifest.permission.CAMERA,
+                        R.string.need_camera_access_snackbar,
+                        CAMERA_PERMISSIONS, PERMISSION_CAMERA_REQUEST);
             }
         });
+    }
+
+    public boolean hasBothPermissions() {
+        int res = 0;
+        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        for (String perms : permissions){
+            res = checkCallingOrSelfPermission(perms);
+            if (!(res == PackageManager.PERMISSION_GRANTED)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean hasPermission(String permission) {
@@ -148,22 +164,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         }
     }
 
-    public void showNoStoragePermissionSnackbar() {
-        Snackbar.make(rootLayout, R.string.storage_not_granted_snackbar, Snackbar.LENGTH_LONG)
-                .setAction(R.string.settings_snackbar, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openSettings(PERMISSION_STORAGE_REQUEST);
-                        Toast.makeText(getApplicationContext(),
-                                R.string.open_settings_grant_storage_snackbar,
-                                Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                })
-                .show();
-    }
-
-    private void showNoPermissionSnackbarSettings(int snackBarStringResId, int toastStringResId, int settingPermissionRequest){
+    private void showNoPermissionSnackbarSettings(int snackBarStringResId, int toastStringResId, int settingPermissionRequest) {
         Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_LONG)
                 .setAction(R.string.settings_snackbar, new View.OnClickListener() {
                     @Override
@@ -185,29 +186,31 @@ public class NewDogFormActivity extends AppCompatActivity {
         startActivityForResult(appSettingsIntent, permissionRequest);
     }
 
-    public void openStorageSettings() {
-        Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.parse("package:" + getPackageName()));
-        startActivityForResult(appSettingsIntent, PERMISSION_STORAGE_REQUEST);
+
+    private void showSnackbarAndRequestPermission(int snackBarStringResId, String[] permissions, int permission_request_int) {
+        Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_LONG)
+                .setAction(R.string.grant_permission_snackbar, new View.OnClickListener() { // R.string.grant_permission_snackbar
+                    @Override
+                    public void onClick(View v) {
+                        requestPermission(permissions, permission_request_int);
+                    }
+                })
+                .show();
     }
 
-    public void openCameraSettings() {
-        Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.parse("package:" + getPackageName()));
-        startActivityForResult(appSettingsIntent, PERMISSION_CAMERA_REQUEST);
+    public void requestPermissionWithRationale(String stringPermission, int stringResIdSnackbar,
+                                               String[] arrayPermissions, int requestPermision) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, stringPermission)) {
+            showSnackbarAndRequestPermission(stringResIdSnackbar, arrayPermissions, requestPermision);
+        } else {
+            requestPermission(arrayPermissions, requestPermision);
+        }
     }
 
     public void requestPermissionWithRationaleStorage() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Snackbar.make(rootLayout, R.string.need_storage_access_snackbar, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.grant_permission_snackbar, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            requestPermission(STORAGE_PERMISSIONS, PERMISSION_STORAGE_REQUEST);
-                        }
-                    })
-                    .show();
+            showSnackbarAndRequestPermission(R.string.need_storage_access_snackbar, STORAGE_PERMISSIONS, PERMISSION_STORAGE_REQUEST);
         } else {
             requestPermission(STORAGE_PERMISSIONS, PERMISSION_STORAGE_REQUEST);
         }
@@ -216,14 +219,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     public void requestPermissionWithRationaleCamera() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CAMERA)) {
-            Snackbar.make(rootLayout, "Нужно разрешение к камере", Snackbar.LENGTH_LONG)
-                    .setAction(R.string.grant_permission_snackbar, new View.OnClickListener() { // R.string.grant_permission_snackbar
-                        @Override
-                        public void onClick(View v) {
-                            requestPermission(CAMERA_PERMISSIONS, PERMISSION_CAMERA_REQUEST);
-                        }
-                    })
-                    .show();
+            showSnackbarAndRequestPermission(R.string.need_camera_access_snackbar, CAMERA_PERMISSIONS, PERMISSION_CAMERA_REQUEST);
         } else {
             requestPermission(CAMERA_PERMISSIONS, PERMISSION_CAMERA_REQUEST);
         }
@@ -231,14 +227,16 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+        if (hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             startCameraOrPreview(photoFilePathString);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     Toast.makeText(this, R.string.storage_permission_denied_snackbar, Toast.LENGTH_LONG).show();
                 } else {
-                    showNoStoragePermissionSnackbar();
+                    showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
+                            R.string.open_settings_grant_storage_snackbar,
+                            PERMISSION_STORAGE_REQUEST);
                 }
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                     Toast.makeText(this, "Камера была отклоненнннна", Toast.LENGTH_LONG).show();
@@ -280,7 +278,7 @@ public class NewDogFormActivity extends AppCompatActivity {
             dog.setDogImageString(photoFilePathString);
         } else if (requestCode == PERMISSION_STORAGE_REQUEST) {
             Log.d(TAG, "PERMISSION_STORAGE_REQUEST");
-            Log.d(TAG," 333");
+            Log.d(TAG, " 333");
             startCameraOrPreview(photoFilePathString);
         }
     }

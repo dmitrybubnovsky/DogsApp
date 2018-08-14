@@ -36,10 +36,11 @@
     <string name="storage_not_granted_snackbar">"Storage permission isn't granted" </string>
     <string name="camera_not_granted_snackbar">"Camera permission isn't granted" </string>
     <string name="need_storage_access_snackbar">"Storage permission is needed to show files count"</string>
+    <string name="need_camera_access_snackbar">"Camera permission is needed to take a photo"</string>
     <string name="open_settings_grant_storage_snackbar">"Open Settings and grant the Storage Permission"</string>
     <string name="open_settings_grant_camera_snackbar">"Open Settings and grant the Camera Permission"</string>
     <string name="storage_permission_denied_snackbar">"Storage Permissions denied"</string>
-    <string name="grant_permission_snackbar">"GRANT"</string>
+    <string name="grant_permission_snackbar">"Grant"</string>
     <string name="settings_snackbar">"Settings"</string>
 
     <string name="weight_measure">kg</string>
