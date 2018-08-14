@@ -38,6 +38,7 @@
     <string name="open_grant_storage_settings_snackbar">"Open Permissions and grant the Storage permission"</string>
     <string name="storage_permission_denied_snackbar">"Storage Permissions denied"</string>
     <string name="grant_permission_snackbar">"GRANT"</string>
+    <string name="settings_snackbar">"Settings"</string>
 
     <string name="weight_measure">kg</string>
     <string name="tall_measure">cm</string>
