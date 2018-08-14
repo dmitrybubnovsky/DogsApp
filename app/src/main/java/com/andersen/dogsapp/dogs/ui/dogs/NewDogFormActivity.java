@@ -149,13 +149,13 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     public void showNoStoragePermissionSnackbar() {
-        Snackbar.make(rootLayout, R.string.permission_isnt_granted_snackbar, Snackbar.LENGTH_LONG)
+        Snackbar.make(rootLayout, R.string.storage_not_granted_snackbar, Snackbar.LENGTH_LONG)
                 .setAction(R.string.settings_snackbar, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         openSettings(PERMISSION_STORAGE_REQUEST);
                         Toast.makeText(getApplicationContext(),
-                                R.string.open_grant_storage_settings_snackbar,
+                                R.string.open_settings_grant_storage_snackbar,
                                 Toast.LENGTH_SHORT)
                                 .show();
                     }
@@ -163,14 +163,14 @@ public class NewDogFormActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void showSnackbar(){
-        Snackbar.make(rootLayout, R.string.permission_isnt_granted_snackbar, Snackbar.LENGTH_LONG)
+    private void showNoPermissionSnackbarSettings(int snackBarStringResId, int toastStringResId, int settingPermissionRequest){
+        Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_LONG)
                 .setAction(R.string.settings_snackbar, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openStorageSettings();
+                        openSettings(settingPermissionRequest);
                         Toast.makeText(getApplicationContext(),
-                                R.string.open_grant_storage_settings_snackbar,
+                                toastStringResId,
                                 Toast.LENGTH_SHORT)
                                 .show();
                     }
@@ -178,20 +178,6 @@ public class NewDogFormActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void showNoCameraPermissionSnackbar() {
-        Snackbar.make(rootLayout, "Камера не разрешена", Snackbar.LENGTH_LONG)
-                .setAction("SETTINGS", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openSettings(PERMISSION_CAMERA_REQUEST);
-                        Toast.makeText(getApplicationContext(),
-                                "Откройте настройки камеры",
-                                Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                })
-                .show();
-    }
 
     public void openSettings(int permissionRequest) {
         Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -231,7 +217,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CAMERA)) {
             Snackbar.make(rootLayout, "Нужно разрешение к камере", Snackbar.LENGTH_LONG)
-                    .setAction("Разрешить доступ к КАМЕРЕ", new View.OnClickListener() { // R.string.grant_permission_snackbar
+                    .setAction(R.string.grant_permission_snackbar, new View.OnClickListener() { // R.string.grant_permission_snackbar
                         @Override
                         public void onClick(View v) {
                             requestPermission(CAMERA_PERMISSIONS, PERMISSION_CAMERA_REQUEST);
@@ -257,7 +243,9 @@ public class NewDogFormActivity extends AppCompatActivity {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                     Toast.makeText(this, "Камера была отклоненнннна", Toast.LENGTH_LONG).show();
                 } else {
-                    showNoCameraPermissionSnackbar();
+                    showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
+                            R.string.open_settings_grant_camera_snackbar,
+                            PERMISSION_CAMERA_REQUEST);
                 }
             }
         }
