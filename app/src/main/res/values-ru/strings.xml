@@ -17,6 +17,12 @@
     <string name="prefered_dog_hint">Любимая порода собаки</string>
     <string name="add_title_button">Добавить</string>
 
+    <string name="permission_isnt_granted_snackbar">"Отсутствует разрешение на доступ к хранилищу" </string>
+    <string name="need_storage_access_snackbar">"Необходимо разрешение на доступ к хранилищу"</string>
+    <string name="open_grant_storage_settings_snackbar">"Откройте НАСТРОЙКИ и включите доступ к хранилищу"</string>
+    <string name="storage_permission_denied_snackbar">"Разрешение на доступ к хранилищу отклонено"</string>
+    <string name="grant_permission_snackbar">"Разрешить"</string>
+
     <string name="dog_name_hint">Кличка</string>
     <string name="dog_kind_hint">Порода</string>
     <string name="dog_weight_hint">Вес</string>
