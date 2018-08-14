@@ -203,7 +203,7 @@ public class NewDogFormActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri uri = FileProvider.getUriForFile(this,
                         "com.andersen.dogsapp.fileprovider", photoFile);
-                this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                this.revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 setFilePathString();
                 dog.setDogImageString(photoFilePathString);
                 updatePhotoView();
