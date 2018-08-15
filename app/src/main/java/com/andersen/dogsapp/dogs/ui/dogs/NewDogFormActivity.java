@@ -167,7 +167,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                 && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    private boolean hasNoAnyPermission(){
+    private boolean hasNoAnyPermission() {
         return !(hasPermission(Manifest.permission.CAMERA)
                 || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
     }
@@ -179,14 +179,16 @@ public class NewDogFormActivity extends AppCompatActivity {
             startCameraOrPreview(photoFilePathString);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (hasNoAnyPermission() && !(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))){
+                if (hasNoAnyPermission()
+                        && !(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))) {
                     showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
                             R.string.open_settings_grant_storage_toast,
                             STORAGE_REQUEST_PERMISSION);
-                    new Handler().postDelayed(() -> showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
-                            R.string.open_settings_grant_camera_toast,
-                            CAMERA_REQUEST_PERMISSION), 3000);
+                    new Handler().postDelayed(() ->
+                            showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
+                                    R.string.open_settings_grant_camera_toast,
+                                    CAMERA_REQUEST_PERMISSION), 3000);
                 } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
