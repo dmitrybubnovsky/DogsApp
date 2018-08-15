@@ -137,12 +137,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                                                   int settingPermissionRequest) {
         Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_LONG)
                 .setDuration(3000)
-                .setAction(R.string.settings_snackbar, view -> {
-                    openSettings(settingPermissionRequest);
-                    new Handler().postDelayed(() -> Toast.makeText(getApplicationContext(),
-                            toastStringResId, Toast.LENGTH_SHORT)
-                            .show(), 3000);
-                })
+                .setAction(R.string.settings_snackbar, view -> openSettings(settingPermissionRequest))
                 .show();
     }
 
@@ -178,11 +173,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        new Handler().postDelayed(() -> Toast.makeText(getApplicationContext(),
-                                R.string.storage_permission_denied_toast,
-                                Toast.LENGTH_SHORT).show(), 3000);
-                    } else {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
                                 R.string.open_settings_grant_storage_toast,
                                 STORAGE_REQUEST_PERMISSION);
@@ -190,10 +181,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                 }
 
                 if (!hasPermission(Manifest.permission.CAMERA)) {
-                    if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                        Toast.makeText(this, R.string.camera_permission_denied_toast,
-                                Toast.LENGTH_SHORT).show();
-                    } else {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                         showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
                                 R.string.open_settings_grant_camera_toast,
                                 CAMERA_REQUEST_PERMISSION);
