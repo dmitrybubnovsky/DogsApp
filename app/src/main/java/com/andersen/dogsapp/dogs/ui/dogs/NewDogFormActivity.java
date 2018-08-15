@@ -103,12 +103,10 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     private void checkPermissions() {
         // если все ок запускаем камеру
-        if (hasPermission(Manifest.permission.CAMERA)
-                && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (hasBothPermissions()) {
             startCameraOrPreview(photoFilePathString);
         } // если отсутствуют оба разрешения
-        else if (!(hasPermission(Manifest.permission.CAMERA)
-                || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+        else if (hasNoAnyPermission()) {
             requestPermission(new String[]{Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST);
         } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -164,23 +162,38 @@ public class NewDogFormActivity extends AppCompatActivity {
         }
     }
 
+    private boolean hasBothPermissions() {
+        return hasPermission(Manifest.permission.CAMERA)
+                && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    private boolean hasNoAnyPermission(){
+        return !(hasPermission(Manifest.permission.CAMERA)
+                || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (hasPermission(Manifest.permission.CAMERA)
-                && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (hasBothPermissions()) {
             startCameraOrPreview(photoFilePathString);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (hasNoAnyPermission() && !(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))){
+                    showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
+                            R.string.open_settings_grant_storage_toast,
+                            STORAGE_REQUEST_PERMISSION);
+                    new Handler().postDelayed(() -> showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
+                            R.string.open_settings_grant_camera_toast,
+                            CAMERA_REQUEST_PERMISSION), 3000);
+                } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
                                 R.string.open_settings_grant_storage_toast,
                                 STORAGE_REQUEST_PERMISSION);
                     }
-                }
-
-                if (!hasPermission(Manifest.permission.CAMERA)) {
+                } else if (!hasPermission(Manifest.permission.CAMERA)) {
                     if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                         showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
                                 R.string.open_settings_grant_camera_toast,
