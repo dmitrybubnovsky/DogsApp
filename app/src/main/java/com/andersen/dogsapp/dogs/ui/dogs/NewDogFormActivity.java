@@ -123,8 +123,8 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     private boolean hasPermission(String permission) {
-        return (ContextCompat.checkSelfPermission(this, permission)
-                == PackageManager.PERMISSION_GRANTED);
+        return ContextCompat.checkSelfPermission(this, permission)
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission(String[] permissions, int permission_request_int) {
