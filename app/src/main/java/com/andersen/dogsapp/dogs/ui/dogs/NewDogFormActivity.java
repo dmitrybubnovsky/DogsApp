@@ -170,14 +170,14 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull
-            int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (hasPermission(Manifest.permission.CAMERA)
                 && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             startCameraOrPreview(photoFilePathString);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if(!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         new Handler().postDelayed(() -> Toast.makeText(getApplicationContext(),
                                 R.string.storage_permission_denied_toast,
@@ -189,7 +189,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                     }
                 }
 
-                if(!hasPermission(Manifest.permission.CAMERA)){
+                if (!hasPermission(Manifest.permission.CAMERA)) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                         Toast.makeText(this, R.string.camera_permission_denied_toast,
                                 Toast.LENGTH_SHORT).show();
