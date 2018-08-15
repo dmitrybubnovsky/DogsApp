@@ -41,6 +41,7 @@
     <string name="open_settings_grant_access_toast">"Open Settings and grant access to Camera and Storage"</string>
     <string name="open_settings_grant_storage_toast">"Open Settings and grant the Storage Permission"</string>
     <string name="open_settings_grant_camera_toast">"Open Settings and grant the Camera Permission"</string>
+    <string name="camera_permission_denied_toast">"Camera Permissions denied"</string>
     <string name="storage_permission_denied_toast">"Storage Permissions denied"</string>
     <string name="grant_permission_snackbar">"Grant"</string>
     <string name="settings_snackbar">"Settings"</string>
