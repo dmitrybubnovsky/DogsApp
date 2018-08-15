@@ -19,10 +19,17 @@
 
     <string name="storage_not_granted_snackbar">"Отсутствует разрешение на доступ к хранилищу" </string>
     <string name="camera_not_granted_snackbar">"Отсутствует разрешение на доступ к камере" </string>
+    <string name="need_both_access_snackbar">"Приложению нужен доступ к камере и хранилищу"</string>
     <string name="need_storage_access_snackbar">"Чтобы сохранять и просматривать фотографии, нужно разрешение на доступ к хранилищу"</string>
     <string name="need_camera_access_snackbar">"Чтобы сделать фотографию, нужно разрешение на доступ к камере"</string>
-    <string name="open_settings_grant_storage_snackbar">"Откройте Настройки и включите доступ к хранилищу"</string>
-    <string name="storage_permission_denied_snackbar">"Разрешение на доступ к хранилищу отклонено"</string>
+
+    <string name="open_settings_grant_access_toast">"Откройте Настройки и предоставьте доступ к камере и хранилищу"</string>
+    <string name="open_settings_grant_storage_toast">"Откройте Настройки и включите доступ к хранилищу</string>
+    <string name="open_settings_grant_camera_toast">"Откройте Настройки и предоставьте доступ к камере"</string>
+
+
+    <string name="storage_permission_denied_toast">"Доступ к ХРАНИЛИЩУ отклонён"</string>
+    <string name="camera_permission_denied_toast">"Доступ к КАМЕРЕ отклонён"</string>
     <string name="grant_permission_snackbar">"Разрешить"</string>
     <string name="settings_snackbar">"Настройки"</string>
 
