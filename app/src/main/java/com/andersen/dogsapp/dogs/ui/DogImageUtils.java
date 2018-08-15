@@ -11,9 +11,9 @@ import android.util.Log;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 
 public class DogImageUtils {
-
+    final static int VALID_RESOURCE_ID = 0;
     public static Drawable getDogImage(Context context, String dogImageString) {
-        final int VALID_RESOURCE_ID = 0;
+
         Drawable dogImageDrawable;
         Resources resources = context.getResources();
         int dogImageResId = resources.getIdentifier(dogImageString, "drawable",
