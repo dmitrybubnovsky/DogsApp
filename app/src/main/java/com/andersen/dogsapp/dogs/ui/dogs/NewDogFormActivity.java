@@ -40,20 +40,19 @@ import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
 
 public class NewDogFormActivity extends AppCompatActivity {
-    public static final String TAG = "#";
+    private static final String TAG = "#";
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int STORAGE_REQUEST_PERMISSION = 114;
     private static final int CAMERA_REQUEST_PERMISSION = 116;
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-    private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String EXTRA_DOG_FOR_KIND = "extra_dog_for_kind";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
     public static final int REQUEST_CODE_DOG_KIND = 202;
     public static final int REQUEST_CODE_PREVIEW = 203;
+    private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private EditText dogNameEditText;
     private EditText dogKindEditText;
     private EditText dogAgeEditText;
@@ -111,9 +110,9 @@ public class NewDogFormActivity extends AppCompatActivity {
         else if (!(hasPermission(Manifest.permission.CAMERA)
                 || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
             requestPermission(new String[]{Manifest.permission.CAMERA,
-                    Manifest.permission.CAMERA}, PERMISSIONS_REQUEST);
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST);
         } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            requestPermissionWithRationale(Manifest.permission.READ_EXTERNAL_STORAGE,
+            requestPermissionWithRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     R.string.need_storage_access_snackbar,
                     STORAGE_PERMISSIONS, STORAGE_REQUEST_PERMISSION);
         } else if (!hasPermission(Manifest.permission.CAMERA)) {
@@ -124,8 +123,8 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     private boolean hasPermission(String permission) {
-        return ContextCompat.checkSelfPermission(this, permission)
-                == PackageManager.PERMISSION_GRANTED;
+        return (ContextCompat.checkSelfPermission(this, permission)
+                == PackageManager.PERMISSION_GRANTED);
     }
 
     private void requestPermission(String[] permissions, int permission_request_int) {
