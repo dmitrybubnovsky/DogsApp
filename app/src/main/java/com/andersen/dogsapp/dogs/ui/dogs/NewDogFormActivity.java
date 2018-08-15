@@ -177,24 +177,27 @@ public class NewDogFormActivity extends AppCompatActivity {
             startCameraOrPreview(photoFilePathString);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    new Handler().postDelayed(() -> Toast.makeText(getApplicationContext(),
-                            R.string.storage_permission_denied_toast,
-                            Toast.LENGTH_SHORT).show(), 3000);
-                } else {
-                    showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
-                            R.string.open_settings_grant_storage_toast,
-                            STORAGE_REQUEST_PERMISSION);
+                if(!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        new Handler().postDelayed(() -> Toast.makeText(getApplicationContext(),
+                                R.string.storage_permission_denied_toast,
+                                Toast.LENGTH_SHORT).show(), 3000);
+                    } else {
+                        showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
+                                R.string.open_settings_grant_storage_toast,
+                                STORAGE_REQUEST_PERMISSION);
+                    }
                 }
 
-                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                    Toast.makeText(this, R.string.camera_permission_denied_toast,
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
-                            R.string.open_settings_grant_camera_toast,
-                            CAMERA_REQUEST_PERMISSION);
+                if(!hasPermission(Manifest.permission.CAMERA)){
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                        Toast.makeText(this, R.string.camera_permission_denied_toast,
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
+                                R.string.open_settings_grant_camera_toast,
+                                CAMERA_REQUEST_PERMISSION);
+                    }
                 }
             }
         }
