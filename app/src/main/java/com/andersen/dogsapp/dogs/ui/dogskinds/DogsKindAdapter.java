@@ -26,7 +26,6 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-//        dogsKinds = DogKindSource.getDogKinds();
         this.listener = listener;
     }
 
@@ -60,7 +59,6 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             String dogKind = dogsKinds.get(position).getKind();
             dogKindTextView.setText(dogKind);
 
-//            String imageResourceString = dogsKinds.get(position).getImageString();
             String imageResourceString = "chinook";
             dogKindImageView.setImageResource(getImageId(context, imageResourceString));
 

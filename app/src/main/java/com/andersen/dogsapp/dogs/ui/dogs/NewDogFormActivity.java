@@ -48,7 +48,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static final String EXTRA_NEW_OWNER = "new owner dog";
-    public static final String EXTRA_DOG_FOR_KIND = "extra_dog_for_kind";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
     public static final int REQUEST_CODE_DOG_KIND = 202;
@@ -275,7 +274,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private void startDogsKindsListActivity() {
 
         // Если сети нет, то список пород НЕ открываем
-        if(!NetworkManager.hasNetWorkAccess(this)) {
+        if (!NetworkManager.hasNetWorkAccess(this)) {
             Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
