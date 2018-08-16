@@ -116,4 +116,3 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
         recyclerView.setAdapter(adapter);
     }
 }
-

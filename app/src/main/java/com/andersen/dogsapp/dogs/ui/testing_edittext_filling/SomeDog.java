@@ -21,12 +21,12 @@ public class SomeDog {
 
     public String name() {
         Random r = new Random();
-        return NAME[r.nextInt(NAME.length-1)];
+        return NAME[r.nextInt(NAME.length - 1)];
     }
 
     public String kind() {
         Random r = new Random();
-        return KIND[r.nextInt(KIND.length-1)];
+        return KIND[r.nextInt(KIND.length - 1)];
     }
 
     public int weight() {

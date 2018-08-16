@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.andersen.dogsapp">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:name=".dogs.MyApp"
         android:allowBackup="true"
@@ -10,6 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.andersen.dogsapp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files"/>
+        </provider>
+
         <activity
             android:name=".dogs.ui.MainAppDescriptionActivity"
             android:theme="@style/NoActionBar">
@@ -33,11 +44,15 @@
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogs.NewDogFormActivity"
+            android:configChanges="orientation"
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogskinds.DogsKindsListActivity"
             android:theme="@style/MainDogApp"/>
-
+        <activity
+            android:name=".dogs.ui.dogs.DogPhotoPreviewActivity"
+            android:configChanges="orientation">
+        </activity>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@
     <color name="colorCustomBlueGrey">#a39db5</color>
     <color name="colorCustomLightGreen">#03cd03</color>
     <color name="colorCustomYellow">#a2ff55</color>
+    <color name="colorCustomBlack">#000000</color>
     <color name="colorCustomOrange">#dfac03</color>
 
     <drawable name="drawableColorHalfTransparency">#99d8d8d8</drawable>
