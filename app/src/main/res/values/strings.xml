@@ -33,6 +33,8 @@
     <string name="toolbar_title_kinds_list">Choose dog kind</string>
     <string name="toolbar_title_detail_info">Dogs info</string>
 
+    <string name="no_network_toast">NO NETWORK CONNECTION</string>
+
     <string name="storage_not_granted_snackbar">"Storage permission isn't granted" </string>
     <string name="camera_not_granted_snackbar">"Camera permission isn't granted" </string>
     <string name="need_both_access_snackbar">"Application needs access to camera and storage"</string>

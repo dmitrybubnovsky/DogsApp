@@ -1,33 +1,47 @@
 package com.andersen.dogsapp.dogs.data;
 
-import android.provider.ContactsContract;
-
 import java.util.List;
 
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
-public class DataRepository {
+public class DataRepository {  // implements IBreedsOnCallback
     private static DataRepository instance;
     private IOwnersDataSource ownersDataSource;
     private IDogsDataSource dogsDataSource;
+    private IBreedsDataSource iBreedsDataSource;
 
-    private DataRepository(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource) {
+
+    private DataRepository(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource iBreedsDataSource) {
         this.ownersDataSource = ownersDataSource;
         this.dogsDataSource = dogsDataSource;
+        this.iBreedsDataSource = iBreedsDataSource;
     }
 
-    public static void init(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource) {
+    public static void init(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource iBreedsDataSource) {
         if (instance == null) {
-            instance = new DataRepository(ownersDataSource, dogsDataSource);
+            instance = new DataRepository(ownersDataSource, dogsDataSource, iBreedsDataSource);
         }
     }
 
     public static DataRepository get() {
         return instance;
     }
+
+    public void getDogKinds(ICallback<List<DogKind>> callback){
+        iBreedsDataSource.getDogsKinds(callback);
+    }
+
+//    @Override
+//    public List<DogKind> breedsCallBack() {
+//
+//        return dogKinds;
+//    }
 
     public List<Dog> getOwnerDogs(Owner owner) {
         return dogsDataSource.getOwnerDogs(owner);

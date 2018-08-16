@@ -33,6 +33,7 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
+import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.io.File;
 
@@ -47,7 +48,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static final String EXTRA_NEW_OWNER = "new owner dog";
-    public static final String EXTRA_DOG_FOR_KIND = "extra_dog_for_kind";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
     public static final int REQUEST_CODE_DOG_KIND = 202;
@@ -84,12 +84,12 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity(dog));
+        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity());
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то переход в список пород
             if (dog.getDogKind() == null) {
-                startDogsKindsListActivity(dog);
+                startDogsKindsListActivity();
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DataRepository.get().addDog(dog);
@@ -270,12 +270,17 @@ public class NewDogFormActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_PREVIEW);
     }
 
-    private void startDogsKindsListActivity(Dog dog) {
-        Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
-        intent.putExtra(EXTRA_DOG_FOR_KIND, dog);
-        startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-        Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast,
-                Toast.LENGTH_SHORT).show();
+
+    private void startDogsKindsListActivity() {
+
+        // Если сети нет, то список пород НЕ открываем
+        if (!NetworkManager.hasNetWorkAccess(this)) {
+            Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
+            Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void backToDogListActivity() {
