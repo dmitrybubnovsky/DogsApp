@@ -35,13 +35,30 @@
 
     <string name="no_network_toast">NO NETWORK CONNECTION</string>
 
+    <string name="storage_not_granted_snackbar">"Storage permission isn't granted" </string>
+    <string name="camera_not_granted_snackbar">"Camera permission isn't granted" </string>
+    <string name="need_both_access_snackbar">"Application needs access to camera and storage"</string>
+    <string name="need_storage_access_snackbar">"Storage permission is needed to show files count"</string>
+    <string name="need_camera_access_snackbar">"Camera permission is needed to take a photo"</string>
+    <string name="open_settings_grant_access_toast">"Open Settings and grant access to Camera and Storage"</string>
+    <string name="open_settings_grant_storage_toast">"Open Settings and grant the Storage Permission"</string>
+    <string name="open_settings_grant_camera_toast">"Open Settings and grant the Camera Permission"</string>
+    <string name="camera_permission_denied_toast">"Camera Permissions denied"</string>
+    <string name="storage_permission_denied_toast">"Storage Permissions denied"</string>
+    <string name="grant_permission_snackbar">"Grant"</string>
+    <string name="settings_snackbar">"Settings"</string>
+
     <string name="weight_measure">kg</string>
     <string name="tall_measure">cm</string>
     <string name="age_year_measure">yrs</string>
     <string name="age_months_measure">months</string>
 
-    <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="voice_btn_title">VOICE!</string>
+    <string name="start_camera_btn_title">Camera</string>
+    <string name="cancel_btn_title">Cancel</string>
+    <string name="save_photo_btn_title">Save</string>
+
+    <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="text_view_app_description">This app dedicated to Dog-fanciers. It contains the list of dog-owners with detailed information of their pet including its name, type of dog, weight, age and tall</string>
     <string name="text_view_title_kind">Kind of dog: </string>
     <string name="text_view_title_age">Age: </string>

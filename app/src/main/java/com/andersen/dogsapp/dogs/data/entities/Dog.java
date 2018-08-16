@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Parcelable;
 import android.os.Parcel;
+import android.util.Log;
+
+import java.util.UUID;
 
 public class Dog implements Parcelable {
     private int dogId;
@@ -61,12 +64,6 @@ public class Dog implements Parcelable {
         return dogKind;
     }
 
-    public int getDogImageId(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());
-        return resourceId;
-    }
-
     public String getDogImageString() {
         return dogImageString;
     }
@@ -113,6 +110,10 @@ public class Dog implements Parcelable {
 
     public void setDogKind(String dogKind) {
         this.dogKind = dogKind;
+    }
+
+    public int getDogId() {
+        return dogId;
     }
 
     @Override
