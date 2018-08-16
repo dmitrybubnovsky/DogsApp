@@ -37,12 +37,6 @@ public class DataRepository {  // implements IBreedsOnCallback
         iBreedsDataSource.getDogsKinds(callback);
     }
 
-//    @Override
-//    public List<DogKind> breedsCallBack() {
-//
-//        return dogKinds;
-//    }
-
     public List<Dog> getOwnerDogs(Owner owner) {
         return dogsDataSource.getOwnerDogs(owner);
     }
@@ -65,5 +59,9 @@ public class DataRepository {  // implements IBreedsOnCallback
             owner.setDogs(getOwnerDogs(owner));
         }
         return owners;
+    }
+
+    public String getBreedsImage(ICallback<String> callback){
+        return iBreedsDataSource.getBreedsImage(callback);
     }
 }

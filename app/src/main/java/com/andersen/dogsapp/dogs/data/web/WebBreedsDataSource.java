@@ -76,6 +76,13 @@ public class WebBreedsDataSource implements IBreedsDataSource {
         });
     }
 
+    @Override
+    public String getBreedsImage (ICallback<String> iCallback){
+
+        // !!! TODO: FIX RETURN
+        return "";
+    }
+
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Type type = new TypeToken<List<DogKind>>() {
