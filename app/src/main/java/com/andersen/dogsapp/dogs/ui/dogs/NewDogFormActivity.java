@@ -45,6 +45,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int STORAGE_REQUEST_PERMISSION = 114;
     private static final int SNACKBAR_DURATION = 3000;
+    private static final int HANDLER_DELAY = 3000;
     private static final int CAMERA_REQUEST_PERMISSION = 116;
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -187,7 +188,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                             STORAGE_REQUEST_PERMISSION);
                     new Handler().postDelayed(() ->
                             showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
-                                    CAMERA_REQUEST_PERMISSION), 3000);
+                                    CAMERA_REQUEST_PERMISSION), HANDLER_DELAY);
                 } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
