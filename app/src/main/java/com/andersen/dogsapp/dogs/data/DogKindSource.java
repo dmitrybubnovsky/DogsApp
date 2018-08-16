@@ -21,7 +21,6 @@ public class DogKindSource {
 
     private final List<DogKind> dogKindsList;
 
-
     private DogKindSource() {
         dogKindsList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {

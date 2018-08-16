@@ -56,7 +56,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             dogKindImageView = view.findViewById(R.id.dog_kind_image_view);
         }
 
-        private void setData(Context context, int position){
+        private void setData(Context context, int position) {
             String dogKind = dogsKinds.get(position).getKind();
             dogKindTextView.setText(dogKind);
 
