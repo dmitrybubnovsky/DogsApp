@@ -83,6 +83,14 @@ public class DogsKindsListActivity extends AppCompatActivity
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
         setResult(RESULT_OK, intent);
+
+        Log.d(TAG, " getBreedsImage( "+dogKind.getKind()+" )");
+        DataRepository.get().getBreedsImage(dogKind.getKind(), new ICallback<String>() {
+            @Override
+            public void onResponseICallback(String s) {
+                Log.d(TAG, " onResponseICallback = "+s);
+            }
+        });
         finish();
     }
 

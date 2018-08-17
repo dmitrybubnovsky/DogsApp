@@ -45,6 +45,7 @@ public class WebBreedsDataSource implements IBreedsDataSource {
                 .addConverterFactory(buildGsonConverter())
                 .build();
         instanceAPI = instanceRetrofit.create(DogBreedsAPI.class);
+
         dogKinds = new ArrayList<>();
     }
 
@@ -57,12 +58,12 @@ public class WebBreedsDataSource implements IBreedsDataSource {
 
     @Override
     public void getDogsKinds(ICallback<List<DogKind>> iCallback) {
-        Call<List<DogKind>> call = instanceAPI.getBreeds();
-        call.enqueue(new Callback<List<DogKind>>() {
+        Call<List<String>> call = instanceAPI.getBreeds();
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<DogKind>> call, Response<List<DogKind>> response) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    dogKinds = response.body();
+                    dogKinds = convertStringListToDogKindList(response.body());
                     iCallback.onResponseICallback(dogKinds);
                 } else {
                     Log.d(TAG, "response is NOT successful");
@@ -70,22 +71,37 @@ public class WebBreedsDataSource implements IBreedsDataSource {
             }
 
             @Override
-            public void onFailure(Call<List<DogKind>> call, Throwable t) {
+            public void onFailure(Call<List<String>> call, Throwable t) {
                 t.printStackTrace();
             }
         });
     }
 
     @Override
-    public String getBreedsImage (ICallback<String> iCallback){
+    public void getBreedsImage (String breedString, ICallback<String> iCallback){
+        Call<List<String>> call = instanceAPI.getBreedImageUriString(breedString);
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    List<String> listString = response.body();
+                    String uriImageString = listString.get(0);
+                    iCallback.onResponseICallback(uriImageString);
+                } else {
+                    Log.d(TAG, "getBreedsImage: response was NOT successful");
+                }
+            }
 
-        // !!! TODO: FIX RETURN
-        return "";
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Type type = new TypeToken<List<DogKind>>() {
+        Type type = new TypeToken<List<String>>() {
         }.getType();
         gsonBuilder.registerTypeAdapter(type, new BreedDeserializer());
         Gson gson = gsonBuilder.create();
@@ -101,5 +117,19 @@ public class WebBreedsDataSource implements IBreedsDataSource {
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .build();
         return client;
+    }
+
+    private List<DogKind> convertStringListToDogKindList (List<String> breedsListString) {
+
+        List<DogKind> dogKinds = new ArrayList<>();
+        for (String breedString : breedsListString) {
+            dogKinds.add(new DogKind(breedString));
+        }
+        return dogKinds;
+    }
+
+    private String convertStringListToUriString (List<String> uriStringList) {
+        String uriString = uriStringList.get(0);
+        return uriString;
     }
 }

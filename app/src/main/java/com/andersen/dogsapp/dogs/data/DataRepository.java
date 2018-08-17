@@ -61,7 +61,7 @@ public class DataRepository {  // implements IBreedsOnCallback
         return owners;
     }
 
-    public String getBreedsImage(ICallback<String> callback){
-        return iBreedsDataSource.getBreedsImage(callback);
+    public void getBreedsImage(String breedString, ICallback<String> callback){
+        iBreedsDataSource.getBreedsImage(breedString, callback);
     }
 }

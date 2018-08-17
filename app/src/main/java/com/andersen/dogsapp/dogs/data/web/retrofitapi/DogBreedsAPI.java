@@ -10,8 +10,8 @@ import retrofit2.http.Path;
 
 public interface DogBreedsAPI {
     @GET("breeds/list/all")
-    Call<List<DogKind>> getBreeds();
+    Call<List<String>> getBreeds();
 
-    @GET("breeds/{breed}/images/random")
-    Call<String> getBreedImageUriString(@Path("breed")String breedString);
+    @GET("breed/{breed}/images/random")
+    Call<List<String>> getBreedImageUriString(@Path("breed") String breed);
 }

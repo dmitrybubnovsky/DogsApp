@@ -8,5 +8,5 @@ import java.util.List;
 public interface IBreedsDataSource {
     void getDogsKinds(ICallback<List<DogKind>> responseCallback);
 
-    String getBreedsImage(ICallback<String> responseCallback);
+    void getBreedsImage(String breedString, ICallback<String> responseCallback);
 }
