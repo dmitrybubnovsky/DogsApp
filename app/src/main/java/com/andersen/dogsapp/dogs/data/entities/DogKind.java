@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DogKind implements Parcelable {
+    private int id;
     private String kind;
     private String imageString;
 
@@ -20,6 +21,7 @@ public class DogKind implements Parcelable {
     }
 
     private DogKind(Parcel parcelInstance) {
+        id = parcelInstance.readInt();
         kind = parcelInstance.readString();
         imageString = parcelInstance.readString();
     }
@@ -47,6 +49,7 @@ public class DogKind implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(kind);
         dest.writeString(imageString);
     }
