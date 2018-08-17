@@ -15,6 +15,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
+import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseBreedCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.squareup.picasso.Picasso;
@@ -25,6 +26,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
+    private IResponseBreedCallback<String, ImageView, DogKind> responseCallback;
     private List<DogKind> dogsKinds;
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
@@ -35,6 +37,10 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     public void setBreeds(List<DogKind> dogsKinds) {
         this.dogsKinds = dogsKinds;
+    }
+
+    public void setResponseBreedCallbackListener(IResponseBreedCallback responseCallback) {
+        this.responseCallback = responseCallback;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,39 +68,23 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         private void setData(Context context, int position) {
             String dogKindString = dogsKinds.get(position).getKind();
 
-            DataRepository.get().getBreedsImage(dogKindString, new ICallback<String>() {
-                @Override
-                public void onResponseICallback(String breedString) {
-                    dogKindInstance.setImageString(breedString);
-                    Log.d(TAG, "onResponseICallback "+ dogKindInstance.geUriImageString());
-                    Picasso.get()
-                            .load(dogKindInstance.geUriImageString())
-                            .placeholder(R.drawable.afghan_hound)
-                            .error(R.drawable.afghan_hound)
-                            .into(dogKindImageView);
-                }
-            });
-
             dogKindTextView.setText(dogKindString);
-
-//            String imageResourceString = dogsKinds.get(position).geUriImageString();
             String imageResourceString = "chinook";
-//            dogKindImageView.setImageResource(getImageId(context, imageResourceString));
-
             dogKindInstance = new DogKind();
             dogKindInstance.setKind(dogKindString);
+            responseCallback.onResponseBreedCallbackListener(dogKindString, dogKindImageView, dogKindInstance);
         }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setData(context, position);
     }
 
     @Override
     public DogsKindAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.dog_kind_item, parent, false);
         return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(context, position);
     }
 
     @Override

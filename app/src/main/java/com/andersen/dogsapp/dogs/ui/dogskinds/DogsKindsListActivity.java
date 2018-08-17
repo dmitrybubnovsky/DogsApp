@@ -8,21 +8,24 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
+import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseBreedCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DogsKindsListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<DogKind> {
+        implements IRecyclerItemListener<DogKind>, IResponseBreedCallback <String, ImageView, DogKind> {
     public static final String TAG = "#";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
@@ -71,11 +74,28 @@ public class DogsKindsListActivity extends AppCompatActivity
 
     private void updateUI() {
         adapter.setBreeds(dogKinds);
+        adapter.setResponseBreedCallbackListener(this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
         if(progressBar != null && dogKinds != null){
             progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onResponseBreedCallbackListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
+        DataRepository.get().getBreedsImage(dogKindString, new ICallback<String>() {
+            @Override
+            public void onResponseICallback(String breedString) {
+                dogKindInstance.setImageString(breedString);
+                Log.d(TAG, "onResponseICallback "+ dogKindInstance.geUriImageString());
+                Picasso.get()
+                        .load(dogKindInstance.geUriImageString())
+                        .placeholder(R.drawable.afghan_hound)
+                        .error(R.drawable.afghan_hound)
+                        .into(dogKindImageView);
+            }
+        });
     }
 
     @Override
