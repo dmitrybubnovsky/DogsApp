@@ -18,7 +18,6 @@ public class BreedDeserializer implements JsonDeserializer<List<String>> {
 
     @Override
     public List<String> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Log.d(TAG, "deserialize ");
         List<String> breedsListString = new ArrayList<>();
 
         JsonObject jsonObject = json.getAsJsonObject();
