@@ -20,23 +20,17 @@ public class BreedDeserializer implements JsonDeserializer<List<String>> {
     public List<String> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         Log.d(TAG, "deserialize ");
         List<String> breedsListString = new ArrayList<>();
-        ;
-        JsonObject jsonObject = json.getAsJsonObject();
 
+        JsonObject jsonObject = json.getAsJsonObject();
 
         if (jsonObject.get("message").isJsonObject()) {
             jsonObject = (JsonObject) jsonObject.get("message");
-            breedsListString = new ArrayList<>(jsonObject.keySet()); // TODO: refactror it
-            Log.d(TAG, "deserialize: json.isJsonObject() = " + breedsListString + " is " + breedsListString.getClass());
+            breedsListString.addAll(jsonObject.keySet()); // TODO: refactror it
         } else if (jsonObject.get("message").isJsonPrimitive()) {
-            Log.d(TAG, "deserialize: json.isJsonPrimitive() = " + breedsListString + " is " + breedsListString.getClass());
-
             JsonPrimitive jsonPrimitive = jsonObject.get("message").getAsJsonPrimitive();
             String uriString = jsonPrimitive.getAsString();
-            breedsListString = new ArrayList<>();
             breedsListString.add(uriString);
         }
-
         return breedsListString;
     }
 }

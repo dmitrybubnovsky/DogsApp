@@ -85,12 +85,12 @@ public class DogsKindsListActivity extends AppCompatActivity
         setResult(RESULT_OK, intent);
 
         Log.d(TAG, " getBreedsImage( "+dogKind.getKind()+" )");
-        DataRepository.get().getBreedsImage(dogKind.getKind(), new ICallback<String>() {
-            @Override
-            public void onResponseICallback(String s) {
-                Log.d(TAG, " onResponseICallback = "+s);
-            }
-        });
+//        DataRepository.get().getBreedsImage(dogKind.getKind(), new ICallback<String>() {
+//            @Override
+//            public void onResponseICallback(String s) {
+//                Log.d(TAG, " onResponseICallback = "+s);
+//            }
+//        });
         finish();
     }
 
