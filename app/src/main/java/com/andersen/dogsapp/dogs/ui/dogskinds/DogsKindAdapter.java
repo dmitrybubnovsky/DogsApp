@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.DogKindSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -60,7 +59,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             String dogKind = dogsKinds.get(position).getKind();
             dogKindTextView.setText(dogKind);
 
-//            String imageResourceString = dogsKinds.get(position).getImageString();
+//            String imageResourceString = dogsKinds.get(position).geUriImageString();
             String imageResourceString = "chinook";
             dogKindImageView.setImageResource(getImageId(context, imageResourceString));
 

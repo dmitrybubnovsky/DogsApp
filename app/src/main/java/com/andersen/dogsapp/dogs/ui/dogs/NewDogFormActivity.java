@@ -323,7 +323,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         dog.setDogKind(dogKindString);
         dogKindEditText.setText(dogKindString);
         if (!hasPhoto) {
-            dog.setDogImageString(dogKind.getImageString());
+            dog.setDogImageString(dogKind.geUriImageString());
         }
     }
 

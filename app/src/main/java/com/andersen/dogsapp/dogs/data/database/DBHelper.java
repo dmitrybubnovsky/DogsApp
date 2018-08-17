@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
@@ -29,6 +30,11 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(DogTable.TALL).append(" INTEGER,")
             .append(DogTable.WEIGHT).append(" INTEGER,")
             .append(DogTable.AGE).append(" INTEGER);").toString();
+    private static final String CREATE_TABLE_DOGKIND_QUERY = new StringBuilder()
+            .append("CREATE TABLE ").append(DogKindTable.TABLE_NAME).append("(")
+            .append(DogKindTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
+            .append(DogKindTable.KIND).append(" TEXT,")
+            .append(DogKindTable.IMAGE_URI).append(" TEXT);").toString();
     private static DBHelper dbHelper = null;
 
     private DBHelper(Context context) {
@@ -46,12 +52,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_OWNER_QUERY);
         db.execSQL(CREATE_TABLE_DOG_QUERY);
+        db.execSQL(CREATE_TABLE_DOGKIND_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + OwnerTable.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + DogTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DogKindTable.TABLE_NAME);
         onCreate(db);
     }
 }
