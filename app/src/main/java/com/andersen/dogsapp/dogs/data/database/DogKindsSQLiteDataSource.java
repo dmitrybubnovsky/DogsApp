@@ -10,7 +10,7 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogKindsSQLiteDataSource {//implements IBreedsDataSource
+public class DogKindsSQLiteDataSource {
     private static final String TAG = "#";
     private static DogKindsSQLiteDataSource dogKindsDataSource;
     private SQLiteDatabase db;
@@ -26,6 +26,11 @@ public class DogKindsSQLiteDataSource {//implements IBreedsDataSource
             dogKindsDataSource = new DogKindsSQLiteDataSource(dbHelper);
         }
         return dogKindsDataSource;
+    }
+
+    public List<DogKind> getDogKinds(){
+        loadDogKinds();
+        return dogKinds;
     }
 
     private void loadDogKinds() {
@@ -56,7 +61,8 @@ public class DogKindsSQLiteDataSource {//implements IBreedsDataSource
         }
     }
 
-    // для формы
+
+
     public DogKind addDogKind(DogKind dogKind) {
         db = DatabaseManager.getInstance().openDB();
 
@@ -66,12 +72,11 @@ public class DogKindsSQLiteDataSource {//implements IBreedsDataSource
         long insertResult = db.insert(DogKindTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
 
-//        if (insertResult != -1) {
-//            dogKind.setOwnerId((int) insertResult);
-//            return dogKind;
-//        } else {
-//            return new DogKind();
-//        }
-        return new DogKind();
+        if (insertResult != -1) {
+            dogKind.setId((int) insertResult);
+            return dogKind;
+        } else {
+            return new DogKind();
+        }
     }
 }

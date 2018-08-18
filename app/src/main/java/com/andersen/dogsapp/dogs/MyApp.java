@@ -17,6 +17,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+
         DBHelper dbHelper = DBHelper.getInstance(this);
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);

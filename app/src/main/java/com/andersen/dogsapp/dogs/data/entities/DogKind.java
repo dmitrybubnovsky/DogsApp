@@ -9,10 +9,13 @@ public class DogKind implements Parcelable {
     private String imageString;
 
     public DogKind() {
+        kind = "";
+        imageString = "";
     }
 
     public DogKind(String kind) {
         this.kind = kind;
+        imageString = "";
     }
 
     public DogKind(String kind, String imageString) {
@@ -36,6 +39,10 @@ public class DogKind implements Parcelable {
 
     public void setKind(String kind) {
         this.kind = kind;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setImageString(String imageString) {
@@ -65,4 +72,8 @@ public class DogKind implements Parcelable {
             return new DogKind[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
 }

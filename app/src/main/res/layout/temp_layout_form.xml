@@ -58,13 +58,22 @@
                 android:layout_height="150dp"
                 android:src="@drawable/cat_makes_selfie"/>
 
-
             <Button
                 android:id="@+id/add_breed_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8dp"
                 android:text="Добавить породу в БД"/>
+
+            <Button
+                android:id="@+id/update_breed_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_8dp"
+                android:text="Обновить БД"/>
+
+
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

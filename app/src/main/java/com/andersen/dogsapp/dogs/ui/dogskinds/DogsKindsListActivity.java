@@ -86,11 +86,11 @@ public class DogsKindsListActivity extends AppCompatActivity
     public void onResponseBreedCallbackListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
         DataRepository.get().getBreedsImage(dogKindString, new ICallback<String>() {
             @Override
-            public void onResponseICallback(String breedString) {
-                dogKindInstance.setImageString(breedString);
+            public void onResponseICallback(String uriBreedString) {
+                dogKindInstance.setImageString(uriBreedString);
                 Log.d(TAG, "onResponseICallback "+ dogKindInstance.geUriImageString());
                 Picasso.get()
-                        .load(dogKindInstance.geUriImageString())
+                        .load(uriBreedString)
                         .placeholder(R.drawable.afghan_hound)
                         .error(R.drawable.afghan_hound)
                         .into(dogKindImageView);

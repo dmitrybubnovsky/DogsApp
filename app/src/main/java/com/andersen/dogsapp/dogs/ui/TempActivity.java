@@ -7,15 +7,23 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.MyApp;
+import com.andersen.dogsapp.dogs.data.database.DBHelper;
+import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.entities.DogKind;
 
 public class TempActivity extends AppCompatActivity {
     public static final String TAG = "#";
-    private EditText breedName;
+    private EditText breedNameEditText;
     private EditText uriStringEditText;
     private ImageView breedImageView;
-    private Button breedButton;
+    private Button addBreedButton;
+    private Button updateBreedButton;
+    DBHelper dbHelper;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,25 +31,57 @@ public class TempActivity extends AppCompatActivity {
         setContentView(R.layout.temp_layout_form);
         initViews();
 
+         dbHelper = DBHelper.getInstance(this)
+
         // just for test
         testingFillEditText();
 
+        // ADD BREED IN DATABASE
+        addBreedButton.setOnClickListener(view -> {
+            DogKind dogKind = addDogKind();
+            Log.d(TAG, "dogKind "+ dogKind.getKind() + " imageString " + dogKind.geUriImageString() + " dogId "+ dogKind.getId());
+        });
 
-        breedButton.setOnClickListener(view -> {
-            Log.d(TAG, "pressed");
+        updateBreedButton.setOnClickListener(view -> {
+            Toast.makeText(getApplicationContext(),"UPDATE",Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "update");
+        });
+
+        // UPDATE LONG CLICK
+        updateBreedButton.setOnLongClickListener(view -> {
+            if(uriStringEditText.getText().toString().length() == 0){
+                uriStringEditText.setText("https://images.dog.ceo/breeds/akita/Akita_Dog.jpg");
+            } else {
+                uriStringEditText.setText("");
+            }
+            return true;
         });
     }
 
     private void initViews() {
-        breedName = findViewById(R.id.breed_name_edittext);
+        breedNameEditText = findViewById(R.id.breed_name_edittext);
         uriStringEditText = findViewById(R.id.uri_string_edittext);
         breedImageView = findViewById(R.id.breed_photo_imageview);
-        breedButton = findViewById(R.id.add_breed_button);
+        addBreedButton = findViewById(R.id.add_breed_button);
+        updateBreedButton = findViewById(R.id.update_breed_button);
+    }
+
+    private DogKind addDogKind (){
+        DogKind dogKind = new DogKind();
+        String dogKindString = breedNameEditText.getText().toString();
+        if (dogKindString != ""){
+            dogKind.setKind(dogKindString);
+            Log.d(TAG, "dogKind "+ dogKind.getKind() + " imageString " + dogKind.geUriImageString());
+        } else {
+            Log.d(TAG, "dogKindString is empty ");
+        }
+        dogKind = DogKindsSQLiteDataSource.getInstance(dbHelper).addDogKind(dogKind);
+        return dogKind;
     }
 
     private void testingFillEditText() {
-        breedName.setText("akita");
-        uriStringEditText.setText("https://images.dog.ceo/breeds/akita/Akita_Inu_dog.jpg");
+        breedNameEditText.setText("akita");
 //        preferredKindEditText.setText(SomeDog.get().kind());
     }
+
 }
