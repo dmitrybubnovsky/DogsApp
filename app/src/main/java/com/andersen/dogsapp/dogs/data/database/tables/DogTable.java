@@ -1,7 +1,7 @@
 package com.andersen.dogsapp.dogs.data.database.tables;
 
 public class DogTable {
-    public static final String TABLE_NAME = "tableName";
+    public static final String TABLE_NAME = "dogTableName";
     public static final String ID = "_id";
     public static final String OWNER_ID = "ownerId";
     public static final String NAME = "dogName";

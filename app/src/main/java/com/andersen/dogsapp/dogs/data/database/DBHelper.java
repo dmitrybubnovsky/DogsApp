@@ -30,11 +30,13 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(DogTable.TALL).append(" INTEGER,")
             .append(DogTable.WEIGHT).append(" INTEGER,")
             .append(DogTable.AGE).append(" INTEGER);").toString();
+
     private static final String CREATE_TABLE_DOGKIND_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(DogKindTable.TABLE_NAME).append("(")
             .append(DogKindTable.ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
             .append(DogKindTable.KIND).append(" TEXT,")
             .append(DogKindTable.IMAGE_URI).append(" TEXT);").toString();
+
     private static DBHelper dbHelper = null;
 
     private DBHelper(Context context) {

@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ public class DogKindsSQLiteDataSource {//implements IBreedsDataSource
 
     private DogKindsSQLiteDataSource(DBHelper dbHelper) {
         DatabaseManager.initInstance(dbHelper);
-         loadDogKinds();
+        loadDogKinds();
     }
 
     public static DogKindsSQLiteDataSource getInstance(DBHelper dbHelper) {
@@ -30,7 +28,7 @@ public class DogKindsSQLiteDataSource {//implements IBreedsDataSource
         return dogKindsDataSource;
     }
 
-    private void  loadDogKinds() {
+    private void loadDogKinds() {
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = null;
         dogKinds = new ArrayList<>();

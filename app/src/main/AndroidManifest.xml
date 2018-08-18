@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:name=".dogs.MyApp"
         android:allowBackup="true"
@@ -25,7 +25,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/files"/>
         </provider>
-
 
         <activity
             android:name=".dogs.ui.MainAppDescriptionActivity"
@@ -57,8 +56,11 @@
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogs.DogPhotoPreviewActivity"
-            android:configChanges="orientation">
-        </activity>
+            android:configChanges="orientation"/>
+
+        <activity android:name=".dogs.ui.TempActivity"
+                  android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

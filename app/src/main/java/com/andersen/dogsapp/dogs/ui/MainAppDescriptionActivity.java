@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
@@ -25,6 +27,16 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         TextView descriptionTextView = findViewById(R.id.app_description_textview);
 
         setTypeFonts(this, descriptionTextView, appNameTextView);
+
+        // TODO DELETE
+        rootLayout.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View view){
+                Intent intent = new Intent(getApplicationContext(), TempActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     private void setTypeFonts(Context context, TextView appNameTextView, TextView descriptionTextView) {

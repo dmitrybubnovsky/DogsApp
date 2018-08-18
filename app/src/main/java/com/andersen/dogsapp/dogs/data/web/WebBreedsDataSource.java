@@ -128,8 +128,9 @@ public class WebBreedsDataSource implements IBreedsDataSource {
         return dogKinds;
     }
 
-    private String convertStringListToUriString (List<String> uriStringList) {
-        String uriString = uriStringList.get(0);
-        return uriString;
-    }
+//    TODO delete that method
+//    private String convertStringListToUriString (List<String> uriStringList) {
+//        String uriString = uriStringList.get(0);
+//        return uriString;
+//    }
 }
