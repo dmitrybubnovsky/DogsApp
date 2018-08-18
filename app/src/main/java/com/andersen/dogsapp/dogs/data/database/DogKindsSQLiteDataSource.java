@@ -68,7 +68,7 @@ public class DogKindsSQLiteDataSource {
 
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.KIND, dogKind.getKind());
-        cv.put(DogKindTable.IMAGE_URI, dogKind.geUriImageString());
+        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
         long insertResult = db.insert(DogKindTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
 
@@ -78,5 +78,15 @@ public class DogKindsSQLiteDataSource {
         } else {
             return new DogKind();
         }
+    }
+
+    public int updateDogKindWithUriImage(DogKind dogKind) {
+        db = DatabaseManager.getInstance().openDB();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
+        int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID+"=?", new String[]{String.valueOf(dogKind.getId())});
+        DatabaseManager.getInstance().closeDB();
+        return result;
     }
 }

@@ -44,9 +44,9 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final String TAG = "#";
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int STORAGE_REQUEST_PERMISSION = 114;
+    private static final int CAMERA_REQUEST_PERMISSION = 116;
     private static final int SNACKBAR_DURATION = 3000;
     private static final int HANDLER_DELAY = 3000;
-    private static final int CAMERA_REQUEST_PERMISSION = 116;
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     public static final String EXTRA_NEW_OWNER = "new owner dog";
@@ -323,7 +323,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         dog.setDogKind(dogKindString);
         dogKindEditText.setText(dogKindString);
         if (!hasPhoto) {
-            dog.setDogImageString(dogKind.geUriImageString());
+            dog.setDogImageString(dogKind.getUriImageString());
         }
     }
 

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.MyApp;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -31,7 +30,7 @@ public class TempActivity extends AppCompatActivity {
         setContentView(R.layout.temp_layout_form);
         initViews();
 
-         dbHelper = DBHelper.getInstance(this)
+         dbHelper = DBHelper.getInstance(this);
 
         // just for test
         testingFillEditText();
@@ -39,7 +38,7 @@ public class TempActivity extends AppCompatActivity {
         // ADD BREED IN DATABASE
         addBreedButton.setOnClickListener(view -> {
             DogKind dogKind = addDogKind();
-            Log.d(TAG, "dogKind "+ dogKind.getKind() + " imageString " + dogKind.geUriImageString() + " dogId "+ dogKind.getId());
+            Log.d(TAG, "dogKind "+ dogKind.getKind() + " imageString " + dogKind.getUriImageString() + " dogId "+ dogKind.getId());
         });
 
         updateBreedButton.setOnClickListener(view -> {
@@ -71,7 +70,6 @@ public class TempActivity extends AppCompatActivity {
         String dogKindString = breedNameEditText.getText().toString();
         if (dogKindString != ""){
             dogKind.setKind(dogKindString);
-            Log.d(TAG, "dogKind "+ dogKind.getKind() + " imageString " + dogKind.geUriImageString());
         } else {
             Log.d(TAG, "dogKindString is empty ");
         }

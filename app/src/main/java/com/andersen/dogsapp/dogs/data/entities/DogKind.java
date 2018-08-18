@@ -29,7 +29,7 @@ public class DogKind implements Parcelable {
         imageString = parcelInstance.readString();
     }
 
-    public String geUriImageString() {
+    public String getUriImageString() {
         return imageString;
     }
 

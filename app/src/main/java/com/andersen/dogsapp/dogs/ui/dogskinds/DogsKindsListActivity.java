@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.MyApp;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
@@ -60,13 +61,17 @@ public class DogsKindsListActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (dogKinds == null){
-            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
-                @Override
-                public void onResponseICallback(List<DogKind> dogBreeds) {
-                    dogKinds = dogBreeds;
-                    runOnUiThread(() -> updateUI());
-                }
-            });
+//
+//            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+//                @Override
+//                public void onResponseICallback(List<DogKind> dogBreeds) {
+//                    dogKinds = dogBreeds;
+//                    runOnUiThread(() -> updateUI());
+//                }
+//            });
+            dogKinds = ((MyApp)getApplicationContext()).dogBreedsList;
+            Log.d(TAG, ""+((MyApp)getApplicationContext()).dogBreedsList.size());
+            updateUI();
         } else {
             updateUI();
         }
@@ -88,7 +93,7 @@ public class DogsKindsListActivity extends AppCompatActivity
             @Override
             public void onResponseICallback(String uriBreedString) {
                 dogKindInstance.setImageString(uriBreedString);
-                Log.d(TAG, "onResponseICallback "+ dogKindInstance.geUriImageString());
+                Log.d(TAG, "onResponseICallback "+ dogKindInstance.getUriImageString());
                 Picasso.get()
                         .load(uriBreedString)
                         .placeholder(R.drawable.afghan_hound)
