@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
+import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +18,23 @@ public class DogKindsSQLiteDataSource {
     private SQLiteDatabase db;
     private List<DogKind> dogKinds;
 
-    private DogKindsSQLiteDataSource(DBHelper dbHelper) {
-        DatabaseManager.initInstance(dbHelper);
+    private DogKindsSQLiteDataSource() {
         loadDogKinds();
     }
 
-    public static DogKindsSQLiteDataSource getInstance(DBHelper dbHelper) {
+    public static DogKindsSQLiteDataSource getInstance() {
         if (dogKindsDataSource == null) {
-            dogKindsDataSource = new DogKindsSQLiteDataSource(dbHelper);
+            dogKindsDataSource = new DogKindsSQLiteDataSource();
         }
         return dogKindsDataSource;
     }
 
-    public List<DogKind> getDogKinds(){
+    public void getDogKinds(IDatabaseCallback<List<DogKind>> dbCallback){
         loadDogKinds();
-        return dogKinds;
+        dbCallback.onDatabaseCallback(dogKinds);
     }
 
-    private boolean isBreedDatabaseEmpty() {
+    public boolean isBreedDatabaseEmpty() {
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = null;
         try {
@@ -47,7 +48,20 @@ public class DogKindsSQLiteDataSource {
         }
     }
 
+    public void addBreedsToDatabase(List<DogKind> breeds){
+        db = DatabaseManager.getInstance().openDB();
+        for(DogKind dogKind : breeds){
+            addDogKindInLoop(dogKind);
+        }
+        DatabaseManager.getInstance().closeDB();
+    }
 
+    private void addDogKindInLoop(DogKind dogKind) {
+        ContentValues cv = new ContentValues();
+        cv.put(DogKindTable.KIND, dogKind.getKind());
+        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
+        db.insert(DogKindTable.TABLE_NAME, null, cv);
+    }
 
     public DogKind addDogKind(DogKind dogKind) {
         db = DatabaseManager.getInstance().openDB();

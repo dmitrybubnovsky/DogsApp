@@ -1,30 +1,29 @@
 package com.andersen.dogsapp.dogs.data;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import com.andersen.dogsapp.dogs.data.database.DBHelper;
-import com.andersen.dogsapp.dogs.data.database.DatabaseManager;
+import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
+import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
 import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DogKindSource implements IBreedsDataSource {
+    private static final String TAG = "#";
     private static DogKindSource instance;
     private List<DogKind> dogKinds;
 
-    public DogKindSource (DBHelper dbHelper){
-        DatabaseManager.initInstance(dbHelper);
+    public DogKindSource() {
         dogKinds = new ArrayList<>();
     }
 
-    public static DogKindSource getInstance(DBHelper dbHelper) {
+    public static DogKindSource getInstance() {
         if (instance == null) {
-            instance = new DogKindSource(dbHelper);
+            instance = new DogKindSource();
         }
         return instance;
     }
@@ -34,20 +33,19 @@ public class DogKindSource implements IBreedsDataSource {
     }
 
     @Override
-    public void getDogsKinds(ICallback<List<DogKind>> callback){
-
-        WebBreedsDataSource.getInstance().getDogsKinds(callback);
-//
-//        WebBreedsDataSource.getInstance().getDogsKinds(new ICallback<List<DogKind>>() {
-//            @Override
-//            public void onResponseICallback(List<DogKind> dogBreeds) {
-//                dogKinds = dogBreeds;
-//            }
-//        });
+    public void getDogsKinds(ICallback<List<DogKind>> responseCallback, IDatabaseCallback<List<DogKind>> dbCallback) {
+        if (DogKindsSQLiteDataSource.getInstance().isBreedDatabaseEmpty()) {
+            Log.d(TAG, "DB Breeds is empty");
+            WebBreedsDataSource.getInstance().getDogsKinds(responseCallback);
+        } else {
+            Log.d(TAG, "DB Breeds is NOT empty");
+            DogKindsSQLiteDataSource.getInstance().getDogKinds(dbCallback);
+        }
+//        WebBreedsDataSource.getInstance().getDogsKinds(callback);
     }
 
     @Override
-    public void getBreedsImage(String breedString, ICallback<String> callback){
+    public void getBreedsImage(String breedString, ICallback<String> callback) {
         WebBreedsDataSource.getInstance().getBreedsImage(breedString, callback);
     }
 }

@@ -29,20 +29,20 @@ public class MyApp extends Application {
 
         DBHelper dbHelper = DBHelper.getInstance(this);
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
-        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance(dbHelper);
-        IBreedsDataSource iBreedsDataSource = DogKindSource.getInstance(dbHelper);
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance();
+        IBreedsDataSource iBreedsDataSource = DogKindSource.getInstance();
 //        IBreedsDataSource iBreedsDataSource = WebBreedsDataSource.getInstance();
         DataRepository.init(iOwnersDataSource, iDogsDataSource, iBreedsDataSource);
 
         if (NetworkManager.hasNetWorkAccess(this)) {
-            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
-                @Override
-                public void onResponseICallback(List<DogKind> dogBreeds) {
-                    dogBreedsList = dogBreeds;
-                }
-            });
+//            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+//                @Override
+//                public void onResponseICallback(List<DogKind> dogBreeds) {
+//                    dogBreedsList = dogBreeds;
+//                }
+//            });
         }
 
-        Log.d(TAG, "dogBreedsList "+( (dogBreedsList != null) ? " != null" : " NULL" ) );
+        Log.d(TAG, "MyApp onCreate: dogBreedsList "+( (dogBreedsList != null) ? " != null" : " NULL" ) );
     }
 }

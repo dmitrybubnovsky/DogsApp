@@ -9,6 +9,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
+import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
 
 public class DataRepository {
     private static DataRepository instance;
@@ -56,8 +57,8 @@ public class DataRepository {
         return owners;
     }
 
-    public void getDogKinds(ICallback<List<DogKind>> callback){
-        breedsDataSource.getDogsKinds(callback);
+    public void getDogKinds(ICallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback){
+        breedsDataSource.getDogsKinds(webCallback, dbCallback);
     }
 
     public void getBreedsImage(String breedString, ICallback<String> callback){

@@ -14,8 +14,10 @@ import android.widget.ProgressBar;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.MyApp;
 import com.andersen.dogsapp.dogs.data.DataRepository;
+import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
+import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseBreedCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -64,19 +66,28 @@ public class DogsKindsListActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        if (dogKinds == null) {
+        if (dogKinds.isEmpty()) {
 //            if(БД DogKinds < количества пород){
 //
 //            }
+            Log.d(TAG, "start DataRepository.get().getDogKinds ");
             DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
                 @Override
                 public void onResponseICallback(List<DogKind> dogBreeds) {
+                    dogKinds = dogBreeds;
+                    DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
+                    runOnUiThread(() -> updateUI());
+                }
+            }, new IDatabaseCallback<List<DogKind>>() {
+                @Override
+                public void onDatabaseCallback(List<DogKind> dogBreeds) {
                     dogKinds = dogBreeds;
                     runOnUiThread(() -> updateUI());
                 }
             });
             updateUI();
         } else {
+            Log.d(TAG, "onResume breed is not null "+ dogKinds.size());
             updateUI();
         }
     }

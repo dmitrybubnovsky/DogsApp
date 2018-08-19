@@ -73,7 +73,7 @@ public class TempActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "dogKindString is empty ");
         }
-        dogKind = DogKindsSQLiteDataSource.getInstance(dbHelper).addDogKind(dogKind);
+        dogKind = DogKindsSQLiteDataSource.getInstance().addDogKind(dogKind);
         return dogKind;
     }
 
