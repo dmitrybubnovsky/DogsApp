@@ -1,8 +1,8 @@
 package com.andersen.dogsapp.dogs.ui.dogskinds;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,12 +21,11 @@ import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.squareup.picasso.Picasso;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class DogsKindsListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<DogKind>, IResponseBreedCallback <String, ImageView, DogKind> {
+        implements IRecyclerItemListener<DogKind>, IResponseBreedCallback<String, ImageView, DogKind> {
     public static final String TAG = "#";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
@@ -40,9 +39,13 @@ public class DogsKindsListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breeds_list);
-        if(savedInstanceState != null){
+
+        dogKinds = (((MyApp) getApplicationContext()).dogBreedsList != null)
+                ? ((MyApp) getApplicationContext()).dogBreedsList : new ArrayList<>();
+
+        if (savedInstanceState != null) {
             dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);
-            Log.d(TAG, "dogKinds "+ dogKinds.size());
+            Log.d(TAG, "dogKinds " + dogKinds.size());
         }
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
@@ -60,17 +63,18 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (dogKinds == null){
+
+        if (dogKinds == null) {
+//            if(БД DogKinds < количества пород){
 //
-//            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
-//                @Override
-//                public void onResponseICallback(List<DogKind> dogBreeds) {
-//                    dogKinds = dogBreeds;
-//                    runOnUiThread(() -> updateUI());
-//                }
-//            });
-            dogKinds = ((MyApp)getApplicationContext()).dogBreedsList;
-            Log.d(TAG, ""+((MyApp)getApplicationContext()).dogBreedsList.size());
+//            }
+            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+                @Override
+                public void onResponseICallback(List<DogKind> dogBreeds) {
+                    dogKinds = dogBreeds;
+                    runOnUiThread(() -> updateUI());
+                }
+            });
             updateUI();
         } else {
             updateUI();
@@ -78,12 +82,14 @@ public class DogsKindsListActivity extends AppCompatActivity
     }
 
     private void updateUI() {
-        adapter.setBreeds(dogKinds);
-        adapter.setResponseBreedCallbackListener(this);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
-        if(progressBar != null && dogKinds != null){
-            progressBar.setVisibility(View.INVISIBLE);
+        if (dogKinds != null) {  // TODO if !dogKinds.isEmpty()
+            adapter.setBreeds(dogKinds);
+            adapter.setResponseBreedCallbackListener(this);
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+            if (progressBar != null && dogKinds != null) {
+                progressBar.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -93,7 +99,8 @@ public class DogsKindsListActivity extends AppCompatActivity
             @Override
             public void onResponseICallback(String uriBreedString) {
                 dogKindInstance.setImageString(uriBreedString);
-                Log.d(TAG, "onResponseICallback "+ dogKindInstance.getUriImageString());
+//                добавить dogKindInstance в БД
+                Log.d(TAG, "onResponseICallback " + dogKindInstance.getUriImageString());
                 Picasso.get()
                         .load(uriBreedString)
                         .placeholder(R.drawable.afghan_hound)
@@ -109,11 +116,11 @@ public class DogsKindsListActivity extends AppCompatActivity
         intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
         setResult(RESULT_OK, intent);
 
-        Log.d(TAG, " getBreedsImage( "+dogKind.getKind()+" )");
+        Log.d(TAG, " getBreedsImage( " + dogKind.getKind() + " )");
         DataRepository.get().getBreedsImage(dogKind.getKind(), new ICallback<String>() {
             @Override
             public void onResponseICallback(String breedString) {
-                Log.d(TAG, " onResponseICallback = "+ breedString);
+                Log.d(TAG, " onResponseICallback = " + breedString);
             }
         });
         finish();

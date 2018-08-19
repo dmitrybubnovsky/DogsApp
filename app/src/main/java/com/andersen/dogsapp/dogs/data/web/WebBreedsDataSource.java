@@ -25,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class WebBreedsDataSource implements IBreedsDataSource {
+public class WebBreedsDataSource {
     private static final String TAG = "# WebDataSource";
 
     private final String BASE_URL = "https://dog.ceo/api/";
@@ -56,7 +56,7 @@ public class WebBreedsDataSource implements IBreedsDataSource {
         return webBreedsDataSource;
     }
 
-    @Override
+//    @Override
     public void getDogsKinds(ICallback<List<DogKind>> iCallback) {
         Call<List<String>> call = instanceAPI.getBreeds();
         call.enqueue(new Callback<List<String>>() {
@@ -77,7 +77,7 @@ public class WebBreedsDataSource implements IBreedsDataSource {
         });
     }
 
-    @Override
+//    @Override
     public void getBreedsImage (String breedString, ICallback<String> iCallback){
         Call<List<String>> call = instanceAPI.getBreedImageUriString(breedString);
         call.enqueue(new Callback<List<String>>() {

@@ -14,26 +14,22 @@ public class DataRepository {
     private static DataRepository instance;
     private IOwnersDataSource ownersDataSource;
     private IDogsDataSource dogsDataSource;
-    private IBreedsDataSource iBreedsDataSource;
+    private IBreedsDataSource breedsDataSource;
 
-    private DataRepository(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource iBreedsDataSource) {
+    private DataRepository(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource breedsDataSource) {
         this.ownersDataSource = ownersDataSource;
         this.dogsDataSource = dogsDataSource;
-        this.iBreedsDataSource = iBreedsDataSource;
+        this.breedsDataSource = breedsDataSource;
     }
 
-    public static void init(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource iBreedsDataSource) {
+    public static void init(IOwnersDataSource ownersDataSource, IDogsDataSource dogsDataSource, IBreedsDataSource breedsDataSource) {
         if (instance == null) {
-            instance = new DataRepository(ownersDataSource, dogsDataSource, iBreedsDataSource);
+            instance = new DataRepository(ownersDataSource, dogsDataSource, breedsDataSource);
         }
     }
 
     public static DataRepository get() {
         return instance;
-    }
-
-    public void getDogKinds(ICallback<List<DogKind>> callback){
-        iBreedsDataSource.getDogsKinds(callback);
     }
 
     public List<Dog> getOwnerDogs(Owner owner) {
@@ -60,7 +56,11 @@ public class DataRepository {
         return owners;
     }
 
+    public void getDogKinds(ICallback<List<DogKind>> callback){
+        breedsDataSource.getDogsKinds(callback);
+    }
+
     public void getBreedsImage(String breedString, ICallback<String> callback){
-        iBreedsDataSource.getBreedsImage(breedString, callback);
+        breedsDataSource.getBreedsImage(breedString, callback);
     }
 }
