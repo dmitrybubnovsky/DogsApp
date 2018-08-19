@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs.data;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DatabaseManager;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -33,6 +35,7 @@ public class DogKindSource implements IBreedsDataSource {
 
     @Override
     public void getDogsKinds(ICallback<List<DogKind>> callback){
+
         WebBreedsDataSource.getInstance().getDogsKinds(callback);
 //
 //        WebBreedsDataSource.getInstance().getDogsKinds(new ICallback<List<DogKind>>() {

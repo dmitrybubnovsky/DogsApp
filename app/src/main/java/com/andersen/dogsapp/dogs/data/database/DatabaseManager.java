@@ -1,17 +1,16 @@
 package com.andersen.dogsapp.dogs.data.database;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
-    private static SQLiteOpenHelper dbHelper;
+    private static DBHelper dbHelper;
     private AtomicInteger openCounter = new AtomicInteger();
     private SQLiteDatabase sqliteDB;
 
-    public static synchronized void initInstance(SQLiteOpenHelper helper) {
+    public static synchronized void initInstance(DBHelper helper) {
         if (instance == null) {
             instance = new DatabaseManager();
             dbHelper = helper;

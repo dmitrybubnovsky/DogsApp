@@ -33,6 +33,49 @@ public class DogKindsSQLiteDataSource {
         return dogKinds;
     }
 
+    private boolean isBreedDatabaseEmpty() {
+        db = DatabaseManager.getInstance().openDB();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(
+                    DogKindTable.TABLE_NAME,
+                    null, null, null, null, null, null, null);
+            return cursor.getCount() == 0 || !cursor.moveToNext();
+        } finally {
+            cursor.close();
+            DatabaseManager.getInstance().closeDB();
+        }
+    }
+
+
+
+    public DogKind addDogKind(DogKind dogKind) {
+        db = DatabaseManager.getInstance().openDB();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DogKindTable.KIND, dogKind.getKind());
+        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
+        long insertResult = db.insert(DogKindTable.TABLE_NAME, null, cv);
+        DatabaseManager.getInstance().closeDB();
+
+        if (insertResult != -1) {
+            dogKind.setId((int) insertResult);
+            return dogKind;
+        } else {
+            return new DogKind();
+        }
+    }
+
+    public int updateBreedDBWithUriImage(DogKind dogKind) {
+        db = DatabaseManager.getInstance().openDB();
+
+        ContentValues cv = new ContentValues();
+        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
+        int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID+"=?", new String[]{String.valueOf(dogKind.getId())});
+        DatabaseManager.getInstance().closeDB();
+        return result;
+    }
+
     private void loadDogKinds() {
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = null;
@@ -61,32 +104,4 @@ public class DogKindsSQLiteDataSource {
         }
     }
 
-
-
-    public DogKind addDogKind(DogKind dogKind) {
-        db = DatabaseManager.getInstance().openDB();
-
-        ContentValues cv = new ContentValues();
-        cv.put(DogKindTable.KIND, dogKind.getKind());
-        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        long insertResult = db.insert(DogKindTable.TABLE_NAME, null, cv);
-        DatabaseManager.getInstance().closeDB();
-
-        if (insertResult != -1) {
-            dogKind.setId((int) insertResult);
-            return dogKind;
-        } else {
-            return new DogKind();
-        }
-    }
-
-    public int updateDogKindWithUriImage(DogKind dogKind) {
-        db = DatabaseManager.getInstance().openDB();
-
-        ContentValues cv = new ContentValues();
-        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID+"=?", new String[]{String.valueOf(dogKind.getId())});
-        DatabaseManager.getInstance().closeDB();
-        return result;
-    }
 }
