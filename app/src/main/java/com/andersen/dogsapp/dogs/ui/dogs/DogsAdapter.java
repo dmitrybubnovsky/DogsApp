@@ -1,8 +1,11 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.interfaces.IBreedImageViewListener;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
@@ -22,6 +26,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
+//    private IBreedImageViewListener<ImageView> iBreedImageViewListener;
 
     public DogsAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
@@ -62,7 +67,15 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
             dogKindTextView.setText(dog.getDogKind());
-            dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dog.getDogImageString()));
+
+            String dogImageString = dog.getDogImageString();
+
+            if(dogImageString.contains("_doggy_dogg.jpg")){
+                dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
+            } else {
+                dogImageView.setImageURI(Uri.parse(dogImageString));
+            }
+
         }
     }
 

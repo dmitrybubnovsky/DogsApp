@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -96,6 +97,7 @@ public class NewDogFormActivity extends AppCompatActivity {
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DataRepository.get().addDog(dog);
+                Log.d(TAG, "dogKindId=" + dog.getDogImageString());
                 owner.addDog(dog);
                 backToDogListActivity();
             }
@@ -258,7 +260,7 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     private File getPhotoFile(Context context) {
         File filesDir = context.getFilesDir();
-        String timeStamp = String.valueOf("dog_" + System.currentTimeMillis()) + ".jpg";
+        String timeStamp = String.valueOf("photo_" + System.currentTimeMillis()) + "_doggy_dogg.jpg";
         return new File(filesDir, timeStamp);
     }
 

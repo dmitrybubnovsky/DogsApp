@@ -62,9 +62,9 @@ public class DogKindsSQLiteDataSource {
         cv.put(DogKindTable.KIND, dogKind.getKind());
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
         long id = db.insert(DogKindTable.TABLE_NAME, null, cv);
-        Log.d(TAG, "id-" + id);
-        Log.d(TAG, "dogKindInstance-" + dogKind.getKind());
-        Log.d(TAG, "UriImageString-" + dogKind.getUriImageString());
+        Log.d(TAG, "id " + id);
+        Log.d(TAG, "dogKindInstance " + dogKind.getKind());
+        Log.d(TAG, "UriImageString " + dogKind.getUriImageString());
         Log.d(TAG, "-----------------------------------");
     }
 
@@ -112,7 +112,6 @@ public class DogKindsSQLiteDataSource {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     DogKind dogKind = new DogKind();
-//                    dogKindInstance.(cursor.getInt(cursor.getColumnIndex(DogKindTable.ID)));
                     dogKind.setId(cursor.getInt(cursor.getColumnIndex(DogKindTable.ID)));
                     dogKind.setKind(cursor.getString(cursor.getColumnIndex(DogKindTable.KIND)));
                     dogKind.setImageString(cursor.getString(cursor.getColumnIndex(DogKindTable.IMAGE_URI)));
