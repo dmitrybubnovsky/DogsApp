@@ -91,7 +91,7 @@ public class WebBreedsDataSource {
                     uriImageString = listString.get(0);
                     webCallback.onWebCallback(uriImageString);
                 } else {
-                    // Если с response'ом проблема, тогда кидаем Uri файла из хранилища,
+                    // Если с response'ом проблема
                     Log.d(TAG, "WebBreedsDataSource: getBreedsImage: response was NOT successful");
 //                    uriImageString = listString.get(0);
 //                    webCallback.onWebCallback(uriImageString);

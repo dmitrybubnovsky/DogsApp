@@ -104,7 +104,8 @@ public class DogsKindsListActivity extends AppCompatActivity
 
     @Override
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
-        DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
+//      DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
+        DataRepository.get().getBreedsImage(this, dogKindString, new IWebCallback<String>() {
             @Override
             public void onWebCallback(String uriBreedString) {
                 dogKindInstance.setImageString(uriBreedString);

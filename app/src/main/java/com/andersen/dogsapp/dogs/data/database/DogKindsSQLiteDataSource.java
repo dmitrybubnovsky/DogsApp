@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.data.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -59,7 +60,8 @@ public class DogKindsSQLiteDataSource {
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.KIND, dogKind.getKind());
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        db.insert(DogKindTable.TABLE_NAME, null, cv);
+        long id = db.insert(DogKindTable.TABLE_NAME, null, cv);
+        Log.d(TAG, "id-"+id); Log.d(TAG, "dogKind-"+dogKind.getKind()); Log.d(TAG, "UriImageString-"+dogKind.getUriImageString());Log.d(TAG, "-----------------------------------");
     }
 
     public DogKind addDogKind(DogKind dogKind) {
@@ -75,7 +77,7 @@ public class DogKindsSQLiteDataSource {
             dogKind.setId((int) insertResult);
             return dogKind;
         } else {
-            return new DogKind();
+            return null; //new DogKind()
         }
     }
 

@@ -1,5 +1,7 @@
 package com.andersen.dogsapp.dogs.data;
 
+import android.content.Context;
+
 import java.util.List;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -63,7 +65,10 @@ public class DataRepository {
     }
 
 //   WEB SERVER IS CURRENTLY ЛЕЖИТ
-    public void getBreedsImage(String breedString, IWebCallback<String> callback){
-        breedsDataSource.getBreedsImage(breedString, callback);
+//    public void getBreedsImage(String breedString, IWebCallback<String> callback){
+//        breedsDataSource.getBreedsImage(breedString, callback);
+
+    public void getBreedsImage(Context context, String breedString, IWebCallback<String> callback){
+        breedsDataSource.getBreedsImage(context, breedString, callback);
     }
 }
