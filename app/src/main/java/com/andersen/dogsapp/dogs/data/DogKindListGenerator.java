@@ -1,11 +1,13 @@
 package com.andersen.dogsapp.dogs.data;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.web.IWebCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DogKindListGenerator {
+    private static DogKindListGenerator instance;
     private final String[] TITLES = new String[]{"Afghan hound", "American bulldog", "American foxhound",
             "Australian cattle", "Belgian tevruren", "Berger pickard", "Bolognese", "Bull terrier", "Chesapeake", "Chinook", "Argentino", "English coonhound", "German shepherd",
             "Icelandic sheepdog", "Komondor", "Mudi", "Munsterlander", "Pharaon hound", "Pocket beagle",
@@ -28,8 +30,14 @@ public class DogKindListGenerator {
         }
     }
 
-    public static List<DogKind> getDogKinds() {
-        DogKindListGenerator dogKindListGenerator = new DogKindListGenerator();
-        return dogKindListGenerator.dogKindsList;
+    public static DogKindListGenerator getInstance(){
+        if(instance == null){
+            instance = new DogKindListGenerator();
+        }
+        return instance;
+    }
+
+    public void getDogsKinds(IWebCallback<List<DogKind>> callback) {
+        callback.onWebCallback(dogKindsList);
     }
 }

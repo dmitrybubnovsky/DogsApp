@@ -16,9 +16,9 @@ import com.andersen.dogsapp.dogs.MyApp;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.ICallback;
-import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
-import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseBreedCallback;
+import com.andersen.dogsapp.dogs.data.web.IWebCallback;
+import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
+import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.squareup.picasso.Picasso;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DogsKindsListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<DogKind>, IResponseBreedCallback<String, ImageView, DogKind> {
+        implements IRecyclerItemListener<DogKind>, IResponseImageCallback<String, ImageView, DogKind> {
     public static final String TAG = "#";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
@@ -67,13 +67,11 @@ public class DogsKindsListActivity extends AppCompatActivity
         super.onResume();
 
         if (dogKinds.isEmpty()) {
-//            if(БД DogKinds < количества пород){
-//
-//            }
             Log.d(TAG, "start DataRepository.get().getDogKinds ");
-            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+            DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
                 @Override
-                public void onResponseICallback(List<DogKind> dogBreeds) {
+                public void onWebCallback(List<DogKind> dogBreeds) {
+// WEB SERVER IS CURRENTLY ЛЕЖИТ, поэтому эту имплементацию подменим для работы другого source-класса
                     dogKinds = dogBreeds;
                     DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
                     runOnUiThread(() -> updateUI());
@@ -105,13 +103,13 @@ public class DogsKindsListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResponseBreedCallbackListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
-        DataRepository.get().getBreedsImage(dogKindString, new ICallback<String>() {
+    public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
+        DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
             @Override
-            public void onResponseICallback(String uriBreedString) {
+            public void onWebCallback(String uriBreedString) {
                 dogKindInstance.setImageString(uriBreedString);
 //                добавить dogKindInstance в БД
-                Log.d(TAG, "onResponseICallback " + dogKindInstance.getUriImageString());
+                Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
                 Picasso.get()
                         .load(uriBreedString)
                         .placeholder(R.drawable.afghan_hound)
@@ -126,14 +124,6 @@ public class DogsKindsListActivity extends AppCompatActivity
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
         setResult(RESULT_OK, intent);
-
-        Log.d(TAG, " getBreedsImage( " + dogKind.getKind() + " )");
-        DataRepository.get().getBreedsImage(dogKind.getKind(), new ICallback<String>() {
-            @Override
-            public void onResponseICallback(String breedString) {
-                Log.d(TAG, " onResponseICallback = " + breedString);
-            }
-        });
         finish();
     }
 

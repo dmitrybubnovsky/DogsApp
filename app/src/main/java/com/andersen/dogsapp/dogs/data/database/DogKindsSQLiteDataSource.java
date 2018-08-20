@@ -6,8 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.ICallback;
-import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
+import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.List;

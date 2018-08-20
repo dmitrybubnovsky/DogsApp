@@ -8,8 +8,8 @@ import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.web.ICallback;
-import com.andersen.dogsapp.dogs.data.web.IDatabaseCallback;
+import com.andersen.dogsapp.dogs.data.web.IWebCallback;
+import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
 
 public class DataRepository {
     private static DataRepository instance;
@@ -57,11 +57,13 @@ public class DataRepository {
         return owners;
     }
 
-    public void getDogKinds(ICallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback){
+//   WEB SERVER IS CURRENTLY ЛЕЖИТ
+    public void getDogKinds(IWebCallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback){
         breedsDataSource.getDogsKinds(webCallback, dbCallback);
     }
 
-    public void getBreedsImage(String breedString, ICallback<String> callback){
+//   WEB SERVER IS CURRENTLY ЛЕЖИТ
+    public void getBreedsImage(String breedString, IWebCallback<String> callback){
         breedsDataSource.getBreedsImage(breedString, callback);
     }
 }

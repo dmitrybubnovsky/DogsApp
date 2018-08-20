@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.DataRepository;
-import com.andersen.dogsapp.dogs.data.DogKindSource;
+import com.andersen.dogsapp.dogs.data.DogKindSourceCoordinator;
 import com.andersen.dogsapp.dogs.data.database.DBHelper;
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
@@ -12,8 +12,6 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.web.ICallback;
-import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.util.List;
@@ -30,14 +28,14 @@ public class MyApp extends Application {
         DBHelper dbHelper = DBHelper.getInstance(this);
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance();
-        IBreedsDataSource iBreedsDataSource = DogKindSource.getInstance();
+        IBreedsDataSource iBreedsDataSource = DogKindSourceCoordinator.getInstance();
 //        IBreedsDataSource iBreedsDataSource = WebBreedsDataSource.getInstance();
         DataRepository.init(iOwnersDataSource, iDogsDataSource, iBreedsDataSource);
 
         if (NetworkManager.hasNetWorkAccess(this)) {
-//            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
+//            DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
 //                @Override
-//                public void onResponseICallback(List<DogKind> dogBreeds) {
+//                public void onWebCallback(List<DogKind> dogBreeds) {
 //                    dogBreedsList = dogBreeds;
 //                }
 //            });

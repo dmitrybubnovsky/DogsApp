@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.ICallback;
-import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseBreedCallback;
+import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,12 +22,12 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
-    private IResponseBreedCallback<String, ImageView, DogKind> responseCallback;
+    private IResponseImageCallback<String, ImageView, DogKind> responseCallback;
     private List<DogKind> dogsKinds;
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-//        dogsKinds = DogKindSource.getDogKinds();
+//        dogsKinds = DogKindSourceCoordinator.getDogKinds();
         this.listener = listener;
     }
 
@@ -39,7 +35,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         this.dogsKinds = dogsKinds;
     }
 
-    public void setResponseBreedCallbackListener(IResponseBreedCallback responseCallback) {
+    public void setResponseBreedCallbackListener(IResponseImageCallback responseCallback) {
         this.responseCallback = responseCallback;
     }
 
@@ -66,13 +62,11 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         }
 
         private void setData(Context context, int position) {
-            String dogKindString = dogsKinds.get(position).getKind();
+            dogKindInstance = dogsKinds.get(position);
+            String dogKindString = dogKindInstance.getKind();
 
             dogKindTextView.setText(dogKindString);
-            String imageResourceString = "chinook";
-            dogKindInstance = new DogKind();
-            dogKindInstance.setKind(dogKindString);
-            responseCallback.onResponseBreedCallbackListener(dogKindString, dogKindImageView, dogKindInstance);
+            responseCallback.onResponseImageListener(dogKindString, dogKindImageView, dogKindInstance);
         }
     }
 

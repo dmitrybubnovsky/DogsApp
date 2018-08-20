@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data.web;
+package com.andersen.dogsapp.dogs.data.interfaces;
 
 public interface IDatabaseCallback<T> {
 

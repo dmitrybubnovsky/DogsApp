@@ -3,7 +3,6 @@ package com.andersen.dogsapp.dogs.data.web;
 import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.json.BreedDeserializer;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.DogBreedsAPI;
 import com.google.gson.Gson;
@@ -57,14 +56,14 @@ public class WebBreedsDataSource {
     }
 
 //    @Override
-    public void getDogsKinds(ICallback<List<DogKind>> iCallback) {
+    public void getDogsKinds(IWebCallback<List<DogKind>> webCallback) {
         Call<List<String>> call = instanceAPI.getBreeds();
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     dogKinds = convertStringListToDogKindList(response.body());
-                    iCallback.onResponseICallback(dogKinds);
+                    webCallback.onWebCallback(dogKinds);
                 } else {
                     Log.d(TAG, "response is NOT successful");
                 }
@@ -78,17 +77,24 @@ public class WebBreedsDataSource {
     }
 
 //    @Override
-    public void getBreedsImage (String breedString, ICallback<String> iCallback){
+    public void getBreedsImage (String breedString, IWebCallback<String> webCallback){
         Call<List<String>> call = instanceAPI.getBreedImageUriString(breedString);
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                List<String> listString;
+                String uriImageString;
+                // Если с response'ом все ок, тогда вытягиваем Uri строку,
+                // которая приходит к нам от десериализатора как List<String>
                 if (response.isSuccessful()) {
-                    List<String> listString = response.body();
-                    String uriImageString = listString.get(0);
-                    iCallback.onResponseICallback(uriImageString);
+                    listString = response.body();
+                    uriImageString = listString.get(0);
+                    webCallback.onWebCallback(uriImageString);
                 } else {
-                    Log.d(TAG, "getBreedsImage: response was NOT successful");
+                    // Если с response'ом проблема, тогда кидаем Uri файла из хранилища,
+                    Log.d(TAG, "WebBreedsDataSource: getBreedsImage: response was NOT successful");
+//                    uriImageString = listString.get(0);
+//                    webCallback.onWebCallback(uriImageString);
                 }
             }
 
@@ -127,10 +133,4 @@ public class WebBreedsDataSource {
         }
         return dogKinds;
     }
-
-//    TODO delete that method
-//    private String convertStringListToUriString (List<String> uriStringList) {
-//        String uriString = uriStringList.get(0);
-//        return uriString;
-//    }
 }
