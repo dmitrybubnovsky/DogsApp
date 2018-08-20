@@ -10,7 +10,9 @@ import java.util.List;
 public interface IBreedsDataSource {
     void getDogsKinds(IWebCallback<List<DogKind>> responseCallback, IDatabaseCallback<List<DogKind>> dbCallback);
 
-    void getBreedsImage(Context context, String breedString, IWebCallback<String> responseCallback);
+//  для DogKindLocalDatasource
+//    void getBreedsImage(Context context, String breedString, IWebCallback<String> responseCallback);
+    void getBreedsImage(String breedString, IWebCallback<String> responseCallback);
 
     int updateBreedDBWithUriImage(DogKind dogKind);
 

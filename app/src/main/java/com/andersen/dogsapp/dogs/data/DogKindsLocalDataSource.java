@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.IWebCallback;
+import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 
 import java.util.ArrayList;
@@ -47,11 +48,12 @@ public class DogKindsLocalDataSource {
         callback.onWebCallback(dogKindsList);
     }
 
-    public void getBreedsImage (Context context, String breedString, IWebCallback<String> webCallback){
-        Log.d(TAG, "DogKindsLocalDataSource: getBreedsImage: " + breedString);
-        String uriImageString = DogImageUtils.getUriFromDrawable(context, breedString).toString();
-
-        webCallback.onWebCallback(uriImageString);
+//    public void getBreedsImage (Context context, String breedString, IWebCallback<String> webCallback){
+    public void getBreedsImage (String breedString, IWebCallback<String> webCallback){
+//        Log.d(TAG, "DogKindsLocalDataSource: getBreedsImage: " + breedString);
+//        String uriImageString = DogImageUtils.getUriFromDrawable(context, breedString).toString();
+//        WebBreedsDataSource.getInstance().getBreedsImage(breedString,webCallback);
+        webCallback.onWebCallback(breedString);
     }
 }
 

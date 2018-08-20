@@ -104,13 +104,13 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
 //   Раскомментировать для WebBreedsDataSource
-//      DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
-        DataRepository.get().getBreedsImage(this, dogKindString, new IWebCallback<String>() {
+      DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
+//        DataRepository.get().getBreedsImage(this, dogKindString, new IWebCallback<String>() {
             @Override
             public void onWebCallback(String uriBreedString) {
                 dogKindInstance.setImageString(uriBreedString);
 //                обновить поле imageString в БД uri-стрингой
-                int i = DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
+                DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
 
                 Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
                 Picasso.get()

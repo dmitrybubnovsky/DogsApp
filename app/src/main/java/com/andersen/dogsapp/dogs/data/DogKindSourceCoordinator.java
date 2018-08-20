@@ -8,6 +8,7 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.web.IWebCallback;
 import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
+import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +38,9 @@ public class DogKindSourceCoordinator implements IBreedsDataSource {
         if (DogKindsSQLiteDataSource.getInstance().isBreedDatabaseEmpty()) {
             Log.d(TAG, "DogKindCoordinator: DB Breeds is empty"); // TODO: Delete this testing Log.d
 
-// Здесь должен бюыть GET-запрос, но WEB SERVER IS CURRENTLY ЛЕЖИТ,
-// поэтому эту имплементацию подменим для работы другого source-класса
-//            WebBreedsDataSource.getInstance().getDogsKinds(responseCallback);
+            WebBreedsDataSource.getInstance().getDogsKinds(responseCallback);
 
-            DogKindsLocalDataSource.getInstance().getDogsKinds(responseCallback);
+//            DogKindsLocalDataSource.getInstance().getDogsKinds(responseCallback);
         } else {
             Log.d(TAG, "DogKindCoordinator: DB Breeds is already exists"); // TODO: Delete this testing Log.d
             DogKindsSQLiteDataSource.getInstance().getDogKinds(dbCallback);                                                                         Log.d(TAG, "DB Breeds is NOT empty");     // TODO Delete this Log.d
@@ -49,9 +48,10 @@ public class DogKindSourceCoordinator implements IBreedsDataSource {
     }
 
     @Override
-    public void getBreedsImage(Context context, String breedString, IWebCallback<String> callback) {
-//       WebBreedsDataSource.getInstance().getBreedsImage(breedString, callback);
-        DogKindsLocalDataSource.getInstance().getBreedsImage(context, breedString, callback);
+//    public void getBreedsImage(Context context, String breedString, IWebCallback<String> callback) {
+//        DogKindsLocalDataSource.getInstance().getBreedsImage(context, breedString, callback);
+    public void getBreedsImage(String breedString, IWebCallback<String> callback) {
+       WebBreedsDataSource.getInstance().getBreedsImage(breedString, callback);
     }
 
     @Override

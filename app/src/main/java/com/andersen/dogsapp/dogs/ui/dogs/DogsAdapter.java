@@ -75,7 +75,6 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             } else {
                 dogImageView.setImageURI(Uri.parse(dogImageString));
             }
-
         }
     }
 
