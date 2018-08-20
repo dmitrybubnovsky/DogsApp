@@ -29,7 +29,7 @@ public class DogKindsSQLiteDataSource {
         return dogKindsDataSource;
     }
 
-    public void getDogKinds(IDatabaseCallback<List<DogKind>> dbCallback){
+    public void getDogKinds(IDatabaseCallback<List<DogKind>> dbCallback) {
         loadDogKinds();
         dbCallback.onDatabaseCallback(dogKinds);
     }
@@ -48,9 +48,9 @@ public class DogKindsSQLiteDataSource {
         }
     }
 
-    public void addBreedsToDatabase(List<DogKind> breeds){
+    public void addBreedsToDatabase(List<DogKind> breeds) {
         db = DatabaseManager.getInstance().openDB();
-        for(DogKind dogKind : breeds){
+        for (DogKind dogKind : breeds) {
             addDogKindInLoop(dogKind);
         }
         DatabaseManager.getInstance().closeDB();
@@ -61,7 +61,10 @@ public class DogKindsSQLiteDataSource {
         cv.put(DogKindTable.KIND, dogKind.getKind());
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
         long id = db.insert(DogKindTable.TABLE_NAME, null, cv);
-        Log.d(TAG, "id-"+id); Log.d(TAG, "dogKind-"+dogKind.getKind()); Log.d(TAG, "UriImageString-"+dogKind.getUriImageString());Log.d(TAG, "-----------------------------------");
+        Log.d(TAG, "id-" + id);
+        Log.d(TAG, "dogKind-" + dogKind.getKind());
+        Log.d(TAG, "UriImageString-" + dogKind.getUriImageString());
+        Log.d(TAG, "-----------------------------------");
     }
 
     public DogKind addDogKind(DogKind dogKind) {
@@ -86,7 +89,8 @@ public class DogKindsSQLiteDataSource {
 
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID+"=?", new String[]{String.valueOf(dogKind.getId())});
+        int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
+                new String[]{String.valueOf(dogKind.getId())});
         DatabaseManager.getInstance().closeDB();
         return result;
     }

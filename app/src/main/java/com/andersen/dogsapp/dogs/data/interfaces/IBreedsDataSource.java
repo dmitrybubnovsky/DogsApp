@@ -12,6 +12,8 @@ public interface IBreedsDataSource {
 
     void getBreedsImage(Context context, String breedString, IWebCallback<String> responseCallback);
 
+    int updateBreedDBWithUriImage(DogKind dogKind);
+
 //    for WebBreedsDataSource
 //    void getBreedsImage(String breedString, IWebCallback<String> responseCallback);
 }

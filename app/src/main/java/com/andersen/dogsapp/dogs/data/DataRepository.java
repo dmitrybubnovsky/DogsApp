@@ -64,11 +64,15 @@ public class DataRepository {
         breedsDataSource.getDogsKinds(webCallback, dbCallback);
     }
 
-//   WEB SERVER IS CURRENTLY ЛЕЖИТ
+//   Раскомментировать для WebBreedsDataSource
 //    public void getBreedsImage(String breedString, IWebCallback<String> callback){
 //        breedsDataSource.getBreedsImage(breedString, callback);
 
     public void getBreedsImage(Context context, String breedString, IWebCallback<String> callback){
         breedsDataSource.getBreedsImage(context, breedString, callback);
+    }
+
+    public int updateBreedDBWithUriImage(DogKind dogKind){
+        return breedsDataSource.updateBreedDBWithUriImage(dogKind);
     }
 }

@@ -31,7 +31,7 @@ public class DogKindLocalDataSource {
     private DogKindLocalDataSource() {
         dogKindsList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
-            DogKind dogKind = new DogKind(TITLES[i], IMAGE_FILES[i]);
+            DogKind dogKind = new DogKind(TITLES[i], ""); // IMAGE_FILES[i]
             dogKindsList.add(dogKind);
         }
     }

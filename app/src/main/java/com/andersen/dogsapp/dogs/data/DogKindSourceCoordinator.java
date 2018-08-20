@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.web.IWebCallback;
@@ -51,5 +52,10 @@ public class DogKindSourceCoordinator implements IBreedsDataSource {
     public void getBreedsImage(Context context, String breedString, IWebCallback<String> callback) {
 //       WebBreedsDataSource.getInstance().getBreedsImage(breedString, callback);
         DogKindLocalDataSource.getInstance().getBreedsImage(context, breedString, callback);
+    }
+
+    @Override
+    public int updateBreedDBWithUriImage (DogKind dogKind){
+        return DogKindsSQLiteDataSource.getInstance().updateBreedDBWithUriImage(dogKind);
     }
 }

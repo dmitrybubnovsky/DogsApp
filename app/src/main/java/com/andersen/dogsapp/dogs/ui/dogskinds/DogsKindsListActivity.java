@@ -71,7 +71,6 @@ public class DogsKindsListActivity extends AppCompatActivity
             DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
                 @Override
                 public void onWebCallback(List<DogKind> dogBreeds) {
-// WEB SERVER IS CURRENTLY ЛЕЖИТ, поэтому эту имплементацию подменим для работы другого source-класса
                     dogKinds = dogBreeds;
                     DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
                     runOnUiThread(() -> updateUI());
@@ -85,7 +84,7 @@ public class DogsKindsListActivity extends AppCompatActivity
             });
             updateUI();
         } else {
-            Log.d(TAG, "onResume breed is not null "+ dogKinds.size());
+            Log.d(TAG, "DogKindsListActivity: onResume: dogKinds is not null, size = "+ dogKinds.size());
             updateUI();
         }
     }
@@ -104,17 +103,21 @@ public class DogsKindsListActivity extends AppCompatActivity
 
     @Override
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
+//   Раскомментировать для WebBreedsDataSource
 //      DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
         DataRepository.get().getBreedsImage(this, dogKindString, new IWebCallback<String>() {
             @Override
             public void onWebCallback(String uriBreedString) {
                 dogKindInstance.setImageString(uriBreedString);
-//                добавить dogKindInstance в БД
+//                обновить поле imageString в БД uri-стрингой
+                int i = DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
+                Log.d(TAG, "DogKindsListActivity: call update " + dogKindInstance + " "+ i);
+
                 Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
                 Picasso.get()
                         .load(uriBreedString)
-                        .placeholder(R.drawable.afghan_hound)
-                        .error(R.drawable.afghan_hound)
+                        .placeholder(R.drawable.smiled_dog_face)
+                        .error(R.drawable.smiled_dog_face)
                         .into(dogKindImageView);
             }
         });

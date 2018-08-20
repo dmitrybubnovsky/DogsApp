@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -31,8 +30,7 @@ public class DogImageUtils {
         return dogImageDrawable;
     }
 
-    public static final Uri getUriFromDrawable(@NonNull Context context,
-                                               String dogImageString)
+    public static final Uri getUriFromDrawable(@NonNull Context context, String dogImageString)
             throws Resources.NotFoundException {
         Resources resources = context.getResources();
         int resId = resources.getIdentifier(dogImageString, "drawable",
@@ -41,7 +39,6 @@ public class DogImageUtils {
                 "://" + resources.getResourcePackageName(resId)
                 + '/' + resources.getResourceTypeName(resId)
                 + '/' + resources.getResourceEntryName(resId));
-        /** return uri */
         return resUri;
     }
 }
