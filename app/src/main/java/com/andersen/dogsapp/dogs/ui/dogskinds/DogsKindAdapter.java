@@ -2,7 +2,12 @@ package com.andersen.dogsapp.dogs.ui.dogskinds;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
+import java.io.File;
 import java.util.List;
 
 public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHolder> {
@@ -67,13 +74,16 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             dogKindInstance = dogsKinds.get(position);
             String dogKindImageString = dogKindInstance.getUriImageString();
             String dogKindName = dogKindInstance.getKind();
-            Log.d(TAG, "DogsKindAdapter " + dogKindImageString);
 
             dogKindTextView.setText(dogKindName);
             if(dogKindInstance.getUriImageString().isEmpty()){
                 responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKindInstance);
             } else {
-                dogKindImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogKindImageString));
+//                dogKindImageView.setImageResource(getImageId(context, dogKindImageString));
+                Log.d(TAG, "DogsKindAdapter " + dogKindImageString);
+
+                Uri uri = Uri.parse(dogKindImageString);
+                dogKindImageView.setImageURI(uri);
             }
         }
     }
