@@ -12,6 +12,6 @@ public interface DogBreedsAPI {
     @GET("breeds/list/all")
     Call<List<String>> getBreeds();
 
-    @GET("breed/{breed}/images/random")
-    Call<List<String>> getBreedImageUriString(@Path("breed") String breed);
+    @GET("dogKindInstance/{dogKindInstance}/images/random")
+    Call<List<String>> getBreedImageUriString(@Path("dogKindInstance") String breed);
 }

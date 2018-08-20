@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
+import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
 import java.util.List;
@@ -63,10 +65,16 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
         private void setData(Context context, int position) {
             dogKindInstance = dogsKinds.get(position);
-            String dogKindString = dogKindInstance.getKind();
+            String dogKindImageString = dogKindInstance.getUriImageString();
+            String dogKindName = dogKindInstance.getKind();
+            Log.d(TAG, "DogsKindAdapter " + dogKindImageString);
 
-            dogKindTextView.setText(dogKindString);
-            responseCallback.onResponseImageListener(dogKindString, dogKindImageView, dogKindInstance);
+            dogKindTextView.setText(dogKindName);
+            if(dogKindInstance.getUriImageString().isEmpty()){
+                responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKindInstance);
+            } else {
+                dogKindImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogKindImageString));
+            }
         }
     }
 

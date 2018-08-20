@@ -92,7 +92,6 @@ public class DogsKindsListActivity extends AppCompatActivity
     private void updateUI() {
         if (dogKinds != null) {  // TODO if !dogKinds.isEmpty()
             adapter.setBreeds(dogKinds);
-            Log.d(TAG, "udateUI id ="+ dogKinds.get(0).getId() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             adapter.setResponseBreedCallbackListener(this);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
@@ -112,7 +111,6 @@ public class DogsKindsListActivity extends AppCompatActivity
                 dogKindInstance.setImageString(uriBreedString);
 //                обновить поле imageString в БД uri-стрингой
                 int i = DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
-                Log.d(TAG, "DogKindsListActivity: call update " + dogKindInstance + " "+ i);
 
                 Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
                 Picasso.get()

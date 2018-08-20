@@ -38,7 +38,7 @@ public class TempActivity extends AppCompatActivity {
         // ADD BREED IN DATABASE
         addBreedButton.setOnClickListener(view -> {
             DogKind dogKind = addDogKind();
-            Log.d(TAG, "dogKind "+ dogKind.getKind() + " imageString " + dogKind.getUriImageString() + " dogId "+ dogKind.getId());
+            Log.d(TAG, "dogKindInstance "+ dogKind.getKind() + " imageString " + dogKind.getUriImageString() + " dogId "+ dogKind.getId());
         });
 
         updateBreedButton.setOnClickListener(view -> {
