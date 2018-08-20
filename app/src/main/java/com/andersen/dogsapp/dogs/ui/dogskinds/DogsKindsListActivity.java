@@ -42,8 +42,8 @@ public class DogsKindsListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breeds_list);
 
-        dogKinds = (((MyApp) getApplicationContext()).dogBreedsList != null)
-                ? ((MyApp) getApplicationContext()).dogBreedsList : new ArrayList<>();
+//        dogKinds = (((MyApp) getApplicationContext()).dogBreedsList != null)
+//                ? ((MyApp) getApplicationContext()).dogBreedsList : new ArrayList<>();
 
         if (savedInstanceState != null) {
             dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);
@@ -66,7 +66,7 @@ public class DogsKindsListActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        if (dogKinds.isEmpty()) {
+        if (dogKinds == null) {
             Log.d(TAG, "start DataRepository.get().getDogKinds ");
             DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
                 @Override
@@ -92,6 +92,7 @@ public class DogsKindsListActivity extends AppCompatActivity
     private void updateUI() {
         if (dogKinds != null) {  // TODO if !dogKinds.isEmpty()
             adapter.setBreeds(dogKinds);
+            Log.d(TAG, "udateUI id ="+ dogKinds.get(0).getId() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             adapter.setResponseBreedCallbackListener(this);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);

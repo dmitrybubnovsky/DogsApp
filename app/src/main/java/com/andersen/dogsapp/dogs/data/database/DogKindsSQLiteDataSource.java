@@ -31,6 +31,7 @@ public class DogKindsSQLiteDataSource {
 
     public void getDogKinds(IDatabaseCallback<List<DogKind>> dbCallback) {
         loadDogKinds();
+        Log.d(TAG, "dogKinds third id = "+dogKinds.get(3).getId());
         dbCallback.onDatabaseCallback(dogKinds);
     }
 
@@ -89,6 +90,7 @@ public class DogKindsSQLiteDataSource {
 
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
+        Log.d(TAG, "DogKindTable.ID = "+dogKind.getId());
         int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
                 new String[]{String.valueOf(dogKind.getId())});
         DatabaseManager.getInstance().closeDB();
@@ -111,6 +113,7 @@ public class DogKindsSQLiteDataSource {
                 while (!cursor.isAfterLast()) {
                     DogKind dogKind = new DogKind();
 //                    dogKind.(cursor.getInt(cursor.getColumnIndex(DogKindTable.ID)));
+                    dogKind.setId(cursor.getInt(cursor.getColumnIndex(DogKindTable.ID)));
                     dogKind.setKind(cursor.getString(cursor.getColumnIndex(DogKindTable.KIND)));
                     dogKind.setImageString(cursor.getString(cursor.getColumnIndex(DogKindTable.IMAGE_URI)));
                     dogKinds.add(dogKind);

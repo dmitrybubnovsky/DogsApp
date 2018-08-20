@@ -10,10 +10,10 @@ import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogKindLocalDataSource {
+public class DogKindsLocalDataSource {
     public static final String TAG = "#";
 
-    private static DogKindLocalDataSource instance;
+    private static DogKindsLocalDataSource instance;
     private final String[] TITLES = new String[]{"afghan_hound", "american_bulldog", "american_foxhound",
             "australiancattle", "belgiantervuren", "berger_picard", "bolognese", "bullterrier", "chesapeake", "chinook", "dogoargentino", "english_coonhound", "german_shepherd",
             "icelandicsheepdog", "komondor", "mudi", "munsterlander_pointer", "pharaohhound", "pocket_beagle",
@@ -28,7 +28,7 @@ public class DogKindLocalDataSource {
 
     private final List<DogKind> dogKindsList;
 
-    private DogKindLocalDataSource() {
+    private DogKindsLocalDataSource() {
         dogKindsList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
             DogKind dogKind = new DogKind(TITLES[i], ""); // IMAGE_FILES[i]
@@ -36,9 +36,9 @@ public class DogKindLocalDataSource {
         }
     }
 
-    public static DogKindLocalDataSource getInstance(){
+    public static DogKindsLocalDataSource getInstance(){
         if(instance == null){
-            instance = new DogKindLocalDataSource();
+            instance = new DogKindsLocalDataSource();
         }
         return instance;
     }
@@ -48,7 +48,7 @@ public class DogKindLocalDataSource {
     }
 
     public void getBreedsImage (Context context, String breedString, IWebCallback<String> webCallback){
-        Log.d(TAG, "DogKindLocalDataSource: getBreedsImage: " + breedString);
+        Log.d(TAG, "DogKindsLocalDataSource: getBreedsImage: " + breedString);
         String uriImageString = DogImageUtils.getUriFromDrawable(context, breedString).toString();
 
         webCallback.onWebCallback(uriImageString);
