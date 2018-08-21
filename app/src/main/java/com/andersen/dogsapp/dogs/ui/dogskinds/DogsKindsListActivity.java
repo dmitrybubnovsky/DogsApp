@@ -33,13 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DogsKindsListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<DogKind>, IResponseImageCallback<String, ImageView, DogKind> {
+        implements IRecyclerItemListener<DogKind>, IResponseImageCallback<String, ImageView, DogKind, ProgressBar> {
     public static final String TAG = "#";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
 
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
+    private ProgressBar itemProgressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -101,7 +102,7 @@ public class DogsKindsListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
+    public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance, ProgressBar itemProgressBar) {
 
         if (dogKindInstance.getUriImageString().isEmpty()) {
             DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
@@ -117,7 +118,7 @@ public class DogsKindsListActivity extends AppCompatActivity
                         @Override
                         public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                             dogKindImageView.setImageBitmap(bitmap);
-//                            progressItemBar.setVisibility(View.INVISIBLE);
+                            itemProgressBar.setVisibility(View.INVISIBLE);
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {

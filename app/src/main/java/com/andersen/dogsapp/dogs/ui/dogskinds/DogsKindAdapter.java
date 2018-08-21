@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
@@ -24,7 +25,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
-    private IResponseImageCallback<String, ImageView, DogKind> responseCallback;
+    private IResponseImageCallback<String, ImageView, DogKind, ProgressBar> responseCallback;
     private List<DogKind> dogsKinds;
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
@@ -44,6 +45,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogKindTextView;
         private ImageView dogKindImageView;
+        private ProgressBar itemProgressBar;
         public DogKind dogKind;
 
         public ViewHolder(View view) {
@@ -61,6 +63,9 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
                     .style(context, R.style.TextViewTitleItem)
                     .build();
             dogKindImageView = view.findViewById(R.id.dog_kind_image_view);
+            itemProgressBar = view.findViewById(R.id.dog_kind_item_progressbar);
+            itemProgressBar.setVisibility(View.VISIBLE);
+
         }
 
         private void setData(Context context, int position) {
@@ -75,7 +80,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
              * и insert'им в БД это поле
              */
             if (dogKind.getUriImageString().isEmpty()) {
-                responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKind);
+                responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKind, itemProgressBar);
             } else {
                 Log.d(TAG, "DogsKindAdapter dogKindImageString - " + dogKindImageString);
 

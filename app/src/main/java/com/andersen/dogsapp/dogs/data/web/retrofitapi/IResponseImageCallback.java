@@ -1,6 +1,8 @@
 package com.andersen.dogsapp.dogs.data.web.retrofitapi;
 
-public interface IResponseImageCallback<String, ImageView, DogKind> {
+import android.widget.ProgressBar;
 
-    void onResponseImageListener(String breed, ImageView imageView, DogKind dogKind);
+public interface IResponseImageCallback<String, ImageView, DogKind, ProgressBar> {
+
+    void onResponseImageListener(String breed, ImageView imageView, DogKind dogKind, ProgressBar itemProgressBar);
 }
