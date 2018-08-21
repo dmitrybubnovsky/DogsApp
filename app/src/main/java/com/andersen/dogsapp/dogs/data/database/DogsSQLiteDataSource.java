@@ -19,13 +19,13 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
     private List<Dog> dogs;
     private SQLiteDatabase db;
 
-    private DogsSQLiteDataSource(DBHelper dbHelper) {
+    private DogsSQLiteDataSource() {
         loadDogs();
     }
 
-    public static DogsSQLiteDataSource getInstance(DBHelper dbHelper) {
+    public static DogsSQLiteDataSource getInstance() {
         if (dogsDataSource == null) {
-            dogsDataSource = new DogsSQLiteDataSource(dbHelper);
+            dogsDataSource = new DogsSQLiteDataSource();
         }
         return dogsDataSource;
     }

@@ -57,12 +57,9 @@ public class DogsKindsListActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         if (dogKinds == null){
-            DataRepository.get().getDogKinds(new ICallback<List<DogKind>>() {
-                @Override
-                public void onResponseICallback(List<DogKind> dogBreeds) {
-                    dogKinds = dogBreeds;
-                    runOnUiThread(() -> updateUI());
-                }
+            DataRepository.get().getDogKinds(dogBreeds -> {
+                dogKinds = dogBreeds;
+                runOnUiThread(this::updateUI);
             });
         } else {
             updateUI();

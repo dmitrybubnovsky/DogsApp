@@ -56,14 +56,14 @@ public class WebBreedsDataSource implements IBreedsDataSource {
     }
 
     @Override
-    public void getDogsKinds(ICallback<List<DogKind>> iCallback) {
+    public void getDogsKinds(ICallback<List<DogKind>> responseCallback) {
         Call<List<DogKind>> call = instanceAPI.getBreeds();
         call.enqueue(new Callback<List<DogKind>>() {
             @Override
             public void onResponse(Call<List<DogKind>> call, Response<List<DogKind>> response) {
                 if (response.isSuccessful()) {
                     dogKinds = response.body();
-                    iCallback.onResponseICallback(dogKinds);
+                    responseCallback.onResponseICallback(dogKinds);
                 } else {
                     Log.d(TAG, "response is NOT successful");
                 }
