@@ -71,28 +71,21 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (dogKinds == null) {
-            Log.d(TAG, "start DataRepository.get().getDogKinds ");
-            DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
-                @Override
-                public void onWebCallback(List<DogKind> dogBreeds) {
-                    dogKinds = dogBreeds;
-                    DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
-                    runOnUiThread(() -> updateUI());
-                }
-            }, new IDatabaseCallback<List<DogKind>>() {
-                @Override
-                public void onDatabaseCallback(List<DogKind> dogBreeds) {
-                    dogKinds = dogBreeds;
-                    runOnUiThread(() -> updateUI());
-                }
-            });
-            updateUI();
-        } else {
-            Log.d(TAG, "DogKindsListActivity: onResume: dogKinds is not null, size = " + dogKinds.size());
-            updateUI();
-        }
+        DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
+            @Override
+            public void onWebCallback(List<DogKind> dogBreeds) {
+                dogKinds = dogBreeds;
+                DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
+                runOnUiThread(() -> updateUI());
+            }
+        }, new IDatabaseCallback<List<DogKind>>() {
+            @Override
+            public void onDatabaseCallback(List<DogKind> dogBreeds) {
+                dogKinds = dogBreeds;
+                runOnUiThread(() -> updateUI());
+            }
+        });
+        updateUI();
     }
 
     private void updateUI() {
@@ -102,67 +95,79 @@ public class DogsKindsListActivity extends AppCompatActivity
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
             if (progressBar != null && dogKinds != null) {
-//                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }
 
     @Override
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
-        DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
-            @Override
-            public void onWebCallback(String uriBreedString) {
-                final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
-                dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
-                // обновить поле imageString в БД uri-стрингой
-                DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
-                final Target target = new Target() {
-                    @Override
-                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                        dogKindImageView.setImageBitmap(bitmap);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                FileOutputStream fos = null;
-                                try {
-                                    fos = new FileOutputStream(breedImageFile);
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } finally {
+
+        if (dogKindInstance.getUriImageString().isEmpty()) {
+            DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
+                @Override
+                public void onWebCallback(String uriBreedString) {
+                    final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
+                    dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
+                    // обновить поле imageString в БД uri-стрингой
+                    Log.d(TAG, "dogKindInstance.getUriImageString().isEmpty() is " + dogKindInstance.getUriImageString().isEmpty());
+                    DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
+
+                    final Target target = new Target() {
+                        @Override
+                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                            dogKindImageView.setImageBitmap(bitmap);
+//                            progressItemBar.setVisibility(View.INVISIBLE);
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    FileOutputStream fos = null;
                                     try {
-                                        fos.close();
+                                        fos = new FileOutputStream(breedImageFile);
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
                                     } catch (IOException e) {
                                         e.printStackTrace();
+                                    } finally {
+                                        try {
+                                            fos.close();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
-                            }
-                        }).start();
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        if (placeHolderDrawable != null) {
+                            }).start();
                         }
-                    }
 
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        Log.d(TAG, "DogsKindsListActivity: onBitmapFailed");
-                    }
-                };
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            if (placeHolderDrawable != null) {
+                            }
+                        }
 
-                dogKindImageView.setTag(target);
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                            Log.d(TAG, "DogsKindsListActivity: onBitmapFailed");
+                        }
+                    };
 
-                Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
-                Picasso.get()
-                        .load(uriBreedString)
-                        .placeholder(R.drawable.smiled_dog_face)
-                        .error(R.drawable.smiled_dog_face)
-                        .into(target);
-            }
-        });
+                    dogKindImageView.setTag(target);
+
+                    Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
+                    Picasso.get()
+                            .load(uriBreedString)
+                            .placeholder(R.drawable.smiled_dog_face)
+                            .error(R.drawable.smiled_dog_face)
+                            .into(target);
+                }
+            });
+        } else {
+
+            Picasso.get()
+                    .load(dogKindInstance.getUriImageString())
+                    .placeholder(R.drawable.smiled_dog_face)
+                    .error(R.drawable.smiled_dog_face)
+                    .into(dogKindImageView);
+        }
     }
 
     private File getImageBreedFile(Context context, String breedFileNameString) {

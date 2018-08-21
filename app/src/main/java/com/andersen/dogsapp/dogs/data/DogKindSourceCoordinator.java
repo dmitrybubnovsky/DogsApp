@@ -37,10 +37,7 @@ public class DogKindSourceCoordinator implements IBreedsDataSource {
     public void getDogsKinds(IWebCallback<List<DogKind>> responseCallback, IDatabaseCallback<List<DogKind>> dbCallback) {
         if (DogKindsSQLiteDataSource.getInstance().isBreedDatabaseEmpty()) {
             Log.d(TAG, "DogKindCoordinator: DB Breeds is empty"); // TODO: Delete this testing Log.d
-
             WebBreedsDataSource.getInstance().getDogsKinds(responseCallback);
-
-//            DogKindsLocalDataSource.getInstance().getDogsKinds(responseCallback);
         } else {
             Log.d(TAG, "DogKindCoordinator: DB Breeds is already exists"); // TODO: Delete this testing Log.d
             DogKindsSQLiteDataSource.getInstance().getDogKinds(dbCallback);                                                                         Log.d(TAG, "DB Breeds is NOT empty");     // TODO Delete this Log.d
