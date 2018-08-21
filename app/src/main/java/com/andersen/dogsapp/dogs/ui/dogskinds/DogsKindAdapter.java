@@ -77,10 +77,11 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
             dogKindTextView.setText(dogKindName);
             if(dogKindInstance.getUriImageString().isEmpty()){
+                Log.d(TAG, "DogsKindAdapter: this dogKindImageString isEmpty");
                 responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKindInstance);
             } else {
 //                dogKindImageView.setImageResource(getImageId(context, dogKindImageString));
-                Log.d(TAG, "DogsKindAdapter " + dogKindImageString);
+                Log.d(TAG, "DogsKindAdapter dogKindImageString - " + dogKindImageString);
 
                 Uri uri = Uri.parse(dogKindImageString);
                 dogKindImageView.setImageURI(uri);
