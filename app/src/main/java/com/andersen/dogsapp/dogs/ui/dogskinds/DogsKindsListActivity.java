@@ -15,13 +15,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.MyApp;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.IWebCallback;
 import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
-import com.andersen.dogsapp.dogs.data.web.imageloader.BreedImageLoader;
+import com.andersen.dogsapp.dogs.data.web.IWebCallback;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -92,7 +90,7 @@ public class DogsKindsListActivity extends AppCompatActivity
             });
             updateUI();
         } else {
-            Log.d(TAG, "DogKindsListActivity: onResume: dogKinds is not null, size = "+ dogKinds.size());
+            Log.d(TAG, "DogKindsListActivity: onResume: dogKinds is not null, size = " + dogKinds.size());
             updateUI();
         }
     }
@@ -111,14 +109,15 @@ public class DogsKindsListActivity extends AppCompatActivity
 
     @Override
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance) {
-      DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
+        DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
             @Override
             public void onWebCallback(String uriBreedString) {
-                dogKindInstance.setImageString(uriBreedString);
+                final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
+                Log.d(TAG, "breedImageFile.getAbsolutePath() --- "+breedImageFile.getAbsolutePath());
+                dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД uri-стрингой
                 DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
-                final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
-                Target target = new Target() {
+                final Target target = new Target() {
                     @Override
                     public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                         new Thread(new Runnable() {
@@ -141,9 +140,11 @@ public class DogsKindsListActivity extends AppCompatActivity
                             }
                         }).start();
                     }
+
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        if (placeHolderDrawable != null) {}
+                        if (placeHolderDrawable != null) {
+                        }
                     }
 
 
@@ -154,26 +155,26 @@ public class DogsKindsListActivity extends AppCompatActivity
                 };
 
                 Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
+                Picasso.get()
+                        .load(uriBreedString)
+                        .placeholder(R.drawable.smiled_dog_face)
+                        .error(R.drawable.smiled_dog_face)
+                        .into(target);
+                Picasso.get().load(breedImageFile).into(dogKindImageView);
+
 //                Picasso.get()
 //                        .load(uriBreedString)
 //                        .placeholder(R.drawable.smiled_dog_face)
 //                        .error(R.drawable.smiled_dog_face)
 //                        .into(dogKindImageView);
 
-                Picasso.get()
-                        .load(uriBreedString)
-                        .placeholder(R.drawable.smiled_dog_face)
-                        .error(R.drawable.smiled_dog_face)
-                        .into(target);
-
-                Picasso.get().load(breedImageFile).into(dogKindImageView);
             }
         });
     }
 
     private File getImageBreedFile(Context context, String breedFileNameString) {
         File filesDir = context.getFilesDir();
-        String timeStamp = String.valueOf(breedFileNameString + ".jpg");
+        String timeStamp = String.valueOf(breedFileNameString + ".jpeg");
         return new File(filesDir, timeStamp);
     }
 
@@ -201,9 +202,11 @@ public class DogsKindsListActivity extends AppCompatActivity
                     }
                 }).start();
             }
+
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-                if (placeHolderDrawable != null) {}
+                if (placeHolderDrawable != null) {
+                }
             }
 
 
