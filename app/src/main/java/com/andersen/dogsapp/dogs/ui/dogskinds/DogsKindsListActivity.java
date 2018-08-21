@@ -102,7 +102,7 @@ public class DogsKindsListActivity extends AppCompatActivity
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
             if (progressBar != null && dogKinds != null) {
-                progressBar.setVisibility(View.INVISIBLE);
+//                progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -113,20 +113,21 @@ public class DogsKindsListActivity extends AppCompatActivity
             @Override
             public void onWebCallback(String uriBreedString) {
                 final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
-                Log.d(TAG, "breedImageFile.getAbsolutePath() --- "+breedImageFile.getAbsolutePath());
                 dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД uri-стрингой
                 DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
                 final Target target = new Target() {
                     @Override
                     public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                        dogKindImageView.setImageBitmap(bitmap);
+                        progressBar.setVisibility(View.INVISIBLE);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 FileOutputStream fos = null;
                                 try {
                                     fos = new FileOutputStream(breedImageFile);
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 } finally {
@@ -136,7 +137,6 @@ public class DogsKindsListActivity extends AppCompatActivity
                                         e.printStackTrace();
                                     }
                                 }
-                                Log.d(TAG, "image saved to >>>" + breedImageFile.getAbsolutePath());
                             }
                         }).start();
                     }
@@ -147,12 +147,13 @@ public class DogsKindsListActivity extends AppCompatActivity
                         }
                     }
 
-
                     @Override
                     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
+                        Log.d(TAG, "DogsKindsListActivity: onBitmapFailed");
                     }
                 };
+
+                dogKindImageView.setTag(target);
 
                 Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
                 Picasso.get()
@@ -160,14 +161,6 @@ public class DogsKindsListActivity extends AppCompatActivity
                         .placeholder(R.drawable.smiled_dog_face)
                         .error(R.drawable.smiled_dog_face)
                         .into(target);
-                Picasso.get().load(breedImageFile).into(dogKindImageView);
-
-//                Picasso.get()
-//                        .load(uriBreedString)
-//                        .placeholder(R.drawable.smiled_dog_face)
-//                        .error(R.drawable.smiled_dog_face)
-//                        .into(dogKindImageView);
-
             }
         });
     }
@@ -176,45 +169,6 @@ public class DogsKindsListActivity extends AppCompatActivity
         File filesDir = context.getFilesDir();
         String timeStamp = String.valueOf(breedFileNameString + ".jpeg");
         return new File(filesDir, timeStamp);
-    }
-
-    private Target picassoImageTarget(final File breedImageFile) {
-        return new Target() {
-            @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        FileOutputStream fos = null;
-                        try {
-                            fos = new FileOutputStream(breedImageFile);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        Log.d(TAG, "image saved to >>>" + breedImageFile.getAbsolutePath());
-                    }
-                }).start();
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                if (placeHolderDrawable != null) {
-                }
-            }
-
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-
-            }
-        };
     }
 
     @Override

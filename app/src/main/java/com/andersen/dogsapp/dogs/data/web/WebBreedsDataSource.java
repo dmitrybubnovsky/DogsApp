@@ -68,7 +68,6 @@ public class WebBreedsDataSource {
                     Log.d(TAG, "response is NOT successful");
                 }
             }
-
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
                 t.printStackTrace();
@@ -90,12 +89,9 @@ public class WebBreedsDataSource {
                     listString = response.body();
                     uriImageString = listString.get(0);
                     webCallback.onWebCallback(uriImageString);
-                    Log.d(TAG, "WebBreedsDataSource: getBreedsImage: uriImageString "+uriImageString);
                 } else {
                     // Если с response'ом проблема
                     Log.d(TAG, "WebBreedsDataSource: getBreedsImage: response was NOT successful");
-//                    uriImageString = listString.get(0);
-//                    webCallback.onWebCallback(uriImageString);
                 }
             }
             @Override
