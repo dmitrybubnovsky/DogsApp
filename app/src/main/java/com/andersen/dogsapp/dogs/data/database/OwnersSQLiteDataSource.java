@@ -37,13 +37,9 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
 
     private void loadOwners() {
         db = DatabaseManager.getInstance().openDB();
-        Cursor cursor = null;
         owners = new ArrayList<>();
-        try {
-            cursor = db.query(
-                    OwnerTable.TABLE_NAME,
-                    null, null, null, null, null, null, null);
-            // проверяем БД, если там пусто то список владельцев пустой
+        try (Cursor cursor = db.query( OwnerTable.TABLE_NAME,
+                null, null, null, null, null, null, null)) {// проверяем БД, если там пусто то список владельцев пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
                 owners.clear();
             } else {
@@ -58,8 +54,8 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
                     cursor.moveToNext();
                 }
             }
-        } finally {
             cursor.close();
+        } finally {
             DatabaseManager.getInstance().closeDB();
         }
     }

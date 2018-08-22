@@ -38,7 +38,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
+//                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .resize(500,0)
                 .into(target);
     }
@@ -47,7 +47,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
+//                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .resize(500,0)
                 .into(dogKindImageView);
     }

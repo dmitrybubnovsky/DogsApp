@@ -75,10 +75,9 @@ public class DogKindsSQLiteDataSource {
 
     private void loadDogKinds() {
         db = DatabaseManager.getInstance().openDB();
-        Cursor cursor = null;
         dogKinds = new ArrayList<>();
         try {
-            cursor = db.query(
+            Cursor cursor = db.query(
                     DogKindTable.TABLE_NAME,
                     null, null, null, null, null, null, null);
             // проверяем БД, если там пусто то список пород пустой
@@ -95,8 +94,8 @@ public class DogKindsSQLiteDataSource {
                     cursor.moveToNext();
                 }
             }
-        } finally {
             cursor.close();
+        } finally {
             DatabaseManager.getInstance().closeDB();
         }
     }

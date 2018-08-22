@@ -36,11 +36,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         db = DatabaseManager.getInstance().openDB();
         dogs = new ArrayList<>();
 
-        Cursor cursor = null;
-        try {
-            cursor = db.query(DogTable.TABLE_NAME, null, null,
-                    null, null, null, null,
-                    null);
+        try (Cursor cursor = db.query(DogTable.TABLE_NAME, null, null,
+                null, null, null, null, null)) {
             if (cursor.getCount() != 0) {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -59,8 +56,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
             } else {
                 Log.d(TAG, "loadDogs. cursor.count == 0");
             }
-        } finally {
             cursor.close();
+        } finally {
             DatabaseManager.getInstance().closeDB();
         }
     }
@@ -80,12 +77,9 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
         List<Dog> ownerDogs = new ArrayList<>();
 
-        Cursor cursor = null;
-
-        try {
-            cursor = db.query(DogTable.TABLE_NAME, null, DogTable.OWNER_ID + "=?",
-                    new String[]{String.valueOf(dogOwnerId)}, null, null, null,
-                    null);
+        try (Cursor cursor = db.query(DogTable.TABLE_NAME, null, DogTable.OWNER_ID + "=?",
+                new String[]{String.valueOf(dogOwnerId)}, null, null, null,
+                null)) {
             if (cursor.getCount() != 0) {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -102,11 +96,10 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     cursor.moveToNext();
                 }
             }
-        } finally {
             cursor.close();
-            // закрываю БД
-            DatabaseManager.getInstance().closeDB();
             return ownerDogs;
+        } finally {
+            DatabaseManager.getInstance().closeDB();
         }
     }
 
