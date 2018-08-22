@@ -56,8 +56,6 @@ public class BreedPicasso {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                int width = bitmap.getWidth();
-                int height = bitmap.getHeight();
                 itemProgressBar.setVisibility(View.GONE);
                 dogKindImageView.setImageBitmap(bitmap);
                 new Thread(() -> {
