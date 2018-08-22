@@ -26,7 +26,6 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private Context context;
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;
-//    private IBreedImageViewListener<ImageView> iBreedImageViewListener;
 
     public DogsAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;

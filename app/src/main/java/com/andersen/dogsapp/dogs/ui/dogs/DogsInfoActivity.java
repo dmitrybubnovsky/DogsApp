@@ -3,15 +3,18 @@ package com.andersen.dogsapp.dogs.ui.dogs;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
@@ -34,8 +37,13 @@ public class DogsInfoActivity extends AppCompatActivity {
     }
 
     private void initViews(Context context, Dog dog, MediaPlayer mediaPlayer) {
-        ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageDrawable(DogImageUtils.getDogImage(context, dog.getDogImageString()));
+        ImageView dogsImageView = findViewById(R.id.dog_imageview);
+        String dogImageString = dog.getDogImageString();
+        if(dogImageString.contains("_doggy_dogg.jpg")){
+            dogsImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
+        } else {
+            dogsImageView.setImageURI(Uri.parse(dogImageString));
+        }
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());

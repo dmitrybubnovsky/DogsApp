@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -33,10 +34,11 @@ public class BreedPicasso {
         return instance;
     }
 
-    public void initWithTarget(String uriBreedString, Target target) {
+    public void intoTarget(String uriBreedString, Target target) {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(target);
     }
 
@@ -44,7 +46,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-                .fit()
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .into(dogKindImageView);
     }
 

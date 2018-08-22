@@ -99,7 +99,7 @@ public class DogsKindsListActivity extends AppCompatActivity
                         .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                 dogKindImageView.setTag(target);
                 BreedPicasso.get(getApplicationContext())
-                        .initWithTarget(uriBreedString, target);
+                        .intoTarget(uriBreedString, target);
             });
         } else {
             BreedPicasso.get(getApplicationContext())
