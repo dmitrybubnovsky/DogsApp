@@ -29,7 +29,6 @@ public class MyApp extends Application {
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance();
         IBreedsDataSource iBreedsDataSource = DogKindSourceCoordinator.getInstance();
-//        IBreedsDataSource iBreedsDataSource = WebBreedsDataSource.getInstance();
         DataRepository.init(iOwnersDataSource, iDogsDataSource, iBreedsDataSource);
 
         if (NetworkManager.hasNetWorkAccess(this)) {
@@ -40,7 +39,6 @@ public class MyApp extends Application {
 //                }
 //            });
         }
-
         Log.d(TAG, "MyApp onCreate: dogBreedsList "+( (dogBreedsList != null) ? " != null" : " NULL" ) );
     }
 }

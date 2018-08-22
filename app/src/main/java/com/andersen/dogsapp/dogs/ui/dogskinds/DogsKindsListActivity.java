@@ -36,7 +36,6 @@ public class DogsKindsListActivity extends AppCompatActivity
 
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
-    private ProgressBar itemProgressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -45,8 +44,6 @@ public class DogsKindsListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breeds_list);
 
-//        dogKinds = (((MyApp) getApplicationContext()).dogBreedsList != null)
-//                ? ((MyApp) getApplicationContext()).dogBreedsList : new ArrayList<>();
 
         if (savedInstanceState != null) {
             dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);

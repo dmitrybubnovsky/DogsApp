@@ -66,7 +66,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             itemProgressBar = view.findViewById(R.id.dog_kind_item_progressbar);
         }
 
-        private void setData(Context context, int position) {
+        private void setData(int position) {
             dogKind = dogsKinds.get(position);
             String dogKindImageString = dogKind.getUriImageString();
             String dogKindName = dogKind.getKind();
@@ -75,7 +75,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
             /*
              * если поле DogKind imageString пусто, значит оно еще не сетилось,
              * тогда отправляемся в активити загружаем файл, сохраняем его путь
-             * и insert'им в БД это поле
+             * и update'им в БД это поле
              */
             if (dogKind.getUriImageString().isEmpty()) {
                 itemProgressBar.setVisibility(View.VISIBLE);
@@ -90,7 +90,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(context, position);
+        holder.setData(position);
     }
 
     @Override
@@ -102,11 +102,5 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     @Override
     public int getItemCount() {
         return dogsKinds.size();
-    }
-
-    private int getImageId(Context context, String imageString) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier(imageString, "drawable", context.getPackageName());
-        return resourceId;
     }
 }
