@@ -75,7 +75,7 @@ public class DogsKindsListActivity extends AppCompatActivity
     }
 
     private void updateUI() {
-        if (dogKinds != null) {  // TODO if !dogKinds.isEmpty()
+        if (dogKinds != null) {
             adapter.setBreeds(dogKinds);
             adapter.setResponseBreedCallbackListener(this);
             adapter.notifyDataSetChanged();
