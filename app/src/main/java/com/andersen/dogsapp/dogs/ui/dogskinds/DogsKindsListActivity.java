@@ -2,8 +2,6 @@ package com.andersen.dogsapp.dogs.ui.dogskinds;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,16 +17,14 @@ import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
+import com.andersen.dogsapp.dogs.data.web.BreedPicasso;
 import com.andersen.dogsapp.dogs.data.web.IWebCallback;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
-import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,63 +106,20 @@ public class DogsKindsListActivity extends AppCompatActivity
                 public void onWebCallback(String uriBreedString) {
                     final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
                     dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
-                    // обновить поле imageString в БД uri-стрингой
+                    // обновить поле imageString в БД
                     Log.d(TAG, "dogKindInstance.getUriImageString().isEmpty() is " + dogKindInstance.getUriImageString().isEmpty());
                     DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
 
-                    final Target target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                            dogKindImageView.setImageBitmap(bitmap);
-                            itemProgressBar.setVisibility(View.INVISIBLE);
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    FileOutputStream fos = null;
-                                    try {
-                                        fos = new FileOutputStream(breedImageFile);
-                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    } finally {
-                                        try {
-                                            fos.close();
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                            }).start();
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-                            if (placeHolderDrawable != null) {
-                            }
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            Log.d(TAG, "DogsKindsListActivity: onBitmapFailed");
-                        }
-                    };
-
+                    final Target target = BreedPicasso.get(getApplicationContext())
+                            .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                     dogKindImageView.setTag(target);
-
-                    Log.d(TAG, "onWebCallback " + dogKindInstance.getUriImageString());
-                    Picasso.get()
-                            .load(uriBreedString)
-                            .placeholder(R.drawable.smiled_dog_face)
-                            .into(target);
+                    BreedPicasso.get(getApplicationContext())
+                                .initWithTarget(uriBreedString, target);
                 }
             });
         } else {
-
-            Picasso.get()
-                    .load(dogKindInstance.getUriImageString())
-                    .placeholder(R.drawable.smiled_dog_face)
-                    .error(R.drawable.smiled_dog_face)
-                    .into(dogKindImageView);
+            BreedPicasso.get(getApplicationContext())
+                    .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
         }
     }
 
