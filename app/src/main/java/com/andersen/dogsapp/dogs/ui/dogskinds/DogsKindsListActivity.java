@@ -42,7 +42,6 @@ public class DogsKindsListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breeds_list);
 
-
         if (savedInstanceState != null) {
             dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);
             Log.d(TAG, "dogKinds " + dogKinds.size());

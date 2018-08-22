@@ -43,7 +43,6 @@ public class WebBreedsDataSource {
                 .addConverterFactory(buildGsonConverter())
                 .build();
         instanceAPI = instanceRetrofit.create(DogBreedsAPI.class);
-
         dogKinds = new ArrayList<>();
     }
 

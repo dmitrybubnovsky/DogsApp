@@ -269,7 +269,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     private void startDogsKindsListActivity() {
-
         // Если сети нет, то список пород НЕ открываем
         if (!NetworkManager.hasNetWorkAccess(this)) {
             Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
