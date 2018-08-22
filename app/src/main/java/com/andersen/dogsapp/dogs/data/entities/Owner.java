@@ -1,12 +1,23 @@
 package com.andersen.dogsapp.dogs.data.entities;
 
-import android.os.Parcelable;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Owner implements Parcelable {
+    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
+        @Override
+        public Owner createFromParcel(Parcel source) {
+            return new Owner(source);
+        }
+
+        @Override
+        public Owner[] newArray(int size) {
+            return new Owner[size];
+        }
+    };
     private int ownerId;
     private String ownerName;
     private String ownerSurname;
@@ -51,6 +62,10 @@ public class Owner implements Parcelable {
         return ownerId;
     }
 
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getOwnerFullName() {
         return ownerName + " " + ownerSurname;
     }
@@ -59,24 +74,20 @@ public class Owner implements Parcelable {
         return ownerName;
     }
 
-    public String getOwnerSurname() {
-        return ownerSurname;
-    }
-
-    public String getPreferedDogsKind() {
-        return preferedDogsKind;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
-
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
 
+    public String getOwnerSurname() {
+        return ownerSurname;
+    }
+
     public void setOwnerSurname(String ownerSurname) {
         this.ownerSurname = ownerSurname;
+    }
+
+    public String getPreferedDogsKind() {
+        return preferedDogsKind;
     }
 
     public void setPreferedDogsKind(String preferedDogsKind) {
@@ -96,17 +107,5 @@ public class Owner implements Parcelable {
         parcelInstance.writeString(preferedDogsKind);
         parcelInstance.writeList(dogs);
     }
-
-    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
-        @Override
-        public Owner createFromParcel(Parcel source) {
-            return new Owner(source);
-        }
-
-        @Override
-        public Owner[] newArray(int size) {
-            return new Owner[size];
-        }
-    };
 }
 

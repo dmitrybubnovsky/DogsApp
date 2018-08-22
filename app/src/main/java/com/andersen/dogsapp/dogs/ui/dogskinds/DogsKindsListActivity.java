@@ -16,7 +16,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.BreedPicasso;
+import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DogsKindsListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<DogKind>, IResponseImageCallback<String, ImageView, DogKind, ProgressBar> {
+        implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
     public static final String TAG = "#";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";

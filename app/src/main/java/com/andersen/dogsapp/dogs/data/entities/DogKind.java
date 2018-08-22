@@ -4,6 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DogKind implements Parcelable {
+    public static final Parcelable.Creator<DogKind> CREATOR = new Parcelable.Creator<DogKind>() {
+        @Override
+        public DogKind createFromParcel(Parcel source) {
+            return new DogKind(source);
+        }
+
+        @Override
+        public DogKind[] newArray(int size) {
+            return new DogKind[size];
+        }
+    };
     private int id;
     private String kind;
     private String imageString;
@@ -41,10 +52,6 @@ public class DogKind implements Parcelable {
         this.kind = kind;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setImageString(String imageString) {
         this.imageString = imageString;
     }
@@ -61,19 +68,11 @@ public class DogKind implements Parcelable {
         dest.writeString(imageString);
     }
 
-    public static final Parcelable.Creator<DogKind> CREATOR = new Parcelable.Creator<DogKind>() {
-        @Override
-        public DogKind createFromParcel(Parcel source) {
-            return new DogKind(source);
-        }
-
-        @Override
-        public DogKind[] newArray(int size) {
-            return new DogKind[size];
-        }
-    };
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

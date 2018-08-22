@@ -1,9 +1,8 @@
-package com.andersen.dogsapp.dogs.data.web;
+package com.andersen.dogsapp.dogs.data.web.imageloader;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -34,14 +33,14 @@ public class BreedPicasso {
         return instance;
     }
 
-    public void initWithTarget(String uriBreedString, Target target){
-                picasso.get()
-               .load(uriBreedString)
-               .placeholder(placeholder)
-               .into(target);
+    public void initWithTarget(String uriBreedString, Target target) {
+        picasso.get()
+                .load(uriBreedString)
+                .placeholder(placeholder)
+                .into(target);
     }
 
-    public void intoImageView(String uriBreedString, ImageView dogKindImageView){
+    public void intoImageView(String uriBreedString, ImageView dogKindImageView) {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
@@ -49,27 +48,24 @@ public class BreedPicasso {
                 .into(dogKindImageView);
     }
 
-    public Target getTarget (ProgressBar itemProgressBar, ImageView dogKindImageView, File breedImageFile){
+    public Target getTarget(ProgressBar itemProgressBar, ImageView dogKindImageView, File breedImageFile) {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                 itemProgressBar.setVisibility(View.GONE);
                 dogKindImageView.setImageBitmap(bitmap);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        FileOutputStream fos = null;
+                new Thread(() -> {
+                    FileOutputStream fos = null;
+                    try {
+                        fos = new FileOutputStream(breedImageFile);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
                         try {
-                            fos = new FileOutputStream(breedImageFile);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                            fos.close();
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } finally {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                         }
                     }
                 }).start();
@@ -80,6 +76,7 @@ public class BreedPicasso {
                 if (placeHolderDrawable != null) {
                 }
             }
+
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
             }

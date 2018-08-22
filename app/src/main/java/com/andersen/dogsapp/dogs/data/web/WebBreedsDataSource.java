@@ -26,9 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WebBreedsDataSource {
     private static final String TAG = "# WebDataSource";
-
-    private final String BASE_URL = "https://dog.ceo/api/";
     private static WebBreedsDataSource webBreedsDataSource;
+    private final String BASE_URL = "https://dog.ceo/api/";
     private Retrofit instanceRetrofit;
     private DogBreedsAPI instanceAPI;
 
@@ -55,52 +54,6 @@ public class WebBreedsDataSource {
         return webBreedsDataSource;
     }
 
-//    @Override
-    public void getDogsKinds(IWebCallback<List<DogKind>> webCallback) {
-        Call<List<String>> call = instanceAPI.getBreeds();
-        call.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if (response.isSuccessful()) {
-                    dogKinds = convertStringListToDogKindList(response.body());
-                    webCallback.onWebCallback(dogKinds);
-                } else {
-                    Log.d(TAG, "response is NOT successful");
-                }
-            }
-            @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
-
-//    @Override
-    public void getBreedsImage (String breedString, IWebCallback<String> webCallback){
-        Call<List<String>> call = instanceAPI.getBreedImageUriString(breedString);
-        call.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                List<String> listString;
-                String uriImageString;
-                // Если с response'ом все ок, тогда вытягиваем Uri строку,
-                // которая приходит к нам от десериализатора как List<String>
-                if (response.isSuccessful()) {
-                    listString = response.body();
-                    uriImageString = listString.get(0);
-                    webCallback.onWebCallback(uriImageString);
-                } else {
-                    // Если с response'ом проблема
-                    Log.d(TAG, "WebBreedsDataSource: getBreedsImage: response was NOT successful");
-                }
-            }
-            @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
-
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Type type = new TypeToken<List<String>>() {
@@ -121,7 +74,53 @@ public class WebBreedsDataSource {
         return client;
     }
 
-    private List<DogKind> convertStringListToDogKindList (List<String> breedsListString) {
+    public void getDogsKinds(IWebCallback<List<DogKind>> webCallback) {
+        Call<List<String>> call = instanceAPI.getBreeds();
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    dogKinds = convertStringListToDogKindList(response.body());
+                    webCallback.onWebCallback(dogKinds);
+                } else {
+                    Log.d(TAG, "response is NOT successful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void getBreedsImage(String breedString, IWebCallback<String> webCallback) {
+        Call<List<String>> call = instanceAPI.getBreedImageUriString(breedString);
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                List<String> listString;
+                String uriImageString;
+                // Если с response'ом все ок, тогда вытягиваем Uri строку,
+                // которая приходит к нам от десериализатора как List<String>
+                if (response.isSuccessful()) {
+                    listString = response.body();
+                    uriImageString = listString.get(0);
+                    webCallback.onWebCallback(uriImageString);
+                } else {
+                    // Если с response'ом проблема
+                    Log.d(TAG, "WebBreedsDataSource: getBreedsImage: response was NOT successful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private List<DogKind> convertStringListToDogKindList(List<String> breedsListString) {
 
         List<DogKind> dogKinds = new ArrayList<>();
         for (String breedString : breedsListString) {

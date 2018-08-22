@@ -25,7 +25,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
-    private IResponseImageCallback<String, ImageView, DogKind, ProgressBar> responseCallback;
+    private IResponseImageCallback responseCallback;
     private List<DogKind> dogsKinds;
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {

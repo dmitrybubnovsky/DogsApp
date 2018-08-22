@@ -1,7 +1,5 @@
 package com.andersen.dogsapp.dogs.data.json;
 
-import android.util.Log;
-
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;

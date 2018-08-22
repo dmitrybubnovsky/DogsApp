@@ -1,17 +1,15 @@
 package com.andersen.dogsapp.dogs.data;
 
-import android.content.Context;
-
-import java.util.List;
-
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.web.IWebCallback;
-import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
+
+import java.util.List;
 
 public class DataRepository {
     private static DataRepository instance;
@@ -59,19 +57,19 @@ public class DataRepository {
         return owners;
     }
 
-//   WEB SERVER IS CURRENTLY ЛЕЖИТ
-    public void getDogKinds(IWebCallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback){
+    //   WEB SERVER IS CURRENTLY ЛЕЖИТ
+    public void getDogKinds(IWebCallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback) {
         breedsDataSource.getDogsKinds(webCallback, dbCallback);
     }
 
-//   Раскомментировать для WebBreedsDataSource
-    public void getBreedsImage(String breedString, IWebCallback<String> callback){
+    //   Раскомментировать для WebBreedsDataSource
+    public void getBreedsImage(String breedString, IWebCallback<String> callback) {
         breedsDataSource.getBreedsImage(breedString, callback);
 //    public void getBreedsImage(Context context, String breedString, IWebCallback<String> callback){
 //        breedsDataSource.getBreedsImage(context, breedString, callback);
     }
 
-    public int updateBreedDBWithUriImage(DogKind dogKind){
+    public int updateBreedDBWithUriImage(DogKind dogKind) {
         return breedsDataSource.updateBreedDBWithUriImage(dogKind);
     }
 }

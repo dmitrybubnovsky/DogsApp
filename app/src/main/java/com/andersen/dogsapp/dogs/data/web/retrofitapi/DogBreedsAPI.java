@@ -1,7 +1,5 @@
 package com.andersen.dogsapp.dogs.data.web.retrofitapi;
 
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
-
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,6 +10,6 @@ public interface DogBreedsAPI {
     @GET("breeds/list/all")
     Call<List<String>> getBreeds();
 
-    @GET("breed/{dogKindInstance}/images/random")
-    Call<List<String>> getBreedImageUriString(@Path("dogKindInstance") String breed);
+    @GET("breed/{breed}/images/random")
+    Call<List<String>> getBreedImageUriString(@Path("breed") String breed);
 }
