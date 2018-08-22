@@ -8,11 +8,9 @@ import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static DBHelper dbHelper = null;
     public static final String TAG = "# DBHelper";
     private static final String DB_NAME = "doggy_dogg.db";
     private static final int VERSION = 1;
-
     // CREATE OWNERS TABLE
     private static final String CREATE_TABLE_OWNER_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(OwnerTable.TABLE_NAME).append(" (")
@@ -20,7 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(OwnerTable.NAME).append(" TEXT DEFAULT 'Unknown',")
             .append(OwnerTable.SURNAME).append(" TEXT DEFAULT 'Unknown',")
             .append(OwnerTable.PREFERED_DOGS_KIND).append(" TEXT DEFAULT 'homeless');").toString();
-
     // CREATE DOGS TABLE
     private static final String CREATE_TABLE_DOG_QUERY = new StringBuilder()
             .append("CREATE TABLE ").append(DogTable.TABLE_NAME).append("(")
@@ -32,6 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
             .append(DogTable.TALL).append(" INTEGER,")
             .append(DogTable.WEIGHT).append(" INTEGER,")
             .append(DogTable.AGE).append(" INTEGER);").toString();
+    private static DBHelper dbHelper = null;
 
     private DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);

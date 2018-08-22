@@ -22,8 +22,7 @@ public class JsonParser {
     }
 
     public <T> T parseInputStream(InputStream inputStream, Class<T> classType) throws IOException {
-        int size = inputStream.available();
-        byte[] buffer = new byte[size];
+        byte[] buffer = new byte[1024];
         inputStream.read(buffer);
         inputStream.close();
         return gson.fromJson(new String(buffer, "UTF-8"), classType);

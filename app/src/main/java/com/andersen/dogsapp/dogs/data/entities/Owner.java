@@ -38,12 +38,12 @@ public class Owner implements Parcelable {
 
     public void setDogs(List<Dog> dogs) {
         this.dogs = dogs;
-        for (Dog dog:dogs) {
+        for (Dog dog : dogs) {
             dog.setOwner(this);
         }
     }
 
-    public void addDog(Dog dog){
+    public void addDog(Dog dog) {
         dogs.add(dog);
     }
 

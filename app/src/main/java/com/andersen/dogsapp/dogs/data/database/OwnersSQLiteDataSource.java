@@ -5,16 +5,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.database.tables.OwnerTable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersSQLiteDataSource implements IOwnersDataSource {
-    private static OwnersSQLiteDataSource ownersDataSource;
     private static final String TAG = "#";
+    private static OwnersSQLiteDataSource ownersDataSource;
     private SQLiteDatabase db;
     private List<Owner> owners;
 
