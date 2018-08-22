@@ -45,7 +45,6 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-                .error(R.drawable.smiled_dog_face)
                 .fit()
                 .into(dogKindImageView);
     }
@@ -54,7 +53,7 @@ public class BreedPicasso {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                itemProgressBar.setVisibility(View.INVISIBLE);
+                itemProgressBar.setVisibility(View.GONE);
                 dogKindImageView.setImageBitmap(bitmap);
                 new Thread(new Runnable() {
                     @Override

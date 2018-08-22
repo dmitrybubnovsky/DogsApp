@@ -107,10 +107,9 @@ public class DogsKindsListActivity extends AppCompatActivity
                     final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
                     dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
                     // обновить поле imageString в БД
-                    Log.d(TAG, "dogKindInstance.getUriImageString().isEmpty() is " + dogKindInstance.getUriImageString().isEmpty());
                     DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
 
-                    final Target target = BreedPicasso.get(getApplicationContext())
+                    Target target = BreedPicasso.get(getApplicationContext())
                             .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                     dogKindImageView.setTag(target);
                     BreedPicasso.get(getApplicationContext())

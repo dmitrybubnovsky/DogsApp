@@ -64,8 +64,6 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
                     .build();
             dogKindImageView = view.findViewById(R.id.dog_kind_image_view);
             itemProgressBar = view.findViewById(R.id.dog_kind_item_progressbar);
-            itemProgressBar.setVisibility(View.VISIBLE);
-
         }
 
         private void setData(Context context, int position) {
@@ -80,10 +78,10 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
              * и insert'им в БД это поле
              */
             if (dogKind.getUriImageString().isEmpty()) {
+                itemProgressBar.setVisibility(View.VISIBLE);
                 responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKind, itemProgressBar);
             } else {
-                Log.d(TAG, "DogsKindAdapter dogKindImageString - " + dogKindImageString);
-
+                itemProgressBar.setVisibility(View.GONE);
                 Uri uri = Uri.parse(dogKindImageString);
                 dogKindImageView.setImageURI(uri);
             }

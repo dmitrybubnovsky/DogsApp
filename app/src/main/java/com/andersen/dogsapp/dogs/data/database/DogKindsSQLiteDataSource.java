@@ -55,6 +55,8 @@ public class DogKindsSQLiteDataSource {
             addDogKindInLoop(dogKind);
         }
         DatabaseManager.getInstance().closeDB();
+        Log.d(TAG, "addBreedsToDatabase called. Breeds DB was created ---------------- !!!!!!!!!!!");
+
     }
 
     private void addDogKindInLoop(DogKind dogKind) {
@@ -62,10 +64,10 @@ public class DogKindsSQLiteDataSource {
         cv.put(DogKindTable.KIND, dogKind.getKind());
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
         long id = db.insert(DogKindTable.TABLE_NAME, null, cv);
-        Log.d(TAG, "id " + id);
-        Log.d(TAG, "dogKindInstance " + dogKind.getKind());
-        Log.d(TAG, "UriImageString " + dogKind.getUriImageString());
-        Log.d(TAG, "-----------------------------------");
+//        Log.d(TAG, "id " + id);
+//        Log.d(TAG, "dogKindInstance " + dogKind.getKind());
+//        Log.d(TAG, "UriImageString " + dogKind.getUriImageString());
+//        Log.d(TAG, "-----------------------------------");
     }
 
     public DogKind addDogKind(DogKind dogKind) {
@@ -90,7 +92,7 @@ public class DogKindsSQLiteDataSource {
 
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        Log.d(TAG, "updateBreedDBWithUriImage DogKindTable.ID = "+dogKind.getId());
+        Log.d(TAG, "--------------    updateBreedDBWithUriImage DogKindTable.ID = "+dogKind.getId());
         int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
                 new String[]{String.valueOf(dogKind.getId())});
         DatabaseManager.getInstance().closeDB();
