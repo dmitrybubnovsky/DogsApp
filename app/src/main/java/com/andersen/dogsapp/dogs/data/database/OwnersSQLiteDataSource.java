@@ -18,14 +18,13 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private SQLiteDatabase db;
     private List<Owner> owners;
 
-    private OwnersSQLiteDataSource(DBHelper dbHelper) {
-        DatabaseManager.initInstance(dbHelper);
+    private OwnersSQLiteDataSource() {
         loadOwners();
     }
 
-    public static OwnersSQLiteDataSource getInstance(DBHelper dbHelper) {
+    public static OwnersSQLiteDataSource getInstance() {
         if (ownersDataSource == null) {
-            ownersDataSource = new OwnersSQLiteDataSource(dbHelper);
+            ownersDataSource = new OwnersSQLiteDataSource();
         }
         return ownersDataSource;
     }

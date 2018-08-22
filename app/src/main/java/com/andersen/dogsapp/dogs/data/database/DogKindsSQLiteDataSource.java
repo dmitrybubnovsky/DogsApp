@@ -3,7 +3,6 @@ package com.andersen.dogsapp.dogs.data.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -31,7 +30,6 @@ public class DogKindsSQLiteDataSource {
 
     public void getDogKinds(IDatabaseCallback<List<DogKind>> dbCallback) {
         loadDogKinds();
-        Log.d(TAG, "dogKinds third id = "+dogKinds.get(3).getId());
         dbCallback.onDatabaseCallback(dogKinds);
     }
 
@@ -55,36 +53,13 @@ public class DogKindsSQLiteDataSource {
             addDogKindInLoop(dogKind);
         }
         DatabaseManager.getInstance().closeDB();
-        Log.d(TAG, "addBreedsToDatabase called. Breeds DB was created ---------------- !!!!!!!!!!!");
-
     }
 
     private void addDogKindInLoop(DogKind dogKind) {
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.KIND, dogKind.getKind());
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        long id = db.insert(DogKindTable.TABLE_NAME, null, cv);
-//        Log.d(TAG, "id " + id);
-//        Log.d(TAG, "dogKindInstance " + dogKind.getKind());
-//        Log.d(TAG, "UriImageString " + dogKind.getUriImageString());
-//        Log.d(TAG, "-----------------------------------");
-    }
-
-    public DogKind addDogKind(DogKind dogKind) {
-        db = DatabaseManager.getInstance().openDB();
-
-        ContentValues cv = new ContentValues();
-        cv.put(DogKindTable.KIND, dogKind.getKind());
-        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        long insertResult = db.insert(DogKindTable.TABLE_NAME, null, cv);
-        DatabaseManager.getInstance().closeDB();
-
-        if (insertResult != -1) {
-            dogKind.setId((int) insertResult);
-            return dogKind;
-        } else {
-            return null; //new DogKind()
-        }
+        db.insert(DogKindTable.TABLE_NAME, null, cv);
     }
 
     public int updateBreedDBWithUriImage(DogKind dogKind) {
@@ -92,7 +67,6 @@ public class DogKindsSQLiteDataSource {
 
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        Log.d(TAG, "--------------    updateBreedDBWithUriImage DogKindTable.ID = "+dogKind.getId());
         int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
                 new String[]{String.valueOf(dogKind.getId())});
         DatabaseManager.getInstance().closeDB();

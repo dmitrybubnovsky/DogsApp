@@ -16,9 +16,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
 import com.andersen.dogsapp.dogs.data.web.BreedPicasso;
-import com.andersen.dogsapp.dogs.data.web.IWebCallback;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
@@ -65,19 +63,13 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        DataRepository.get().getDogKinds(new IWebCallback<List<DogKind>>() {
-            @Override
-            public void onWebCallback(List<DogKind> dogBreeds) {
-                dogKinds = dogBreeds;
-                DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
-                runOnUiThread(() -> updateUI());
-            }
-        }, new IDatabaseCallback<List<DogKind>>() {
-            @Override
-            public void onDatabaseCallback(List<DogKind> dogBreeds) {
-                dogKinds = dogBreeds;
-                runOnUiThread(() -> updateUI());
-            }
+        DataRepository.get().getDogKinds(dogBreeds -> {
+            dogKinds = dogBreeds;
+            DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
+            runOnUiThread(() -> updateUI());
+        }, dogBreeds -> {
+            dogKinds = dogBreeds;
+            runOnUiThread(() -> updateUI());
         });
         updateUI();
     }
@@ -98,20 +90,17 @@ public class DogsKindsListActivity extends AppCompatActivity
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance, ProgressBar itemProgressBar) {
 
         if (dogKindInstance.getUriImageString().isEmpty()) {
-            DataRepository.get().getBreedsImage(dogKindString, new IWebCallback<String>() {
-                @Override
-                public void onWebCallback(String uriBreedString) {
-                    final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
-                    dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
-                    // обновить поле imageString в БД
-                    DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
+            DataRepository.get().getBreedsImage(dogKindString, uriBreedString -> {
+                final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
+                dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
+                // обновить поле imageString в БД
+                DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
 
-                    Target target = BreedPicasso.get(getApplicationContext())
-                            .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
-                    dogKindImageView.setTag(target);
-                    BreedPicasso.get(getApplicationContext())
-                                .initWithTarget(uriBreedString, target);
-                }
+                Target target = BreedPicasso.get(getApplicationContext())
+                        .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
+                dogKindImageView.setTag(target);
+                BreedPicasso.get(getApplicationContext())
+                        .initWithTarget(uriBreedString, target);
             });
         } else {
             BreedPicasso.get(getApplicationContext())

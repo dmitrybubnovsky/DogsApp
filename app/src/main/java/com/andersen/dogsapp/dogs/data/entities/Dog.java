@@ -44,6 +44,10 @@ public class Dog implements Parcelable {
         this.dogWeight = dogWeight;
     }
 
+    public Dog(String errorEmptyDog) {
+        dogName = errorEmptyDog;
+    }
+
     public Owner getOwner() {
         return owner;
     }

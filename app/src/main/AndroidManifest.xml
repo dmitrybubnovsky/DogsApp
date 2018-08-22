@@ -58,9 +58,6 @@
             android:name=".dogs.ui.dogs.DogPhotoPreviewActivity"
             android:configChanges="orientation"/>
 
-        <activity android:name=".dogs.ui.TempActivity"
-                  android:screenOrientation="portrait"/>
-
     </application>
 
 </manifest>

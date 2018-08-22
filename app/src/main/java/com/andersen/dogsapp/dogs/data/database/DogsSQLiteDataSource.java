@@ -131,8 +131,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
             dog.setDogId((int) insertResult);
             return dog;
         } else {
-            Log.d(TAG, "DogsSQLiteDataSource. addDog: Dog was NOT added");
-            return new Dog();
+            return new Dog("addDog method. Error of Dog creating");
         }
     }
 }

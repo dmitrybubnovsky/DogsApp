@@ -32,16 +32,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         TextView descriptionTextView = findViewById(R.id.app_description_textview);
 
         setTypeFonts(this, descriptionTextView, appNameTextView);
-
-        // TODO DELETE
-        rootLayout.setOnLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View view){
-                Intent intent = new Intent(getApplicationContext(), TempActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
     }
 
     private void setTypeFonts(Context context, TextView appNameTextView, TextView descriptionTextView) {
