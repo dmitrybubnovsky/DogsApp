@@ -125,7 +125,7 @@ public class DogsKindsListActivity extends AppCompatActivity
                                     FileOutputStream fos = null;
                                     try {
                                         fos = new FileOutputStream(breedImageFile);
-                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     } finally {
