@@ -62,7 +62,6 @@ public class DataRepository {
         breedsDataSource.getDogsKinds(webCallback, dbCallback);
     }
 
-    //   Раскомментировать для WebBreedsDataSource
     public void getBreedsImage(String breedString, IWebCallback<String> callback) {
         breedsDataSource.getBreedsImage(breedString, callback);
     }

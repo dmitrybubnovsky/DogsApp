@@ -25,7 +25,8 @@ public class MyApp extends Application {
         super.onCreate();
 
         DBHelper dbHelper = DBHelper.getInstance(this);
-        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance(dbHelper);
+        DatabaseManager.initInstance(dbHelper);
+        IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance();
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance();
         IBreedsDataSource iBreedsDataSource = DogKindSourceCoordinator.getInstance();
         DataRepository.init(iOwnersDataSource, iDogsDataSource, iBreedsDataSource);
