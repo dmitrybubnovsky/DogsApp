@@ -157,7 +157,6 @@ public class DogsKindsListActivity extends AppCompatActivity
                     Picasso.get()
                             .load(uriBreedString)
                             .placeholder(R.drawable.smiled_dog_face)
-                            .error(R.drawable.smiled_dog_face)
                             .into(target);
                 }
             });
