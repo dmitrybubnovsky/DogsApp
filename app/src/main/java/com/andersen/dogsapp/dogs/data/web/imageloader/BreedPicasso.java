@@ -39,6 +39,7 @@ public class BreedPicasso {
                 .load(uriBreedString)
                 .placeholder(placeholder)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .resize(500,0)
                 .into(target);
     }
 
@@ -47,6 +48,7 @@ public class BreedPicasso {
                 .load(uriBreedString)
                 .placeholder(placeholder)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
+                .resize(500,0)
                 .into(dogKindImageView);
     }
 
@@ -54,6 +56,8 @@ public class BreedPicasso {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
                 itemProgressBar.setVisibility(View.GONE);
                 dogKindImageView.setImageBitmap(bitmap);
                 new Thread(() -> {
