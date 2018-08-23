@@ -8,7 +8,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
 import java.util.List;
 
-public class DogsRepository implements IDogsDataSource {
+public class DogsRepository {
     private static final String TAG = "#";
     IDogsDataSource iDogsDataSource;
     private static DogsRepository instance;
@@ -27,17 +27,14 @@ public class DogsRepository implements IDogsDataSource {
         return instance;
     }
 
-    @Override
     public List<Dog> getOwnerDogs(Owner owner){
         return iDogsDataSource.getOwnerDogs(owner);
     }
 
-    @Override
     public List<Dog> getDogs(){
         return iDogsDataSource.getDogs();
     }
 
-    @Override
     public Dog addDog(Dog dog){
         return iDogsDataSource.addDog(dog);
     }

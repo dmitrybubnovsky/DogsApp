@@ -5,7 +5,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
 import java.util.List;
 
-public class OwnersRepository implements IOwnersDataSource {
+public class OwnersRepository{
     private static final String TAG = "#";
     private static OwnersRepository instance;
     private IOwnersDataSource ownersDataSource;
