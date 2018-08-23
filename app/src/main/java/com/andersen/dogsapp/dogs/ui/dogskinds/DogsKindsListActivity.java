@@ -13,13 +13,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.BreedsRepository;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
-import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.squareup.picasso.Target;
 
 import java.io.File;
@@ -29,9 +28,8 @@ import java.util.List;
 public class DogsKindsListActivity extends AppCompatActivity
         implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
     public static final String TAG = "#";
-    private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
-
+    private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
@@ -94,7 +92,7 @@ public class DogsKindsListActivity extends AppCompatActivity
                         .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                 dogKindImageView.setTag(target);
                 BreedPicasso.get(getApplicationContext())
-                            .intoTarget(uriBreedString, target);
+                        .intoTarget(uriBreedString, target);
             });
         } else {
             BreedPicasso.get(getApplicationContext())

@@ -2,24 +2,21 @@ package com.andersen.dogsapp.dogs.data.repositories;
 
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
 import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 
 import java.util.List;
 
-public class BreedsRepository implements IBreedsDataSource{
+public class BreedsRepository {
     private static final String TAG = "#";
     private static BreedsRepository instance;
-    IBreedsDataSource iBreedsDataSource;
 
-    public BreedsRepository(IBreedsDataSource iBreedsDataSource) {
-        this.iBreedsDataSource = iBreedsDataSource;
+    public BreedsRepository() {
     }
 
-    public static void init (IBreedsDataSource iBreedsDataSource){
+    public static void init() {
         if (instance == null) {
-            instance = new BreedsRepository(iBreedsDataSource);
+            instance = new BreedsRepository();
         }
     }
 
@@ -27,7 +24,6 @@ public class BreedsRepository implements IBreedsDataSource{
         return instance;
     }
 
-    @Override
     public void getDogsKinds(ICallback<List<DogKind>> responseCallback) {
         // Если БД нет, тогда делаем запрос, получаем List стрингов пород,
         // десериал-ем его в List<DogKind> и создаем БД из этого листа
@@ -42,12 +38,10 @@ public class BreedsRepository implements IBreedsDataSource{
         }
     }
 
-    @Override
     public void getBreedsImage(String breedString, ICallback<String> callback) {
         WebBreedsDataSource.getInstance().getBreedsImage(breedString, callback);
     }
 
-    @Override
     public int updateBreedDBWithUriImage(DogKind dogKind) {
         return DogKindsSQLiteDataSource.getInstance().updateBreedDBWithUriImage(dogKind);
     }

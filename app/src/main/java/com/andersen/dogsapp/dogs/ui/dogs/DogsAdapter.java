@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.ui.DogImageUtils;
-import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.ui.AppTextView;
+import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 
 import java.util.List;
 
@@ -31,6 +31,22 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
     public void setList(List<Dog> dogs) {
         this.dogs = dogs;
+    }
+
+    @Override
+    public DogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setData(dogs.get(position), context);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dogs.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,27 +82,11 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
             String dogImageString = dog.getDogImageString();
 
-            if(dogImageString.contains("_doggy_dogg.jpg")){
+            if (dogImageString.contains("_doggy_dogg.jpg")) {
                 dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
             } else {
                 dogImageView.setImageURI(Uri.parse(dogImageString));
             }
         }
-    }
-
-    @Override
-    public DogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(dogs.get(position), context);
-    }
-
-    @Override
-    public int getItemCount() {
-        return dogs.size();
     }
 }

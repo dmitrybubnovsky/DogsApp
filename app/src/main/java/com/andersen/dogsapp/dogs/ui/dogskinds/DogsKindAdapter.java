@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
-import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 
 import java.util.List;
 
@@ -39,11 +39,27 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
         this.responseCallback = responseCallback;
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setData(position);
+    }
+
+    @Override
+    public DogsKindAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dog_kind_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dogsKinds.size();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
+        public DogKind dogKind;
         private TextView dogKindTextView;
         private ImageView dogKindImageView;
         private ProgressBar itemProgressBar;
-        public DogKind dogKind;
 
         public ViewHolder(View view) {
             super(view);
@@ -83,21 +99,5 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
                 dogKindImageView.setImageURI(uri);
             }
         }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(position);
-    }
-
-    @Override
-    public DogsKindAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.dog_kind_item, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public int getItemCount() {
-        return dogsKinds.size();
     }
 }

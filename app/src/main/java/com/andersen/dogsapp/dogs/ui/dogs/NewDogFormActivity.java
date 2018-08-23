@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
-import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
@@ -42,6 +41,11 @@ import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
 
 public class NewDogFormActivity extends AppCompatActivity {
+    public static final String EXTRA_NEW_OWNER = "new owner dog";
+    public static final String EXTRA_FILE_PATH = "extra_file_path";
+    public static final int REQUEST_CAMERA = 201;
+    public static final int REQUEST_CODE_DOG_KIND = 202;
+    public static final int REQUEST_CODE_PREVIEW = 203;
     private static final String TAG = "#";
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int STORAGE_REQUEST_PERMISSION = 114;
@@ -50,11 +54,6 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final int HANDLER_DELAY = 3000;
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    public static final String EXTRA_NEW_OWNER = "new owner dog";
-    public static final String EXTRA_FILE_PATH = "extra_file_path";
-    public static final int REQUEST_CAMERA = 201;
-    public static final int REQUEST_CODE_DOG_KIND = 202;
-    public static final int REQUEST_CODE_PREVIEW = 203;
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private EditText dogNameEditText;
     private EditText dogKindEditText;
