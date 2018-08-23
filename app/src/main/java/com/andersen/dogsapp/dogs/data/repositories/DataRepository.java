@@ -7,7 +7,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IBreedsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
-import com.andersen.dogsapp.dogs.data.web.IWebCallback;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.List;
 
@@ -57,11 +57,12 @@ public class DataRepository {
         return owners;
     }
 
-    public void getDogKinds(IWebCallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback) {
-        breedsDataSource.getDogsKinds(webCallback, dbCallback);
+    public void getDogKinds(ICallback<List<DogKind>> result) {
+
+        breedsDataSource.getDogsKinds(result);
     }
 
-    public void getBreedsImage(String breedString, IWebCallback<String> callback) {
+    public void getBreedsImage(String breedString, ICallback<String> callback) {
         breedsDataSource.getBreedsImage(breedString, callback);
     }
 

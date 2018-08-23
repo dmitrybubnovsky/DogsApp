@@ -1,5 +1,6 @@
 package com.andersen.dogsapp.dogs.data.web;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -73,14 +74,14 @@ public class WebBreedsDataSource {
         return client;
     }
 
-    public void getDogsKinds(IWebCallback<List<DogKind>> webCallback) {
+    public void getDogsKinds(ICallback<List<DogKind>> resultCallback) {
         Call<List<String>> call = instanceAPI.getBreeds();
         call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     dogKinds = convertStringListToDogKindList(response.body());
-                    webCallback.onWebCallback(dogKinds);
+                    resultCallback.onResult(dogKinds);
                 } else {
                     Log.d(TAG, "response is NOT successful");
                 }
@@ -93,7 +94,7 @@ public class WebBreedsDataSource {
         });
     }
 
-    public void getBreedsImage(String breedString, IWebCallback<String> webCallback) {
+    public void getBreedsImage(String breedString, ICallback<String> webCallback) {
         Call<List<String>> call = instanceAPI.getBreedImageUriString(breedString);
         call.enqueue(new Callback<List<String>>() {
             @Override
@@ -105,7 +106,7 @@ public class WebBreedsDataSource {
                 if (response.isSuccessful()) {
                     listString = response.body();
                     uriImageString = listString.get(0);
-                    webCallback.onWebCallback(uriImageString);
+                    webCallback.onResult(uriImageString);
                 } else {
                     // Если с response'ом проблема
                     Log.d(TAG, "WebBreedsDataSource: getBreedsImage: response was NOT successful");

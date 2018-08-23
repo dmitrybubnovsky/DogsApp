@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IDatabaseCallback;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,9 @@ public class DogKindsSQLiteDataSource {
         return dogKindsDataSource;
     }
 
-    public void getDogKinds(IDatabaseCallback<List<DogKind>> dbCallback) {
+    public void getDogKinds(ICallback<List<DogKind>> dbCallback) {
         loadDogKinds();
-        dbCallback.onDatabaseCallback(dogKinds);
+        dbCallback.onResult(dogKinds);
     }
 
     public boolean isBreedDatabaseEmpty() {

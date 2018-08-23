@@ -16,6 +16,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.repositories.DogKindsRepository;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
@@ -62,15 +63,10 @@ public class DogsKindsListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        DataRepository.get().getDogKinds(dogBreeds -> {
+        DogKindsRepository.get().getDogsKinds(dogBreeds -> {
             dogKinds = dogBreeds;
-            DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
-            runOnUiThread(() -> updateUI());
-        }, dogBreeds -> {
-            dogKinds = dogBreeds;
-            runOnUiThread(() -> updateUI());
+            runOnUiThread(this::updateUI);
         });
-        updateUI();
     }
 
     private void updateUI() {

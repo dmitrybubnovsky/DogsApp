@@ -1,7 +1,7 @@
 package com.andersen.dogsapp.dogs.data.localsources;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.IWebCallback;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +39,11 @@ public class DogKindsLocalDataSource {
         return instance;
     }
 
-    public void getDogsKinds(IWebCallback<List<DogKind>> callback) {
-        callback.onWebCallback(dogKindsList);
+    public void getDogsKinds(ICallback<List<DogKind>> callback) {
+        callback.onResult(dogKindsList);
     }
 
-    public void getBreedsImage(String breedString, IWebCallback<String> webCallback) {
-        webCallback.onWebCallback(breedString);
+    public void getBreedsImage(String breedString, ICallback<String> webCallback) {
+        webCallback.onResult(breedString);
     }
 }

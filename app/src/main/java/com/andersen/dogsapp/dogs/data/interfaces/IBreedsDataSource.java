@@ -1,14 +1,14 @@
 package com.andersen.dogsapp.dogs.data.interfaces;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.web.IWebCallback;
+import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.List;
 
 public interface IBreedsDataSource {
-    void getDogsKinds(IWebCallback<List<DogKind>> responseCallback, IDatabaseCallback<List<DogKind>> dbCallback);
+    void getDogsKinds(ICallback<List<DogKind>> responseCallback);
 
-    void getBreedsImage(String breedString, IWebCallback<String> responseCallback);
+    void getBreedsImage(String breedString, ICallback<String> responseCallback);
 
     int updateBreedDBWithUriImage(DogKind dogKind);
 }
