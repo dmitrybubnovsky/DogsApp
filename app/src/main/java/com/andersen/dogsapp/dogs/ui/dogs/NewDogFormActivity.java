@@ -30,6 +30,7 @@ import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
@@ -95,7 +96,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                 startDogsKindsListActivity();
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
-                dog = DataRepository.get().addDog(dog);
+                dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
                 backToDogListActivity();
             }

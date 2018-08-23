@@ -13,6 +13,7 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 
+import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 
 import android.support.v7.widget.RecyclerView;
@@ -55,7 +56,8 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     @Override
     protected void onResume() {
         super.onResume();
-        ownerDogs = DataRepository.get().getOwnerDogs(owner);
+//        ownerDogs = DataRepository.get().getOwnerDogs(owner);
+        ownerDogs = DogsRepository.get().getOwnerDogs(owner);
 
         if (ownerDogs.isEmpty()) {
             openAddNewDogScreen();

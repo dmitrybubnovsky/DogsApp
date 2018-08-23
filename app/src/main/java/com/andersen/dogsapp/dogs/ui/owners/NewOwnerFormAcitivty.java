@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
@@ -51,7 +52,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
         Owner owner = new Owner(ownerName, ownerSurname, preferredDogKind);
-        owner = DataRepository.get().addOwner(owner);
+        owner = OwnersRepository.get().addOwner(owner);
         return owner;
     }
 
