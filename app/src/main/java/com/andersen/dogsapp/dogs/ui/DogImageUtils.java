@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 
 public class DogImageUtils {
     final static int NOT_VALID_RESOURCE_ID = 0;
@@ -19,6 +20,10 @@ public class DogImageUtils {
         Resources resources = context.getResources();
         Bitmap bitmap = PictureUtils.getScaledBitmap(dogImageString, (AppCompatActivity) context);
         return new BitmapDrawable(resources, bitmap);
+    }
+
+    public static boolean hasNetworkImage(Dog dog){
+        return dog.getDogImageString().contains("_doggy_dogg.jpg");
     }
 
     public static final Uri getUriFromDrawable(@NonNull Context context, String dogImageString)

@@ -37,7 +37,7 @@ public class DogsInfoActivity extends AppCompatActivity {
     private void initViews(Context context, Dog dog, MediaPlayer mediaPlayer) {
         ImageView dogsImageView = findViewById(R.id.dog_imageview);
         String dogImageString = dog.getDogImageString();
-        if (dogImageString.contains("_doggy_dogg.jpg")) {
+        if (DogImageUtils.hasNetworkImage(dog)) {
             dogsImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
         } else {
             dogsImageView.setImageURI(Uri.parse(dogImageString));

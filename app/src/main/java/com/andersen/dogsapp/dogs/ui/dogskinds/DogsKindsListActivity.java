@@ -83,21 +83,26 @@ public class DogsKindsListActivity extends AppCompatActivity
 
         if (dogKindInstance.getUriImageString().isEmpty()) {
             BreedsRepository.getInstance().getBreedsImage(dogKindString, uriBreedString -> {
-                final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
-                dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД
                 BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
-
-                Target target = BreedPicasso.getInstance(getApplicationContext())
-                        .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
-                dogKindImageView.setTag(target);
-                BreedPicasso.getInstance(getApplicationContext())
-                        .intoTarget(uriBreedString, target);
+                // сохранить картинку породы
+                saveBreedImageSetToView(uriBreedString, dogKindString, dogKindImageView, dogKindInstance, itemProgressBar);
             });
         } else {
             BreedPicasso.getInstance(getApplicationContext())
                     .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
         }
+    }
+
+    private void saveBreedImageSetToView(String uriBreedString, String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance, ProgressBar itemProgressBar){
+        final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
+        dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
+
+        Target target = BreedPicasso.getInstance(getApplicationContext())
+                .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
+        dogKindImageView.setTag(target);
+        BreedPicasso.getInstance(getApplicationContext())
+                .intoTarget(uriBreedString, target);
     }
 
     private File getImageBreedFile(Context context, String breedFileNameString) {
