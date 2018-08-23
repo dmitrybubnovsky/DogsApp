@@ -13,13 +13,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.DataRepository;
+import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.squareup.picasso.Target;
 
 import java.io.File;

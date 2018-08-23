@@ -1,11 +1,9 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.interfaces.IBreedImageViewListener;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 
 import java.util.List;
 

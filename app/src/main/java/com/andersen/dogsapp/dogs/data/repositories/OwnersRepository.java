@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data;
+package com.andersen.dogsapp.dogs.data.repositories;
 
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Owner;

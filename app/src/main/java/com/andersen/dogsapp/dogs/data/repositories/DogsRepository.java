@@ -1,11 +1,9 @@
-package com.andersen.dogsapp.dogs.data;
+package com.andersen.dogsapp.dogs.data.repositories;
 
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
-import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
-import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
 import java.util.List;
 

@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
-import com.andersen.dogsapp.dogs.data.DataRepository;
+import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;

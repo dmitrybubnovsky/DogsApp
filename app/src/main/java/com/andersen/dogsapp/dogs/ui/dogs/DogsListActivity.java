@@ -20,10 +20,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.andersen.dogsapp.dogs.data.DataRepository;
+import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
 
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {

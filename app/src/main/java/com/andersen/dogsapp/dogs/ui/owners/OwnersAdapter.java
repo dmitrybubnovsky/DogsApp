@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 
 import java.util.ArrayList;
 import java.util.List;
