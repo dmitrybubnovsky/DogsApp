@@ -23,14 +23,13 @@ public class MyApp extends Application {
 
         DBHelper dbHelper = DBHelper.getInstance(this);
         DatabaseManager.initInstance(dbHelper);
+
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance();
         OwnersRepository.init(iOwnersDataSource);
 
         IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance();
         DogsRepository.init(iDogsDataSource);
 
-
-        IBreedsDataSource iBreedsDataSource = BreedsRepository.getInstance();
-        BreedsRepository.init(iBreedsDataSource);
+        BreedsRepository.init();
     }
 }

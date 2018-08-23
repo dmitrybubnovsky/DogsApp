@@ -84,17 +84,17 @@ public class DogsKindsListActivity extends AppCompatActivity
     public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance, ProgressBar itemProgressBar) {
 
         if (dogKindInstance.getUriImageString().isEmpty()) {
-            DataRepository.get().getBreedsImage(dogKindString, uriBreedString -> {
+            BreedsRepository.getInstance().getBreedsImage(dogKindString, uriBreedString -> {
                 final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
                 dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД
-                DataRepository.get().updateBreedDBWithUriImage(dogKindInstance);
+                BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
 
                 Target target = BreedPicasso.get(getApplicationContext())
                         .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                 dogKindImageView.setTag(target);
                 BreedPicasso.get(getApplicationContext())
-                        .intoTarget(uriBreedString, target);
+                            .intoTarget(uriBreedString, target);
             });
         } else {
             BreedPicasso.get(getApplicationContext())
