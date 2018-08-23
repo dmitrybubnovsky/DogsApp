@@ -57,7 +57,6 @@ public class DataRepository {
         return owners;
     }
 
-    //   WEB SERVER IS CURRENTLY ЛЕЖИТ
     public void getDogKinds(IWebCallback<List<DogKind>> webCallback, IDatabaseCallback<List<DogKind>> dbCallback) {
         breedsDataSource.getDogsKinds(webCallback, dbCallback);
     }
