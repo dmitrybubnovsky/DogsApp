@@ -37,7 +37,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         owner = getIntent().getParcelableExtra(EXTRA_OWNER);
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_dogs_list, owner.getOwnerFullName());
+        Toolbar toolbar = DogToolBar.init(this, R.string.title_dogs_list, owner.getOwnerFullName());
         setSupportActionBar(toolbar);
 // json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);

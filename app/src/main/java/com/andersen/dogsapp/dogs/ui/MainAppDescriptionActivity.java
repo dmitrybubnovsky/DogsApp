@@ -21,19 +21,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
 
-        ConstraintLayout rootLayout = findViewById(R.id.root_layout);
-        rootLayout.setOnClickListener(view -> startActivity(new Intent(this, OwnersListActivity.class)));
 
-        TextView appNameTextView = findViewById(R.id.app_name_textview);
-        TextView descriptionTextView = findViewById(R.id.app_description_textview);
 
-        setTypeFonts(this, descriptionTextView, appNameTextView);
-    }
 
-    private void setTypeFonts(Context context, TextView appNameTextView, TextView descriptionTextView) {
-        // first way through the asset folder
-        appNameTextView.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Aclonica.ttf"));
-        // second way through the R.font resource
-        descriptionTextView.setTypeface(ResourcesCompat.getFont(context, R.font.droid_serif_italic));
     }
 }

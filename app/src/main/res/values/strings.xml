@@ -26,10 +26,13 @@
 
     <string name="specify_kind_please_toast">Specify dog\'s breed please!</string>
 
-    <string name="toolbar_title_owners_list">Owners list</string>
+    <string name="title_description">Description</string>
+    <string name="title_owners_list">Dog Owners</string>
+    <string name="title_dogs_list">Dogs</string>
+    <string name="title_breeds">Breeds</string>
+
     <string name="toolbar_title_add_owner">Add new owner</string>
     <string name="toolbar_title_add_dog">Add new dog</string>
-    <string name="toolbar_title_dogs_list">Dogs list</string>
     <string name="toolbar_title_kinds_list">Choose dog kind</string>
     <string name="toolbar_title_detail_info">Dogs info</string>
 

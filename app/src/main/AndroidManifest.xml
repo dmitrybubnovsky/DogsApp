@@ -28,7 +28,7 @@
 
         <activity
             android:name=".dogs.ui.MainAppDescriptionActivity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/MainDogApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

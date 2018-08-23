@@ -35,7 +35,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
 //      json имплементация
 //        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
 //        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_owners_list, colorCustomBlueGrey);
+        Toolbar toolbar = DogToolBar.init(this, R.string.title_owners_list, colorCustomBlueGrey);
         setSupportActionBar(toolbar);
 
         ownersAdapter = new OwnersAdapter(this, this);

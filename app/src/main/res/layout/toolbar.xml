@@ -4,6 +4,7 @@
     android:id="@+id/toolbar_dogs_app"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     android:background="@color/colorCustomYellow"
     android:minHeight="?attr/actionBarSize">
 </android.support.v7.widget.Toolbar>
