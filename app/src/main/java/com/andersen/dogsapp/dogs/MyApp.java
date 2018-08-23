@@ -2,6 +2,7 @@ package com.andersen.dogsapp.dogs;
 
 import android.app.Application;
 
+import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.repositories.DogKindsRepository;
@@ -25,7 +26,10 @@ public class MyApp extends Application {
         IOwnersDataSource iOwnersDataSource = OwnersSQLiteDataSource.getInstance();
         OwnersRepository.init(iOwnersDataSource);
 
-        IDogsDataSource iDogsDataSource = DogsRepository.getInstance();
+        IDogsDataSource iDogsDataSource = DogsSQLiteDataSource.getInstance();
+        DogsRepository.init(iDogsDataSource);
+
+
         IBreedsDataSource iBreedsDataSource = DogKindsRepository.getInstance();
         DataRepository.init(iOwnersDataSource, iDogsDataSource, iBreedsDataSource);
     }

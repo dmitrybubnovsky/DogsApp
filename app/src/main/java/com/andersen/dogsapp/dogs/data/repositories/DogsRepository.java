@@ -4,21 +4,23 @@ import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
+import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
 import java.util.List;
 
 public class DogsRepository implements IDogsDataSource {
     private static final String TAG = "#";
+    IDogsDataSource iDogsDataSource;
     private static DogsRepository instance;
 
-    public DogsRepository() {
+    public DogsRepository(IDogsDataSource iDogsDataSource) {
+        this.iDogsDataSource = iDogsDataSource;
     }
 
-    public static DogsRepository getInstance() {
+    public static void init (IDogsDataSource iDogsDataSource){
         if (instance == null) {
-            instance = new DogsRepository();
+            instance = new DogsRepository(iDogsDataSource);
         }
-        return instance;
     }
 
     public static DogsRepository get() {
@@ -27,16 +29,16 @@ public class DogsRepository implements IDogsDataSource {
 
     @Override
     public List<Dog> getOwnerDogs(Owner owner){
-        return DogsSQLiteDataSource.getInstance().getOwnerDogs(owner);
+        return iDogsDataSource.getOwnerDogs(owner);
     }
 
     @Override
     public List<Dog> getDogs(){
-        return DogsSQLiteDataSource.getInstance().getDogs();
+        return iDogsDataSource.getDogs();
     }
 
     @Override
     public Dog addDog(Dog dog){
-        return DogsSQLiteDataSource.getInstance().addDog(dog);
+        return iDogsDataSource.addDog(dog);
     }
 }

@@ -12,7 +12,7 @@ import com.andersen.dogsapp.dogs.data.web.ICallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogKindsSQLiteDataSource {
+public class DogKindsSQLiteDataSource  {
     private static final String TAG = "#";
     private static DogKindsSQLiteDataSource dogKindsDataSource;
     private SQLiteDatabase db;
