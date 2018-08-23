@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.repositories.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
@@ -46,7 +47,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     @Override
     protected void onResume() {
         super.onResume();
-        owners = DataRepository.get().getOwners();
+        owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             openAddNewOwnerScreen();
         } else {

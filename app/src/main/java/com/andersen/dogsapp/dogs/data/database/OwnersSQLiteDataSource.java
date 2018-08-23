@@ -12,7 +12,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnersSQLiteDataSource {
+public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private static final String TAG = "#";
     private static OwnersSQLiteDataSource ownersDataSource;
     private SQLiteDatabase db;
@@ -29,6 +29,7 @@ public class OwnersSQLiteDataSource {
         return ownersDataSource;
     }
 
+    @Override
     public List<Owner> getOwners() {
         loadOwners();
         return owners;
@@ -37,7 +38,7 @@ public class OwnersSQLiteDataSource {
     private void loadOwners() {
         db = DatabaseManager.getInstance().openDB();
         owners = new ArrayList<>();
-        try (Cursor cursor = db.query( OwnerTable.TABLE_NAME,
+        try (Cursor cursor = db.query(OwnerTable.TABLE_NAME,
                 null, null, null, null, null, null, null)) {// проверяем БД, если там пусто то список владельцев пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
                 owners.clear();
@@ -59,6 +60,7 @@ public class OwnersSQLiteDataSource {
         }
     }
 
+    @Override
     public Owner addOwner(Owner owner) {
         db = DatabaseManager.getInstance().openDB();
 
