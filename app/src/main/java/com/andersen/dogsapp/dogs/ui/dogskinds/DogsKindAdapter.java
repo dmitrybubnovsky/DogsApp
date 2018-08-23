@@ -28,7 +28,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
-//        dogsKinds = DogKindsRepository.getDogKinds();
+//        dogsKinds = BreedsRepository.getDogKinds();
         this.listener = listener;
     }
 

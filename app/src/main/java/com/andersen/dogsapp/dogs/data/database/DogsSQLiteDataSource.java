@@ -13,7 +13,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class    DogsSQLiteDataSource implements IDogsDataSource {
+public class DogsSQLiteDataSource implements IDogsDataSource {
     private static final String TAG = "#";
     private static DogsSQLiteDataSource dogsDataSource;
     private List<Dog> dogs;

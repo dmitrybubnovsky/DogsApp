@@ -34,7 +34,7 @@ public class DogKindsSQLiteDataSource  {
         dbCallback.onResult(dogKinds);
     }
 
-    public boolean isBreedDatabaseEmpty() {
+    public boolean isDogKindsDatabaseEmpty() {
         db = DatabaseManager.getInstance().openDB();
         Cursor cursor = null;
         try {

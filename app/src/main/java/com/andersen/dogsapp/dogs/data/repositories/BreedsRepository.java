@@ -8,21 +8,22 @@ import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 
 import java.util.List;
 
-public class DogKindsRepository implements IBreedsDataSource{
+public class BreedsRepository implements IBreedsDataSource{
     private static final String TAG = "#";
-    private static DogKindsRepository instance;
+    private static BreedsRepository instance;
+    IBreedsDataSource iBreedsDataSource;
 
-    public DogKindsRepository() {
+    public BreedsRepository(IBreedsDataSource iBreedsDataSource) {
+        this.iBreedsDataSource = iBreedsDataSource;
     }
 
-    public static DogKindsRepository getInstance() {
+    public static void init (IBreedsDataSource iBreedsDataSource){
         if (instance == null) {
-            instance = new DogKindsRepository();
+            instance = new BreedsRepository(iBreedsDataSource);
         }
-        return instance;
     }
 
-    public static DogKindsRepository get() {
+    public static BreedsRepository getInstance() {
         return instance;
     }
 
@@ -30,7 +31,7 @@ public class DogKindsRepository implements IBreedsDataSource{
     public void getDogsKinds(ICallback<List<DogKind>> responseCallback) {
         // Если БД нет, тогда делаем запрос, получаем List стрингов пород,
         // десериал-ем его в List<DogKind> и создаем БД из этого листа
-        if (DogKindsSQLiteDataSource.getInstance().isBreedDatabaseEmpty()) {
+        if (DogKindsSQLiteDataSource.getInstance().isDogKindsDatabaseEmpty()) {
             WebBreedsDataSource.getInstance().getDogsKinds(dogKinds -> {
                 DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
                 responseCallback.onResult(dogKinds);

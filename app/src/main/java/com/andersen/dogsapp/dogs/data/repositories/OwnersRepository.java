@@ -5,18 +5,18 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
 import java.util.List;
 
-public class OwnersRepository{
+public class OwnersRepository {
     private static final String TAG = "#";
     private static OwnersRepository instance;
-    private IOwnersDataSource ownersDataSource;
+    private IOwnersDataSource iOwnersDataSource;
 
-    public OwnersRepository(IOwnersDataSource ownersDataSource) {
-        this.ownersDataSource = ownersDataSource;
+    public OwnersRepository(IOwnersDataSource iOwnersDataSource) {
+        this.iOwnersDataSource = iOwnersDataSource;
     }
 
-    public static void init (IOwnersDataSource ownersDataSource){
+    public static void init(IOwnersDataSource iOwnersDataSource) {
         if (instance == null) {
-            instance = new OwnersRepository(ownersDataSource);
+            instance = new OwnersRepository(iOwnersDataSource);
         }
     }
 
@@ -25,7 +25,7 @@ public class OwnersRepository{
     }
 
     public List<Owner> getOwners() {
-        List<Owner> owners = ownersDataSource.getOwners();
+        List<Owner> owners = iOwnersDataSource.getOwners();
         for (Owner owner : owners) {
             owner.setDogs(DogsRepository.get().getOwnerDogs(owner));
         }
@@ -33,6 +33,6 @@ public class OwnersRepository{
     }
 
     public Owner addOwner(Owner owner) {
-        return ownersDataSource.addOwner(owner);
+        return iOwnersDataSource.addOwner(owner);
     }
 }
