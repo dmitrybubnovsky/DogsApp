@@ -25,7 +25,11 @@ public class OwnersRepository implements IOwnersDataSource {
     }
 
     public List<Owner> getOwners() {
-        return ownersDataSource.getOwners();
+        List<Owner> owners = ownersDataSource.getOwners();
+        for (Owner owner : owners) {
+            owner.setDogs(DogsRepository.get().getOwnerDogs(owner));
+        }
+        return owners;
     }
 
     public Owner addOwner(Owner owner) {
