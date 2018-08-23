@@ -12,7 +12,7 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnersSQLiteDataSource implements IOwnersDataSource {
+public class OwnersSQLiteDataSource {
     private static final String TAG = "#";
     private static OwnersSQLiteDataSource ownersDataSource;
     private SQLiteDatabase db;
@@ -29,7 +29,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         return ownersDataSource;
     }
 
-    @Override
     public List<Owner> getOwners() {
         loadOwners();
         return owners;
@@ -60,8 +59,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         }
     }
 
-    // для формы
-    @Override
     public Owner addOwner(Owner owner) {
         db = DatabaseManager.getInstance().openDB();
 

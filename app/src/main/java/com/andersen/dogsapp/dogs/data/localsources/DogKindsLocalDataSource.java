@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.data;
+package com.andersen.dogsapp.dogs.data.localsources;
 
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.IWebCallback;

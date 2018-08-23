@@ -8,12 +8,11 @@ import android.util.Log;
 import com.andersen.dogsapp.dogs.data.database.tables.DogTable;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.data.interfaces.IDogsDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogsSQLiteDataSource implements IDogsDataSource {
+public class DogsSQLiteDataSource {
     private static final String TAG = "#";
     private static DogsSQLiteDataSource dogsDataSource;
     private List<Dog> dogs;
@@ -32,7 +31,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
 
     private void loadDogs() {
-        // открываю БД
+        // открываем БД
         db = DatabaseManager.getInstance().openDB();
         dogs = new ArrayList<>();
 
@@ -57,18 +56,16 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                 Log.d(TAG, "loadDogs. cursor.count == 0");
             }
             cursor.close();
-        } finally {
+        } finally { // закрываем БД
             DatabaseManager.getInstance().closeDB();
         }
     }
 
-    @Override
     public List<Dog> getDogs() {
         loadDogs();
         return dogs;
     }
 
-    @Override
     public List<Dog> getOwnerDogs(Owner owner) {
         // открываю БД
         db = DatabaseManager.getInstance().openDB();
@@ -103,8 +100,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         }
     }
 
-    // для формы
-    @Override
     public Dog addDog(Dog dog) {
         db = DatabaseManager.getInstance().openDB();
 

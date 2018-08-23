@@ -9,21 +9,21 @@ import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
 
 import java.util.List;
 
-public class DogKindRepository implements IBreedsDataSource {
+public class DogKindsRepository implements IBreedsDataSource {
     private static final String TAG = "#";
-    private static DogKindRepository instance;
+    private static DogKindsRepository instance;
 
-    public DogKindRepository() {
+    public DogKindsRepository() {
     }
 
-    public static DogKindRepository getInstance() {
+    public static DogKindsRepository getInstance() {
         if (instance == null) {
-            instance = new DogKindRepository();
+            instance = new DogKindsRepository();
         }
         return instance;
     }
 
-    public static DogKindRepository get() {
+    public static DogKindsRepository get() {
         return instance;
     }
 

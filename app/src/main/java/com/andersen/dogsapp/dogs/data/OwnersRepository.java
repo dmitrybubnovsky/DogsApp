@@ -6,21 +6,21 @@ import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
 import java.util.List;
 
-public class OwnersDataRepository implements IOwnersDataSource {
+public class OwnersRepository implements IOwnersDataSource {
     private static final String TAG = "#";
-    private static OwnersDataRepository instance;
+    private static OwnersRepository instance;
 
-    public OwnersDataRepository() {
+    public OwnersRepository() {
     }
 
-    public static OwnersDataRepository getInstance() {
+    public static OwnersRepository getInstance() {
         if (instance == null) {
-            instance = new OwnersDataRepository();
+            instance = new OwnersRepository();
         }
         return instance;
     }
 
-    public static OwnersDataRepository get() {
+    public static OwnersRepository get() {
         return instance;
     }
 
