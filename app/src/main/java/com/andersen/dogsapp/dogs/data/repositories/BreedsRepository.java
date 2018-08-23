@@ -33,7 +33,7 @@ public class BreedsRepository {
                 responseCallback.onResult(dogKinds);
             });
         } else {
-            //иначе читам БД пород
+            //иначе читаем БД пород
             DogKindsSQLiteDataSource.getInstance().getDogKinds(responseCallback);
         }
     }
@@ -42,7 +42,7 @@ public class BreedsRepository {
         WebBreedsDataSource.getInstance().getBreedsImage(breedString, callback);
     }
 
-    public int updateBreedDBWithUriImage(DogKind dogKind) {
-        return DogKindsSQLiteDataSource.getInstance().updateBreedDBWithUriImage(dogKind);
+    public void updateBreedDBWithUriImage(DogKind dogKind) {
+        DogKindsSQLiteDataSource.getInstance().updateBreedDBWithUriImage(dogKind);
     }
 }
