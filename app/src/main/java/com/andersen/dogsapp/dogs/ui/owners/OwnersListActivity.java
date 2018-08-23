@@ -46,7 +46,7 @@ public class OwnersListActivity extends MenuActivity implements IRecyclerItemLis
     @Override
     protected void onResume() {
         super.onResume();
-        owners = OwnersRepository.get().getOwners();
+        owners = OwnersRepository.getInstance().getOwners();
         if (owners.isEmpty()) {
             openAddNewOwnerScreen();
         } else {

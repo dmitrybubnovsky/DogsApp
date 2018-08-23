@@ -9,31 +9,31 @@ import java.util.List;
 public class DogsRepository {
     private static final String TAG = "#";
     private static DogsRepository instance;
-    private IDogsDataSource iDogsDataSource;
+    private IDogsDataSource dogsDataSource;
 
-    public DogsRepository(IDogsDataSource iDogsDataSource) {
-        this.iDogsDataSource = iDogsDataSource;
+    private DogsRepository(IDogsDataSource dogsDataSource) {
+        this.dogsDataSource = dogsDataSource;
     }
 
-    public static void init(IDogsDataSource iDogsDataSource) {
+    public static void init(IDogsDataSource dogsDataSource) {
         if (instance == null) {
-            instance = new DogsRepository(iDogsDataSource);
+            instance = new DogsRepository(dogsDataSource);
         }
     }
 
-    public static DogsRepository get() {
+    public static DogsRepository getInstance() {
         return instance;
     }
 
     public List<Dog> getOwnerDogs(Owner owner) {
-        return iDogsDataSource.getOwnerDogs(owner);
+        return dogsDataSource.getOwnerDogs(owner);
     }
 
     public List<Dog> getDogs() {
-        return iDogsDataSource.getDogs();
+        return dogsDataSource.getDogs();
     }
 
     public Dog addDog(Dog dog) {
-        return iDogsDataSource.addDog(dog);
+        return dogsDataSource.addDog(dog);
     }
 }

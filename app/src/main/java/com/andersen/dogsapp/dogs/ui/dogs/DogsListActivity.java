@@ -50,7 +50,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     @Override
     protected void onResume() {
         super.onResume();
-        ownerDogs = DogsRepository.get().getOwnerDogs(owner);
+        ownerDogs = DogsRepository.getInstance().getOwnerDogs(owner);
 
         if (ownerDogs.isEmpty()) {
             openAddNewDogScreen();

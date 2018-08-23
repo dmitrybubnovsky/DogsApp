@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -26,7 +27,7 @@ public class BreedPicasso {
         Picasso.setSingletonInstance(picasso);
     }
 
-    public static BreedPicasso get(Context context) {
+    public static BreedPicasso getInstance(Context context) {
         if (instance == null) {
             instance = new BreedPicasso(context);
         }
@@ -37,8 +38,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-//                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .resize(500, 0)
+                .resize(500,0)
                 .into(target);
     }
 
@@ -46,8 +46,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-//                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .resize(500, 0)
+                .resize(500,0)
                 .into(dogKindImageView);
     }
 
@@ -58,18 +57,10 @@ public class BreedPicasso {
                 itemProgressBar.setVisibility(View.GONE);
                 dogKindImageView.setImageBitmap(bitmap);
                 new Thread(() -> {
-                    FileOutputStream fos = null;
-                    try {
-                        fos = new FileOutputStream(breedImageFile);
+                    try (FileOutputStream fos = new FileOutputStream(breedImageFile)){
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } finally {
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }).start();
             }

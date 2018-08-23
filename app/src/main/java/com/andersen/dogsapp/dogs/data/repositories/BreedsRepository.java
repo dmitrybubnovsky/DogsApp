@@ -11,7 +11,7 @@ public class BreedsRepository {
     private static final String TAG = "#";
     private static BreedsRepository instance;
 
-    public BreedsRepository() {
+    private BreedsRepository() {
     }
 
     public static void init() {

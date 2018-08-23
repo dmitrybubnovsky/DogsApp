@@ -51,13 +51,13 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
         String ownerSurname = ownerSurnameEditText.getText().toString();
         String preferredDogKind = preferredKindEditText.getText().toString();
         Owner owner = new Owner(ownerName, ownerSurname, preferredDogKind);
-        owner = OwnersRepository.get().addOwner(owner);
+        owner = OwnersRepository.getInstance().addOwner(owner);
         return owner;
     }
 
     private void testingFillEditText() {
-        ownerNameEditText.setText(SomeOwner.get().name());
-        ownerSurnameEditText.setText(SomeOwner.get().surname());
-        preferredKindEditText.setText(SomeDog.get().kind());
+        ownerNameEditText.setText(SomeOwner.getInstance().name());
+        ownerSurnameEditText.setText(SomeOwner.getInstance().surname());
+        preferredKindEditText.setText(SomeDog.getInstance().kind());
     }
 }

@@ -95,7 +95,7 @@ public class NewDogFormActivity extends AppCompatActivity {
                 startDogsKindsListActivity();
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
-                dog = DogsRepository.get().addDog(dog);
+                dog = DogsRepository.getInstance().addDog(dog);
                 owner.addDog(dog);
                 backToDogListActivity();
             }
@@ -328,9 +328,9 @@ public class NewDogFormActivity extends AppCompatActivity {
 
     // Заполнение всех полей
     private void testingFillEditText() {
-        dogNameEditText.setText(SomeDog.get().name());
-        dogAgeEditText.setText("" + SomeDog.get().age());
-        dogWeightEditText.setText("" + SomeDog.get().weight());
-        dogTallEditText.setText("" + SomeDog.get().tall());
+        dogNameEditText.setText(SomeDog.getInstance().name());
+        dogAgeEditText.setText("" + SomeDog.getInstance().age());
+        dogWeightEditText.setText("" + SomeDog.getInstance().weight());
+        dogTallEditText.setText("" + SomeDog.getInstance().tall());
     }
 }

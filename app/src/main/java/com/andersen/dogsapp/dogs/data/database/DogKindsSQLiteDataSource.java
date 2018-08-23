@@ -35,14 +35,11 @@ public class DogKindsSQLiteDataSource {
 
     public boolean isDogKindsDatabaseEmpty() {
         db = DatabaseManager.getInstance().openDB();
-        Cursor cursor = null;
-        try {
-            cursor = db.query(
-                    DogKindTable.TABLE_NAME,
-                    null, null, null, null, null, null, null);
+        try (Cursor cursor = db.query(
+                DogKindTable.TABLE_NAME,
+                null, null, null, null, null, null, null)) {
             return cursor.getCount() == 0 || !cursor.moveToNext();
         } finally {
-            cursor.close();
             DatabaseManager.getInstance().closeDB();
         }
     }
@@ -62,24 +59,23 @@ public class DogKindsSQLiteDataSource {
         db.insert(DogKindTable.TABLE_NAME, null, cv);
     }
 
-    public int updateBreedDBWithUriImage(DogKind dogKind) {
+    public void updateBreedDBWithUriImage(DogKind dogKind) {
         db = DatabaseManager.getInstance().openDB();
 
         ContentValues cv = new ContentValues();
         cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        int result = db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
+        db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
                 new String[]{String.valueOf(dogKind.getId())});
         DatabaseManager.getInstance().closeDB();
-        return result;
     }
 
     private void loadDogKinds() {
         db = DatabaseManager.getInstance().openDB();
         dogKinds = new ArrayList<>();
-        try {
-            Cursor cursor = db.query(
-                    DogKindTable.TABLE_NAME,
-                    null, null, null, null, null, null, null);
+        try (Cursor cursor = db.query(
+                DogKindTable.TABLE_NAME,
+                null, null, null, null, null, null, null)) {
+
             // проверяем БД, если там пусто то список пород пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
                 dogKinds.clear();
@@ -94,10 +90,8 @@ public class DogKindsSQLiteDataSource {
                     cursor.moveToNext();
                 }
             }
-            cursor.close();
         } finally {
             DatabaseManager.getInstance().closeDB();
         }
     }
-
 }

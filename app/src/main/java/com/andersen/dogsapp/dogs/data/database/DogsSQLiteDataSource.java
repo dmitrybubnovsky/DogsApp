@@ -96,7 +96,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     cursor.moveToNext();
                 }
             }
-            cursor.close();
             return ownerDogs;
         } finally {
             DatabaseManager.getInstance().closeDB();

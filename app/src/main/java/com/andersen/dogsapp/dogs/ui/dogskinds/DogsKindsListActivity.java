@@ -88,14 +88,14 @@ public class DogsKindsListActivity extends AppCompatActivity
                 // обновить поле imageString в БД
                 BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
 
-                Target target = BreedPicasso.get(getApplicationContext())
+                Target target = BreedPicasso.getInstance(getApplicationContext())
                         .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                 dogKindImageView.setTag(target);
-                BreedPicasso.get(getApplicationContext())
+                BreedPicasso.getInstance(getApplicationContext())
                         .intoTarget(uriBreedString, target);
             });
         } else {
-            BreedPicasso.get(getApplicationContext())
+            BreedPicasso.getInstance(getApplicationContext())
                     .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
         }
     }
