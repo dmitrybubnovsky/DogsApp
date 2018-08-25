@@ -28,7 +28,7 @@ import java.util.List;
 public class BreedsListActivity extends AppCompatActivity
         implements IRecyclerItemListener<Breed>, IResponseImageCallback {
     public static final String TAG = "#";
-    public static final String EXTRA_SELECTED_KIND = "extra_kind";
+    public static final String EXTRA_SELECTED_BREED = "extra_breed";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     private List<Breed> breeds;
     private ProgressBar progressBar;
@@ -45,7 +45,7 @@ public class BreedsListActivity extends AppCompatActivity
             Log.d(TAG, "breeds " + breeds.size());
         }
 
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
+        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_breeds_list);
         setSupportActionBar(toolbar);
 
         initViews();
@@ -94,7 +94,7 @@ public class BreedsListActivity extends AppCompatActivity
         }
     }
 
-    private void saveBreedImageSetToView(String uriBreedString, String breedString, ImageView breedImageView, Breed breedInstance, ProgressBar itemProgressBar){
+    private void saveBreedImageSetToView(String uriBreedString, String breedString, ImageView breedImageView, Breed breedInstance, ProgressBar itemProgressBar) {
         final File breedImageFile = getImageBreedFile(getApplicationContext(), breedString);
         breedInstance.setImageString(breedImageFile.getAbsolutePath());
 
@@ -114,7 +114,7 @@ public class BreedsListActivity extends AppCompatActivity
     @Override
     public void onRecyclerItemClick(Breed breed) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_SELECTED_KIND, breed);
+        intent.putExtra(EXTRA_SELECTED_BREED, breed);
         setResult(RESULT_OK, intent);
         finish();
     }

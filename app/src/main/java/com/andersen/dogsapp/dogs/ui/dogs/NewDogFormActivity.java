@@ -38,7 +38,7 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 import java.io.File;
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
-import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity.EXTRA_SELECTED_KIND;
+import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity.EXTRA_SELECTED_BREED;
 
 public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";
@@ -210,7 +210,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_BREED:
-                    breed = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
+                    breed = intent.getParcelableExtra(EXTRA_SELECTED_BREED);
                     setBreedTitleAndImage();
                     break;
                 case REQUEST_CAMERA:
