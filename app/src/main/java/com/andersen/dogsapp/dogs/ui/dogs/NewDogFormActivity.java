@@ -44,7 +44,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
-    public static final int REQUEST_CODE_DOG_KIND = 202;
+    public static final int REQUEST_CODE_BREED = 202;
     public static final int REQUEST_CODE_PREVIEW = 203;
     private static final String TAG = "#";
     private static final int PERMISSIONS_REQUEST = 115;
@@ -56,7 +56,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private EditText dogNameEditText;
-    private EditText dogKindEditText;
+    private EditText breedEditText;
     private EditText dogAgeEditText;
     private EditText dogTallEditText;
     private EditText dogWeightEditText;
@@ -85,9 +85,9 @@ public class NewDogFormActivity extends AppCompatActivity {
         testingFillEditText();
         createDogModelWithInputDatas();
 
-        dogKindEditText.setFocusable(false);
-        dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(view -> startBreedsListActivity());
+        breedEditText.setFocusable(false);
+        breedEditText.setClickable(true);
+        breedEditText.setOnClickListener(view -> startBreedsListActivity());
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то переход в список пород
@@ -209,9 +209,9 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_CODE_DOG_KIND:
+                case REQUEST_CODE_BREED:
                     breed = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
-                    setDogKindTitleAndImage();
+                    setBreedTitleAndImage();
                     break;
                 case REQUEST_CAMERA:
                     setFilePathString();
@@ -274,8 +274,8 @@ public class NewDogFormActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(getApplicationContext(), BreedsListActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-            Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
+            startActivityForResult(intent, REQUEST_CODE_BREED);
+            Toast.makeText(getApplicationContext(), R.string.specify_breed_please_toast, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -302,7 +302,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         addDogButton = findViewById(R.id.add_dog_button);
         photoDogImageView = findViewById(R.id.dog_photo_imageview);
         dogNameEditText = findViewById(R.id.dog_name_edittext);
-        dogKindEditText = findViewById(R.id.dog_kind_edittext);
+        breedEditText = findViewById(R.id.breed_edittext);
         dogAgeEditText = findViewById(R.id.dog_age_edittext);
         dogTallEditText = findViewById(R.id.dog_tall_edittext);
         dogWeightEditText = findViewById(R.id.dog_weight_edittext);
@@ -317,10 +317,10 @@ public class NewDogFormActivity extends AppCompatActivity {
         dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
     }
 
-    public void setDogKindTitleAndImage() {
-        String dogKindString = breed.getBreedString();
-        dog.setBreed(dogKindString);
-        dogKindEditText.setText(dogKindString);
+    public void setBreedTitleAndImage() {
+        String breedString = breed.getBreedString();
+        dog.setBreed(breedString);
+        breedEditText.setText(breedString);
         if (!hasPhoto) {
             dog.setDogImageString(breed.getUriImageString());
         }

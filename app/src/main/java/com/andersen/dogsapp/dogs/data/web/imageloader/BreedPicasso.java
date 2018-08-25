@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -42,20 +41,20 @@ public class BreedPicasso {
                 .into(target);
     }
 
-    public void intoImageView(String uriBreedString, ImageView dogKindImageView) {
+    public void intoImageView(String uriBreedString, ImageView breedImageView) {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
                 .resize(500,0)
-                .into(dogKindImageView);
+                .into(breedImageView);
     }
 
-    public Target getTarget(ProgressBar itemProgressBar, ImageView dogKindImageView, File breedImageFile) {
+    public Target getTarget(ProgressBar itemProgressBar, ImageView breedImageView, File breedImageFile) {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                 itemProgressBar.setVisibility(View.GONE);
-                dogKindImageView.setImageBitmap(bitmap);
+                breedImageView.setImageBitmap(bitmap);
                 new Thread(() -> {
                     try (FileOutputStream fos = new FileOutputStream(breedImageFile)){
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);

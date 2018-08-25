@@ -79,28 +79,28 @@ public class BreedsListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResponseImageListener(String breedString, ImageView breedImageView, Breed breedInstance, ProgressBar itemProgressBar) {
+    public void onResponseImageListener(String breedString, ImageView breedImageView, Breed breedEntity, ProgressBar itemProgressBar) {
 
-        if (breedInstance.getUriImageString().isEmpty()) {
+        if (breedEntity.getUriImageString().isEmpty()) {
             BreedsRepository.getInstance().getBreedsImage(breedString, uriBreedString -> {
                 // обновить поле imageString в БД
-                BreedsRepository.getInstance().updateBreedDBWithUriImage(breedInstance);
+                BreedsRepository.getInstance().updateBreedDBWithUriImage(breedEntity);
                 // сохранить картинку породы
-                saveBreedImageSetToView(uriBreedString, breedString, breedImageView, breedInstance, itemProgressBar);
+                saveBreedImageSetToView(uriBreedString, breedString, breedImageView, breedEntity, itemProgressBar);
             });
         } else {
             BreedPicasso.getInstance(getApplicationContext())
-                    .intoImageView(breedInstance.getUriImageString(), breedImageView);
+                    .intoImageView(breedEntity.getUriImageString(), breedImageView);
         }
     }
 
-    private void saveBreedImageSetToView(String uriBreedString, String breedString, ImageView dogKindImageView, Breed breedInstance, ProgressBar itemProgressBar){
+    private void saveBreedImageSetToView(String uriBreedString, String breedString, ImageView breedImageView, Breed breedInstance, ProgressBar itemProgressBar){
         final File breedImageFile = getImageBreedFile(getApplicationContext(), breedString);
         breedInstance.setImageString(breedImageFile.getAbsolutePath());
 
         Target target = BreedPicasso.getInstance(getApplicationContext())
-                .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
-        dogKindImageView.setTag(target);
+                .getTarget(itemProgressBar, breedImageView, breedImageFile);
+        breedImageView.setTag(target);
         BreedPicasso.getInstance(getApplicationContext())
                 .intoTarget(uriBreedString, target);
     }

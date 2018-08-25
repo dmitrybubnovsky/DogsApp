@@ -80,7 +80,7 @@ public class WebBreedsDataSource {
             @Override
             public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    breeds = convertStringListToDogKindList(response.body());
+                    breeds = convertStringListToBreedList(response.body());
                     resultCallback.onResult(breeds);
                 } else {
                     Log.d(TAG, "response is NOT successful");
@@ -120,7 +120,7 @@ public class WebBreedsDataSource {
         });
     }
 
-    private List<Breed> convertStringListToDogKindList(List<String> breedsListString) {
+    private List<Breed> convertStringListToBreedList(List<String> breedsListString) {
 
         List<Breed> breeds = new ArrayList<>();
         for (String breedString : breedsListString) {

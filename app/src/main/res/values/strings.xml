@@ -24,7 +24,7 @@
     <string name="dog_age_hint">Age</string>
     <string name="dog_tall_hint">Tall</string>
 
-    <string name="specify_kind_please_toast">Specify dog\'s breed please!</string>
+    <string name="specify_breed_please_toast">Specify dog\'s breed please!</string>
 
     <string name="toolbar_title_owners_list">Owners list</string>
     <string name="toolbar_title_add_owner">Add new owner</string>

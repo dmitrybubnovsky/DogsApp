@@ -7,5 +7,5 @@ import com.andersen.dogsapp.dogs.data.entities.Breed;
 
 public interface IResponseImageCallback {
 
-    void onResponseImageListener(String breed, ImageView imageView, Breed dogKind, ProgressBar itemProgressBar);
+    void onResponseImageListener(String breed, ImageView imageView, Breed breedEntity, ProgressBar itemProgressBar);
 }

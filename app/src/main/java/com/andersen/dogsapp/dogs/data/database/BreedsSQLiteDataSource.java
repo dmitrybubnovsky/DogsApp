@@ -13,27 +13,27 @@ import java.util.List;
 
 public class BreedsSQLiteDataSource {
     private static final String TAG = "#";
-    private static BreedsSQLiteDataSource dogKindsDataSource;
+    private static BreedsSQLiteDataSource breedsDataSource;
     private SQLiteDatabase db;
     private List<Breed> breeds;
 
     private BreedsSQLiteDataSource() {
-        loadDogKinds();
+        loadBreeds();
     }
 
     public static BreedsSQLiteDataSource getInstance() {
-        if (dogKindsDataSource == null) {
-            dogKindsDataSource = new BreedsSQLiteDataSource();
+        if (breedsDataSource == null) {
+            breedsDataSource = new BreedsSQLiteDataSource();
         }
-        return dogKindsDataSource;
+        return breedsDataSource;
     }
 
     public void getBreeds(ICallback<List<Breed>> dbCallback) {
-        loadDogKinds();
+        loadBreeds();
         dbCallback.onResult(breeds);
     }
 
-    public boolean isDogKindsDatabaseEmpty() {
+    public boolean isBreedsDatabaseEmpty() {
         db = DatabaseManager.getInstance().openDB();
         try (Cursor cursor = db.query(
                 BreedTable.TABLE_NAME,
@@ -47,12 +47,12 @@ public class BreedsSQLiteDataSource {
     public void addBreedsToDatabase(List<Breed> breeds) {
         db = DatabaseManager.getInstance().openDB();
         for (Breed breed : breeds) {
-            addDogKindInLoop(breed);
+            insertBreedInLoop(breed);
         }
         DatabaseManager.getInstance().closeDB();
     }
 
-    private void addDogKindInLoop(Breed breed) {
+    private void insertBreedInLoop(Breed breed) {
         ContentValues cv = new ContentValues();
         cv.put(BreedTable.BREED, breed.getBreedString());
         cv.put(BreedTable.IMAGE_URI, breed.getUriImageString());
@@ -69,7 +69,7 @@ public class BreedsSQLiteDataSource {
         DatabaseManager.getInstance().closeDB();
     }
 
-    private void loadDogKinds() {
+    private void loadBreeds() {
         db = DatabaseManager.getInstance().openDB();
         breeds = new ArrayList<>();
         try (Cursor cursor = db.query(

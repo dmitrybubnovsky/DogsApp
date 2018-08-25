@@ -5,7 +5,7 @@ public class DogTable {
     public static final String ID = "_id";
     public static final String OWNER_ID = "ownerId";
     public static final String NAME = "dogName";
-    public static final String KIND = "dogKindInstance";
+    public static final String KIND = "breedString";
     public static final String IMAGE = "image";
     public static final String TALL = "dogTall";
     public static final String WEIGHT = "dogWeight";

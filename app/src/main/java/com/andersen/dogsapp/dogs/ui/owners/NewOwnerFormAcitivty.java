@@ -20,7 +20,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
     private EditText ownerNameEditText;
     private EditText ownerSurnameEditText;
-    private EditText preferredKindEditText;
+    private EditText preferredBreedEditText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
 
         ownerNameEditText = findViewById(R.id.owner_name_edittext);
         ownerSurnameEditText = findViewById(R.id.surname_edittext);
-        preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
+        preferredBreedEditText = findViewById(R.id.preferred_kind_edit_text);
 
         // just for test
         testingFillEditText();
@@ -49,7 +49,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     private Owner addOwner() {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
-        String preferredBreed = preferredKindEditText.getText().toString();
+        String preferredBreed = preferredBreedEditText.getText().toString();
         Owner owner = new Owner(ownerName, ownerSurname, preferredBreed);
         owner = OwnersRepository.getInstance().addOwner(owner);
         return owner;
@@ -58,6 +58,6 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     private void testingFillEditText() {
         ownerNameEditText.setText(SomeOwner.getInstance().name());
         ownerSurnameEditText.setText(SomeOwner.getInstance().surname());
-        preferredKindEditText.setText(SomeDog.getInstance().kind());
+        preferredBreedEditText.setText(SomeDog.getInstance().kind());
     }
 }
