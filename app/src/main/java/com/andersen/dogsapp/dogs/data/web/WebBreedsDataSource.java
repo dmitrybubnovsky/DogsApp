@@ -3,7 +3,7 @@ package com.andersen.dogsapp.dogs.data.web;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.andersen.dogsapp.dogs.data.json.BreedDeserializer;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.DogBreedsAPI;
 import com.google.gson.Gson;
@@ -32,9 +32,9 @@ public class WebBreedsDataSource {
     private Retrofit instanceRetrofit;
     private DogBreedsAPI instanceAPI;
 
-    @SerializedName("dogKinds")
+    @SerializedName("breeds")
     @Expose
-    private List<DogKind> dogKinds;
+    private List<Breed> breeds;
 
 
     private WebBreedsDataSource() {
@@ -44,7 +44,7 @@ public class WebBreedsDataSource {
                 .addConverterFactory(buildGsonConverter())
                 .build();
         instanceAPI = instanceRetrofit.create(DogBreedsAPI.class);
-        dogKinds = new ArrayList<>();
+        breeds = new ArrayList<>();
     }
 
     public static WebBreedsDataSource getInstance() {
@@ -74,14 +74,14 @@ public class WebBreedsDataSource {
         return client;
     }
 
-    public void getDogsKinds(ICallback<List<DogKind>> resultCallback) {
+    public void getBreeds(ICallback<List<Breed>> resultCallback) {
         Call<List<String>> call = instanceAPI.getBreeds();
         call.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    dogKinds = convertStringListToDogKindList(response.body());
-                    resultCallback.onResult(dogKinds);
+                    breeds = convertStringListToDogKindList(response.body());
+                    resultCallback.onResult(breeds);
                 } else {
                     Log.d(TAG, "response is NOT successful");
                 }
@@ -120,12 +120,12 @@ public class WebBreedsDataSource {
         });
     }
 
-    private List<DogKind> convertStringListToDogKindList(List<String> breedsListString) {
+    private List<Breed> convertStringListToDogKindList(List<String> breedsListString) {
 
-        List<DogKind> dogKinds = new ArrayList<>();
+        List<Breed> breeds = new ArrayList<>();
         for (String breedString : breedsListString) {
-            dogKinds.add(new DogKind(breedString));
+            breeds.add(new Breed(breedString));
         }
-        return dogKinds;
+        return breeds;
     }
 }

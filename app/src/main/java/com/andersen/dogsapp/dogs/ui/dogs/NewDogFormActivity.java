@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
@@ -63,7 +63,7 @@ public class NewDogFormActivity extends AppCompatActivity {
     private Button addDogButton;
     private Owner owner;
     private Dog dog;
-    private DogKind dogKind;
+    private Breed breed;
     private ImageView photoDogImageView;
     private File photoFile;
     private String photoFilePathString;
@@ -87,12 +87,12 @@ public class NewDogFormActivity extends AppCompatActivity {
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity());
+        dogKindEditText.setOnClickListener(view -> startBreedsListActivity());
 
         addDogButton.setOnClickListener(view -> {
             // если порода собаки еще не установлена, то переход в список пород
-            if (dog.getDogKind() == null) {
-                startDogsKindsListActivity();
+            if (dog.getBreed() == null) {
+                startBreedsListActivity();
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DogsRepository.getInstance().addDog(dog);
@@ -210,7 +210,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_DOG_KIND:
-                    dogKind = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
+                    breed = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
                     setDogKindTitleAndImage();
                     break;
                 case REQUEST_CAMERA:
@@ -268,7 +268,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_PREVIEW);
     }
 
-    private void startDogsKindsListActivity() {
+    private void startBreedsListActivity() {
         // Если сети нет, то список пород НЕ открываем
         if (!NetworkManager.hasNetWorkAccess(this)) {
             Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
@@ -318,11 +318,11 @@ public class NewDogFormActivity extends AppCompatActivity {
     }
 
     public void setDogKindTitleAndImage() {
-        String dogKindString = dogKind.getKind();
-        dog.setDogKind(dogKindString);
+        String dogKindString = breed.getBreedString();
+        dog.setBreed(dogKindString);
         dogKindEditText.setText(dogKindString);
         if (!hasPhoto) {
-            dog.setDogImageString(dogKind.getUriImageString());
+            dog.setDogImageString(breed.getUriImageString());
         }
     }
 

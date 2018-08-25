@@ -76,7 +76,7 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         private void setData(Owner owner) {
             this.owner = owner;
             ownerFullNameTextView.setText(owner.getOwnerFullName());
-            preferredKindTextView.setText(owner.getPreferedDogsKind());
+            preferredKindTextView.setText(owner.getPreferedBreed());
             int dogsQuantity = owner.getDogs().size();
             dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
         }

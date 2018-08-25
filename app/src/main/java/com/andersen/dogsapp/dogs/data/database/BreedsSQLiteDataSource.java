@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.andersen.dogsapp.dogs.data.database.tables.DogKindTable;
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.database.tables.BreedTable;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class BreedsSQLiteDataSource {
     private static final String TAG = "#";
     private static BreedsSQLiteDataSource dogKindsDataSource;
     private SQLiteDatabase db;
-    private List<DogKind> dogKinds;
+    private List<Breed> breeds;
 
     private BreedsSQLiteDataSource() {
         loadDogKinds();
@@ -28,15 +28,15 @@ public class BreedsSQLiteDataSource {
         return dogKindsDataSource;
     }
 
-    public void getDogKinds(ICallback<List<DogKind>> dbCallback) {
+    public void getBreeds(ICallback<List<Breed>> dbCallback) {
         loadDogKinds();
-        dbCallback.onResult(dogKinds);
+        dbCallback.onResult(breeds);
     }
 
     public boolean isDogKindsDatabaseEmpty() {
         db = DatabaseManager.getInstance().openDB();
         try (Cursor cursor = db.query(
-                DogKindTable.TABLE_NAME,
+                BreedTable.TABLE_NAME,
                 null, null, null, null, null, null, null)) {
             return cursor.getCount() == 0 || !cursor.moveToNext();
         } finally {
@@ -44,49 +44,49 @@ public class BreedsSQLiteDataSource {
         }
     }
 
-    public void addBreedsToDatabase(List<DogKind> breeds) {
+    public void addBreedsToDatabase(List<Breed> breeds) {
         db = DatabaseManager.getInstance().openDB();
-        for (DogKind dogKind : breeds) {
-            addDogKindInLoop(dogKind);
+        for (Breed breed : breeds) {
+            addDogKindInLoop(breed);
         }
         DatabaseManager.getInstance().closeDB();
     }
 
-    private void addDogKindInLoop(DogKind dogKind) {
+    private void addDogKindInLoop(Breed breed) {
         ContentValues cv = new ContentValues();
-        cv.put(DogKindTable.KIND, dogKind.getKind());
-        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        db.insert(DogKindTable.TABLE_NAME, null, cv);
+        cv.put(BreedTable.BREED, breed.getBreedString());
+        cv.put(BreedTable.IMAGE_URI, breed.getUriImageString());
+        db.insert(BreedTable.TABLE_NAME, null, cv);
     }
 
-    public void updateBreedDBWithUriImage(DogKind dogKind) {
+    public void updateBreedDBWithUriImage(Breed breed) {
         db = DatabaseManager.getInstance().openDB();
 
         ContentValues cv = new ContentValues();
-        cv.put(DogKindTable.IMAGE_URI, dogKind.getUriImageString());
-        db.update(DogKindTable.TABLE_NAME, cv, DogKindTable.ID + "=?",
-                new String[]{String.valueOf(dogKind.getId())});
+        cv.put(BreedTable.IMAGE_URI, breed.getUriImageString());
+        db.update(BreedTable.TABLE_NAME, cv, BreedTable.ID + "=?",
+                new String[]{String.valueOf(breed.getId())});
         DatabaseManager.getInstance().closeDB();
     }
 
     private void loadDogKinds() {
         db = DatabaseManager.getInstance().openDB();
-        dogKinds = new ArrayList<>();
+        breeds = new ArrayList<>();
         try (Cursor cursor = db.query(
-                DogKindTable.TABLE_NAME,
+                BreedTable.TABLE_NAME,
                 null, null, null, null, null, null, null)) {
 
             // проверяем БД, если там пусто то список пород пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
-                dogKinds.clear();
+                breeds.clear();
             } else {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
-                    DogKind dogKind = new DogKind();
-                    dogKind.setId(cursor.getInt(cursor.getColumnIndex(DogKindTable.ID)));
-                    dogKind.setKind(cursor.getString(cursor.getColumnIndex(DogKindTable.KIND)));
-                    dogKind.setImageString(cursor.getString(cursor.getColumnIndex(DogKindTable.IMAGE_URI)));
-                    dogKinds.add(dogKind);
+                    Breed breed = new Breed();
+                    breed.setId(cursor.getInt(cursor.getColumnIndex(BreedTable.ID)));
+                    breed.setBreedString(cursor.getString(cursor.getColumnIndex(BreedTable.BREED)));
+                    breed.setImageString(cursor.getString(cursor.getColumnIndex(BreedTable.IMAGE_URI)));
+                    breeds.add(breed);
                     cursor.moveToNext();
                 }
             }

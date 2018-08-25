@@ -1,6 +1,6 @@
 package com.andersen.dogsapp.dogs.data.localsources;
 
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
 
 import java.util.ArrayList;
@@ -22,13 +22,13 @@ public class BreedsInMemoryDataSource {
             "pug", "saint_bernard", "scottishterrier", "shepherd", "siberian_husky",
             "staffordshire", "standard_schnauzer", "water_spaniel"};
 
-    private final List<DogKind> dogKindsList;
+    private final List<Breed> breedsList;
 
     private BreedsInMemoryDataSource() {
-        dogKindsList = new ArrayList<>();
+        breedsList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
-            DogKind dogKind = new DogKind(TITLES[i], "");
-            dogKindsList.add(dogKind);
+            Breed breed = new Breed(TITLES[i], "");
+            breedsList.add(breed);
         }
     }
 
@@ -39,8 +39,8 @@ public class BreedsInMemoryDataSource {
         return instance;
     }
 
-    public void getDogsKinds(ICallback<List<DogKind>> callback) {
-        callback.onResult(dogKindsList);
+    public void getBreeds(ICallback<List<Breed>> callback) {
+        callback.onResult(breedsList);
     }
 
     public void getBreedsImage(String breedString, ICallback<String> webCallback) {

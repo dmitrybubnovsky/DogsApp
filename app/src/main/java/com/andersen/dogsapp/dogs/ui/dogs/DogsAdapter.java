@@ -51,7 +51,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogNameTextView;
-        private TextView dogKindTextView;
+        private TextView breedTextView;
         private ImageView dogImageView;
         private Dog dog;
 
@@ -69,7 +69,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
                     .style(context, R.style.TextViewTitleItem)
                     .build();
-            dogKindTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
+            breedTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin13sp)
                     .build();
             dogImageView = view.findViewById(R.id.dog_recycler_image_view);
@@ -78,7 +78,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         private void setData(Dog dog, Context context) {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
-            dogKindTextView.setText(dog.getDogKind());
+            breedTextView.setText(dog.getBreed());
 
             String dogImageString = dog.getDogImageString();
 

@@ -21,7 +21,7 @@ public class Owner implements Parcelable {
     private int ownerId;
     private String ownerName;
     private String ownerSurname;
-    private String preferedDogsKind;
+    private String preferedBreed;
     private List<Dog> dogs = new ArrayList<>();
 
     public Owner() {
@@ -31,15 +31,15 @@ public class Owner implements Parcelable {
         ownerId = parcelInstance.readInt();
         ownerName = parcelInstance.readString();
         ownerSurname = parcelInstance.readString();
-        preferedDogsKind = parcelInstance.readString();
+        preferedBreed = parcelInstance.readString();
         dogs = new ArrayList<>();
         parcelInstance.readList(dogs, Dog.class.getClassLoader());
     }
 
-    public Owner(String ownerName, String ownerSurname, String preferedDogsKind) {
+    public Owner(String ownerName, String ownerSurname, String preferredBreed) {
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
-        this.preferedDogsKind = preferedDogsKind;
+        this.preferedBreed = preferredBreed;
         dogs = new ArrayList<>(0);
     }
 
@@ -86,12 +86,12 @@ public class Owner implements Parcelable {
         this.ownerSurname = ownerSurname;
     }
 
-    public String getPreferedDogsKind() {
-        return preferedDogsKind;
+    public String getPreferedBreed() {
+        return preferedBreed;
     }
 
-    public void setPreferedDogsKind(String preferedDogsKind) {
-        this.preferedDogsKind = preferedDogsKind;
+    public void setPreferedBreed(String preferedBreed) {
+        this.preferedBreed = preferedBreed;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class Owner implements Parcelable {
         parcelInstance.writeInt(ownerId);
         parcelInstance.writeString(ownerName);
         parcelInstance.writeString(ownerSurname);
-        parcelInstance.writeString(preferedDogsKind);
+        parcelInstance.writeString(preferedBreed);
         parcelInstance.writeList(dogs);
     }
 }

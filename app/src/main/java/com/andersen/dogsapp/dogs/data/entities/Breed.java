@@ -3,40 +3,40 @@ package com.andersen.dogsapp.dogs.data.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DogKind implements Parcelable {
-    public static final Parcelable.Creator<DogKind> CREATOR = new Parcelable.Creator<DogKind>() {
+public class Breed implements Parcelable {
+    public static final Parcelable.Creator<Breed> CREATOR = new Parcelable.Creator<Breed>() {
         @Override
-        public DogKind createFromParcel(Parcel source) {
-            return new DogKind(source);
+        public Breed createFromParcel(Parcel source) {
+            return new Breed(source);
         }
 
         @Override
-        public DogKind[] newArray(int size) {
-            return new DogKind[size];
+        public Breed[] newArray(int size) {
+            return new Breed[size];
         }
     };
     private int id;
-    private String kind;
+    private String breedString;
     private String imageString;
 
-    public DogKind() {
-        kind = "";
+    public Breed() {
+        breedString = "";
         imageString = "";
     }
 
-    public DogKind(String kind) {
-        this.kind = kind;
+    public Breed(String breedString) {
+        this.breedString = breedString;
         imageString = "";
     }
 
-    public DogKind(String kind, String imageString) {
-        this.kind = kind;
+    public Breed(String breedString, String imageString) {
+        this.breedString = breedString;
         this.imageString = imageString;
     }
 
-    private DogKind(Parcel parcelInstance) {
+    private Breed(Parcel parcelInstance) {
         id = parcelInstance.readInt();
-        kind = parcelInstance.readString();
+        breedString = parcelInstance.readString();
         imageString = parcelInstance.readString();
     }
 
@@ -44,12 +44,12 @@ public class DogKind implements Parcelable {
         return imageString;
     }
 
-    public String getKind() {
-        return kind;
+    public String getBreedString() {
+        return breedString;
     }
 
-    public void setKind(String kind) {
-        this.kind = kind;
+    public void setBreedString(String breedString) {
+        this.breedString = breedString;
     }
 
     public void setImageString(String imageString) {
@@ -64,7 +64,7 @@ public class DogKind implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(kind);
+        dest.writeString(breedString);
         dest.writeString(imageString);
     }
 

@@ -45,7 +45,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
                     dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
                     dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
-                    dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                    dog.setBreed(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
                     dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
                     dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
                     dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
@@ -87,7 +87,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
                     dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
                     dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
-                    dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                    dog.setBreed(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
                     dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
                     dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
                     dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
@@ -113,7 +113,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         cv.put(DogTable.WEIGHT, dog.getDogWeight());
         cv.put(DogTable.IMAGE, dog.getDogImageString());
         cv.put(DogTable.NAME, dog.getDogName());
-        cv.put(DogTable.KIND, dog.getDogKind());
+        cv.put(DogTable.KIND, dog.getBreed());
 
         long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();

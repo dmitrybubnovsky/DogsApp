@@ -23,8 +23,8 @@ public class Dog implements Parcelable {
     private Owner owner;
     private String dogImageString;
     private String dogName;
-    private String dogKind;
-    private DogKind dogKindInfo;
+    private String breed;
+    private Breed breedInfo;
 
     public Dog() {
     }
@@ -37,8 +37,8 @@ public class Dog implements Parcelable {
         dogWeight = parcelInstance.readInt();
         dogImageString = parcelInstance.readString();
         dogName = parcelInstance.readString();
-        dogKind = parcelInstance.readString();
-        dogKindInfo = parcelInstance.readParcelable(DogKind.class.getClassLoader());
+        breed = parcelInstance.readString();
+        breedInfo = parcelInstance.readParcelable(Breed.class.getClassLoader());
     }
 
     public Dog(String dogName, Owner owner, int dogAge, int dogTall, int dogWeight) {
@@ -74,12 +74,12 @@ public class Dog implements Parcelable {
         this.dogName = dogName;
     }
 
-    public String getDogKind() {
-        return dogKind;
+    public String getBreed() {
+        return breed;
     }
 
-    public void setDogKind(String dogKind) {
-        this.dogKind = dogKind;
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     public String getDogImageString() {
@@ -140,8 +140,8 @@ public class Dog implements Parcelable {
         dest.writeInt(dogWeight);
         dest.writeString(dogImageString);
         dest.writeString(dogName);
-        dest.writeString(dogKind);
-        dest.writeParcelable(dogKindInfo, flags);
+        dest.writeString(breed);
+        dest.writeParcelable(breedInfo, flags);
     }
 }
 

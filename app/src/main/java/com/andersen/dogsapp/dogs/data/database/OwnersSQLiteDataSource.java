@@ -49,7 +49,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
                     owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
                     owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
                     owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
-                    owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
+                    owner.setPreferedBreed(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERRED_BREED)));
                     owners.add(owner);
                     cursor.moveToNext();
                 }
@@ -67,7 +67,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         ContentValues cv = new ContentValues();
         cv.put(OwnerTable.NAME, owner.getOwnerName());
         cv.put(OwnerTable.SURNAME, owner.getOwnerSurname());
-        cv.put(OwnerTable.PREFERED_DOGS_KIND, owner.getPreferedDogsKind());
+        cv.put(OwnerTable.PREFERRED_BREED, owner.getPreferedBreed());
         long insertResult = db.insert(OwnerTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
 

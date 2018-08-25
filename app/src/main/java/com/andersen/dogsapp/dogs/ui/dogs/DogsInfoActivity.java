@@ -47,7 +47,7 @@ public class DogsInfoActivity extends AppCompatActivity {
         dogNameTextView.setText(dog.getDogName());
 
         TextView kindDogTextView = findViewById(R.id.kind_dog_textview);
-        kindDogTextView.setText(dog.getDogKind());
+        kindDogTextView.setText(dog.getBreed());
 
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
         dogAgeTextView.setText("" + dog.getDogAge() + " " + getResources().getString(R.string.age_months_measure));

@@ -49,8 +49,8 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     private Owner addOwner() {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
-        String preferredDogKind = preferredKindEditText.getText().toString();
-        Owner owner = new Owner(ownerName, ownerSurname, preferredDogKind);
+        String preferredBreed = preferredKindEditText.getText().toString();
+        Owner owner = new Owner(ownerName, ownerSurname, preferredBreed);
         owner = OwnersRepository.getInstance().addOwner(owner);
         return owner;
     }

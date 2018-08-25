@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
@@ -22,17 +22,17 @@ import java.util.List;
 public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder> {
     public static final String TAG = "#";
     private Context context;
-    private IRecyclerItemListener<DogKind> listener;
+    private IRecyclerItemListener<Breed> listener;
     private IResponseImageCallback responseCallback;
-    private List<DogKind> dogsKinds;
+    private List<Breed> breeds;
 
     public BreedsAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
-    public void setBreeds(List<DogKind> dogsKinds) {
-        this.dogsKinds = dogsKinds;
+    public void setBreeds(List<Breed> breeds) {
+        this.breeds = breeds;
     }
 
     public void setResponseBreedCallbackListener(IResponseImageCallback responseCallback) {
@@ -52,11 +52,11 @@ public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return dogsKinds.size();
+        return breeds.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public DogKind dogKind;
+        public Breed breed;
         private TextView dogKindTextView;
         private ImageView dogKindImageView;
         private ProgressBar itemProgressBar;
@@ -65,7 +65,7 @@ public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder
             super(view);
             view.setOnClickListener((View view1) -> {
                 if (listener != null) {
-                    listener.onRecyclerItemClick(dogKind);
+                    listener.onRecyclerItemClick(breed);
                 }
             });
             initViews(view);
@@ -80,19 +80,19 @@ public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder
         }
 
         private void setData(int position) {
-            dogKind = dogsKinds.get(position);
-            String dogKindImageString = dogKind.getUriImageString();
-            String dogKindName = dogKind.getKind();
+            breed = breeds.get(position);
+            String dogKindImageString = breed.getUriImageString();
+            String dogKindName = breed.getBreedString();
 
             dogKindTextView.setText(dogKindName);
             /*
-             * если поле DogKind imageString пусто, значит оно еще не сетилось,
+             * если поле Breed imageString пусто, значит оно еще не сетилось,
              * тогда отправляемся в активити загружаем файл, сохраняем его путь
              * и update'им в БД это поле
              */
-            if (dogKind.getUriImageString().isEmpty()) {
+            if (breed.getUriImageString().isEmpty()) {
                 itemProgressBar.setVisibility(View.VISIBLE);
-                responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKind, itemProgressBar);
+                responseCallback.onResponseImageListener(dogKindName, dogKindImageView, breed, itemProgressBar);
             } else {
                 itemProgressBar.setVisibility(View.GONE);
                 Uri uri = Uri.parse(dogKindImageString);

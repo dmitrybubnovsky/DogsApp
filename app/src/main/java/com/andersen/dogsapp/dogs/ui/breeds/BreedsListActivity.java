@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.BreedsRepository;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BreedsListActivity extends AppCompatActivity
-        implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
+        implements IRecyclerItemListener<Breed>, IResponseImageCallback {
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
-    private List<DogKind> dogKinds;
+    private List<Breed> breeds;
     private ProgressBar progressBar;
     private BreedsAdapter adapter;
     private RecyclerView recyclerView;
@@ -41,8 +41,8 @@ public class BreedsListActivity extends AppCompatActivity
         setContentView(R.layout.activity_breeds_list);
 
         if (savedInstanceState != null) {
-            dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);
-            Log.d(TAG, "dogKinds " + dogKinds.size());
+            breeds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);
+            Log.d(TAG, "breeds " + breeds.size());
         }
 
         Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
@@ -53,50 +53,50 @@ public class BreedsListActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(BREEDS_BUNDLE_KEY, (ArrayList<DogKind>) dogKinds);
+        outState.putParcelableArrayList(BREEDS_BUNDLE_KEY, (ArrayList<Breed>) breeds);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        BreedsRepository.getInstance().getDogsKinds(dogBreeds -> {
-            dogKinds = dogBreeds;
+        BreedsRepository.getInstance().getBreeds(dogBreeds -> {
+            breeds = dogBreeds;
             runOnUiThread(this::updateUI);
         });
     }
 
     private void updateUI() {
-        if (dogKinds != null) {
-            adapter.setBreeds(dogKinds);
+        if (breeds != null) {
+            adapter.setBreeds(breeds);
             adapter.setResponseBreedCallbackListener(this);
             adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
-            if (progressBar != null && dogKinds != null) {
+            if (progressBar != null && breeds != null) {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }
 
     @Override
-    public void onResponseImageListener(String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance, ProgressBar itemProgressBar) {
+    public void onResponseImageListener(String breedString, ImageView breedImageView, Breed breedInstance, ProgressBar itemProgressBar) {
 
-        if (dogKindInstance.getUriImageString().isEmpty()) {
-            BreedsRepository.getInstance().getBreedsImage(dogKindString, uriBreedString -> {
+        if (breedInstance.getUriImageString().isEmpty()) {
+            BreedsRepository.getInstance().getBreedsImage(breedString, uriBreedString -> {
                 // обновить поле imageString в БД
-                BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
+                BreedsRepository.getInstance().updateBreedDBWithUriImage(breedInstance);
                 // сохранить картинку породы
-                saveBreedImageSetToView(uriBreedString, dogKindString, dogKindImageView, dogKindInstance, itemProgressBar);
+                saveBreedImageSetToView(uriBreedString, breedString, breedImageView, breedInstance, itemProgressBar);
             });
         } else {
             BreedPicasso.getInstance(getApplicationContext())
-                    .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
+                    .intoImageView(breedInstance.getUriImageString(), breedImageView);
         }
     }
 
-    private void saveBreedImageSetToView(String uriBreedString, String dogKindString, ImageView dogKindImageView, DogKind dogKindInstance, ProgressBar itemProgressBar){
-        final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
-        dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
+    private void saveBreedImageSetToView(String uriBreedString, String breedString, ImageView dogKindImageView, Breed breedInstance, ProgressBar itemProgressBar){
+        final File breedImageFile = getImageBreedFile(getApplicationContext(), breedString);
+        breedInstance.setImageString(breedImageFile.getAbsolutePath());
 
         Target target = BreedPicasso.getInstance(getApplicationContext())
                 .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
@@ -112,16 +112,16 @@ public class BreedsListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRecyclerItemClick(DogKind dogKind) {
+    public void onRecyclerItemClick(Breed breed) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
+        intent.putExtra(EXTRA_SELECTED_KIND, breed);
         setResult(RESULT_OK, intent);
         finish();
     }
 
     private void initViews() {
         progressBar = findViewById(R.id.network_breeds_progress_bar);
-        if (dogKinds == null) {
+        if (breeds == null) {
             progressBar.setVisibility(View.VISIBLE);
         }
         recyclerView = findViewById(R.id.breeds_recycler_view);

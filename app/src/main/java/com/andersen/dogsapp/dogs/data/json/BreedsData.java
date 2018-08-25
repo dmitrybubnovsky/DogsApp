@@ -1,17 +1,17 @@
 package com.andersen.dogsapp.dogs.data.json;
 
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Breed;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class DogsKindsData {
+public class BreedsData {
     @SerializedName("message")
     @Expose
-    private List<DogKind> dogsKinds;
+    private List<Breed> breeds;
 
-    public List<DogKind> getDogsKinds() {
-        return dogsKinds;
+    public List<Breed> getBreeds() {
+        return breeds;
     }
 }
