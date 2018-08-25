@@ -31,14 +31,14 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
-import com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity;
+import com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.io.File;
 
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
-import static com.andersen.dogsapp.dogs.ui.dogskinds.DogsKindsListActivity.EXTRA_SELECTED_KIND;
+import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity.EXTRA_SELECTED_KIND;
 
 public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";
@@ -273,7 +273,7 @@ public class NewDogFormActivity extends AppCompatActivity {
         if (!NetworkManager.hasNetWorkAccess(this)) {
             Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
         } else {
-            Intent intent = new Intent(getApplicationContext(), DogsKindsListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), BreedsListActivity.class);
             startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
             Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
         }

@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.ui.dogskinds;
+package com.andersen.dogsapp.dogs.ui.breeds;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,14 +25,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogsKindsListActivity extends AppCompatActivity
+public class BreedsListActivity extends AppCompatActivity
         implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
-    private DogsKindAdapter adapter;
+    private BreedsAdapter adapter;
     private RecyclerView recyclerView;
 
     @Override
@@ -126,7 +126,7 @@ public class DogsKindsListActivity extends AppCompatActivity
         }
         recyclerView = findViewById(R.id.breeds_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DogsKindAdapter(this, this);
+        adapter = new BreedsAdapter(this, this);
     }
 }
 

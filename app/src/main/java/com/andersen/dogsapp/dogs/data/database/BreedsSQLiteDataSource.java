@@ -11,19 +11,19 @@ import com.andersen.dogsapp.dogs.data.web.ICallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogKindsSQLiteDataSource {
+public class BreedsSQLiteDataSource {
     private static final String TAG = "#";
-    private static DogKindsSQLiteDataSource dogKindsDataSource;
+    private static BreedsSQLiteDataSource dogKindsDataSource;
     private SQLiteDatabase db;
     private List<DogKind> dogKinds;
 
-    private DogKindsSQLiteDataSource() {
+    private BreedsSQLiteDataSource() {
         loadDogKinds();
     }
 
-    public static DogKindsSQLiteDataSource getInstance() {
+    public static BreedsSQLiteDataSource getInstance() {
         if (dogKindsDataSource == null) {
-            dogKindsDataSource = new DogKindsSQLiteDataSource();
+            dogKindsDataSource = new BreedsSQLiteDataSource();
         }
         return dogKindsDataSource;
     }

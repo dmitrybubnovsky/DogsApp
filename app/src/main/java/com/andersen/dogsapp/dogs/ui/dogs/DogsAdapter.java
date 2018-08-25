@@ -82,7 +82,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
             String dogImageString = dog.getDogImageString();
 
-            if (dogImageString.contains("_doggy_dogg.jpg")) {
+            if (DogImageUtils.hasNetworkImage(dog)) {
                 dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
             } else {
                 dogImageView.setImageURI(Uri.parse(dogImageString));

@@ -14,7 +14,6 @@ import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 
 public class DogImageUtils {
-    final static int NOT_VALID_RESOURCE_ID = 0;
 
     public static Drawable getDogImage(Context context, String dogImageString) {
         Resources resources = context.getResources();
@@ -26,7 +25,7 @@ public class DogImageUtils {
         return dog.getDogImageString().contains("_doggy_dogg.jpg");
     }
 
-    public static final Uri getUriFromDrawable(@NonNull Context context, String dogImageString)
+    public static Uri getUriFromDrawable(@NonNull Context context, String dogImageString)
             throws Resources.NotFoundException {
         Resources resources = context.getResources();
         int resId = resources.getIdentifier(dogImageString, "drawable",

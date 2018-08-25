@@ -6,10 +6,10 @@ import com.andersen.dogsapp.dogs.data.web.ICallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DogKindsLocalDataSource {
+public class BreedsInMemoryDataSource {
     public static final String TAG = "#";
 
-    private static DogKindsLocalDataSource instance;
+    private static BreedsInMemoryDataSource instance;
     private final String[] TITLES = new String[]{"afghan_hound", "american_bulldog", "american_foxhound",
             "australiancattle", "belgiantervuren", "berger_picard", "bolognese", "bullterrier", "chesapeake", "chinook", "dogoargentino", "english_coonhound", "german_shepherd",
             "icelandicsheepdog", "komondor", "mudi", "munsterlander_pointer", "pharaohhound", "pocket_beagle",
@@ -24,7 +24,7 @@ public class DogKindsLocalDataSource {
 
     private final List<DogKind> dogKindsList;
 
-    private DogKindsLocalDataSource() {
+    private BreedsInMemoryDataSource() {
         dogKindsList = new ArrayList<>();
         for (int i = 0; i < TITLES.length; i++) {
             DogKind dogKind = new DogKind(TITLES[i], "");
@@ -32,9 +32,9 @@ public class DogKindsLocalDataSource {
         }
     }
 
-    public static DogKindsLocalDataSource getInstance() {
+    public static BreedsInMemoryDataSource getInstance() {
         if (instance == null) {
-            instance = new DogKindsLocalDataSource();
+            instance = new BreedsInMemoryDataSource();
         }
         return instance;
     }

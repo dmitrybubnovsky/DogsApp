@@ -1,6 +1,6 @@
 package com.andersen.dogsapp.dogs.data.repositories;
 
-import com.andersen.dogsapp.dogs.data.database.DogKindsSQLiteDataSource;
+import com.andersen.dogsapp.dogs.data.database.BreedsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.web.ICallback;
 import com.andersen.dogsapp.dogs.data.web.WebBreedsDataSource;
@@ -27,14 +27,14 @@ public class BreedsRepository {
     public void getDogsKinds(ICallback<List<DogKind>> responseCallback) {
         // Если БД нет, тогда делаем запрос, получаем List стрингов пород,
         // десериал-ем его в List<DogKind> и создаем БД из этого листа
-        if (DogKindsSQLiteDataSource.getInstance().isDogKindsDatabaseEmpty()) {
+        if (BreedsSQLiteDataSource.getInstance().isDogKindsDatabaseEmpty()) {
             WebBreedsDataSource.getInstance().getDogsKinds(dogKinds -> {
-                DogKindsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
+                BreedsSQLiteDataSource.getInstance().addBreedsToDatabase(dogKinds);
                 responseCallback.onResult(dogKinds);
             });
         } else {
             //иначе читаем БД пород
-            DogKindsSQLiteDataSource.getInstance().getDogKinds(responseCallback);
+            BreedsSQLiteDataSource.getInstance().getDogKinds(responseCallback);
         }
     }
 
@@ -43,6 +43,6 @@ public class BreedsRepository {
     }
 
     public void updateBreedDBWithUriImage(DogKind dogKind) {
-        DogKindsSQLiteDataSource.getInstance().updateBreedDBWithUriImage(dogKind);
+        BreedsSQLiteDataSource.getInstance().updateBreedDBWithUriImage(dogKind);
     }
 }

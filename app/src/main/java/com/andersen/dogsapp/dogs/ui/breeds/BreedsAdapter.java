@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.ui.dogskinds;
+package com.andersen.dogsapp.dogs.ui.breeds;
 
 import android.content.Context;
 import android.net.Uri;
@@ -19,14 +19,14 @@ import com.andersen.dogsapp.dogs.ui.AppTextView;
 
 import java.util.List;
 
-public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHolder> {
+public class BreedsAdapter extends RecyclerView.Adapter<BreedsAdapter.ViewHolder> {
     public static final String TAG = "#";
     private Context context;
     private IRecyclerItemListener<DogKind> listener;
     private IResponseImageCallback responseCallback;
     private List<DogKind> dogsKinds;
 
-    public DogsKindAdapter(Context context, IRecyclerItemListener listener) {
+    public BreedsAdapter(Context context, IRecyclerItemListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -45,7 +45,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
     }
 
     @Override
-    public DogsKindAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BreedsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.dog_kind_item, parent, false);
         return new ViewHolder(view);
     }
