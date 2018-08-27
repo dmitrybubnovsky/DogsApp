@@ -27,7 +27,7 @@ public class BreedsRepository {
     public void getBreeds(ICallback<List<Breed>> responseCallback) {
         // Если БД нет, тогда делаем запрос, получаем List стрингов пород,
         // десериал-ем его в List<Breed> и создаем БД из этого листа
-        if (BreedsSQLiteDataSource.getInstance().isBreedsDatabaseEmpty()) {
+        if (BreedsSQLiteDataSource.getInstance().isBreedsDbEmpty()) {
             WebBreedsDataSource.getInstance().getBreeds(dogBreeds -> {
                 BreedsSQLiteDataSource.getInstance().addBreedsToDatabase(dogBreeds);
                 responseCallback.onResult(dogBreeds);

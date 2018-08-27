@@ -17,6 +17,8 @@ import java.io.IOException;
 
 public class BreedPicasso {
     private static BreedPicasso instance;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 0;
     final int placeholder = R.drawable.smiled_dog_face;
     Picasso picasso;
 
@@ -37,7 +39,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-                .resize(500,0)
+                .resize(WIDTH, HEIGHT)
                 .into(target);
     }
 
@@ -45,7 +47,7 @@ public class BreedPicasso {
         picasso.get()
                 .load(uriBreedString)
                 .placeholder(placeholder)
-                .resize(500,0)
+                .resize(WIDTH, HEIGHT)
                 .into(breedImageView);
     }
 
@@ -67,11 +69,13 @@ public class BreedPicasso {
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
                 if (placeHolderDrawable != null) {
+                    // no implementation
                 }
             }
 
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                // no implementation
             }
         };
     }

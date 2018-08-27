@@ -33,7 +33,7 @@ public class BreedsSQLiteDataSource {
         dbCallback.onResult(breeds);
     }
 
-    public boolean isBreedsDatabaseEmpty() {
+    public boolean isBreedsDbEmpty() {
         db = DatabaseManager.getInstance().openDB();
         try (Cursor cursor = db.query(
                 BreedTable.TABLE_NAME,
@@ -52,13 +52,6 @@ public class BreedsSQLiteDataSource {
         DatabaseManager.getInstance().closeDB();
     }
 
-    private void insertBreedInLoop(Breed breed) {
-        ContentValues cv = new ContentValues();
-        cv.put(BreedTable.BREED, breed.getBreedString());
-        cv.put(BreedTable.IMAGE_URI, breed.getUriImageString());
-        db.insert(BreedTable.TABLE_NAME, null, cv);
-    }
-
     public void updateBreedDBWithUriImage(Breed breed) {
         db = DatabaseManager.getInstance().openDB();
 
@@ -67,6 +60,13 @@ public class BreedsSQLiteDataSource {
         db.update(BreedTable.TABLE_NAME, cv, BreedTable.ID + "=?",
                 new String[]{String.valueOf(breed.getId())});
         DatabaseManager.getInstance().closeDB();
+    }
+
+    private void insertBreedInLoop(Breed breed) {
+        ContentValues cv = new ContentValues();
+        cv.put(BreedTable.BREED, breed.getBreedString());
+        cv.put(BreedTable.IMAGE_URI, breed.getUriImageString());
+        db.insert(BreedTable.TABLE_NAME, null, cv);
     }
 
     private void loadBreeds() {
