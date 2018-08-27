@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar_dogs_app"
-        layout="@layout/toolbar"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,7 +66,6 @@
                     android:hint="@string/prefered_dog_hint"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-
 
             <Button
                 android:id="@+id/add_owner_button_frag"
