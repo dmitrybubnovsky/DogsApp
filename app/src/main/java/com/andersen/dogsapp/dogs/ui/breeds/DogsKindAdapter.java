@@ -1,4 +1,4 @@
-package com.andersen.dogsapp.dogs.ui.dogskinds;
+package com.andersen.dogsapp.dogs.ui.breeds;
 
 import android.content.Context;
 import android.net.Uri;

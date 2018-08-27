@@ -52,7 +52,7 @@
             android:configChanges="orientation"
             android:theme="@style/MainDogApp"/>
         <activity
-            android:name=".dogs.ui.dogskinds.DogsKindsListActivity"
+            android:name=".dogs.ui.breeds.BreedsListActivity"
             android:theme="@style/MainDogApp"/>
         <activity
             android:name=".dogs.ui.dogs.DogPhotoPreviewActivity"

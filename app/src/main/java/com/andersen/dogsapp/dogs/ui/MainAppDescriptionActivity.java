@@ -11,13 +11,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
+import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
+import java.io.File;
 import java.util.List;
 
 public class MainAppDescriptionActivity extends AppCompatActivity {
@@ -27,10 +30,10 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
-
     private List<Owner> owners;
 
-
+    private Fragment fragment;
+    private Class fragmentClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +41,15 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_app_subscription);
 
         initViews();
+        fragmentClass = NewOwnerFormFragment.class;
+        replaceFragment(fragmentClass);
+
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume(){
+        super.onResume();
         owners = OwnersRepository.get().getOwners();
-
     }
 
     private void initViews() {
@@ -103,8 +108,10 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     }
 
     private void selectDrawerItem(MenuItem menuItem) {
-        Fragment fragment = null;
-        Class fragmentClass = null;
+//        Fragment fragment = null;
+//        Class fragmentClass = null;
+        fragment = null;
+        fragmentClass = null;
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
 //                startActivity(new Intent(this, OwnersListActivity.class));
@@ -120,11 +127,38 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
 //                fragmentClass = BreedsListFragment.class;
                 break;
             default:
-                fragmentClass = OwnersListFragment.class;
+                if (owners.isEmpty()) {
+                    fragmentClass = NewOwnerFormFragment.class;
+                } else {
+                    fragmentClass = OwnersListFragment.class;
+                }
         }
 
+        replaceFragment(fragmentClass);
+
+//        try {
+//            fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
+//            Log.d(TAG, "selectDrawerItem "+fragment.getClass().toString());
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.host_fragment_container, fragment)
+//                .commit();
+
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        drawerLayout.closeDrawers();
+    }
+
+    private void replaceFragment(Class<?> fragmentClass){
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
+            Log.d(TAG, "selectDrawerItem "+fragment.getClass().toString());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,9 +167,5 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.host_fragment_container, fragment)
                 .commit();
-
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        drawerLayout.closeDrawers();
     }
 }

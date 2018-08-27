@@ -1,8 +1,11 @@
 package com.andersen.dogsapp.dogs.data.repositories;
 
+import android.util.Log;
+
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IOwnersDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersRepository {
@@ -29,6 +32,7 @@ public class OwnersRepository {
         for (Owner owner : owners) {
             owner.setDogs(DogsRepository.get().getOwnerDogs(owner));
         }
+        Log.d("#", "getOwners "+( (owners.isEmpty()) ? "empty" : "NOT empty")); // todo delete
         return owners;
     }
 
