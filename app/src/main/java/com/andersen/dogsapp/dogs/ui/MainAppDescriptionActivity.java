@@ -14,7 +14,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
+
+import java.util.List;
 
 public class MainAppDescriptionActivity extends AppCompatActivity {
     private static final String TAG = "#";
@@ -24,12 +28,23 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
 
+    private List<Owner> owners;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
 
         initViews();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        owners = OwnersRepository.get().getOwners();
+
     }
 
     private void initViews() {
@@ -70,9 +85,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        // !!! Убедитесь, что вы передаёте допустимую ссылку на toolbar
-        // ActionBarDrawToggle() не предусматривает в ней необходимости
-        // и не будет отображать иконку гамбургера без неё
         return new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.drawer_open, R.string.drawer_close);
 
@@ -95,12 +107,16 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         Class fragmentClass = null;
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
+//                startActivity(new Intent(this, OwnersListActivity.class));
                 fragmentClass = OwnersListFragment.class;
+                toolbar.setTitle(R.string.title_owners_list);
                 break;
             case R.id.dogs_list_fragment:
+                toolbar.setTitle(R.string.title_dogs_list);
 //                fragmentClass = DogsListFragment.class;
                 break;
             case R.id.breeds_fragment:
+                toolbar.setTitle(R.string.title_breeds);
 //                fragmentClass = BreedsListFragment.class;
                 break;
             default:
@@ -115,11 +131,10 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_framelayout, fragment)
+                .replace(R.id.host_fragment_container, fragment)
                 .commit();
 
         menuItem.setChecked(true);
-        // Установить заголовок для action bar'а
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
     }

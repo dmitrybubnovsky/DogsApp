@@ -3,6 +3,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ public class OwnersListFragment extends Fragment {
     private static final String TAG = "#";
     private static final String NAME_ARG = "name";
     private String mName;
+    private RecyclerView ownersRecyclerView;
+    private OwnersAdapter ownersAdapter;
 
 
     public OwnersListFragment(){}
@@ -44,7 +47,7 @@ public class OwnersListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.activity_owners_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
         readBundle(bundle);
 
         return view;
