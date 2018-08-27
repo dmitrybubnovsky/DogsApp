@@ -60,10 +60,13 @@ public class NewOwnerFormFragment extends BaseFragment {
 
         initViews(view);
 
+        testingFillEditText();
+
         addOwnerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addOwner();
+
             }
         });
 

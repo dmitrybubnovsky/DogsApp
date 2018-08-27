@@ -135,26 +135,13 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         }
 
         replaceFragment(fragmentClass);
-
-//        try {
-//            fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
-//            Log.d(TAG, "selectDrawerItem "+fragment.getClass().toString());
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.host_fragment_container, fragment)
-//                .commit();
-
+//////
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
     }
 
-    private void replaceFragment(Class<?> fragmentClass){
+    private void replaceFragment(Class<? extends BaseFragment> fragmentClass){
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
             Log.d(TAG, "selectDrawerItem "+fragment.getClass().toString());
@@ -169,3 +156,5 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
                 .commit();
     }
 }
+
+
