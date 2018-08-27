@@ -32,15 +32,12 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
 
     private void loadDogs() {
-        // открываю БД
+        // открываем БД
         db = DatabaseManager.getInstance().openDB();
         dogs = new ArrayList<>();
 
-        Cursor cursor = null;
-        try {
-            cursor = db.query(DogTable.TABLE_NAME, null, null,
-                    null, null, null, null,
-                    null);
+        try (Cursor cursor = db.query(DogTable.TABLE_NAME, null, null,
+                null, null, null, null, null)) {
             if (cursor.getCount() != 0) {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -48,7 +45,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
                     dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
                     dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
-                    dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                    dog.setBreed(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
                     dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
                     dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
                     dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
@@ -59,8 +56,8 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
             } else {
                 Log.d(TAG, "loadDogs. cursor.count == 0");
             }
-        } finally {
             cursor.close();
+        } finally { // закрываем БД
             DatabaseManager.getInstance().closeDB();
         }
     }
@@ -80,12 +77,9 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
 
         List<Dog> ownerDogs = new ArrayList<>();
 
-        Cursor cursor = null;
-
-        try {
-            cursor = db.query(DogTable.TABLE_NAME, null, DogTable.OWNER_ID + "=?",
-                    new String[]{String.valueOf(dogOwnerId)}, null, null, null,
-                    null);
+        try (Cursor cursor = db.query(DogTable.TABLE_NAME, null, DogTable.OWNER_ID + "=?",
+                new String[]{String.valueOf(dogOwnerId)}, null, null, null,
+                null)) {
             if (cursor.getCount() != 0) {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
@@ -93,7 +87,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     dog.setDogId(cursor.getInt(cursor.getColumnIndex(DogTable.ID)));
                     dog.setDogName(cursor.getString(cursor.getColumnIndex(DogTable.NAME)));
                     dog.setDogOwnerId(cursor.getInt(cursor.getColumnIndex(DogTable.OWNER_ID)));
-                    dog.setDogKind(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
+                    dog.setBreed(cursor.getString(cursor.getColumnIndex(DogTable.KIND)));
                     dog.setDogImageString(cursor.getString(cursor.getColumnIndex(DogTable.IMAGE)));
                     dog.setDogAge(cursor.getInt(cursor.getColumnIndex(DogTable.AGE)));
                     dog.setDogTall(cursor.getInt(cursor.getColumnIndex(DogTable.TALL)));
@@ -102,15 +96,12 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     cursor.moveToNext();
                 }
             }
-        } finally {
-            cursor.close();
-            // закрываю БД
-            DatabaseManager.getInstance().closeDB();
             return ownerDogs;
+        } finally {
+            DatabaseManager.getInstance().closeDB();
         }
     }
 
-    // для формы
     @Override
     public Dog addDog(Dog dog) {
         db = DatabaseManager.getInstance().openDB();
@@ -122,7 +113,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
         cv.put(DogTable.WEIGHT, dog.getDogWeight());
         cv.put(DogTable.IMAGE, dog.getDogImageString());
         cv.put(DogTable.NAME, dog.getDogName());
-        cv.put(DogTable.KIND, dog.getDogKind());
+        cv.put(DogTable.KIND, dog.getBreed());
 
         long insertResult = db.insert(DogTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
@@ -131,8 +122,7 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
             dog.setDogId((int) insertResult);
             return dog;
         } else {
-            Log.d(TAG, "DogsSQLiteDataSource. addDog: Dog was NOT added");
-            return new Dog();
+            return new Dog("addDog method. Error of Dog creating");
         }
     }
 }

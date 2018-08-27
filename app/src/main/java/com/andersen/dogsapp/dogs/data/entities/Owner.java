@@ -1,16 +1,27 @@
 package com.andersen.dogsapp.dogs.data.entities;
 
-import android.os.Parcelable;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Owner implements Parcelable {
+    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
+        @Override
+        public Owner createFromParcel(Parcel source) {
+            return new Owner(source);
+        }
+
+        @Override
+        public Owner[] newArray(int size) {
+            return new Owner[size];
+        }
+    };
     private int ownerId;
     private String ownerName;
     private String ownerSurname;
-    private String preferedDogsKind;
+    private String preferedBreed;
     private List<Dog> dogs = new ArrayList<>();
 
     public Owner() {
@@ -20,15 +31,15 @@ public class Owner implements Parcelable {
         ownerId = parcelInstance.readInt();
         ownerName = parcelInstance.readString();
         ownerSurname = parcelInstance.readString();
-        preferedDogsKind = parcelInstance.readString();
+        preferedBreed = parcelInstance.readString();
         dogs = new ArrayList<>();
         parcelInstance.readList(dogs, Dog.class.getClassLoader());
     }
 
-    public Owner(String ownerName, String ownerSurname, String preferedDogsKind) {
+    public Owner(String ownerName, String ownerSurname, String preferredBreed) {
         this.ownerName = ownerName;
         this.ownerSurname = ownerSurname;
-        this.preferedDogsKind = preferedDogsKind;
+        this.preferedBreed = preferredBreed;
         dogs = new ArrayList<>(0);
     }
 
@@ -51,6 +62,10 @@ public class Owner implements Parcelable {
         return ownerId;
     }
 
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getOwnerFullName() {
         return ownerName + " " + ownerSurname;
     }
@@ -59,28 +74,24 @@ public class Owner implements Parcelable {
         return ownerName;
     }
 
-    public String getOwnerSurname() {
-        return ownerSurname;
-    }
-
-    public String getPreferedDogsKind() {
-        return preferedDogsKind;
-    }
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
-
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public String getOwnerSurname() {
+        return ownerSurname;
     }
 
     public void setOwnerSurname(String ownerSurname) {
         this.ownerSurname = ownerSurname;
     }
 
-    public void setPreferedDogsKind(String preferedDogsKind) {
-        this.preferedDogsKind = preferedDogsKind;
+    public String getPreferedBreed() {
+        return preferedBreed;
+    }
+
+    public void setPreferedBreed(String preferedBreed) {
+        this.preferedBreed = preferedBreed;
     }
 
     @Override
@@ -93,20 +104,8 @@ public class Owner implements Parcelable {
         parcelInstance.writeInt(ownerId);
         parcelInstance.writeString(ownerName);
         parcelInstance.writeString(ownerSurname);
-        parcelInstance.writeString(preferedDogsKind);
+        parcelInstance.writeString(preferedBreed);
         parcelInstance.writeList(dogs);
     }
-
-    public static final Parcelable.Creator<Owner> CREATOR = new Parcelable.Creator<Owner>() {
-        @Override
-        public Owner createFromParcel(Parcel source) {
-            return new Owner(source);
-        }
-
-        @Override
-        public Owner[] newArray(int size) {
-            return new Owner[size];
-        }
-    };
 }
 

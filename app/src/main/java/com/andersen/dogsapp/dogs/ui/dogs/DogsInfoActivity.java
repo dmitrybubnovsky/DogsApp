@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.ui.dogs;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,14 +35,19 @@ public class DogsInfoActivity extends AppCompatActivity {
     }
 
     private void initViews(Context context, Dog dog, MediaPlayer mediaPlayer) {
-        ImageView dogsPhoto = findViewById(R.id.dog_imageview);
-        dogsPhoto.setImageDrawable(DogImageUtils.getDogImage(context, dog.getDogImageString()));
+        ImageView dogsImageView = findViewById(R.id.dog_imageview);
+        String dogImageString = dog.getDogImageString();
+        if (DogImageUtils.hasNetworkImage(dog)) {
+            dogsImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
+        } else {
+            dogsImageView.setImageURI(Uri.parse(dogImageString));
+        }
 
         TextView dogNameTextView = findViewById(R.id.dog_name_textview);
         dogNameTextView.setText(dog.getDogName());
 
         TextView kindDogTextView = findViewById(R.id.kind_dog_textview);
-        kindDogTextView.setText(dog.getDogKind());
+        kindDogTextView.setText(dog.getBreed());
 
         TextView dogAgeTextView = findViewById(R.id.dog_age_textview);
         dogAgeTextView.setText("" + dog.getDogAge() + " " + getResources().getString(R.string.age_months_measure));

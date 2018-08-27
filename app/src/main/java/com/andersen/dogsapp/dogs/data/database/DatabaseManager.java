@@ -1,7 +1,6 @@
 package com.andersen.dogsapp.dogs.data.database;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

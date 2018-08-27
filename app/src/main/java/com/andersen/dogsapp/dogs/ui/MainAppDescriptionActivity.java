@@ -13,8 +13,11 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListActivity;
 
 public class MainAppDescriptionActivity extends AppCompatActivity {
+    private static final String TAG = "#";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
 

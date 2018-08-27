@@ -1,35 +1,30 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
-import java.util.List;
-
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.content.Intent;
-
-import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.data.entities.Owner;
-
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
-
-import com.andersen.dogsapp.dogs.ui.DogToolBar;
-
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.andersen.dogsapp.dogs.data.DataRepository;
-
+import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.MenuActivity;
 
+import java.util.List;
+
 public class DogsListActivity extends MenuActivity implements IRecyclerItemListener<Dog> {
-    public final int REQUEST_CODE_NEW_DOG = 2;
     public static final String TAG = "#";
     public static final String EXTRA_OWNER = "extra_owner";
+    public final int REQUEST_CODE_NEW_DOG = 2;
     private RecyclerView recyclerView;
     private Owner owner;
     private DogsAdapter adapter;
@@ -55,7 +50,7 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
     @Override
     protected void onResume() {
         super.onResume();
-        ownerDogs = DataRepository.get().getOwnerDogs(owner);
+        ownerDogs = DogsRepository.getInstance().getOwnerDogs(owner);
 
         if (ownerDogs.isEmpty()) {
             openAddNewDogScreen();

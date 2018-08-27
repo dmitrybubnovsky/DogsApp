@@ -1,6 +1,7 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.ui.DogImageUtils;
-import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.ui.AppTextView;
+import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 
 import java.util.List;
 
@@ -32,9 +33,25 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         this.dogs = dogs;
     }
 
+    @Override
+    public DogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setData(dogs.get(position), context);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dogs.size();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView dogNameTextView;
-        private TextView dogKindTextView;
+        private TextView breedTextView;
         private ImageView dogImageView;
         private Dog dog;
 
@@ -52,7 +69,7 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
             dogNameTextView = AppTextView.newInstance(itemView, R.id.dog_name_recycler_textiview)
                     .style(context, R.style.TextViewTitleItem)
                     .build();
-            dogKindTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
+            breedTextView = AppTextView.newInstance(itemView, R.id.dog_kind_recycler_textiview)
                     .style(context, R.style.BoldRobotoThin13sp)
                     .build();
             dogImageView = view.findViewById(R.id.dog_recycler_image_view);
@@ -61,24 +78,15 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
         private void setData(Dog dog, Context context) {
             this.dog = dog;
             dogNameTextView.setText(dog.getDogName());
-            dogKindTextView.setText(dog.getDogKind());
-            dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dog.getDogImageString()));
+            breedTextView.setText(dog.getBreed());
+
+            String dogImageString = dog.getDogImageString();
+
+            if (DogImageUtils.hasNetworkImage(dog)) {
+                dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
+            } else {
+                dogImageView.setImageURI(Uri.parse(dogImageString));
+            }
         }
-    }
-
-    @Override
-    public DogsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_dog, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setData(dogs.get(position), context);
-    }
-
-    @Override
-    public int getItemCount() {
-        return dogs.size();
     }
 }

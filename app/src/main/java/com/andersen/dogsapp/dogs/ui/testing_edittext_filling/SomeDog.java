@@ -12,7 +12,7 @@ public class SomeDog {
             "Pug", "Saint bernard", "Scottish terrier", "Shepherd", "Siberian husky",
             "Staffordshire terrier", "Standard schnauzer", "Water spaniel"};
 
-    public static SomeDog get() {
+    public static SomeDog getInstance() {
         if (instance == null) {
             instance = new SomeDog();
         }

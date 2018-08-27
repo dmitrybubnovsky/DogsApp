@@ -1,14 +1,20 @@
 package com.andersen.dogsapp.dogs.data.entities;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.os.Parcelable;
 import android.os.Parcel;
-import android.util.Log;
-
-import java.util.UUID;
+import android.os.Parcelable;
 
 public class Dog implements Parcelable {
+    public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {
+        @Override
+        public Dog createFromParcel(Parcel source) {
+            return new Dog(source);
+        }
+
+        @Override
+        public Dog[] newArray(int size) {
+            return new Dog[size];
+        }
+    };
     private int dogId;
     private int dogOwnerId;
     private int dogAge;
@@ -17,8 +23,8 @@ public class Dog implements Parcelable {
     private Owner owner;
     private String dogImageString;
     private String dogName;
-    private String dogKind;
-    private DogKind dogKindInfo;
+    private String breed;
+    private Breed breedInfo;
 
     public Dog() {
     }
@@ -31,8 +37,8 @@ public class Dog implements Parcelable {
         dogWeight = parcelInstance.readInt();
         dogImageString = parcelInstance.readString();
         dogName = parcelInstance.readString();
-        dogKind = parcelInstance.readString();
-        dogKindInfo = parcelInstance.readParcelable(DogKind.class.getClassLoader());
+        breed = parcelInstance.readString();
+        breedInfo = parcelInstance.readParcelable(Breed.class.getClassLoader());
     }
 
     public Dog(String dogName, Owner owner, int dogAge, int dogTall, int dogWeight) {
@@ -42,6 +48,10 @@ public class Dog implements Parcelable {
         this.dogAge = dogAge;
         this.dogTall = dogTall;
         this.dogWeight = dogWeight;
+    }
+
+    public Dog(String errorEmptyDog) {
+        dogName = errorEmptyDog;
     }
 
     public Owner getOwner() {
@@ -60,60 +70,60 @@ public class Dog implements Parcelable {
         return dogName;
     }
 
-    public String getDogKind() {
-        return dogKind;
+    public void setDogName(String dogName) {
+        this.dogName = dogName;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
     public String getDogImageString() {
         return dogImageString;
     }
 
+    public void setDogImageString(String dogImageString) {
+        this.dogImageString = dogImageString;
+    }
+
     public int getDogAge() {
         return dogAge;
-    }
-
-    public int getDogTall() {
-        return dogTall;
-    }
-
-    public int getDogWeight() {
-        return dogWeight;
-    }
-
-    public void setDogOwnerId(int dogOwnerId) {
-        this.dogOwnerId = dogOwnerId;
-    }
-
-    public void setDogId(int dogId) {
-        this.dogId = dogId;
     }
 
     public void setDogAge(int dogAge) {
         this.dogAge = dogAge;
     }
 
+    public int getDogTall() {
+        return dogTall;
+    }
+
     public void setDogTall(int dogTall) {
         this.dogTall = dogTall;
+    }
+
+    public int getDogWeight() {
+        return dogWeight;
     }
 
     public void setDogWeight(int dogWeight) {
         this.dogWeight = dogWeight;
     }
 
-    public void setDogImageString(String dogImageString) {
-        this.dogImageString = dogImageString;
-    }
-
-    public void setDogName(String dogName) {
-        this.dogName = dogName;
-    }
-
-    public void setDogKind(String dogKind) {
-        this.dogKind = dogKind;
+    public void setDogOwnerId(int dogOwnerId) {
+        this.dogOwnerId = dogOwnerId;
     }
 
     public int getDogId() {
         return dogId;
+    }
+
+    public void setDogId(int dogId) {
+        this.dogId = dogId;
     }
 
     @Override
@@ -130,21 +140,9 @@ public class Dog implements Parcelable {
         dest.writeInt(dogWeight);
         dest.writeString(dogImageString);
         dest.writeString(dogName);
-        dest.writeString(dogKind);
-        dest.writeParcelable(dogKindInfo, flags);
+        dest.writeString(breed);
+        dest.writeParcelable(breedInfo, flags);
     }
-
-    public static final Parcelable.Creator<Dog> CREATOR = new Parcelable.Creator<Dog>() {
-        @Override
-        public Dog createFromParcel(Parcel source) {
-            return new Dog(source);
-        }
-
-        @Override
-        public Dog[] newArray(int size) {
-            return new Dog[size];
-        }
-    };
 }
 
 

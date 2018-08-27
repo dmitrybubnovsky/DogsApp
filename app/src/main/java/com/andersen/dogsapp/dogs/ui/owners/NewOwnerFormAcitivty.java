@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.DataRepository;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
@@ -20,7 +20,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     public static final String TAG = "#";
     private EditText ownerNameEditText;
     private EditText ownerSurnameEditText;
-    private EditText preferredKindEditText;
+    private EditText preferredBreedEditText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
 
         ownerNameEditText = findViewById(R.id.owner_name_edittext);
         ownerSurnameEditText = findViewById(R.id.surname_edittext);
-        preferredKindEditText = findViewById(R.id.preferred_kind_edit_text);
+        preferredBreedEditText = findViewById(R.id.preferred_kind_edit_text);
 
         // just for test
         testingFillEditText();
@@ -49,15 +49,15 @@ public class NewOwnerFormAcitivty extends AppCompatActivity {
     private Owner addOwner() {
         String ownerName = ownerNameEditText.getText().toString();
         String ownerSurname = ownerSurnameEditText.getText().toString();
-        String preferredDogKind = preferredKindEditText.getText().toString();
-        Owner owner = new Owner(ownerName, ownerSurname, preferredDogKind);
-        owner = DataRepository.get().addOwner(owner);
+        String preferredBreed = preferredBreedEditText.getText().toString();
+        Owner owner = new Owner(ownerName, ownerSurname, preferredBreed);
+        owner = OwnersRepository.getInstance().addOwner(owner);
         return owner;
     }
 
     private void testingFillEditText() {
-        ownerNameEditText.setText(SomeOwner.get().name());
-        ownerSurnameEditText.setText(SomeOwner.get().surname());
-        preferredKindEditText.setText(SomeDog.get().kind());
+        ownerNameEditText.setText(SomeOwner.getInstance().name());
+        ownerSurnameEditText.setText(SomeOwner.getInstance().surname());
+        preferredBreedEditText.setText(SomeDog.getInstance().kind());
     }
 }

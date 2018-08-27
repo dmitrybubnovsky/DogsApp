@@ -9,28 +9,28 @@
     <string name="btn_command_voice">Say Woof!</string>
     <string name="text_view_title_dogs_quantity">How many dogs: </string>
     <string name="woof_btn_title">WOOF!</string>
-    <string name="text_view_title_preff_dog">Favourite kind of dog: </string>
+    <string name="text_view_title_preff_dog">Favourite breedString of dog: </string>
 
     <string name="add_item_menu">Add</string>
 
     <string name="owner_name_hint">Name</string>
     <string name="owner_surname_hint">Surname</string>
-    <string name="prefered_dog_hint">Favourite dogs kind</string>
+    <string name="prefered_dog_hint">Favourite dogs breedString</string>
     <string name="add_title_button">Add</string>
 
     <string name="dog_name_hint">Name</string>
-    <string name="dog_kind_hint">Select dog kind</string>
+    <string name="dog_kind_hint">Select dog breedString</string>
     <string name="dog_weight_hint">Weight</string>
     <string name="dog_age_hint">Age</string>
     <string name="dog_tall_hint">Tall</string>
 
-    <string name="specify_kind_please_toast">Specify dog\'s breed please!</string>
+    <string name="specify_breed_please_toast">Specify dog\'s breed please!</string>
 
     <string name="toolbar_title_owners_list">Owners list</string>
     <string name="toolbar_title_add_owner">Add new owner</string>
     <string name="toolbar_title_add_dog">Add new dog</string>
     <string name="toolbar_title_dogs_list">Dogs list</string>
-    <string name="toolbar_title_kinds_list">Choose dog kind</string>
+    <string name="toolbar_title_breeds_list">Choose dog breedString</string>
     <string name="toolbar_title_detail_info">Dogs info</string>
 
     <string name="no_network_toast">NO NETWORK CONNECTION</string>

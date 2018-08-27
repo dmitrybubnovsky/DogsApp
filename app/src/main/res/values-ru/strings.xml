@@ -38,14 +38,14 @@
     <string name="dog_age_hint">Возраст</string>
     <string name="dog_tall_hint">Высота в холке</string>
 
-    <string name="specify_kind_please_toast">Пожалуйста, укажите породу собаки!</string>
+    <string name="specify_breed_please_toast">Пожалуйста, укажите породу собаки!</string>
 
     <string name="toolbar_title_owners_list">Список собаководов</string>
     <string name="toolbar_title_dogs_list">Список собак</string>
     <string name="toolbar_title_detail_info">Информация о собаке</string>
     <string name="toolbar_title_add_owner">Добавить собаковода</string>
     <string name="toolbar_title_add_dog">Добавить собаку</string>
-    <string name="toolbar_title_kinds_list">Выберите породу собаки</string>
+    <string name="toolbar_title_breeds_list">Выберите породу собаки</string>
 
     <string name="no_network_toast">ПОДКЛЮЧЕНИЕ К СЕТИ ОТСУТСТВУЕТ</string>
 

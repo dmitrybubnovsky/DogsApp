@@ -10,7 +10,7 @@ public class SomeOwner {
     private final String[] SURNAME = {"Jackson", "De Niro", "Clooney", "Ford", "Harrison", "Oldman", "Johnson",
             "Ericsson", "Pitt", "Doggson", "Stevenson", "Soderberg"};
 
-    public static SomeOwner get() {
+    public static SomeOwner getInstance() {
         if (instance == null) {
             instance = new SomeOwner();
         }

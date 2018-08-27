@@ -18,14 +18,13 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     private SQLiteDatabase db;
     private List<Owner> owners;
 
-    private OwnersSQLiteDataSource(DBHelper dbHelper) {
-        DatabaseManager.initInstance(dbHelper);
+    private OwnersSQLiteDataSource() {
         loadOwners();
     }
 
-    public static OwnersSQLiteDataSource getInstance(DBHelper dbHelper) {
+    public static OwnersSQLiteDataSource getInstance() {
         if (ownersDataSource == null) {
-            ownersDataSource = new OwnersSQLiteDataSource(dbHelper);
+            ownersDataSource = new OwnersSQLiteDataSource();
         }
         return ownersDataSource;
     }
@@ -38,13 +37,9 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
 
     private void loadOwners() {
         db = DatabaseManager.getInstance().openDB();
-        Cursor cursor = null;
         owners = new ArrayList<>();
-        try {
-            cursor = db.query(
-                    OwnerTable.TABLE_NAME,
-                    null, null, null, null, null, null, null);
-            // проверяем БД, если там пусто то список владельцев пустой
+        try (Cursor cursor = db.query(OwnerTable.TABLE_NAME,
+                null, null, null, null, null, null, null)) {// проверяем БД, если там пусто то список владельцев пустой
             if (cursor.getCount() == 0 || !cursor.moveToNext()) {
                 owners.clear();
             } else {
@@ -54,18 +49,17 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
                     owner.setOwnerId(cursor.getInt(cursor.getColumnIndex(OwnerTable.ID)));
                     owner.setOwnerName(cursor.getString(cursor.getColumnIndex(OwnerTable.NAME)));
                     owner.setOwnerSurname(cursor.getString(cursor.getColumnIndex(OwnerTable.SURNAME)));
-                    owner.setPreferedDogsKind(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERED_DOGS_KIND)));
+                    owner.setPreferedBreed(cursor.getString(cursor.getColumnIndex(OwnerTable.PREFERRED_BREED)));
                     owners.add(owner);
                     cursor.moveToNext();
                 }
             }
-        } finally {
             cursor.close();
+        } finally {
             DatabaseManager.getInstance().closeDB();
         }
     }
 
-    // для формы
     @Override
     public Owner addOwner(Owner owner) {
         db = DatabaseManager.getInstance().openDB();
@@ -73,7 +67,7 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
         ContentValues cv = new ContentValues();
         cv.put(OwnerTable.NAME, owner.getOwnerName());
         cv.put(OwnerTable.SURNAME, owner.getOwnerSurname());
-        cv.put(OwnerTable.PREFERED_DOGS_KIND, owner.getPreferedDogsKind());
+        cv.put(OwnerTable.PREFERRED_BREED, owner.getPreferedBreed());
         long insertResult = db.insert(OwnerTable.TABLE_NAME, null, cv);
         DatabaseManager.getInstance().closeDB();
 

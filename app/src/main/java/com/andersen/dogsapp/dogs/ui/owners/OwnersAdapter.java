@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
-import com.andersen.dogsapp.dogs.ui.IRecyclerItemListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class OwnersAdapter extends RecyclerView.Adapter<OwnersAdapter.ViewHolder
         private void setData(Owner owner) {
             this.owner = owner;
             ownerFullNameTextView.setText(owner.getOwnerFullName());
-            preferredKindTextView.setText(owner.getPreferedDogsKind());
+            preferredKindTextView.setText(owner.getPreferedBreed());
             int dogsQuantity = owner.getDogs().size();
             dogsQuantityTextView.setText(String.valueOf(dogsQuantity));
         }
