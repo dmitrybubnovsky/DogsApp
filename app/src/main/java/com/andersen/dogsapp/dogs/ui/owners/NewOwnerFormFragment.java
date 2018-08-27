@@ -29,9 +29,15 @@ public class NewOwnerFormFragment extends BaseFragment {
     private EditText preferredKindEditText;
     private Button addOwnerButton;
 
+    private IBundleListener onBundleListener;
+
     private List<Owner> owners;
 
     public NewOwnerFormFragment(){}
+
+    public void setOnBundleListener(IBundleListener onBundleListener){
+        this.onBundleListener = onBundleListener;
+    }
 
 //    public static Fragment newInstance(){
 //        final NewOwnerFormFragment newOwnerFragment = new NewOwnerFormFragment();
@@ -66,7 +72,7 @@ public class NewOwnerFormFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 addOwner();
-
+                testingFillEditText();
             }
         });
 
