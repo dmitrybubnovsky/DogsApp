@@ -29,7 +29,7 @@ import java.util.List;
 public class DogsListFragment extends Fragment implements IRecyclerItemListener<Dog>  {
     private static final String TAG = "#";
     private static final String DOGS_ARG = "dogs_arg";
-    private static final String OWNER_ARG = "owner";
+    private static final String OWNER_ARG = "owner_arg";
     public static final String DOGS_TAG = "dogs_tag";
 
     public final int REQUEST_CODE_NEW_DOG = 2;
@@ -59,12 +59,14 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentListener = (MainAppDescriptionActivity)context;
+        Log.d(TAG, "DogsList onAttach"); // TODO Delete
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         fragmentListener = null;
+        Log.d(TAG, "DogsList onDetach");  // TODO Delete
     }
 
     @Override
@@ -72,11 +74,8 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         final Bundle bundleArguments = getArguments();
-        owner = (Owner)getArguments().getParcelable(OWNER_ARG);
 
-
-        readBundle(bundleArguments);
-
+        readArguments(bundleArguments);
 
         if (bundleArguments == null || !bundleArguments.containsKey(DOGS_TAG)) {
             Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
@@ -109,10 +108,10 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         }
     }
 
-    private void readBundle(Bundle bundle) {
+    private void readArguments(Bundle bundle) {
 
         if (bundle != null) {
-            Log.d(TAG, "OwnersListFragment: readBundle: bundle != null");
+            Log.d(TAG, "OwnersListFragment: readArguments: bundle != null");
             owner = getArguments().getParcelable(OWNER_ARG);
         }
     }
@@ -130,7 +129,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         dogsAdapter.notifyDataSetChanged();
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -146,7 +144,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onRecyclerItemClick(Dog dog) {

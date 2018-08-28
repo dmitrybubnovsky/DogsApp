@@ -29,7 +29,7 @@ import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
 public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
-        DogsListFragment.IFragmentDogListener<Dog> {
+                   DogsListFragment.IFragmentDogListener<Dog> {
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private Toolbar toolbar;
@@ -38,18 +38,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentManager fragManager;
 
-//    public OwnersListFragment.IFragmentOwnerListener callback;
-
     private List<Owner> owners;
     private String fragmentTag;
 
     private Fragment fragment;
     private Class fragmentClass;
-
-//    public void setOnFragmentListener(OwnersListFragment.IFragmentOwnerListener callback) {
-//        this.callback = callback;
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +134,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
-//                startActivity(new Intent(this, OwnersListActivity.class));
                 fragmentClass = OwnersListFragment.class;
                 toolbar.setTitle(R.string.title_owners_list);
                 fragmentTag = OWNERS_TAG;
@@ -190,22 +182,28 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         Log.d(TAG, "added " + fragment.getClass().toString());
     }
 
+    // Overridden callback method of IFragmentOwnerListener<Owner> interface
     @Override
     public void onFragmentOwnerListener(Owner owner) {
-        Log.d(TAG, "HOST-activity: onFragmentOwnerListener owner " + owner.getOwnerName());
-        Fragment fragm = fragManager.findFragmentByTag(DogsListFragment.DOGS_TAG);
-        if(fragm == null){
-            fragm = DogsListFragment.newInstance(owner);
-            fragManager.beginTransaction().add(R.id.host_fragment_container, fragm).commit();
-            Log.d(TAG, "added " + fragment.getClass().toString());
-        } else {
-            Log.d(TAG, "NOT added ");
-        }
+        startDogsListFragment(owner);
     }
 
+    // Overridden callback method of IFragmentDogListener<Dog> interface
     @Override
     public void onFragmentDogListener(Dog dog) {
         Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
+    }
+
+    private void startDogsListFragment(Owner owner){
+        Fragment fragm = fragManager.findFragmentByTag(DogsListFragment.DOGS_TAG);
+        if (fragm == null) {
+            fragm = DogsListFragment.newInstance(owner);
+            fragManager.beginTransaction()
+                    .add(R.id.host_fragment_container, fragm)
+                    .commit();
+        } else {
+            Log.d(TAG, "NOT added ");
+        }
     }
 
 
