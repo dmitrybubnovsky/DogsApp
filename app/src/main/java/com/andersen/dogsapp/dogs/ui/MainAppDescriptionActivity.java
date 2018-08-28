@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
+import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
@@ -26,15 +28,15 @@ import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER
 import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
 public class MainAppDescriptionActivity extends AppCompatActivity
-        implements OwnersListFragment.IFragmentOwnerListener<Owner> {
+        implements OwnersListFragment.IFragmentOwnerListener<Owner>,
+        DogsListFragment.IFragmentDogListener<Dog> {
     private static final String TAG = "#";
-    private static final String DOGS_TAG = "dogs_tag";
     private static final String BREEDS_TAG = "breeds_tag";
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private FragmentManager fragMan;
+    private FragmentManager fragManager;
 
 //    public OwnersListFragment.IFragmentOwnerListener callback;
 
@@ -47,7 +49,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //    public void setOnFragmentListener(OwnersListFragment.IFragmentOwnerListener callback) {
 //        this.callback = callback;
 //    }
-
 
 
     @Override
@@ -68,7 +69,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        fragMan = getSupportFragmentManager();
+        fragManager = getSupportFragmentManager();
         Log.d(TAG, "Main: onResume");
         owners = OwnersRepository.get().getOwners();
 
@@ -79,7 +80,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         if (owners.isEmpty()) {
             initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
             replaceFragment(fragmentClass, fragmentTag);
-            Log.d(TAG, "getFragments.size " + fragMan.getFragments().size());
+            Log.d(TAG, "getFragments.size " + fragManager.getFragments().size());
         }
     }
 
@@ -143,7 +144,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //                startActivity(new Intent(this, OwnersListActivity.class));
                 fragmentClass = OwnersListFragment.class;
                 toolbar.setTitle(R.string.title_owners_list);
-                fragmentTag = OwnersListFragment.class.getName();
+                fragmentTag = OWNERS_TAG;
                 break;
             case R.id.dogs_list_fragment:
                 toolbar.setTitle(R.string.title_dogs_list);
@@ -155,14 +156,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //                fragmentClass = BreedsListFragment.class;
                 break;
             default:
-//                if (owners.isEmpty()) {
-//                    fragmentClass = NewOwnerFormFragment.class;
-//                    fragmentTag = NewOwnerFormFragment.class.getName();
-//
-//                } else {
-//                    fragmentClass = OwnersListFragment.class;
-//                    fragmentTag = OwnersListFragment.class.getName();
-//                }
+                fragmentClass = OwnersListFragment.class;
+                fragmentTag = OWNERS_TAG;
         }
 
         replaceFragment(fragmentClass, fragmentTag);
@@ -178,7 +173,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fragMan.beginTransaction()
+        fragManager.beginTransaction()
                 .replace(R.id.host_fragment_container, fragment, fragmentTag)
                 .commit();
     }
@@ -189,7 +184,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        fragMan.beginTransaction()
+        fragManager.beginTransaction()
                 .add(R.id.host_fragment_container, fragment, fragmentTag)
                 .commit();
         Log.d(TAG, "added " + fragment.getClass().toString());
@@ -197,8 +192,23 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
     @Override
     public void onFragmentOwnerListener(Owner owner) {
-        Log.d(TAG, "HOST-activity: onFragmentOwnerListener owner "+ owner.getOwnerName());
+        Log.d(TAG, "HOST-activity: onFragmentOwnerListener owner " + owner.getOwnerName());
+        Fragment fragm = fragManager.findFragmentByTag(DogsListFragment.DOGS_TAG);
+        if(fragm == null){
+            fragm = DogsListFragment.newInstance(owner);
+            fragManager.beginTransaction().add(R.id.host_fragment_container, fragm).commit();
+            Log.d(TAG, "added " + fragment.getClass().toString());
+        } else {
+            Log.d(TAG, "NOT added ");
+        }
     }
+
+    @Override
+    public void onFragmentDogListener(Dog dog) {
+        Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
+    }
+
+
 }
 
 

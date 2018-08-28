@@ -19,7 +19,7 @@ import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import java.util.List;
 
 public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
-    private static final String TAG = "# DogsAdapter";
+    private static final String TAG = "#";
     private Context context;
     private List<Dog> dogs;
     private IRecyclerItemListener<Dog> listener;

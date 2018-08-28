@@ -39,9 +39,6 @@ public class DogsListActivity extends MenuActivity implements IRecyclerItemListe
 
         Toolbar toolbar = DogToolBar.init(this, R.string.title_dogs_list, owner.getOwnerFullName());
         setSupportActionBar(toolbar);
-// json имплементация
-//        IOwnersDataSource iOwnersDataSource = JsonOwnersDataSource.getInstance(this);
-//        IDogsDataSource iDogsDataSource = JsonDogsDataSource.getInstance(this);
         adapter = new DogsAdapter(this, this);
 
         initRecyclerView();
