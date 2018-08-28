@@ -16,12 +16,13 @@ import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.ui.AppTextView;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
     private static final String TAG = "#";
     private Context context;
-    private List<Dog> dogs;
+    private List<Dog> dogs = new ArrayList<>();
     private IRecyclerItemListener<Dog> listener;
 
     public DogsAdapter(Context context, IRecyclerItemListener listener) {

@@ -51,6 +51,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         final DogsListFragment ownersListFragment = new DogsListFragment();
         final Bundle bundleArgs = new Bundle();
         bundleArgs.putParcelable(OWNER_ARG, owner);
+        ownersListFragment.setArguments(bundleArgs);
         return ownersListFragment;
     }
 
@@ -61,13 +62,22 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        fragmentListener = null;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        readBundle(savedInstanceState);
-
-
         final Bundle bundleArguments = getArguments();
+        owner = (Owner)getArguments().getParcelable(OWNER_ARG);
+
+
+        readBundle(bundleArguments);
+
+
         if (bundleArguments == null || !bundleArguments.containsKey(DOGS_TAG)) {
             Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
         } else {
@@ -78,8 +88,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owner_dogs_list, container, false);
-//        setHasOptionsMenu(true);
-
 
         dogsAdapter = new DogsAdapter(getActivity(), this);
 
@@ -102,15 +110,16 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     }
 
     private void readBundle(Bundle bundle) {
+
         if (bundle != null) {
             Log.d(TAG, "OwnersListFragment: readBundle: bundle != null");
-            owner = bundle.getParcelable(OWNER_ARG);
+            owner = getArguments().getParcelable(OWNER_ARG);
         }
     }
 
     private void initRecyclerView(View view) {
         Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
-        dogsRecyclerView = view.findViewById(R.id.recycler_view);
+        dogsRecyclerView = view.findViewById(R.id.owner_dogs_recycler_view);
         dogsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dogsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         dogsRecyclerView.setAdapter(dogsAdapter);
