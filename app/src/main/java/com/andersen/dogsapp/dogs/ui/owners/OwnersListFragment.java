@@ -1,4 +1,5 @@
 package com.andersen.dogsapp.dogs.ui.owners;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,45 +13,51 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
-import com.andersen.dogsapp.dogs.ui.BaseFragment;
+import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
+import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
+import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class OwnersListFragment extends BaseFragment {
+public class OwnersListFragment extends Fragment implements IRecyclerItemListener<Owner> {
     private static final String TAG = "#";
-    private static final String NAME_ARG = "name";
+    private static final String OWNERS_ARG = "name";
     private String mName;
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
 
     private List<Owner> owners;
 
-
-
-
     public OwnersListFragment(){}
 
-//    public static Fragment newInstance(){
-//        final OwnersListFragment ownersListFragment = new OwnersListFragment();
-//        final Bundle bundleArgs = new Bundle();
-//        bundleArgs.putString(NAME_ARG,"OwnersListFragment says HELLO!");
+    public static Fragment newInstance(){
+        final OwnersListFragment ownersListFragment = new OwnersListFragment();
+        final Bundle bundleArgs = new Bundle();
+//        bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
 //        ownersListFragment.setArguments(bundleArgs);
-//        return ownersListFragment;
-//    }
+        return ownersListFragment;
+    }
+
+    public static Fragment newInstance(List<Owner> owners){ // ? extends Parcelable
+        final OwnersListFragment ownersListFragment = new OwnersListFragment();
+        final Bundle bundleArgs = new Bundle();
+        bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
+        ownersListFragment.setArguments(bundleArgs);
+        return ownersListFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Bundle bundleArguments = getArguments();
-        if(bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)){
-            Log.d("", OwnersListFragment.class.getSimpleName()
-                    + " bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)");
+        if(bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)){
+            Log.d("",  "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
         } else {
             Toast.makeText(getActivity().getApplicationContext(),
-                    "bundleArgument is "+bundleArguments.getString(NAME_ARG),
+                    "bundleArgument is "+bundleArguments.getString(OWNERS_ARG),
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -61,6 +68,8 @@ public class OwnersListFragment extends BaseFragment {
 
         readBundle(bundle);
 
+        ownersAdapter = new OwnersAdapter(getActivity(), this);
+
         initRecyclerView(view);
 
         return view;
@@ -69,14 +78,19 @@ public class OwnersListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        owners = OwnersRepository.get().getOwners();
+        if (owners.isEmpty()) {
+            Toast.makeText(getActivity(), "Owners is empty",Toast.LENGTH_SHORT).show();
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        } else {
+            updateUI();
+        }
     }
 
     private void readBundle(Bundle bundle) {
         if (bundle != null) {
             Log.d(TAG, "OwnersListFragment: readBundle: bundle != null");
-//           TODO read bundle
-//            List<DogKind> owners = bundle.getParcelableArrayList(OWNERS_ARGS_BUNDLE);
+            owners = bundle.getParcelableArrayList(OWNERS_ARG);
         }
     }
 
@@ -91,5 +105,13 @@ public class OwnersListFragment extends BaseFragment {
     private void updateUI() {
         ownersAdapter.setOwners(owners);
         ownersAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onRecyclerItemClick(Owner owner) {
+//        Intent intent = new Intent(getApplicationContext(), DogsListActivity.class);
+//        intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
+//        startActivity(intent);
     }
 }

@@ -18,9 +18,11 @@ import com.andersen.dogsapp.dogs.ui.BaseFragment;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
+import java.io.File;
 import java.util.List;
 
-public class NewOwnerFormFragment extends BaseFragment {
+public class NewOwnerFormFragment extends Fragment {
+    private static final String FRAGM_TAG = NewOwnerFormFragment.class.getName();
     private static final String TAG = "#";
     private static final String NAME_ARG = "name";
     private String mName;
@@ -29,23 +31,10 @@ public class NewOwnerFormFragment extends BaseFragment {
     private EditText preferredKindEditText;
     private Button addOwnerButton;
 
-    private IBundleListener onBundleListener;
 
     private List<Owner> owners;
 
     public NewOwnerFormFragment(){}
-
-    public void setOnBundleListener(IBundleListener onBundleListener){
-        this.onBundleListener = onBundleListener;
-    }
-
-//    public static Fragment newInstance(){
-//        final NewOwnerFormFragment newOwnerFragment = new NewOwnerFormFragment();
-//        final Bundle bundleArgs = new Bundle();
-//        bundleArgs.putString(NAME_ARG,"OwnersListFragment says HELLO!");
-//        newOwnerFragment.setArguments(bundleArgs);
-//        return newOwnerFragment;
-//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +61,8 @@ public class NewOwnerFormFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 addOwner();
-                testingFillEditText();
+                Fragment fragment = getFragmentManager().findFragmentByTag(FRAGM_TAG);
+                getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         });
 

@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
@@ -20,7 +19,6 @@ import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
-import java.io.File;
 import java.util.List;
 
 public class MainAppDescriptionActivity extends AppCompatActivity {
@@ -29,11 +27,17 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+//    public IBundleListener onBundleListener;
 
     private List<Owner> owners;
+    private String fragmentTag;
 
     private Fragment fragment;
     private Class fragmentClass;
+
+//    public void setOnBundleListener(IBundleListener onBundleListener){
+//        this.onBundleListener = onBundleListener;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +45,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_app_subscription);
 
         initViews();
-        fragmentClass = NewOwnerFormFragment.class;
-        replaceFragment(fragmentClass);
 
     }
 
@@ -50,6 +52,14 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         owners = OwnersRepository.get().getOwners();
+        if (owners.isEmpty()){
+            fragmentClass = NewOwnerFormFragment.class;
+            fragmentTag = NewOwnerFormFragment.class.getName();
+        } else {
+            fragmentClass = OwnersListFragment.class;
+            fragmentTag = OwnersListFragment.class.getName();
+        }
+        replaceFragment(fragmentClass, fragmentTag);
     }
 
     private void initViews() {
@@ -112,14 +122,17 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
 //        Class fragmentClass = null;
         fragment = null;
         fragmentClass = null;
+
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
 //                startActivity(new Intent(this, OwnersListActivity.class));
                 fragmentClass = OwnersListFragment.class;
                 toolbar.setTitle(R.string.title_owners_list);
+                fragmentTag = OwnersListFragment.class.getName();
                 break;
             case R.id.dogs_list_fragment:
                 toolbar.setTitle(R.string.title_dogs_list);
+//                fragmentTag = getResources().getString(R.string.title_dogs_list);
 //                fragmentClass = DogsListFragment.class;
                 break;
             case R.id.breeds_fragment:
@@ -129,30 +142,31 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
             default:
                 if (owners.isEmpty()) {
                     fragmentClass = NewOwnerFormFragment.class;
+                    fragmentTag = NewOwnerFormFragment.class.getName();
+
                 } else {
                     fragmentClass = OwnersListFragment.class;
+                    fragmentTag = OwnersListFragment.class.getName();
                 }
         }
 
-        replaceFragment(fragmentClass, );
-//////
+        replaceFragment(fragmentClass, fragmentTag);
+
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
     }
 
-    private void replaceFragment(Class<? extends BaseFragment> fragmentClass){
+    private void replaceFragment(Class<?> fragmentClass, String fragmentTag){
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
-            Log.d(TAG, "selectDrawerItem "+fragment.getClass().toString());
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.host_fragment_container, fragment)
+                .replace(R.id.host_fragment_container, fragment, fragmentTag)
                 .commit();
     }
 }
