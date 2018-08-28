@@ -1,13 +1,16 @@
 package com.andersen.dogsapp.dogs.ui.owners;
+
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,7 +20,7 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
-import com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity;
+import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +34,10 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
 
     private List<Owner> owners;
 
-    public OwnersListFragment(){}
+    public OwnersListFragment() {
+    }
 
-    public static Fragment newInstance(){
+    public static Fragment newInstance() {
         final OwnersListFragment ownersListFragment = new OwnersListFragment();
         final Bundle bundleArgs = new Bundle();
 //        bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
@@ -41,7 +45,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         return ownersListFragment;
     }
 
-    public static Fragment newInstance(List<Owner> owners){ // ? extends Parcelable
+    public static Fragment newInstance(List<Owner> owners) { // ? extends Parcelable
         final OwnersListFragment ownersListFragment = new OwnersListFragment();
         final Bundle bundleArgs = new Bundle();
         bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
@@ -52,12 +56,14 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         final Bundle bundleArguments = getArguments();
-        if(bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)){
-            Log.d("",  "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
+        if (bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)) {
+            Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
         } else {
             Toast.makeText(getActivity().getApplicationContext(),
-                    "bundleArgument is "+bundleArguments.getString(OWNERS_ARG),
+                    "bundleArgument is " + bundleArguments.getString(OWNERS_ARG),
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -65,6 +71,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
+//        setHasOptionsMenu(true);
 
         readBundle(bundle);
 
@@ -80,9 +87,10 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         super.onResume();
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
-            Toast.makeText(getActivity(), "Owners is empty",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Owners is empty", Toast.LENGTH_SHORT).show();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         } else {
+            Log.d(TAG, "OwnersListFragment: onResume: owners not empty");
             updateUI();
         }
     }
@@ -107,6 +115,15 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         ownersAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new_menu_item:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onRecyclerItemClick(Owner owner) {

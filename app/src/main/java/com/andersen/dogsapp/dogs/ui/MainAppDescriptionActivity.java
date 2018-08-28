@@ -11,6 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
@@ -21,7 +23,7 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
 import java.util.List;
 
-public class MainAppDescriptionActivity extends AppCompatActivity {
+public class MainAppDescriptionActivity extends MenuActivity {
     private static final String TAG = "#";
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -51,12 +53,18 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        Log.d(TAG, "Main: onResume");
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()){
             fragmentClass = NewOwnerFormFragment.class;
+            toolbar.setTitle(R.string.toolbar_title_add_owner);
             fragmentTag = NewOwnerFormFragment.class.getName();
+
+//            fragmentClass = OwnersListFragment.class;
+//            fragmentTag = OwnersListFragment.class.getName();
         } else {
             fragmentClass = OwnersListFragment.class;
+            toolbar.setTitle(R.string.title_owners_list);
             fragmentTag = OwnersListFragment.class.getName();
         }
         replaceFragment(fragmentClass, fragmentTag);
@@ -167,6 +175,19 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.host_fragment_container, fragment, fragmentTag)
+                .commit();
+    }
+
+    private void addFragment(Class<?> fragmentClass, String fragmentTag){
+        try {
+            fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.host_fragment_container, fragment, fragmentTag)
                 .commit();
     }
 }

@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.BaseFragment;
+import com.andersen.dogsapp.dogs.ui.DogToolBar;
+import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
@@ -30,9 +33,6 @@ public class NewOwnerFormFragment extends Fragment {
     private EditText ownerSurnameEditText;
     private EditText preferredKindEditText;
     private Button addOwnerButton;
-
-
-    private List<Owner> owners;
 
     public NewOwnerFormFragment(){}
 
@@ -51,6 +51,12 @@ public class NewOwnerFormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_owner_form, container, false);
+        Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
+        if (toolbar != null) {
+            ((MainAppDescriptionActivity)getActivity()).setSupportActionBar(toolbar);
+        }
+
+
         readBundle(bundle);
 
         initViews(view);
