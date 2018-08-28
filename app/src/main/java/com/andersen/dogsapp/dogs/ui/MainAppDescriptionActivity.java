@@ -23,7 +23,7 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
 import java.util.List;
 
-public class MainAppDescriptionActivity extends MenuActivity {
+public class MainAppDescriptionActivity extends AppCompatActivity {
     private static final String TAG = "#";
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -171,7 +171,6 @@ public class MainAppDescriptionActivity extends MenuActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.host_fragment_container, fragment, fragmentTag)
@@ -184,7 +183,6 @@ public class MainAppDescriptionActivity extends MenuActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.host_fragment_container, fragment, fragmentTag)
