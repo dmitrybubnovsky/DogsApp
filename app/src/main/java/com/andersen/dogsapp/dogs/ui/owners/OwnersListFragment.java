@@ -1,11 +1,10 @@
 package com.andersen.dogsapp.dogs.ui.owners;
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,9 +29,15 @@ import java.util.List;
 public class OwnersListFragment extends Fragment implements IRecyclerItemListener<Owner> {
     private static final String TAG = "#";
     private static final String OWNERS_ARG = "name";
-    private String mName;
+    public static final String OWNERS_TAG = "owners_tag";
+
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
+
+    IFragmentOwnerListener fragmentListener;
+    public interface IFragmentOwnerListener<T> {
+        void onFragmentOwnerListener(T t);
+    }
 
     private List<Owner> owners;
 
@@ -42,8 +47,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public static Fragment newInstance() {
         final OwnersListFragment ownersListFragment = new OwnersListFragment();
         final Bundle bundleArgs = new Bundle();
-//        bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
-//        ownersListFragment.setArguments(bundleArgs);
         return ownersListFragment;
     }
 
@@ -53,6 +56,12 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
         ownersListFragment.setArguments(bundleArgs);
         return ownersListFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fragmentListener = (MainAppDescriptionActivity)context;
     }
 
     @Override
@@ -136,8 +145,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
 
     @Override
     public void onRecyclerItemClick(Owner owner) {
-//        Intent intent = new Intent(getApplicationContext(), DogsListActivity.class);
-//        intent.putExtra(DogsListActivity.EXTRA_OWNER, owner);
-//        startActivity(intent);
+        fragmentListener.onFragmentOwnerListener(owner);
     }
 }

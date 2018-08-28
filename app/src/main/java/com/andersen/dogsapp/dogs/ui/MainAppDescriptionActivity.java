@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
@@ -23,13 +22,21 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
 import java.util.List;
 
-public class MainAppDescriptionActivity extends AppCompatActivity {
+import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER_TAG;
+import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
+
+public class MainAppDescriptionActivity extends AppCompatActivity
+        implements OwnersListFragment.IFragmentOwnerListener<Owner> {
     private static final String TAG = "#";
+    private static final String DOGS_TAG = "dogs_tag";
+    private static final String BREEDS_TAG = "breeds_tag";
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-//    public IBundleListener onBundleListener;
+    private FragmentManager fragMan;
+
+//    public OwnersListFragment.IFragmentOwnerListener callback;
 
     private List<Owner> owners;
     private String fragmentTag;
@@ -37,9 +44,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     private Fragment fragment;
     private Class fragmentClass;
 
-//    public void setOnBundleListener(IBundleListener onBundleListener){
-//        this.onBundleListener = onBundleListener;
+//    public void setOnFragmentListener(OwnersListFragment.IFragmentOwnerListener callback) {
+//        this.callback = callback;
 //    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +59,28 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
 
     }
 
+    private void initFragment(Class<?> fragmentClass, String fragmentTag, int stringResId) {
+        this.fragmentClass = fragmentClass;
+        toolbar.setTitle(stringResId);
+        this.fragmentTag = fragmentTag;
+    }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
+        fragMan = getSupportFragmentManager();
         Log.d(TAG, "Main: onResume");
         owners = OwnersRepository.get().getOwners();
-        if (owners.isEmpty()){
-            fragmentClass = NewOwnerFormFragment.class;
-            toolbar.setTitle(R.string.toolbar_title_add_owner);
-            fragmentTag = NewOwnerFormFragment.class.getName();
 
-//            fragmentClass = OwnersListFragment.class;
-//            fragmentTag = OwnersListFragment.class.getName();
-        } else {
-            fragmentClass = OwnersListFragment.class;
-            toolbar.setTitle(R.string.title_owners_list);
-            fragmentTag = OwnersListFragment.class.getName();
+        if (getSupportFragmentManager().findFragmentByTag(OWNERS_TAG) == null) {
+            initFragment(OwnersListFragment.class, OWNERS_TAG, R.string.title_owners_list);
+            addFragment(fragmentClass, fragmentTag);
         }
-        replaceFragment(fragmentClass, fragmentTag);
+        if (owners.isEmpty()) {
+            initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
+            replaceFragment(fragmentClass, fragmentTag);
+            Log.d(TAG, "getFragments.size " + fragMan.getFragments().size());
+        }
     }
 
     private void initViews() {
@@ -84,21 +97,17 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Синхронизировать состояние переключения после того,
-        // как возникнет onRestoreInstanceState
         actionBarDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Передать любые изменения конфигурации переключателям drawer'а
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Действие home/up action bar'а должно открывать или закрывать drawer.
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -126,8 +135,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
     }
 
     private void selectDrawerItem(MenuItem menuItem) {
-//        Fragment fragment = null;
-//        Class fragmentClass = null;
         fragment = null;
         fragmentClass = null;
 
@@ -148,14 +155,14 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
 //                fragmentClass = BreedsListFragment.class;
                 break;
             default:
-                if (owners.isEmpty()) {
-                    fragmentClass = NewOwnerFormFragment.class;
-                    fragmentTag = NewOwnerFormFragment.class.getName();
-
-                } else {
-                    fragmentClass = OwnersListFragment.class;
-                    fragmentTag = OwnersListFragment.class.getName();
-                }
+//                if (owners.isEmpty()) {
+//                    fragmentClass = NewOwnerFormFragment.class;
+//                    fragmentTag = NewOwnerFormFragment.class.getName();
+//
+//                } else {
+//                    fragmentClass = OwnersListFragment.class;
+//                    fragmentTag = OwnersListFragment.class.getName();
+//                }
         }
 
         replaceFragment(fragmentClass, fragmentTag);
@@ -165,28 +172,32 @@ public class MainAppDescriptionActivity extends AppCompatActivity {
         drawerLayout.closeDrawers();
     }
 
-    private void replaceFragment(Class<?> fragmentClass, String fragmentTag){
+    private void replaceFragment(Class<?> fragmentClass, String fragmentTag) {
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        fragMan.beginTransaction()
                 .replace(R.id.host_fragment_container, fragment, fragmentTag)
                 .commit();
     }
 
-    private void addFragment(Class<?> fragmentClass, String fragmentTag){
+    private void addFragment(Class<?> fragmentClass, String fragmentTag) {
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
+        fragMan.beginTransaction()
                 .add(R.id.host_fragment_container, fragment, fragmentTag)
                 .commit();
+        Log.d(TAG, "added " + fragment.getClass().toString());
+    }
+
+    @Override
+    public void onFragmentOwnerListener(Owner owner) {
+        Log.d(TAG, "HOST-activity: onFragmentOwnerListener owner "+ owner.getOwnerName());
     }
 }
 
