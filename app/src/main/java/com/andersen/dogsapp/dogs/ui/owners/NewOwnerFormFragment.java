@@ -61,6 +61,7 @@ public class NewOwnerFormFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
         if (toolbar != null) {
             ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
+//            toolbar.setTitle(R.string.title_add_dog);
         }
 
         readBundle(bundle);
@@ -79,7 +80,6 @@ public class NewOwnerFormFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addOwner();
-//                Fragment fragment = getFragmentManager().findFragmentByTag(NEW_OWNER_TAG);
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });

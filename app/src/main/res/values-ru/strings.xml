@@ -43,6 +43,9 @@
     <string name="title_owners_list">Собаководы</string>
     <string name="title_dogs_list">Собаки</string>
     <string name="title_breeds">Породы</string>
+    <string name="title_add_dog">Добавить собаку</string>
+    <string name="title_add_owner">Добавить владельца</string>
+    <string name="title_take_shot">Сделать снимок</string>
 
     <string name="toolbar_title_detail_info">Информация о собаке</string>
     <string name="toolbar_title_add_owner">Добавить собаковода</string>

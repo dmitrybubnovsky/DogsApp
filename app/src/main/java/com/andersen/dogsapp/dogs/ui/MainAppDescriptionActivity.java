@@ -226,20 +226,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
             Log.d(TAG, "NOT added ");
         }
     }
-//
-//    private <T> void findFragmentByTagAndAdd(String fragmentName, String fragmentTag, String keyArgs, T t ) {
-//        Fragment fragm = fragManager.findFragmentByTag(fragmentTag);
-//        if (fragm == null) {
-//            Bundle bundleArgs = new Bundle();
-//            bundleArgs.putParcelable(keyArgs, (Parcelable) t);
-//            fragm = Fragment.instantiate(this, fragmentName, bundleArgs);
-//
-//            fragManager.beginTransaction()
-//                    .add(R.id.host_fragment_container, fragm)
-//                    .commit();
-//        }
-//    }
-
 
     @Override
     public void onBackPressed() {
@@ -259,6 +245,24 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
     }
+
+
+//
+//    private <T> void findFragmentByTagAndAdd(String fragmentName, String fragmentTag, String keyArgs, T t ) {
+//        Fragment fragm = fragManager.findFragmentByTag(fragmentTag);
+//        if (fragm == null) {
+//            Bundle bundleArgs = new Bundle();
+//            bundleArgs.putParcelable(keyArgs, (Parcelable) t);
+//            fragm = Fragment.instantiate(this, fragmentName, bundleArgs);
+//
+//            fragManager.beginTransaction()
+//                    .add(R.id.host_fragment_container, fragm)
+//                    .commit();
+//        }
+//    }
+
 }
+
+
 
 

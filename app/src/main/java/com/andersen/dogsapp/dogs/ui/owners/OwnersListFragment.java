@@ -46,11 +46,10 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
 
     public static Fragment newInstance() {
         final OwnersListFragment ownersListFragment = new OwnersListFragment();
-        final Bundle bundleArgs = new Bundle();
         return ownersListFragment;
     }
 
-    public static Fragment newInstance(List<Owner> owners) { // ? extends Parcelable
+    public static Fragment newInstance(List<Owner> owners) {
         final OwnersListFragment ownersListFragment = new OwnersListFragment();
         final Bundle bundleArgs = new Bundle();
         bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
@@ -73,9 +72,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         if (bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)) {
             Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
         } else {
-            Toast.makeText(getActivity().getApplicationContext(),
-                    "bundleArgument is " + bundleArguments.getString(OWNERS_ARG),
-                    Toast.LENGTH_SHORT).show();
+            readBundle(bundleArguments);
         }
     }
 
@@ -84,7 +81,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
 //        setHasOptionsMenu(true);
         Log.d(TAG, "OwnersList onCreate");
-        readBundle(bundle);
 
         ownersAdapter = new OwnersAdapter(getActivity(), this);
 
