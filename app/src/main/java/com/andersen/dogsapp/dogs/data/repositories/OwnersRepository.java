@@ -32,7 +32,6 @@ public class OwnersRepository {
         for (Owner owner : owners) {
             owner.setDogs(DogsRepository.get().getOwnerDogs(owner));
         }
-        Log.d("#", "getOwners "+( (owners.isEmpty()) ? "empty" : "NOT empty")); // todo delete
         return owners;
     }
 

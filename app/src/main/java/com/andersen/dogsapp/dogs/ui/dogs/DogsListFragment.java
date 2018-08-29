@@ -147,6 +147,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
     @Override
     public void onRecyclerItemClick(Dog dog) {
-        fragmentListener.onFragmentDogListener(dog);
+        fragmentListener.onFragmentDogListener(dog); // TODO fix this warning
     }
 }

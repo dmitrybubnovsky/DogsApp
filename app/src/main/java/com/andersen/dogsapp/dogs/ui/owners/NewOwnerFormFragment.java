@@ -1,8 +1,8 @@
 package com.andersen.dogsapp.dogs.ui.owners;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
-import com.andersen.dogsapp.dogs.ui.BaseFragment;
-import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
@@ -31,18 +29,19 @@ public class NewOwnerFormFragment extends Fragment {
     private EditText preferredKindEditText;
     private Button addOwnerButton;
 
-    IFragmentListener callback;
-    public interface IFragmentListener {
-        void onFragmentClick();
+    INewOwnerFragmentListener fragmentListener;
+    public interface INewOwnerFragmentListener {
+        void onNewOwnerFragmentListener();
     }
 
-    public NewOwnerFormFragment(){}
+    public NewOwnerFormFragment() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Bundle bundleArguments = getArguments();
-        if(bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)){
+        if (bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)) {
             Log.d("", "NewOwnerFormFragment: bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)");
         } else {
             Toast.makeText(getActivity().getApplicationContext(),
@@ -55,7 +54,7 @@ public class NewOwnerFormFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_owner_form, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
         if (toolbar != null) {
-            ((MainAppDescriptionActivity)getActivity()).setSupportActionBar(toolbar);
+            ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
         }
 
         readBundle(bundle);
@@ -64,12 +63,18 @@ public class NewOwnerFormFragment extends Fragment {
 
         testingFillEditText();
 
+        if(getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null){
+            Log.d(TAG, "OwnersListFragment not exist");
+        } else {
+            Log.d(TAG, "OwnersListFragment exists");
+        }
+
         addOwnerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addOwner();
                 Fragment fragment = getFragmentManager().findFragmentByTag(NEW_OWNER_TAG);
-                getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -91,7 +96,7 @@ public class NewOwnerFormFragment extends Fragment {
         }
     }
 
-    private void initViews(View view){
+    private void initViews(View view) {
         ownerNameEditText = view.findViewById(R.id.owner_name_edittext_frag);
         ownerSurnameEditText = view.findViewById(R.id.surname_edittext_frag);
         preferredKindEditText = view.findViewById(R.id.preferred_breed_edittext_frag);
@@ -102,5 +107,15 @@ public class NewOwnerFormFragment extends Fragment {
         ownerNameEditText.setText(SomeOwner.get().name());
         ownerSurnameEditText.setText(SomeOwner.get().surname());
         preferredKindEditText.setText(SomeDog.get().kind());
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null){
+            Log.d(TAG, "onDetach: OwnersListFragment not exist");
+        } else {
+            Log.d(TAG, "onDetach: OwnersListFragment exists");
+        }
     }
 }

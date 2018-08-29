@@ -83,7 +83,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
 //        setHasOptionsMenu(true);
-
+        Log.d(TAG, "OwnersList onCreate");
         readBundle(bundle);
 
         ownersAdapter = new OwnersAdapter(getActivity(), this);
@@ -101,9 +101,9 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
             Toast.makeText(getActivity(), "Owners is empty", Toast.LENGTH_SHORT).show();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         } else {
-            Log.d(TAG, "OwnersListFragment: onResume: owners not empty");
             updateUI();
         }
+        Log.d(TAG, "OwnersListFragment onResume");
     }
 
     private void readBundle(Bundle bundle) {
@@ -145,6 +145,31 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
 
     @Override
     public void onRecyclerItemClick(Owner owner) {
-        fragmentListener.onFragmentOwnerListener(owner);
+        fragmentListener.onFragmentOwnerListener(owner); // TODO fix this warning
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "OwnersListFragment onStop");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "OwnersListFragment onDetach");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "OwnersListFragment onPause");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "OwnersListFragment onDestroy");
     }
 }

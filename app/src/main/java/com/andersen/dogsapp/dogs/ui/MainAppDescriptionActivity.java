@@ -29,7 +29,8 @@ import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
 public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
-                   DogsListFragment.IFragmentDogListener<Dog> {
+                   DogsListFragment.IFragmentDogListener<Dog>,
+                   NewOwnerFormFragment.INewOwnerFragmentListener {
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private Toolbar toolbar;
@@ -48,6 +49,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
+        fragManager = getSupportFragmentManager();
 
         initViews();
 
@@ -62,18 +64,16 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        fragManager = getSupportFragmentManager();
         Log.d(TAG, "Main: onResume");
         owners = OwnersRepository.get().getOwners();
 
-        if (getSupportFragmentManager().findFragmentByTag(OWNERS_TAG) == null) {
+        if (fragManager.findFragmentByTag(OWNERS_TAG) == null) {
             initFragment(OwnersListFragment.class, OWNERS_TAG, R.string.title_owners_list);
             addFragment(fragmentClass, fragmentTag);
         }
         if (owners.isEmpty()) {
             initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
-            replaceFragment(fragmentClass, fragmentTag);
-            Log.d(TAG, "getFragments.size " + fragManager.getFragments().size());
+            addFragment(fragmentClass, fragmentTag);
         }
     }
 
@@ -152,14 +152,15 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 fragmentTag = OWNERS_TAG;
         }
 
-        replaceFragment(fragmentClass, fragmentTag);
+        addFragment(fragmentClass, fragmentTag);
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
     }
 
-    private void replaceFragment(Class<?> fragmentClass, String fragmentTag) {
+    private void addFragment(Class<?> fragmentClass, String fragmentTag) {
+        Log.d(TAG, "addFragment called");
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
         } catch (Exception e) {
@@ -167,10 +168,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         }
         fragManager.beginTransaction()
                 .replace(R.id.host_fragment_container, fragment, fragmentTag)
+                .addToBackStack(null)
                 .commit();
     }
 
-    private void addFragment(Class<?> fragmentClass, String fragmentTag) {
+    private void addFragmentToBackStack(Class<?> fragmentClass, String fragmentTag) {
         try {
             fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
         } catch (Exception e) {
@@ -178,8 +180,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         }
         fragManager.beginTransaction()
                 .add(R.id.host_fragment_container, fragment, fragmentTag)
+                .addToBackStack(null)
                 .commit();
-        Log.d(TAG, "added " + fragment.getClass().toString());
+        Log.d(TAG, "addToBackStack " + fragment.getClass().toString());
     }
 
     // Overridden callback method of IFragmentOwnerListener<Owner> interface
@@ -193,6 +196,14 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     public void onFragmentDogListener(Dog dog) {
         Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
     }
+
+    // Overridden callback method of INewOwnerFragmentListener interface
+    @Override
+    public void onNewOwnerFragmentListener() {
+//        Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
+    }
+
+
 
     private void startDogsListFragment(Owner owner){
         Fragment fragm = fragManager.findFragmentByTag(DogsListFragment.DOGS_TAG);
