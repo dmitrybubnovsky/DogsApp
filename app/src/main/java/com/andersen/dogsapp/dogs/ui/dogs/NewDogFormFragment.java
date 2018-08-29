@@ -42,15 +42,12 @@ import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity.EXTRA_SELECTED_KIND;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 
 public class NewDogFormFragment extends Fragment {
     public static final String NEW_DOG_ARG = "new dog arg";
-    public static final String EXTRA_NEW_OWNER = "new owner dog";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
     public static final int REQUEST_CODE_DOG_KIND = 202;
@@ -79,6 +76,11 @@ public class NewDogFormFragment extends Fragment {
     private boolean hasPhoto;
     private View rootLayout;
 
+    IFragmentNewDogListener fragmentListener;
+    public interface IFragmentNewDogListener<T> {
+        void onFragmentNewDogListener(T t);
+    }
+
     public static Fragment newInstance(Owner owner) {
         final NewDogFormFragment newDogFragment = new NewDogFormFragment();
         final Bundle bundleArgs = new Bundle();
@@ -91,50 +93,57 @@ public class NewDogFormFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//
-//        final Bundle bundleArguments = getArguments();
-//        if (bundleArguments == null || !bundleArguments.containsKey(NEW_DOG_ARG)) {
-//            Log.d("", "NewDogFormFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
-//        } else {
-//            readBundle(bundleArguments);
-//            Toast.makeText(getActivity().getApplicationContext(),
-//                    "NewDogFormFragment: bundleArgument is " + bundleArguments.getString(NEW_DOG_ARG),
-//                    Toast.LENGTH_SHORT).show();
-//        }
+
+        final Bundle bundleArguments = getArguments();
+        if (bundleArguments == null || !bundleArguments.containsKey(NEW_DOG_ARG)) {
+            Log.d("", "NewDogFormFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
+        } else {
+            readBundle(bundleArguments);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_dog_form, container, false);
-//        Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
-//        if (toolbar != null) {
-//            ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
-////            toolbar.setTitle(R.string.title_add_dog);
-//        }
-//
-//        hasPhoto = false;
-//
-//        initViews(view);
-//        testingFillEditText();
-//        createDogModelWithInputDatas();
-//
-//        dogKindEditText.setFocusable(false);
-//        dogKindEditText.setClickable(true);
-//        dogKindEditText.setOnClickListener(view -> startDogsKindsListActivity());
-//
-//        addDogButton.setOnClickListener(view -> {
-//            // если порода собаки еще не установлена, то переход в список пород
-//            if (dog.getDogKind() == null) {
+        Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
+        if (toolbar != null) {
+            ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
+//            toolbar.setTitle(R.string.title_add_dog);
+        }
+
+        hasPhoto = false;
+
+        initViews(view);
+        testingFillEditText();
+        createDogModelWithInputDatas();
+
+        dogKindEditText.setFocusable(false);
+        dogKindEditText.setClickable(true);
+        dogKindEditText.setOnClickListener(view_ -> startDogsKindsListActivity());
+
+        addDogButton.setOnClickListener(view_ -> {
+
+            // если порода собаки еще не установлена, то переход в список пород
+
+            if (dog.getDogKind() == null) {
 //                startDogsKindsListActivity();
-//            } else {
-//                // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
-//                dog = DogsRepository.get().addDog(dog);
-//                owner.addDog(dog);
+
+/* временноe */   dog.setDogImageString("german_shepherd_doggy_dogg.jpg"); // TODO delete this line
+/* решениe */     dog.setDogKind("german_shepherd");                       // TODO delete this line
+                  dogKindEditText.setText("german_shepherd"); // TODO delete this line
+
+            } else {
+                // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
+                dog = DogsRepository.get().addDog(dog);
+
+                owner.addDog(dog);
+                getActivity().getSupportFragmentManager().popBackStack();
+//                fragmentListener.onFragmentNewDogListener(owner);
 //                backToDogListActivity();
-//            }
-//        });
-//
-//        photoDogImageView.setOnClickListener(view -> checkPermissions());
+            }
+        });
+
+        photoDogImageView.setOnClickListener(view_ -> checkPermissions());
 
         return view;
     }
@@ -144,108 +153,109 @@ public class NewDogFormFragment extends Fragment {
             owner = bundle.getParcelable(NEW_DOG_ARG);
         } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
     }
-//
-//    private void checkPermissions() {
-//        // если все ок запускаем камеру
-//        if (hasBothPermissions()) {
-//            startCameraOrPreview(photoFilePathString);
-//        } // если отсутствуют оба разрешения
-//        else if (hasNoAnyPermission()) {
-//            requestPermission(new String[]{Manifest.permission.CAMERA,
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST);
-//        } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//            requestPermissionWithRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                    R.string.need_storage_access_snackbar,
-//                    STORAGE_PERMISSIONS, STORAGE_REQUEST_PERMISSION);
-//        } else if (!hasPermission(Manifest.permission.CAMERA)) {
-//            requestPermissionWithRationale(Manifest.permission.CAMERA,
-//                    R.string.need_camera_access_snackbar,
-//                    CAMERA_PERMISSIONS, CAMERA_REQUEST_PERMISSION);
-//        }
-//    }
-//
-//    private boolean hasPermission(String permission) {
-//        return ContextCompat.checkSelfPermission(this, permission)
-//                == PackageManager.PERMISSION_GRANTED;
-//    }
-//
-//    private void requestPermission(String[] permissions, int permission_request_int) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            requestPermissions(permissions, permission_request_int);
-//        }
-//    }
-//
-//    private void showNoPermissionSnackbarSettings(int snackBarStringResId, int settingPermissionRequest) {
-//        Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_LONG)
-//                .setDuration(SNACKBAR_DURATION)
-//                .setAction(R.string.settings_snackbar, view -> openSettings(settingPermissionRequest))
-//                .show();
-//    }
-//
-//    private void openSettings(int permissionRequest) {
-//        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-//                Uri.parse("package:" + getPackageName())), permissionRequest);
-//    }
-//
-//    private void showSnackbarAndRequestPermission(int snackBarStringResId, String[] permissions,
-//                                                  int permission_request_int) {
-//        Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_SHORT)
-//                .setDuration(SNACKBAR_DURATION)
-//                .setAction(R.string.grant_permission_snackbar,
-//                        view -> requestPermission(permissions, permission_request_int))
-//                .show();
-//    }
-//
-//    private void requestPermissionWithRationale(String stringPermission, int stringResIdSnackbar,
-//                                                String[] arrayPermissions, int requestPermission) {
-//        if (ActivityCompat.shouldShowRequestPermissionRationale(this, stringPermission)) {
-//            showSnackbarAndRequestPermission(stringResIdSnackbar, arrayPermissions, requestPermission);
-//        } else {
-//            requestPermission(arrayPermissions, requestPermission);
-//        }
-//    }
-//
-//    private boolean hasBothPermissions() {
-//        return hasPermission(Manifest.permission.CAMERA)
-//                && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//    }
-//
-//    private boolean hasNoAnyPermission() {
-//        return !(hasPermission(Manifest.permission.CAMERA)
-//                || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        if (hasBothPermissions()) {
-//            startCameraOrPreview(photoFilePathString);
-//        } else {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                if (hasNoAnyPermission()
-//                        && !(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                        && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))) {
-//                    showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
-//                            STORAGE_REQUEST_PERMISSION);
-//                    new Handler().postDelayed(() ->
-//                            showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
-//                                    CAMERA_REQUEST_PERMISSION), HANDLER_DELAY);
-//                } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                        showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
-//                                STORAGE_REQUEST_PERMISSION);
-//                    }
-//                } else if (!hasPermission(Manifest.permission.CAMERA)) {
-//                    if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-//                        showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
-//                                CAMERA_REQUEST_PERMISSION);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    @Override
+
+    private void checkPermissions() {
+        // если все ок запускаем камеру
+        if (hasBothPermissions()) {
+            startCameraOrPreview(photoFilePathString);
+        } // если отсутствуют оба разрешения
+        else if (hasNoAnyPermission()) {
+            requestPermission(new String[]{Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST);
+        } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            requestPermissionWithRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    R.string.need_storage_access_snackbar,
+                    STORAGE_PERMISSIONS, STORAGE_REQUEST_PERMISSION);
+        } else if (!hasPermission(Manifest.permission.CAMERA)) {
+            requestPermissionWithRationale(Manifest.permission.CAMERA,
+                    R.string.need_camera_access_snackbar,
+                    CAMERA_PERMISSIONS, CAMERA_REQUEST_PERMISSION);
+        }
+    }
+
+    private boolean hasPermission(String permission) {
+        return ContextCompat.checkSelfPermission(getActivity(), permission)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission(String[] permissions, int permission_request_int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, permission_request_int);
+        }
+    }
+
+    private void showNoPermissionSnackbarSettings(int snackBarStringResId, int settingPermissionRequest) {
+        Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_LONG)
+                .setDuration(SNACKBAR_DURATION)
+                .setAction(R.string.settings_snackbar, view -> openSettings(settingPermissionRequest))
+                .show();
+    }
+
+    private void openSettings(int permissionRequest) {
+        startActivityForResult(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.parse("package:" + getActivity().getPackageName())), permissionRequest);
+    }
+
+    private void showSnackbarAndRequestPermission(int snackBarStringResId, String[] permissions,
+                                                  int permission_request_int) {
+        Snackbar.make(rootLayout, snackBarStringResId, Snackbar.LENGTH_SHORT)
+                .setDuration(SNACKBAR_DURATION)
+                .setAction(R.string.grant_permission_snackbar,
+                        view -> requestPermission(permissions, permission_request_int))
+                .show();
+    }
+
+    private void requestPermissionWithRationale(String stringPermission, int stringResIdSnackbar,
+                                                String[] arrayPermissions, int requestPermission) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), stringPermission)) {
+            showSnackbarAndRequestPermission(stringResIdSnackbar, arrayPermissions, requestPermission);
+        } else {
+            requestPermission(arrayPermissions, requestPermission);
+        }
+    }
+
+    private boolean hasBothPermissions() {
+        return hasPermission(Manifest.permission.CAMERA)
+                && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    private boolean hasNoAnyPermission() {
+        return !(hasPermission(Manifest.permission.CAMERA)
+                || hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (hasBothPermissions()) {
+            startCameraOrPreview(photoFilePathString);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (hasNoAnyPermission()
+                        && !(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA))) {
+                    showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
+                            STORAGE_REQUEST_PERMISSION);
+                    new Handler().postDelayed(() ->
+                            showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
+                                    CAMERA_REQUEST_PERMISSION), HANDLER_DELAY);
+                } else if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        showNoPermissionSnackbarSettings(R.string.storage_not_granted_snackbar,
+                                STORAGE_REQUEST_PERMISSION);
+                    }
+                } else if (!hasPermission(Manifest.permission.CAMERA)) {
+                    if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                        showNoPermissionSnackbarSettings(R.string.camera_not_granted_snackbar,
+                                CAMERA_REQUEST_PERMISSION);
+                    }
+                }
+            }
+        }
+    }
+
+
+
 //    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //
 //        if (resultCode == RESULT_OK) {
@@ -280,98 +290,101 @@ public class NewDogFormFragment extends Fragment {
 //            hasPhoto = false;
 //        }
 //    }
-//
-//    private void startCameraOrPreview(String photoFilePathString) {
-//        if (hasPhoto) {
+
+    private void startCameraOrPreview(String photoFilePathString) {
+        if (hasPhoto) {
 //            startPhotoPreviewActivity(photoFilePathString);
-//        } else {
+        } else {
 //            startCamera();
-//        }
-//    }
-//
-//    private void startCamera() {
-//        photoFile = getPhotoFile(this);
-//        Uri uri = FileProvider.getUriForFile(this,
-//                "com.andersen.dogsapp.fileprovider", photoFile);
-//        captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//        startActivityForResult(captureImage, REQUEST_CAMERA);
-//    }
-//
-//    private File getPhotoFile(Context context) {
-//        File filesDir = context.getFilesDir();
-//        String timeStamp = String.valueOf("dog_" + System.currentTimeMillis()) + ".jpg";
-//        return new File(filesDir, timeStamp);
-//    }
-//
-//    private void startPhotoPreviewActivity(String photoFilePathString) {
+        }
+    }
+
+    private void startCamera() {
+        photoFile = getPhotoFile(getActivity());
+        Uri uri = FileProvider.getUriForFile(getActivity(),
+                "com.andersen.dogsapp.fileprovider", photoFile);
+        captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(captureImage, REQUEST_CAMERA);
+    }
+
+    private File getPhotoFile(Context context) {
+        File filesDir = context.getFilesDir();
+        String timeStamp = String.valueOf("dog_" + System.currentTimeMillis()) + ".jpg";
+        return new File(filesDir, timeStamp);
+    }
+
+    private void startPhotoPreviewActivity(String photoFilePathString) {
 //        Intent intent = new Intent(getApplicationContext(), DogPhotoPreviewActivity.class);
 //        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
 //        startActivityForResult(intent, REQUEST_CODE_PREVIEW);
-//    }
-//
-//    private void startDogsKindsListActivity() {
-//        // Если сети нет, то список пород НЕ открываем
-//        if (!NetworkManager.hasNetWorkAccess(this)) {
-//            Toast.makeText(this, R.string.no_network_toast, Toast.LENGTH_SHORT).show();
-//        } else {
+    }
+
+    private void startDogsKindsListActivity() {
+        // Если сети нет, то список пород НЕ открываем
+        if (!NetworkManager.hasNetWorkAccess(getActivity())) {
+            Toast.makeText(getActivity(), R.string.no_network_toast, Toast.LENGTH_SHORT).show();
+        }
+//        else {
 //            Intent intent = new Intent(getApplicationContext(), BreedsListActivity.class);
 //            startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
 //            Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
 //        }
-//    }
-//
-//    private void backToDogListActivity() {
+    }
+
+    private void backToDogListActivity() {
 //        Intent intent = new Intent();
 //        intent.putExtra(EXTRA_OWNER, owner);
 //        setResult(RESULT_OK, intent);
 //        finish();
-//    }
-//
-//    private void setFilePathString() {
-//        if (photoFile != null || photoFile.exists()) {
-//            photoFilePathString = photoFile.getPath();
-//        }
-//    }
-//
-//    private void updatePhotoView() {
-//        Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, this);
-//        photoDogImageView.setImageBitmap(bitmap);
-//    }
-//
-//    private void initViews(View view) {
-//        rootLayout = view.findViewById(R.id.new_dog_form_root_frag);
-//        addDogButton = view.findViewById(R.id.add_dog_button_frag);
-//        photoDogImageView = view.findViewById(R.id.dog_photo_imageview_frag);
-//        dogNameEditText = view.findViewById(R.id.dog_name_edittext_frag);
-//        dogKindEditText = view.findViewById(R.id.dog_kind_edittext_frag);
-//        dogAgeEditText = view.findViewById(R.id.dog_age_edittext_frag);
-//        dogTallEditText = view.findViewById(R.id.dog_tall_edittext_frag);
-//        dogWeightEditText = view.findViewById(R.id.dog_weight_edittext_frag);
-//    }
-//
-//    private void createDogModelWithInputDatas() {
-//        String dogName = dogNameEditText.getText().toString();
-//        int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
-//        int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
-//        int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
-//        // вытащили owner'a из EXTRA и добавляем его в модель Dog
-//        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
-//    }
-//
-//    public void setDogKindTitleAndImage() {
-//        String dogKindString = dogKind.getKind();
-//        dog.setDogKind(dogKindString);
-//        dogKindEditText.setText(dogKindString);
-//        if (!hasPhoto) {
-//            dog.setDogImageString(dogKind.getUriImageString());
-//        }
-//    }
-//
-//    // Заполнение всех полей
-//    private void testingFillEditText() {
-//        dogNameEditText.setText(SomeDog.get().name());
-//        dogAgeEditText.setText("" + SomeDog.get().age());
-//        dogWeightEditText.setText("" + SomeDog.get().weight());
-//        dogTallEditText.setText("" + SomeDog.get().tall());
-//    }
+    }
+
+    private void setFilePathString() {
+        if (photoFile != null || photoFile.exists()) {
+            photoFilePathString = photoFile.getPath();
+        }
+    }
+
+    private void updatePhotoView() {
+        Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, getActivity());
+        photoDogImageView.setImageBitmap(bitmap);
+    }
+
+    private void initViews(View view) {
+        rootLayout = view.findViewById(R.id.new_dog_form_root_frag);
+        addDogButton = view.findViewById(R.id.add_dog_button_frag);
+        photoDogImageView = view.findViewById(R.id.dog_photo_imageview_frag);
+        dogNameEditText = view.findViewById(R.id.dog_name_edittext_frag);
+        dogKindEditText = view.findViewById(R.id.dog_kind_edittext_frag);
+        dogAgeEditText = view.findViewById(R.id.dog_age_edittext_frag);
+        dogTallEditText = view.findViewById(R.id.dog_tall_edittext_frag);
+        dogWeightEditText = view.findViewById(R.id.dog_weight_edittext_frag);
+    }
+
+    private void createDogModelWithInputDatas() {
+        String dogName = dogNameEditText.getText().toString();
+        int dogAge = Integer.parseInt(dogAgeEditText.getText().toString());
+        int dogTall = Integer.parseInt(dogTallEditText.getText().toString());
+        int dogWeight = Integer.parseInt(dogWeightEditText.getText().toString());
+        // вытащили owner'a из EXTRA и добавляем его в модель Dog
+        dog = new Dog(dogName, owner, dogAge, dogTall, dogWeight);
+    }
+
+    public void setDogKindTitleAndImage() {
+        String dogKindString = dogKind.getKind();
+        dog.setDogKind(dogKindString);
+        dogKindEditText.setText(dogKindString);
+        if (!hasPhoto) {
+            dog.setDogImageString(dogKind.getUriImageString());
+        }
+    }
+
+
+
+    // Заполнение всех полей
+    private void testingFillEditText() {
+        dogNameEditText.setText(SomeDog.get().name());
+        dogAgeEditText.setText("" + SomeDog.get().age());
+        dogWeightEditText.setText("" + SomeDog.get().weight());
+        dogTallEditText.setText("" + SomeDog.get().tall());
+    }
 }

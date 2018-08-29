@@ -20,6 +20,8 @@ import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
+import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity;
+import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
@@ -193,12 +195,17 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     // Overridden callback method of IFragmentOwnerListener<Owner> interface
+    // which is called from OwnersListFragment
     @Override
     public void onFragmentOwnerListener(Owner owner) {
-        startDogsListFragment(owner);
+//
+        if(owner.getDogs().isEmpty()){
+            startNewDogFormFragment(owner);
+        } else {
+            startDogsListFragment(owner); // TODO fix
+        }
 
 //        findFragmentByTagAndAdd("DogsListFragment", DogsListFragment.DOGS_TAG, DogsListFragment.DOGS_ARG, (Owner)owner);
-
 
     }
 
@@ -214,13 +221,26 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //        Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
     }
 
+    private void startNewDogFormFragment(Owner owner) {
+        Fragment fragm = fragManager.findFragmentByTag(NewDogFormFragment.NEW_DOG_ARG);
+        if (fragm == null) {
+            fragm = NewDogFormFragment.newInstance(owner);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, fragm)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Log.d(TAG, "NOT added ");
+        }
+    }
 
     private void startDogsListFragment(Owner owner) {
         Fragment fragm = fragManager.findFragmentByTag(DogsListFragment.DOGS_TAG);
         if (fragm == null) {
             fragm = DogsListFragment.newInstance(owner);
             fragManager.beginTransaction()
-                    .add(R.id.host_fragment_container, fragm)
+                    .replace(R.id.host_fragment_container, fragm)
+                    .addToBackStack(null)
                     .commit();
         } else {
             Log.d(TAG, "NOT added ");
