@@ -28,7 +28,7 @@ import java.util.List;
 
 public class DogsListFragment extends Fragment implements IRecyclerItemListener<Dog>  {
     private static final String TAG = "#";
-    private static final String DOGS_ARG = "dogs_arg";
+    public static final String DOGS_ARG = "dogs_arg";
     private static final String OWNER_ARG = "owner_arg";
     public static final String DOGS_TAG = "dogs_tag";
 
@@ -44,8 +44,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         void onFragmentDogListener(T t);
     }
 
-    public DogsListFragment() {
-    }
+    public DogsListFragment() {}
 
     public static Fragment newInstance(Owner owner) {
         final DogsListFragment ownersListFragment = new DogsListFragment();

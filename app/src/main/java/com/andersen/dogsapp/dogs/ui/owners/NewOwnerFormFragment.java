@@ -16,6 +16,7 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
+import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
@@ -35,6 +36,11 @@ public class NewOwnerFormFragment extends Fragment {
     }
 
     public NewOwnerFormFragment() {
+    }
+
+    public static Fragment newInstance() {
+        final NewOwnerFormFragment fragment = new NewOwnerFormFragment();
+        return fragment;
     }
 
     @Override
@@ -73,7 +79,7 @@ public class NewOwnerFormFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addOwner();
-                Fragment fragment = getFragmentManager().findFragmentByTag(NEW_OWNER_TAG);
+//                Fragment fragment = getFragmentManager().findFragmentByTag(NEW_OWNER_TAG);
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });

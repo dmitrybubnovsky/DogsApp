@@ -2,6 +2,7 @@ package com.andersen.dogsapp.dogs.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,15 +23,17 @@ import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER_TAG;
 import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
 public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
-                   DogsListFragment.IFragmentDogListener<Dog>,
-                   NewOwnerFormFragment.INewOwnerFragmentListener {
+        DogsListFragment.IFragmentDogListener<Dog>,
+        NewOwnerFormFragment.INewOwnerFragmentListener {
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private Toolbar toolbar;
@@ -110,6 +113,18 @@ public class MainAppDescriptionActivity extends AppCompatActivity
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.add_new_menu_item:
+                Log.d(TAG, "case R.id.add_new_menu_item: ");
+
+                Fragment fragm = fragManager.findFragmentByTag(NewOwnerFormFragment.NEW_OWNER_TAG);
+                if (fragm == null) {
+                    fragm = NewOwnerFormFragment.newInstance();
+                    fragManager.beginTransaction()
+                            .replace(R.id.host_fragment_container, fragm)
+                            .addToBackStack(null)
+                            .commit();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -164,7 +179,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     private void replaceAddToBackstackFragment(Class<?> fragmentClass, String fragmentTag) {
-        if (fragManager.findFragmentByTag(fragmentTag) == null){
+        if (fragManager.findFragmentByTag(fragmentTag) == null) {
             try {
                 fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
             } catch (Exception e) {
@@ -181,6 +196,10 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     public void onFragmentOwnerListener(Owner owner) {
         startDogsListFragment(owner);
+
+//        findFragmentByTagAndAdd("DogsListFragment", DogsListFragment.DOGS_TAG, DogsListFragment.DOGS_ARG, (Owner)owner);
+
+
     }
 
     // Overridden callback method of IFragmentDogListener<Dog> interface
@@ -196,8 +215,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
 
-
-    private void startDogsListFragment(Owner owner){
+    private void startDogsListFragment(Owner owner) {
         Fragment fragm = fragManager.findFragmentByTag(DogsListFragment.DOGS_TAG);
         if (fragm == null) {
             fragm = DogsListFragment.newInstance(owner);
@@ -208,9 +226,23 @@ public class MainAppDescriptionActivity extends AppCompatActivity
             Log.d(TAG, "NOT added ");
         }
     }
+//
+//    private <T> void findFragmentByTagAndAdd(String fragmentName, String fragmentTag, String keyArgs, T t ) {
+//        Fragment fragm = fragManager.findFragmentByTag(fragmentTag);
+//        if (fragm == null) {
+//            Bundle bundleArgs = new Bundle();
+//            bundleArgs.putParcelable(keyArgs, (Parcelable) t);
+//            fragm = Fragment.instantiate(this, fragmentName, bundleArgs);
+//
+//            fragManager.beginTransaction()
+//                    .add(R.id.host_fragment_container, fragm)
+//                    .commit();
+//        }
+//    }
+
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         if (fragManager.getBackStackEntryCount() == 1) {
             finish();
         } else {
@@ -221,13 +253,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "MainActivity: onDestroy ");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "MainActivity: onStop ");
     }
 }
 
