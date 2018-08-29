@@ -45,6 +45,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private Fragment fragment;
     private Class fragmentClass;
 
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +71,13 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         owners = OwnersRepository.get().getOwners();
 
         if (fragManager.findFragmentByTag(OWNERS_TAG) == null) {
+            Log.d(TAG, "!!!!!!!!!!!!!   findFragmentByTag(OWNERS_TAG) == null)");
             initFragment(OwnersListFragment.class, OWNERS_TAG, R.string.title_owners_list);
-            addFragment(fragmentClass, fragmentTag);
+            replaceAddToBackstackFragment(fragmentClass, fragmentTag);
         }
         if (owners.isEmpty()) {
             initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
-            addFragment(fragmentClass, fragmentTag);
+            replaceAddToBackstackFragment(fragmentClass, fragmentTag);
         }
     }
 
@@ -152,37 +156,25 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 fragmentTag = OWNERS_TAG;
         }
 
-        addFragment(fragmentClass, fragmentTag);
+        replaceAddToBackstackFragment(fragmentClass, fragmentTag);
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
     }
 
-    private void addFragment(Class<?> fragmentClass, String fragmentTag) {
-        Log.d(TAG, "addFragment called");
-        try {
-            fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void replaceAddToBackstackFragment(Class<?> fragmentClass, String fragmentTag) {
+        if (fragManager.findFragmentByTag(fragmentTag) == null){
+            try {
+                fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, fragment, fragmentTag)
+                    .addToBackStack(null)
+                    .commit();
         }
-        fragManager.beginTransaction()
-                .replace(R.id.host_fragment_container, fragment, fragmentTag)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    private void addFragmentToBackStack(Class<?> fragmentClass, String fragmentTag) {
-        try {
-            fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        fragManager.beginTransaction()
-                .add(R.id.host_fragment_container, fragment, fragmentTag)
-                .addToBackStack(null)
-                .commit();
-        Log.d(TAG, "addToBackStack " + fragment.getClass().toString());
     }
 
     // Overridden callback method of IFragmentOwnerListener<Owner> interface
@@ -217,7 +209,26 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        if (fragManager.getBackStackEntryCount() == 1) {
+            finish();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "MainActivity: onDestroy ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "MainActivity: onStop ");
+    }
 }
 
 
