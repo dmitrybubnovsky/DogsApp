@@ -30,11 +30,6 @@ public class NewOwnerFormFragment extends Fragment {
     private EditText preferredKindEditText;
     private Button addOwnerButton;
 
-    INewOwnerFragmentListener fragmentListener;
-    public interface INewOwnerFragmentListener {
-        void onNewOwnerFragmentListener();
-    }
-
     public NewOwnerFormFragment() {
     }
 

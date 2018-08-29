@@ -2,7 +2,6 @@ package com.andersen.dogsapp.dogs.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,22 +19,19 @@ import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
-import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity;
 import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
-import java.lang.reflect.Constructor;
 import java.util.List;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER_TAG;
 import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
 public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
-        DogsListFragment.IFragmentDogListener<Dog>,
-        NewOwnerFormFragment.INewOwnerFragmentListener {
+        DogsListFragment.IAddDogFragmentListener<Owner>,
+        OwnersListFragment.IaddOwnerFragmentListener {
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private Toolbar toolbar;
@@ -115,18 +111,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.add_new_menu_item:
-                Log.d(TAG, "case R.id.add_new_menu_item: ");
-
-                Fragment fragm = fragManager.findFragmentByTag(NewOwnerFormFragment.NEW_OWNER_TAG);
-                if (fragm == null) {
-                    fragm = NewOwnerFormFragment.newInstance();
-                    fragManager.beginTransaction()
-                            .replace(R.id.host_fragment_container, fragm)
-                            .addToBackStack(null)
-                            .commit();
-                }
-                break;
+//            case R.id.add_new_menu_item:
+//                Log.d(TAG, "case R.id.add_new_menu_item: ");
+//
+//                startNewOwnerFormFragment();
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -209,16 +198,18 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
     }
 
-    // Overridden callback method of IFragmentDogListener<Dog> interface
+    // Overridden callback method of IAddDogFragmentListener<Dog> interface
+    // which is called in DogsListFragment in menu
     @Override
-    public void onFragmentDogListener(Dog dog) {
-        Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
+    public void onAddDogFragmentListener(Owner owner) {
+        startNewDogFormFragment(owner);
     }
 
-    // Overridden callback method of INewOwnerFragmentListener interface
+    // Overridden callback method of IaddOwnerFragmentListener interface
+    // which is called from OwnersListFragment
     @Override
     public void onNewOwnerFragmentListener() {
-//        Log.d(TAG, "HOST-activity:onFragmentDogListener dog " + dog.getDogName());
+        startNewOwnerFormFragment();
     }
 
     private void startNewDogFormFragment(Owner owner) {
@@ -246,6 +237,22 @@ public class MainAppDescriptionActivity extends AppCompatActivity
             Log.d(TAG, "NOT added ");
         }
     }
+
+
+    private void startNewOwnerFormFragment() {
+        Fragment fragm = fragManager.findFragmentByTag(NewOwnerFormFragment.NEW_OWNER_TAG);
+        if (fragm == null) {
+            fragm = NewOwnerFormFragment.newInstance();
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, fragm)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Log.d(TAG, "MainActivity: startNewOwnerFormFragment: frag != null ");
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {

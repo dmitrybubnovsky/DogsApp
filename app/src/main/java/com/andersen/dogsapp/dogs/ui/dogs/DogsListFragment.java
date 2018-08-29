@@ -38,10 +38,10 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     private DogsAdapter dogsAdapter;
     private List<Dog> ownerDogs;
 
-    IFragmentDogListener fragmentListener;
+    IAddDogFragmentListener addDogListener;
 
-    public interface IFragmentDogListener<T> {
-        void onFragmentDogListener(T t);
+    public interface IAddDogFragmentListener<T> {
+        void onAddDogFragmentListener(T t);
     }
 
     public DogsListFragment() {}
@@ -57,14 +57,14 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentListener = (MainAppDescriptionActivity)context;
+        addDogListener = (MainAppDescriptionActivity)context;
         Log.d(TAG, "DogsList onAttach"); // TODO Delete
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        fragmentListener = null;
+        addDogListener = null;
         Log.d(TAG, "DogsList onDetach");  // TODO Delete
     }
 
@@ -93,6 +93,22 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
         return view;
     }
+
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_new_menu_item:
+                 addDogListener.onAddDogFragmentListener(owner);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
     @Override
     public void onResume() {
@@ -135,17 +151,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_new_menu_item:
-
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onRecyclerItemClick(Dog dog) {
-        fragmentListener.onFragmentDogListener(dog); // TODO fix this warning
+        // должна реагировать на касание элемента списка
     }
 }

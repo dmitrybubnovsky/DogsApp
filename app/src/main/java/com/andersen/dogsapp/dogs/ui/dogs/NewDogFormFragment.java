@@ -128,7 +128,7 @@ public class NewDogFormFragment extends Fragment {
             if (dog.getDogKind() == null) {
 //                startDogsKindsListActivity();
 
-/* временноe */   dog.setDogImageString("german_shepherd_doggy_dogg.jpg"); // TODO delete this line
+/* временноe */   dog.setDogImageString("german_shepherd_testimage.jpg");  // TODO delete this line
 /* решениe */     dog.setDogKind("german_shepherd");                       // TODO delete this line
                   dogKindEditText.setText("german_shepherd"); // TODO delete this line
 
@@ -138,7 +138,7 @@ public class NewDogFormFragment extends Fragment {
 
                 owner.addDog(dog);
                 getActivity().getSupportFragmentManager().popBackStack();
-//                fragmentListener.onFragmentNewDogListener(owner);
+//                addDogListener.onFragmentNewDogListener(owner);
 //                backToDogListActivity();
             }
         });

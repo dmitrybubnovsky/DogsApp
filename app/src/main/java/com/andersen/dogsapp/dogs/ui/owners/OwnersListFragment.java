@@ -39,6 +39,12 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         void onFragmentOwnerListener(T t);
     }
 
+
+    IaddOwnerFragmentListener addOwnerListener;
+    public interface IaddOwnerFragmentListener {
+        void onNewOwnerFragmentListener();
+    }
+
     private List<Owner> owners;
 
     public OwnersListFragment() {
@@ -61,6 +67,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public void onAttach(Context context) {
         super.onAttach(context);
         fragmentListener = (MainAppDescriptionActivity)context;
+        addOwnerListener = (MainAppDescriptionActivity)context;
     }
 
     @Override
@@ -79,7 +86,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
-//        setHasOptionsMenu(true);
         Log.d(TAG, "OwnersList onCreate");
 
         ownersAdapter = new OwnersAdapter(getActivity(), this);
@@ -133,7 +139,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_menu_item:
-
+                addOwnerListener.onNewOwnerFragmentListener();
                 break;
         }
         return super.onOptionsItemSelected(item);

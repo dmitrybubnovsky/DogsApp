@@ -1,6 +1,7 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -85,6 +86,10 @@ public class DogsAdapter extends RecyclerView.Adapter<DogsAdapter.ViewHolder> {
 
             if (dogImageString.contains("_doggy_dogg.jpg")) {
                 dogImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
+            } else if (dogImageString.contains("german_shepherd_testimage.jpg")) {   // TODO delete this line
+                Resources resources = context.getResources();// TODO delete this line
+                int resourceId = resources.getIdentifier(dogImageString, "drawable", context.getPackageName());// TODO delete this line
+                dogImageView.setImageResource(resourceId);// TODO delete this line
             } else {
                 dogImageView.setImageURI(Uri.parse(dogImageString));
             }
