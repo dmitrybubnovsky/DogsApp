@@ -1,14 +1,16 @@
 package com.andersen.dogsapp.dogs.ui.breeds;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -18,53 +20,72 @@ import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.BreedsRepository;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.data.web.retrofitapi.IResponseImageCallback;
-import com.andersen.dogsapp.dogs.ui.DogToolBar;
+import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BreedsListActivity extends AppCompatActivity
+public class BreedsListFragment extends Fragment
         implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
     public static final String TAG = "#";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
-    private static final String BREEDS_BUNDLE_KEY = "breeds_bundle_key";
+    private static final String BREEDS_ON_SAVE_INSTANCE_STATE_KEY = "breeds_bundle_key";
+    public static final String BREEDS_ARG = "breeds_arg";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_breeds_list);
+    IOnBreedFragmentListener fragmentListener;
 
-        if (savedInstanceState != null) {
-            dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_BUNDLE_KEY);
-            Log.d(TAG, "dogKinds " + dogKinds.size());
-        }
-
-        Toolbar toolbar = DogToolBar.init(this, R.string.toolbar_title_kinds_list);
-        setSupportActionBar(toolbar);
-
-        initViews();
+    public interface IOnBreedFragmentListener<T> {
+        void IOnBreedFragmentListener(T t);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(BREEDS_BUNDLE_KEY, (ArrayList<DogKind>) dogKinds);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fragmentListener = (MainAppDescriptionActivity) getContext();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY);
+            Log.d(TAG, "dogKinds " + dogKinds.size());
+        }
+
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle bundle) {
+        View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
+        initViews(view);
+
+        return super.onCreateView(inflater, container, bundle);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY, (ArrayList<DogKind>) dogKinds);
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         BreedsRepository.getInstance().getDogsKinds(dogBreeds -> {
             dogKinds = dogBreeds;
-            runOnUiThread(this::updateUI);
+            getActivity().runOnUiThread(this::updateUI);
         });
     }
+
 
     private void updateUI() {
         if (dogKinds != null) {
@@ -83,19 +104,19 @@ public class BreedsListActivity extends AppCompatActivity
 
         if (dogKindInstance.getUriImageString().isEmpty()) {
             BreedsRepository.getInstance().getBreedsImage(dogKindString, uriBreedString -> {
-                final File breedImageFile = getImageBreedFile(getApplicationContext(), dogKindString);
+                final File breedImageFile = getImageBreedFile(getActivity(), dogKindString);
                 dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД
                 BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
 
-                Target target = BreedPicasso.get(getApplicationContext())
+                Target target = BreedPicasso.get(getActivity())
                         .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                 dogKindImageView.setTag(target);
-                BreedPicasso.get(getApplicationContext())
+                BreedPicasso.get(getActivity())
                         .intoTarget(uriBreedString, target);
             });
         } else {
-            BreedPicasso.get(getApplicationContext())
+            BreedPicasso.get(getActivity())
                     .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
         }
     }
@@ -112,16 +133,17 @@ public class BreedsListActivity extends AppCompatActivity
 //        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
 //        setResult(RESULT_OK, intent);
 //        finish();
+        fragmentListener.IOnBreedFragmentListener(dogKind);
     }
 
-    private void initViews() {
-        progressBar = findViewById(R.id.network_breeds_progress_bar);
+    private void initViews(View view) {
+        progressBar = view.findViewById(R.id.network_breeds_progress_bar);
         if (dogKinds == null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-        recyclerView = findViewById(R.id.breeds_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DogsKindAdapter(this, this);
+        recyclerView = view.findViewById(R.id.breeds_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new DogsKindAdapter(getActivity(), this);
     }
 }
 

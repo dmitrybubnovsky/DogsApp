@@ -34,20 +34,15 @@ import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
-import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
-import com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity;
-import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.io.File;
 
-import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity.EXTRA_SELECTED_KIND;
-import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
-
 public class NewDogFormFragment extends Fragment {
-    public static final String NEW_DOG_ARG = "new dog arg";
+    public static final String NEW_DOG_ARG = "new_dog_arg";
+    public static final String BREED_ARG = "breed_arg";
     public static final String NEW_DOG_TAG = "new_dog_tag";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
@@ -96,7 +91,7 @@ public class NewDogFormFragment extends Fragment {
         setHasOptionsMenu(true);
 
         final Bundle bundleArguments = getArguments();
-        if (bundleArguments == null || !bundleArguments.containsKey(NEW_DOG_ARG)) {
+        if (bundleArguments == null) {
             Log.d("", "NewDogFormFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
         } else {
             readBundle(bundleArguments);
@@ -128,10 +123,9 @@ public class NewDogFormFragment extends Fragment {
 
             if (dog.getDogKind() == null) {
 //                startDogsKindsListActivity();
-
 /* временноe */   dog.setDogImageString("german_shepherd_testimage.jpg");  // TODO delete this line
 /* решениe */     dog.setDogKind("german_shepherd");                       // TODO delete this line
-                  dogKindEditText.setText("german_shepherd"); // TODO delete this line
+                  dogKindEditText.setText("german_shepherd");              // TODO delete this line
 
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
@@ -151,7 +145,13 @@ public class NewDogFormFragment extends Fragment {
 
     private void readBundle(Bundle bundle) {
         if (bundle != null) {
-            owner = bundle.getParcelable(NEW_DOG_ARG);
+            if(bundle.containsKey(NEW_DOG_ARG)){
+                owner = bundle.getParcelable(NEW_DOG_ARG);
+            }
+            if (bundle.containsKey(BREED_ARG)) {
+                Log.d(TAG, "OwnersListFragment: readArguments: bundle != null");
+                dogKind = bundle.getParcelable(BREED_ARG);
+            }
         } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
     }
 

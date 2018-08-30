@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.ui.owners;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,19 +29,21 @@ import java.util.List;
 
 public class OwnersListFragment extends Fragment implements IRecyclerItemListener<Owner> {
     private static final String TAG = "#";
-    private static final String OWNERS_ARG = "name";
+    public static final String OWNERS_ARG = "onwers_arg";
     public static final String OWNERS_TAG = "owners_tag";
 
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
 
     IFragmentOwnerListener fragmentListener;
+
     public interface IFragmentOwnerListener<T> {
         void onFragmentOwnerListener(T t);
     }
 
 
     IaddOwnerFragmentListener addOwnerListener;
+
     public interface IaddOwnerFragmentListener {
         void onNewOwnerFragmentListener();
     }
@@ -66,8 +69,8 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        fragmentListener = (MainAppDescriptionActivity)context;
-        addOwnerListener = (MainAppDescriptionActivity)context;
+        fragmentListener = (MainAppDescriptionActivity) context;
+        addOwnerListener = (MainAppDescriptionActivity) context;
     }
 
     @Override
@@ -75,16 +78,17 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        final Bundle bundleArguments = getArguments();
-        if (bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)) {
-            Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
-        } else {
-            readBundle(bundleArguments);
-        }
+//        final Bundle bundleArguments = getArguments();
+//        if (bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)) {
+//            Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
+//        } else {
+//            readBundle(bundleArguments);
+//        }
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
         Log.d(TAG, "OwnersList onCreate");
 
@@ -104,14 +108,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         } else {
             updateUI();
-        }
-        Log.d(TAG, "OwnersListFragment onResume");
-    }
-
-    private void readBundle(Bundle bundle) {
-        if (bundle != null) {
-            Log.d(TAG, "OwnersListFragment: readBundle: bundle != null");
-            owners = bundle.getParcelableArrayList(OWNERS_ARG);
         }
     }
 
