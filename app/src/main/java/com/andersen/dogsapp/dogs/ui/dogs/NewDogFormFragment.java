@@ -48,6 +48,7 @@ import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 
 public class NewDogFormFragment extends Fragment {
     public static final String NEW_DOG_ARG = "new dog arg";
+    public static final String NEW_DOG_TAG = "new_dog_tag";
     public static final String EXTRA_FILE_PATH = "extra_file_path";
     public static final int REQUEST_CAMERA = 201;
     public static final int REQUEST_CODE_DOG_KIND = 202;

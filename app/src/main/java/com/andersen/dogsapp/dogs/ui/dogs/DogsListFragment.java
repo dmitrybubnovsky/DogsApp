@@ -29,7 +29,7 @@ import java.util.List;
 public class DogsListFragment extends Fragment implements IRecyclerItemListener<Dog>  {
     private static final String TAG = "#";
     public static final String DOGS_ARG = "dogs_arg";
-    private static final String OWNER_ARG = "owner_arg";
+    public static final String OWNER_ARG = "owner_arg";
     public static final String DOGS_TAG = "dogs_tag";
 
     public final int REQUEST_CODE_NEW_DOG = 2;

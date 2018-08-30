@@ -1,6 +1,7 @@
 package com.andersen.dogsapp.dogs;
 
 import android.app.Application;
+import android.app.FragmentManager;
 
 import com.andersen.dogsapp.dogs.data.database.DogsSQLiteDataSource;
 import com.andersen.dogsapp.dogs.data.database.OwnersSQLiteDataSource;

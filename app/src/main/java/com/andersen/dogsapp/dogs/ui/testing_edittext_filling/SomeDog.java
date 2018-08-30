@@ -5,7 +5,7 @@ import java.util.Random;
 public class SomeDog {
     private static SomeDog instance;
 
-    private final String[] NAME = {"Juchka", "Palkan", "Kashtanka", "Belka", "Strelka", "Plooto"};
+    private final String[] NAME = {"Juchka", "Palkan", "Kashtanka", "Palma", "Judy", "Bobyk", "Belka", "Strelka", "Plooto", "Jessy"};
     private final String[] KIND = {"Afghan hound", "American bulldog", "American foxhound",
             "Australian cattle", "Belgian tevruren", "Berger pickard", "Bolognese", "Bull terrier", "Chesapeake", "Chinook", "Argentino", "English coonhound", "German shepherd",
             "Icelandic sheepdog", "Komondor", "Mudi", "Munsterlander", "Pharaon hound", "Pocket beagle",
