@@ -39,12 +39,14 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
         DogsListFragment.IAddDogFragmentListener<Owner>,
         OwnersListFragment.IaddOwnerFragmentListener,
+        NewDogFormFragment.ISetBreedFragmentListener,
         BreedsListFragment.IOnBreedFragmentListener<DogKind> {
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private static final String NEW_OWNER_FRAGMENT = NewOwnerFormFragment.class.getName();
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
     private static final String DOGS_FRAGMENT = DogsListFragment.class.getName();
+    private static final String BREEDS_FRAGMENT = BreedsListFragment.class.getName();
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -212,10 +214,28 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
     // callback метода  вызывается из BreedsListFragment
     @Override
-    public void IOnBreedFragmentListener(DogKind dogKind) {
+    public void onBreedFragmentListener(DogKind dogKind) {
         AppFragmentManager.getInstance(this)
                 .replaceFragmentWithEntity(this, NEW_DOG_FRAGMENT,
                         NEW_DOG_TAG, BREED_ARG, dogKind);
+    }
+
+
+
+    // callback метода  вызывается из NewDogFormFragment по нажатию на breedEditText
+    @Override
+    public void onSetBreedListener() {
+        Log.d(TAG, "Main: onSetBreedListener");
+//        AppFragmentManager.getInstance(this)
+//                .replaceAddToBackStack(this, BREEDS_FRAGMENT, BREEDS_TAG);
+        fragment = fragManager.findFragmentByTag(BREEDS_TAG);
+        if (fragment == null) {
+            fragment = Fragment.instantiate(this, BreedsListFragment.class.getName());
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, fragment, fragmentTag)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
 

@@ -35,12 +35,11 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
 
-    IFragmentOwnerListener fragmentListener;
+    private IFragmentOwnerListener fragmentListener;
 
     public interface IFragmentOwnerListener<T> {
         void onFragmentOwnerListener(T t);
     }
-
 
     IaddOwnerFragmentListener addOwnerListener;
 
@@ -77,13 +76,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-//        final Bundle bundleArguments = getArguments();
-//        if (bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)) {
-//            Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
-//        } else {
-//            readBundle(bundleArguments);
-//        }
     }
 
     @Nullable

@@ -33,6 +33,7 @@ public class BreedsListFragment extends Fragment
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private static final String BREEDS_ON_SAVE_INSTANCE_STATE_KEY = "breeds_bundle_key";
     public static final String BREEDS_ARG = "breeds_arg";
+    public static final String BREEDS_TAG = "breeds_tag";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
@@ -41,7 +42,15 @@ public class BreedsListFragment extends Fragment
     IOnBreedFragmentListener fragmentListener;
 
     public interface IOnBreedFragmentListener<T> {
-        void IOnBreedFragmentListener(T t);
+        void onBreedFragmentListener(T t);
+    }
+
+    public BreedsListFragment (){}
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY, (ArrayList<DogKind>) dogKinds);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -58,23 +67,14 @@ public class BreedsListFragment extends Fragment
             dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY);
             Log.d(TAG, "dogKinds " + dogKinds.size());
         }
-
-
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle bundle) {
-        View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_breeds_list, container, false);
         initViews(view);
-
-        return super.onCreateView(inflater, container, bundle);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY, (ArrayList<DogKind>) dogKinds);
-        super.onSaveInstanceState(outState);
+        return view;
     }
 
     @Override
@@ -86,14 +86,10 @@ public class BreedsListFragment extends Fragment
         });
     }
 
-
     private void updateUI() {
         if (dogKinds != null) {
             adapter.setBreeds(dogKinds);
-            adapter.setResponseBreedCallbackListener(this);
-            adapter.notifyDataSetChanged();
-            recyclerView.setAdapter(adapter);
-            if (progressBar != null && dogKinds != null) {
+            if (progressBar != null) {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }
@@ -133,17 +129,20 @@ public class BreedsListFragment extends Fragment
 //        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
 //        setResult(RESULT_OK, intent);
 //        finish();
-        fragmentListener.IOnBreedFragmentListener(dogKind);
+        fragmentListener.onBreedFragmentListener(dogKind);
     }
 
     private void initViews(View view) {
-        progressBar = view.findViewById(R.id.network_breeds_progress_bar);
+        progressBar = view.findViewById(R.id.network_breeds_progress_bar_frag);
         if (dogKinds == null) {
             progressBar.setVisibility(View.VISIBLE);
         }
-        recyclerView = view.findViewById(R.id.breeds_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new DogsKindAdapter(getActivity(), this);
+        adapter.setResponseBreedCallbackListener(this);
+        recyclerView = view.findViewById(R.id.breeds_recycler_view_frag);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
     }
 }
 

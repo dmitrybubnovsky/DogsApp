@@ -33,6 +33,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
 
     public void setBreeds(List<DogKind> dogsKinds) {
         this.dogsKinds = dogsKinds;
+        notifyDataSetChanged();
     }
 
     public void setResponseBreedCallbackListener(IResponseImageCallback responseCallback) {

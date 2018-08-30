@@ -2,13 +2,12 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".dogs.ui.breeds.BreedsListActivity">
+    android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/network_breeds_progress_bar"
+        android:id="@+id/network_breeds_progress_bar_frag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -18,18 +17,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/breeds_recycler_view_frag"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/breeds_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
-    </RelativeLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

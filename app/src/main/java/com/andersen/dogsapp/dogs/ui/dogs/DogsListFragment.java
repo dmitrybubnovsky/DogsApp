@@ -38,21 +38,10 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     private DogsAdapter dogsAdapter;
     private List<Dog> ownerDogs;
 
-    IAddDogFragmentListener addDogListener;
+    private IAddDogFragmentListener addDogListener;
 
     public interface IAddDogFragmentListener<T> {
         void onAddDogFragmentListener(T t);
-    }
-
-    public DogsListFragment() {
-    }
-
-    public static Fragment newInstance(Owner owner) {
-        final DogsListFragment ownersListFragment = new DogsListFragment();
-        final Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(OWNER_ARG, owner);
-        ownersListFragment.setArguments(bundleArgs);
-        return ownersListFragment;
     }
 
     @Override

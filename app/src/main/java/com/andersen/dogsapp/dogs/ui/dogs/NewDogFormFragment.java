@@ -72,10 +72,12 @@ public class NewDogFormFragment extends Fragment {
     private boolean hasPhoto;
     private View rootLayout;
 
-    IFragmentNewDogListener fragmentListener;
-    public interface IFragmentNewDogListener<T> {
-        void onFragmentNewDogListener(T t);
+    ISetBreedFragmentListener breedListener;
+    public interface ISetBreedFragmentListener {
+        void onSetBreedListener();
     }
+
+
 
     public static Fragment newInstance(Owner owner) {
         final NewDogFormFragment newDogFragment = new NewDogFormFragment();
@@ -83,6 +85,12 @@ public class NewDogFormFragment extends Fragment {
         bundleArgs.putParcelable(NEW_DOG_ARG, owner);
         newDogFragment.setArguments(bundleArgs);
         return newDogFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        breedListener = (MainAppDescriptionActivity) context;
     }
 
     @Override
@@ -115,25 +123,21 @@ public class NewDogFormFragment extends Fragment {
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
-        dogKindEditText.setOnClickListener(view_ -> startDogsKindsListActivity());
+        dogKindEditText.setOnClickListener(view1 -> startDogsKindsListActivity());
 
-        addDogButton.setOnClickListener(view_ -> {
-
+        addDogButton.setOnClickListener(view1 -> {
             // если порода собаки еще не установлена, то переход в список пород
-
             if (dog.getDogKind() == null) {
 //                startDogsKindsListActivity();
+
 /* временноe */   dog.setDogImageString("german_shepherd_testimage.jpg");  // TODO delete this line
 /* решениe */     dog.setDogKind("german_shepherd");                       // TODO delete this line
                   dogKindEditText.setText("german_shepherd");              // TODO delete this line
-
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DogsRepository.get().addDog(dog);
-
                 owner.addDog(dog);
                 getActivity().getSupportFragmentManager().popBackStack();
-//                addDogListener.onFragmentNewDogListener(owner);
 //                backToDogListActivity();
             }
         });
@@ -149,7 +153,6 @@ public class NewDogFormFragment extends Fragment {
                 owner = bundle.getParcelable(NEW_DOG_ARG);
             }
             if (bundle.containsKey(BREED_ARG)) {
-                Log.d(TAG, "OwnersListFragment: readArguments: bundle != null");
                 dogKind = bundle.getParcelable(BREED_ARG);
             }
         } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
@@ -255,43 +258,6 @@ public class NewDogFormFragment extends Fragment {
         }
     }
 
-
-
-//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//
-//        if (resultCode == RESULT_OK) {
-//            switch (requestCode) {
-//                case REQUEST_CODE_DOG_KIND:
-//                    dogKind = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
-//                    setDogKindTitleAndImage();
-//                    break;
-//                case REQUEST_CAMERA:
-//                    setFilePathString();
-//                    dog.setDogImageString(photoFilePathString);
-//                    updatePhotoView();
-//                    hasPhoto = true;
-//                    break;
-//                case REQUEST_CODE_PREVIEW:
-//                    photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
-//                    break;
-//                case PERMISSIONS_REQUEST:
-//                case STORAGE_REQUEST_PERMISSION:
-//                case CAMERA_REQUEST_PERMISSION:
-//                    if (hasPermission(Manifest.permission.CAMERA)
-//                            && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                        startCameraOrPreview(photoFilePathString);
-//                    }
-//                    break;
-//                default:
-//                    updatePhotoView();
-//                    dog.setDogImageString(photoFilePathString);
-//                    break;
-//            }
-//        } else {
-//            hasPhoto = false;
-//        }
-//    }
-
     private void startCameraOrPreview(String photoFilePathString) {
         if (hasPhoto) {
 //            startPhotoPreviewActivity(photoFilePathString);
@@ -324,19 +290,14 @@ public class NewDogFormFragment extends Fragment {
         // Если сети нет, то список пород НЕ открываем
         if (!NetworkManager.hasNetWorkAccess(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network_toast, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "no network");
         }
-//        else {
-//            Intent intent = new Intent(getApplicationContext(), BreedsListActivity.class);
-//            startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-//            Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
-//        }
-    }
+        else {
 
-    private void backToDogListActivity() {
-//        Intent intent = new Intent();
-//        intent.putExtra(EXTRA_OWNER, owner);
-//        setResult(RESULT_OK, intent);
-//        finish();
+            getActivity().getSupportFragmentManager().popBackStack();
+            breedListener.onSetBreedListener();
+//            startActivityForResult(new Intent(getApplicationContext(), BreedsListActivity.class), REQUEST_CODE_DOG_KIND);
+        }
     }
 
     private void setFilePathString() {
@@ -379,8 +340,6 @@ public class NewDogFormFragment extends Fragment {
         }
     }
 
-
-
     // Заполнение всех полей
     private void testingFillEditText() {
         dogNameEditText.setText(SomeDog.get().name());
@@ -389,3 +348,55 @@ public class NewDogFormFragment extends Fragment {
         dogTallEditText.setText("" + SomeDog.get().tall());
     }
 }
+
+
+
+
+
+
+//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//
+//        if (resultCode == RESULT_OK) {
+//            switch (requestCode) {
+//                case REQUEST_CODE_DOG_KIND:
+//                    dogKind = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
+//                    setDogKindTitleAndImage();
+//                    break;
+//                case REQUEST_CAMERA:
+//                    setFilePathString();
+//                    dog.setDogImageString(photoFilePathString);
+//                    updatePhotoView();
+//                    hasPhoto = true;
+//                    break;
+//                case REQUEST_CODE_PREVIEW:
+//                    photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+//                    break;
+//                case PERMISSIONS_REQUEST:
+//                case STORAGE_REQUEST_PERMISSION:
+//                case CAMERA_REQUEST_PERMISSION:
+//                    if (hasPermission(Manifest.permission.CAMERA)
+//                            && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                        startCameraOrPreview(photoFilePathString);
+//                    }
+//                    break;
+//                default:
+//                    updatePhotoView();
+//                    dog.setDogImageString(photoFilePathString);
+//                    break;
+//            }
+//        } else {
+//            hasPhoto = false;
+//        }
+//    }
+
+
+
+
+
+
+//    private void backToDogListActivity() {
+//        Intent intent = new Intent();
+//        intent.putExtra(EXTRA_OWNER, owner);
+//        setResult(RESULT_OK, intent);
+//        finish();
+//    }
