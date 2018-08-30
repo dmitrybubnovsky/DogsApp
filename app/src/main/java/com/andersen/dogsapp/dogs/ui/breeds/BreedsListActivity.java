@@ -108,10 +108,10 @@ public class BreedsListActivity extends AppCompatActivity
 
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
-//        Intent intent = new Intent();
-//        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
-//        setResult(RESULT_OK, intent);
-//        finish();
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void initViews() {

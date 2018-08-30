@@ -89,7 +89,10 @@ public class BreedsListFragment extends Fragment
     private void updateUI() {
         if (dogKinds != null) {
             adapter.setBreeds(dogKinds);
-            if (progressBar != null) {
+            adapter.setResponseBreedCallbackListener(this);
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+            if (progressBar != null && dogKinds != null) {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }
@@ -138,11 +141,8 @@ public class BreedsListFragment extends Fragment
             progressBar.setVisibility(View.VISIBLE);
         }
         adapter = new DogsKindAdapter(getActivity(), this);
-        adapter.setResponseBreedCallbackListener(this);
         recyclerView = view.findViewById(R.id.breeds_recycler_view_frag);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
     }
 }
 
