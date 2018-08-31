@@ -1,6 +1,8 @@
 package com.andersen.dogsapp.dogs.ui.breeds;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,7 +51,8 @@ public class BreedsListFragment extends Fragment
         void onBreedFragmentListener(D d, O o);
     }
 
-    public BreedsListFragment (){}
+    public BreedsListFragment() {
+    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -134,10 +137,12 @@ public class BreedsListFragment extends Fragment
 
     private void readBundle(final Bundle bundle) {
         if (bundle != null) {
-            if(bundle.containsKey(OWNER_ARG)){
+            if (bundle.containsKey(OWNER_ARG)) {
                 owner = bundle.getParcelable(OWNER_ARG);
             }
-        } else { Log.d(TAG, "owner bundle = null"); } // TODO delete this line
+        } else {
+            Log.d(TAG, "owner bundle = null");
+        } // TODO delete this line
     }
 
     private File getImageBreedFile(Context context, String breedFileNameString) {
@@ -148,13 +153,25 @@ public class BreedsListFragment extends Fragment
 
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
-//        Intent intent = new Intent();
-//        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
-//        setResult(RESULT_OK, intent);
-//        finish();
-        if(!calledFromDrawer){
-            fragmentListener.onBreedFragmentListener(dogKind, owner);
+//        if(!calledFromDrawer){
+//            fragmentListener.onBreedFragmentListener(dogKind, owner);
+//        }
+//        if (!calledFromDrawer) {
+//            fragmentListener.onBreedFragmentListener(dogKind, owner);
+//        }
+        sendResultBreed(Activity.RESULT_OK, dogKind);
+        ((MainAppDescriptionActivity) getActivity()).deleteFragment(BreedsListFragment.this);
+
+    }
+
+    private void sendResultBreed(int resultCode, DogKind dogkind) {
+        if (getTargetFragment() == null) {
+            Log.d(TAG, "getTargetFragment() == null");
+            return;
         }
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SELECTED_KIND, dogkind);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 
     private void initViews(View view) {

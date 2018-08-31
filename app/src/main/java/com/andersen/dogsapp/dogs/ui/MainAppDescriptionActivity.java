@@ -88,7 +88,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //                    .replaceAddToBackStack(this, fragmentClass.getName(), fragmentTag);
 
 
-
         if (owners.isEmpty()) {
 //            initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
 //            AppFragmentManager.getInstance(this)
@@ -99,9 +98,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         }
     }
 
-    public void addOwnersListFragment(){
+    public void addOwnersListFragment() {
         Fragment ownersFragment = fragManager.findFragmentByTag(OWNERS_TAG);
-        if(ownersFragment == null){
+        if (ownersFragment == null) {
             ownersFragment = Fragment.instantiate(this, OWNERS_FRAGMENT);
             fragManager.beginTransaction()
                     .replace(R.id.host_fragment_container, ownersFragment)
@@ -110,9 +109,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         }
     }
 
-    public void addNewOwnerFragment(){
+    public void addNewOwnerFragment() {
         Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
-        if(newOwnerFragment == null){
+        if (newOwnerFragment == null) {
             newOwnerFragment = Fragment.instantiate(this, NEW_OWNER_FRAGMENT);
             fragManager.beginTransaction()
                     .replace(R.id.host_fragment_container, newOwnerFragment)
@@ -217,25 +216,27 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     public void onFragmentOwnerListener(Owner owner) {
         if (owner.getDogs().isEmpty()) {
             // запускает NewDogFormFragment
-//            AppFragmentManager.getInstance(this)
-//                    .replaceFragmentWithEntity(this, NEW_DOG_FRAGMENT,
-//                            NEW_DOG_TAG, NEW_DOG_ARG, owner);
-            Bundle bundleArgs = new Bundle();
-            bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
-
-            Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
-            if (newDogFragment == null) {
-                newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
-                fragManager.beginTransaction()
-                        .replace(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
-                        .addToBackStack(null)
-                        .commit();
-            }
+            startNewDogFragment(owner); // add and commit
         } else {
             // запускает DogsListFragment
             AppFragmentManager.getInstance(this)
                     .replaceFragmentWithEntity(this, DOGS_FRAGMENT,
                             DOGS_TAG, OWNER_ARG, owner);
+        }
+    }
+
+    private void startNewDogFragment(Owner owner) {
+        Bundle bundleArgs = new Bundle();
+        bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
+
+        Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
+        if (newDogFragment == null) {
+            newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
+            fragManager.beginTransaction()
+                    .add(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
+//                        .replace(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
+//                        .addToBackStack(null)
+                    .commit();
         }
     }
 
@@ -286,7 +287,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
 
-
     // callback метода IaddOwnerFragmentListener вызывается из OwnersListFragment в menu
     @Override
     public void onAddOwnerFragmentListener() {
@@ -298,7 +298,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
 
-    // callback метода  вызывается из NewDogFormFragment по нажатию на породы breedEditText
+    // callback метода  вызывается из NewDogFormFragment
+    // по нажатию на породы breedEditText
+    // запускает BreedsListFragment
     @Override
     public void onSetBreedListener(Owner owner) {
         Log.d(TAG, "Main: onSetBreedListener");
@@ -307,15 +309,26 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 .replaceBreedFragment(this, BREEDS_FRAGMENT, BREEDS_TAG, BreedsListFragment.OWNER_ARG, owner);
     }
 
+    public void startBreedsFromTargetFragment(Fragment frag) {
+//        Fragment breedsFragment = fragManager.findFragmentByTag(BREEDS_TAG);
+//        if (breedsFragment == null) {
+//            breedsFragment = Fragment.instantiate(this, BREEDS_FRAGMENT);
 
-    @Override
-    public void onBackPressed() {
-        if (fragManager.getBackStackEntryCount() == 1) {
-            finish();
-        } else {
-            super.onBackPressed();
-        }
+        fragManager.beginTransaction()
+                .add(R.id.host_fragment_container, frag, BREEDS_TAG)
+                .commit();
+
     }
+
+
+//    @Override
+//    public void onBackPressed() {
+//        if (fragManager.getBackStackEntryCount() == 1) {
+//            finish();
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
@@ -344,15 +357,26 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     // вызывается при клике добавить owner'a в NewOwnerFormFragment
     @Override
     public void onAddedOwnerListener() {
+        deleteFragmentByTag(NEW_OWNER_TAG);
 
-        Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
-        if(newOwnerFragment != null){
+        addOwnersListFragment();
+    }
+
+    public void deleteFragmentByTag(String fragmentTag) {
+        Fragment newOwnerFragment = fragManager.findFragmentByTag(fragmentTag);
+        if (newOwnerFragment != null) {
             fragManager.beginTransaction()
                     .remove(newOwnerFragment)
                     .commit();
         }
+    }
 
-        addOwnersListFragment();
+    public void deleteFragment(Fragment fragment) {
+        if (fragment != null) {
+            fragManager.beginTransaction()
+                    .remove(fragment)
+                    .commit();
+        }
     }
 }
 

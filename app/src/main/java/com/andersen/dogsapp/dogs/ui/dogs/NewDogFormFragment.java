@@ -35,6 +35,7 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
+import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
@@ -113,6 +114,8 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "BreedsFragment onDestroy");
+
     }
 
     private void readBundle(final Bundle bundle) {
@@ -308,8 +311,13 @@ public class NewDogFormFragment extends Fragment {
             Log.d(TAG, "no network");
         }
         else {
-            getActivity().getSupportFragmentManager().popBackStack();
-            breedListener.onSetBreedListener(owner);
+
+            Fragment frag = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName());
+            frag.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
+            ((MainAppDescriptionActivity)getActivity()).startBreedsFromTargetFragment(frag);
+
+//            getActivity().getSupportFragmentManager().popBackStack();
+//            breedListener.onSetBreedListener(owner);
 //            startActivityForResult(new Intent(getApplicationContext(), BreedsListActivity.class), REQUEST_CODE_DOG_KIND);
         }
     }
@@ -361,6 +369,26 @@ public class NewDogFormFragment extends Fragment {
         dogWeightEditText.setText("" + SomeDog.get().weight());
         dogTallEditText.setText("" + SomeDog.get().tall());
     }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "BreedsFragment onStop");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "BreedsFragment  onDetach");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "BreedsFragment  onPause");
+    }
+
 }
 
 
