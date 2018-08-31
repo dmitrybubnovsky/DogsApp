@@ -1,9 +1,9 @@
 package com.andersen.dogsapp.dogs.ui.owners;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
-import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeDog;
 import com.andersen.dogsapp.dogs.ui.testing_edittext_filling.SomeOwner;
 
@@ -31,12 +30,24 @@ public class NewOwnerFormFragment extends Fragment {
     private EditText preferredKindEditText;
     private Button addOwnerButton;
 
+    IAddedOwnerFragmentListener addedOwnerListener;
+
+    public interface IAddedOwnerFragmentListener {
+        void onAddedOwnerListener();
+    }
+
     public NewOwnerFormFragment() {
     }
 
     public static Fragment newInstance() {
         final NewOwnerFormFragment fragment = new NewOwnerFormFragment();
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        addedOwnerListener = (MainAppDescriptionActivity) context;
     }
 
     @Override
@@ -66,7 +77,7 @@ public class NewOwnerFormFragment extends Fragment {
 
         testingFillEditText();
 
-        if(getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null){
+        if (getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null) {
             Log.d(TAG, "OwnersListFragment not exist");
         } else {
             Log.d(TAG, "OwnersListFragment exists");
@@ -76,7 +87,8 @@ public class NewOwnerFormFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addOwner();
-                getActivity().getSupportFragmentManager().popBackStack();
+                addedOwnerListener.onAddedOwnerListener();
+//                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -114,10 +126,10 @@ public class NewOwnerFormFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        if(getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null){
+        if (getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null) {
             Log.d(TAG, "onDetach: OwnersListFragment not exist");
         } else {
-            Log.d(TAG, "onDetach: OwnersListFragment exists");
+            Log.d(TAG, "NewOwnerFragment: onDetach: OwnersListFragment found by tag");
         }
     }
 }

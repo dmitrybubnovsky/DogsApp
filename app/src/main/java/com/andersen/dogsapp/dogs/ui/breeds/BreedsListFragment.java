@@ -155,7 +155,6 @@ public class BreedsListFragment extends Fragment
         if(!calledFromDrawer){
             fragmentListener.onBreedFragmentListener(dogKind, owner);
         }
-
     }
 
     private void initViews(View view) {

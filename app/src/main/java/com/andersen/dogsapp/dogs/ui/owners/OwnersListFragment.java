@@ -44,7 +44,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     IaddOwnerFragmentListener addOwnerListener;
 
     public interface IaddOwnerFragmentListener {
-        void onNewOwnerFragmentListener();
+        void onAddOwnerFragmentListener();
     }
 
     private List<Owner> owners;
@@ -127,7 +127,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_new_menu_item:
-                addOwnerListener.onNewOwnerFragmentListener();
+                addOwnerListener.onAddOwnerFragmentListener();
                 break;
         }
         return super.onOptionsItemSelected(item);

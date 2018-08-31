@@ -41,6 +41,7 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 import java.io.File;
 
 public class NewDogFormFragment extends Fragment {
+    public static final String TAG = "#";
     public static final String NEW_DOG_ARG = "new_dog_arg";
     public static final String BREED_ARG = "breed_arg";
     public static final String NEW_DOG_TAG = "new_dog_tag";
@@ -48,7 +49,6 @@ public class NewDogFormFragment extends Fragment {
     public static final int REQUEST_CAMERA = 201;
     public static final int REQUEST_CODE_DOG_KIND = 202;
     public static final int REQUEST_CODE_PREVIEW = 203;
-    private static final String TAG = "#";
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int STORAGE_REQUEST_PERMISSION = 114;
     private static final int CAMERA_REQUEST_PERMISSION = 116;
@@ -154,13 +154,15 @@ public class NewDogFormFragment extends Fragment {
             // если порода собаки еще не установлена, то переход в список пород
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity();
+                Log.d(TAG, "------------- dog.getDogKind() starts breeedslist");
 
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
-                finishedDogListener.onDogFinishedListener(owner);
+                Log.d(TAG, "------------- dog kind "+dog.getDogKind()+" starts onDogFinishedListener");
 //                getActivity().getSupportFragmentManager().popBackStack();
+                finishedDogListener.onDogFinishedListener(owner);
 
 //                backToDogListActivity();
             }

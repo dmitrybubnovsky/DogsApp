@@ -68,4 +68,19 @@ public class AppFragmentManager {
         }
     }
 
+
+    public <T> void replaceBreedFragment(Context context, String fragmentName, String fragmentTag, String keyArgs, T t ) {
+        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
+        if (fragment == null) {
+            Bundle bundleArgs = new Bundle();
+            bundleArgs.putParcelable(keyArgs, (Parcelable) t);
+            fragment = Fragment.instantiate(context, fragmentName, bundleArgs);
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.host_fragment_container, fragment, fragmentTag)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
+
 }

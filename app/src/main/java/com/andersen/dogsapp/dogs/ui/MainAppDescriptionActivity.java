@@ -39,6 +39,7 @@ import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
 public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
+        NewOwnerFormFragment.IAddedOwnerFragmentListener,
         DogsListFragment.IAddDogFragmentListener<Owner>,
         OwnersListFragment.IaddOwnerFragmentListener,
         NewDogFormFragment.ISetBreedFragmentListener<Owner>,
@@ -47,6 +48,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private static final String NEW_OWNER_FRAGMENT = NewOwnerFormFragment.class.getName();
+    private static final String OWNERS_FRAGMENT = OwnersListFragment.class.getName();
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
     private static final String DOGS_FRAGMENT = DogsListFragment.class.getName();
     private static final String BREEDS_FRAGMENT = BreedsListFragment.class.getName();
@@ -80,16 +82,42 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         Log.d(TAG, "Main: onResume");
         owners = OwnersRepository.get().getOwners();
 
-        if (fragManager.findFragmentByTag(OWNERS_TAG) == null) {
-            initFragment(OwnersListFragment.class, OWNERS_TAG, R.string.title_owners_list);
-            AppFragmentManager.getInstance(this)
-                    .replaceAddToBackStack(this, fragmentClass.getName(), fragmentTag);
+//        if (fragManager.findFragmentByTag(OWNERS_TAG) == null) {}
+//            initFragment(OwnersListFragment.class, OWNERS_TAG, R.string.title_owners_list);
+//            AppFragmentManager.getInstance(this)
+//                    .replaceAddToBackStack(this, fragmentClass.getName(), fragmentTag);
 
-        }
+
+
         if (owners.isEmpty()) {
-            initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
-            AppFragmentManager.getInstance(this)
-                    .replaceAddToBackStack(this, fragmentClass.getName(), fragmentTag);
+//            initFragment(NewOwnerFormFragment.class, NEW_OWNER_TAG, R.string.toolbar_title_add_owner);
+//            AppFragmentManager.getInstance(this)
+//                    .replaceAddToBackStack(this, fragmentClass.getName(), fragmentTag);
+            addNewOwnerFragment();
+        } else {
+            addOwnersListFragment();
+        }
+    }
+
+    public void addOwnersListFragment(){
+        Fragment ownersFragment = fragManager.findFragmentByTag(OWNERS_TAG);
+        if(ownersFragment == null){
+            ownersFragment = Fragment.instantiate(this, OWNERS_FRAGMENT);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, ownersFragment)
+//                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
+    }
+
+    public void addNewOwnerFragment(){
+        Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
+        if(newOwnerFragment == null){
+            newOwnerFragment = Fragment.instantiate(this, NEW_OWNER_FRAGMENT);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, newOwnerFragment)
+//                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
         }
     }
 
@@ -183,16 +211,28 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
 
-    // callback метода IFragmentOwnerListener<Owner> вызывается из OwnersListFragment клик по списку
+    // callback метода IFragmentOwnerListener<Owner>
+    // вызывается из OwnersListFragment клик по списку
     @Override
     public void onFragmentOwnerListener(Owner owner) {
         if (owner.getDogs().isEmpty()) {
-        // start NewDogFormFragment
-            AppFragmentManager.getInstance(this)
-                    .replaceFragmentWithEntity(this, NEW_DOG_FRAGMENT,
-                            NEW_DOG_TAG, NEW_DOG_ARG, owner);
+            // запускает NewDogFormFragment
+//            AppFragmentManager.getInstance(this)
+//                    .replaceFragmentWithEntity(this, NEW_DOG_FRAGMENT,
+//                            NEW_DOG_TAG, NEW_DOG_ARG, owner);
+            Bundle bundleArgs = new Bundle();
+            bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
+
+            Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
+            if (newDogFragment == null) {
+                newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
+                fragManager.beginTransaction()
+                        .replace(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
+                        .addToBackStack(null)
+                        .commit();
+            }
         } else {
-        // start DogsListFragment
+            // запускает DogsListFragment
             AppFragmentManager.getInstance(this)
                     .replaceFragmentWithEntity(this, DOGS_FRAGMENT,
                             DOGS_TAG, OWNER_ARG, owner);
@@ -200,33 +240,62 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     // callback метода of IAddDogFragmentListener<Dog> вызывается из DogsListFragment в menu
+    // start NewDogFormFragment(owner)
     @Override
     public void onAddDogFragmentListener(Owner owner) {
-//        startNewDogFormFragment(owner);
-        AppFragmentManager.getInstance(this)
-                .replaceFragmentWithEntity(this, NEW_DOG_FRAGMENT,
-                        NEW_DOG_TAG, NEW_DOG_ARG, owner);
-    }
+//        AppFragmentManager.getInstance(this)
+//                .replaceFragmentWithEntity(this, NEW_DOG_FRAGMENT,
+//                        NEW_DOG_TAG, NEW_DOG_ARG, owner);
+        Bundle bundleArgs = new Bundle();
+        bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
 
-    // callback метода IaddOwnerFragmentListener вызывается из OwnersListFragment в menu
-    @Override
-    public void onNewOwnerFragmentListener() {
-        AppFragmentManager.getInstance(this)
-                .replaceAddToBackStack(this, NEW_OWNER_FRAGMENT, NEW_OWNER_TAG);
-    }
+        Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
+        if (newDogFragment == null) {
+            newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
 
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
 
     // callback метода  вызывается из BreedsListFragment
+    // запускает NewDogFragment
     @Override
     public void onBreedFragmentListener(DogKind dogKind, Owner owner) {
         Bundle bundleArgs = new Bundle();
         bundleArgs.putParcelable(BREED_ARG, (Parcelable) dogKind);
         bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
-        AppFragmentManager.getInstance(this)
-                .replaceFragmentWithBundle(this, NEW_DOG_FRAGMENT,
-                        NEW_DOG_TAG, bundleArgs);
+
+        Fragment breedsFragment = fragManager.findFragmentByTag(BREEDS_TAG);
+        fragManager.popBackStack();
+
+        Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
+        if (newDogFragment == null) {
+            newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
+            fragManager.beginTransaction()
+                    .add(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+//        AppFragmentManager.getInstance(this)
+//                .replaceFragmentWithBundle(this, NEW_DOG_FRAGMENT,
+//                        NEW_DOG_TAG, bundleArgs);
     }
 
+
+
+    // callback метода IaddOwnerFragmentListener вызывается из OwnersListFragment в menu
+    @Override
+    public void onAddOwnerFragmentListener() {
+//        AppFragmentManager.getInstance(this)
+//                .replaceAddToBackStack(this, NEW_OWNER_FRAGMENT, NEW_OWNER_TAG);
+
+        addNewOwnerFragment();
+
+    }
 
 
     // callback метода  вызывается из NewDogFormFragment по нажатию на породы breedEditText
@@ -234,9 +303,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     public void onSetBreedListener(Owner owner) {
         Log.d(TAG, "Main: onSetBreedListener");
         AppFragmentManager.getInstance(this)
-                .replaceFragmentWithEntity(this, BREEDS_FRAGMENT, BREEDS_TAG, BreedsListFragment.OWNER_ARG, owner);
+//                .replaceFragmentWithEntity(this, BREEDS_FRAGMENT, BREEDS_TAG, BreedsListFragment.OWNER_ARG, owner);
+                .replaceBreedFragment(this, BREEDS_FRAGMENT, BREEDS_TAG, BreedsListFragment.OWNER_ARG, owner);
     }
-
 
 
     @Override
@@ -251,6 +320,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "Main onDestroy");
     }
 
     @Override
@@ -263,6 +333,26 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     public void onDogFinishedListener(Owner owner) {
         AppFragmentManager.getInstance(this)
                 .replaceFragmentWithEntity(this, DOGS_FRAGMENT, DOGS_ARG, OWNER_ARG, owner);
+    }
+
+
+    public void popAll() {
+        fragManager = getSupportFragmentManager();
+        fragManager.popBackStack(BACK_STACK_ROOT_TAG, fragManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    // вызывается при клике добавить owner'a в NewOwnerFormFragment
+    @Override
+    public void onAddedOwnerListener() {
+
+        Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
+        if(newOwnerFragment != null){
+            fragManager.beginTransaction()
+                    .remove(newOwnerFragment)
+                    .commit();
+        }
+
+        addOwnersListFragment();
     }
 }
 
