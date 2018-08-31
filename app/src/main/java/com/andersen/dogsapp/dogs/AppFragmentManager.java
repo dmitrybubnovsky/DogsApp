@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.andersen.dogsapp.R;
 
@@ -50,4 +51,21 @@ public class AppFragmentManager {
             replaceAddToBackStack(fragment, fragmentTag);
         }
     }
+
+
+    public <T> void replaceFragmentWithBundle(Context context, String fragmentName, String fragmentTag, Bundle bundle) {
+        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
+        if (fragment == null) {
+            fragment = Fragment.instantiate(context, fragmentName, bundle);
+            replaceAddToBackStack(fragment, fragmentTag);
+        }
+    }
+
+    public void clearBackStack() {
+        Log.d("#","clearBackStack");
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
 }

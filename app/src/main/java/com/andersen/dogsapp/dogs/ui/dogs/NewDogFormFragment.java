@@ -73,11 +73,14 @@ public class NewDogFormFragment extends Fragment {
     private View rootLayout;
 
     ISetBreedFragmentListener breedListener;
-    public interface ISetBreedFragmentListener {
-        void onSetBreedListener();
+    public interface ISetBreedFragmentListener<T> {
+        void onSetBreedListener(T t);
     }
 
-
+    IDogFinishedFragmentListener finishedDogListener;
+    public interface IDogFinishedFragmentListener<T> {
+        void onDogFinishedListener(T t);
+    }
 
     public static Fragment newInstance(Owner owner) {
         final NewDogFormFragment newDogFragment = new NewDogFormFragment();
@@ -91,6 +94,7 @@ public class NewDogFormFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         breedListener = (MainAppDescriptionActivity) context;
+        finishedDogListener = (MainAppDescriptionActivity) context;
     }
 
     @Override
@@ -107,6 +111,22 @@ public class NewDogFormFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void readBundle(final Bundle bundle) {
+        if (bundle != null) {
+            if(bundle.containsKey(NEW_DOG_ARG)){
+                owner = bundle.getParcelable(NEW_DOG_ARG);
+            }
+            if (bundle.containsKey(BREED_ARG)) {
+                dogKind = bundle.getParcelable(BREED_ARG);
+            }
+        } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_dog_form, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
@@ -119,7 +139,12 @@ public class NewDogFormFragment extends Fragment {
 
         initViews(view);
         testingFillEditText();
+
         createDogModelWithInputDatas();
+
+        if((owner != null) && (dogKind != null)){
+            setDogKindTitleAndImage();
+        }
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
@@ -128,16 +153,15 @@ public class NewDogFormFragment extends Fragment {
         addDogButton.setOnClickListener(view1 -> {
             // если порода собаки еще не установлена, то переход в список пород
             if (dog.getDogKind() == null) {
-//                startDogsKindsListActivity();
+                startDogsKindsListActivity();
 
-/* временноe */   dog.setDogImageString("german_shepherd_testimage.jpg");  // TODO delete this line
-/* решениe */     dog.setDogKind("german_shepherd");                       // TODO delete this line
-                  dogKindEditText.setText("german_shepherd");              // TODO delete this line
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
-                getActivity().getSupportFragmentManager().popBackStack();
+                finishedDogListener.onDogFinishedListener(owner);
+//                getActivity().getSupportFragmentManager().popBackStack();
+
 //                backToDogListActivity();
             }
         });
@@ -145,17 +169,6 @@ public class NewDogFormFragment extends Fragment {
         photoDogImageView.setOnClickListener(view_ -> checkPermissions());
 
         return view;
-    }
-
-    private void readBundle(Bundle bundle) {
-        if (bundle != null) {
-            if(bundle.containsKey(NEW_DOG_ARG)){
-                owner = bundle.getParcelable(NEW_DOG_ARG);
-            }
-            if (bundle.containsKey(BREED_ARG)) {
-                dogKind = bundle.getParcelable(BREED_ARG);
-            }
-        } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
     }
 
     private void checkPermissions() {
@@ -293,9 +306,8 @@ public class NewDogFormFragment extends Fragment {
             Log.d(TAG, "no network");
         }
         else {
-
             getActivity().getSupportFragmentManager().popBackStack();
-            breedListener.onSetBreedListener();
+            breedListener.onSetBreedListener(owner);
 //            startActivityForResult(new Intent(getApplicationContext(), BreedsListActivity.class), REQUEST_CODE_DOG_KIND);
         }
     }

@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
+import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.BreedsRepository;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
@@ -30,6 +31,7 @@ import java.util.List;
 public class BreedsListFragment extends Fragment
         implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
     public static final String TAG = "#";
+    public static final String OWNER_ARG = "BreedsListFragment_owner_arg";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private static final String BREEDS_ON_SAVE_INSTANCE_STATE_KEY = "breeds_bundle_key";
     public static final String BREEDS_ARG = "breeds_arg";
@@ -38,11 +40,13 @@ public class BreedsListFragment extends Fragment
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
+    private Owner owner; // set final
+    private boolean calledFromDrawer;
 
     IOnBreedFragmentListener fragmentListener;
 
-    public interface IOnBreedFragmentListener<T> {
-        void onBreedFragmentListener(T t);
+    public interface IOnBreedFragmentListener<D, O> {
+        void onBreedFragmentListener(D d, O o);
     }
 
     public BreedsListFragment (){}
@@ -62,6 +66,14 @@ public class BreedsListFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        calledFromDrawer = false;
+
+        final Bundle bundleArguments = getArguments();
+        if (bundleArguments == null) {
+            calledFromDrawer = true;
+        } else {
+            readBundle(bundleArguments);
+        }
 
         if (savedInstanceState != null) {
             dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY);
@@ -120,6 +132,14 @@ public class BreedsListFragment extends Fragment
         }
     }
 
+    private void readBundle(final Bundle bundle) {
+        if (bundle != null) {
+            if(bundle.containsKey(OWNER_ARG)){
+                owner = bundle.getParcelable(OWNER_ARG);
+            }
+        } else { Log.d(TAG, "owner bundle = null"); } // TODO delete this line
+    }
+
     private File getImageBreedFile(Context context, String breedFileNameString) {
         File filesDir = context.getFilesDir();
         String timeStamp = String.valueOf(breedFileNameString + ".jpeg");
@@ -132,7 +152,10 @@ public class BreedsListFragment extends Fragment
 //        intent.putExtra(EXTRA_SELECTED_KIND, dogKind);
 //        setResult(RESULT_OK, intent);
 //        finish();
-        fragmentListener.onBreedFragmentListener(dogKind);
+        if(!calledFromDrawer){
+            fragmentListener.onBreedFragmentListener(dogKind, owner);
+        }
+
     }
 
     private void initViews(View view) {
