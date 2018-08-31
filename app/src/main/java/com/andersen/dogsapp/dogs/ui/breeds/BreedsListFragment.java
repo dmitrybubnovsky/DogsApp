@@ -161,7 +161,12 @@ public class BreedsListFragment extends Fragment
 //        }
         sendResultBreed(Activity.RESULT_OK, dogKind);
         ((MainAppDescriptionActivity) getActivity()).deleteFragment(BreedsListFragment.this);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "breeds onDestroy");
     }
 
     private void sendResultBreed(int resultCode, DogKind dogkind) {

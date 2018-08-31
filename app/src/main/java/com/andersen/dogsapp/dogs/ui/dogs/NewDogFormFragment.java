@@ -41,6 +41,9 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.io.File;
 
+import static android.app.Activity.RESULT_OK;
+import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELECTED_KIND;
+
 public class NewDogFormFragment extends Fragment {
     public static final String TAG = "#";
     public static final String NEW_DOG_ARG = "new_dog_arg";
@@ -389,7 +392,15 @@ public class NewDogFormFragment extends Fragment {
         Log.d(TAG, "BreedsFragment  onPause");
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+            setDogKindTitleAndImage();
+        }
+    }
 }
+
 
 
 
