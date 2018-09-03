@@ -30,11 +30,9 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
 import java.util.List;
 
-import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.OWNER_ARG;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.BREED_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_TAG;
@@ -47,7 +45,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         DogsListFragment.IAddDogFragmentListener<Owner>,
         DogsListFragment.IAddedDogFragmentListener,
         OwnersListFragment.IaddOwnerFragmentListener,
-        NewDogFormFragment.ISetBreedFragmentListener<Owner>,
         NewDogFormFragment.IDogFinishedFragmentListener<Owner>,
         BreedsListFragment.IOnBreedFragmentListener<DogKind, Owner> {
     private static final String TAG = "#";
@@ -212,9 +209,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 fragmentTag = OWNERS_TAG;
         }
 
-//        AppFragmentManager.getInstance(this)
-//                .replaceAddToBackStack(this, fragmentClass.getName(), fragmentTag);
-
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
@@ -326,29 +320,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
     }
 
-
-    // callback метода  вызывается из NewDogFormFragment
-    // по нажатию на породы breedEditText
-    // запускает BreedsListFragment
-    @Override
-    public void onSetBreedListener(Owner owner) {
-        Log.d(TAG, "Main: onSetBreedListener");
-        AppFragmentManager.getInstance(this)
-//                .replaceFragmentWithEntity(this, BREEDS_FRAGMENT, BREEDS_TAG, BreedsListFragment.OWNER_ARG, owner);
-                .replaceBreedFragment(this, BREEDS_FRAGMENT, BREEDS_TAG, BreedsListFragment.OWNER_ARG, owner);
-    }
-
     public void startBreedsFromTargetFragment(Fragment frag) {
         fragManager.beginTransaction()
                 .add(R.id.host_fragment_container, frag, BREEDS_TAG)
                 .commit();
     }
-
-    public void startDogPhotoPreviewFragment(String photoFilePathString) {
-
-        Fragment frag = Fragment.instantiate(getActivity(), DogPhotoPreviewFragment.class.getName());
-    }
-
 
     @Override
     public void onBackPressed() {

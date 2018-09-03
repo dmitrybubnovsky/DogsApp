@@ -42,10 +42,8 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
-import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BACK_STACK_ROOT_TAG;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELECTED_KIND;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
 
 public class NewDogFormFragment extends Fragment {
     public static final String TAG = "#";
@@ -79,12 +77,14 @@ public class NewDogFormFragment extends Fragment {
     private boolean hasPhoto;
     private View rootLayout;
 
-    ISetBreedFragmentListener breedListener;
-    public interface ISetBreedFragmentListener<T> {
-        void onSetBreedListener(T t);
+    IPreviewClickFragmentListener previewClickListener;
+
+    public interface IPreviewClickFragmentListener<T> {
+        void onPreviewClickListener(T t);
     }
 
     IDogFinishedFragmentListener finishedDogListener;
+
     public interface IDogFinishedFragmentListener<T> {
         void onDogFinishedListener(T t);
     }
@@ -100,10 +100,9 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        breedListener = (MainAppDescriptionActivity) context;
+//        previewClickListener = (MainAppDescriptionActivity) context;
         finishedDogListener = (MainAppDescriptionActivity) context;
     }
-
 
 
     @Override
@@ -136,15 +135,16 @@ public class NewDogFormFragment extends Fragment {
 
     private void readBundle(final Bundle bundle) {
         if (bundle != null) {
-            if(bundle.containsKey(NEW_DOG_ARG)){
+            if (bundle.containsKey(NEW_DOG_ARG)) {
                 owner = bundle.getParcelable(NEW_DOG_ARG);
             }
             if (bundle.containsKey(BREED_ARG)) {
                 dogKind = bundle.getParcelable(BREED_ARG);
             }
-        } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
+        } else {
+            Log.d(TAG, "NewDogFragment bundle = null");
+        } // TODO delete this line
     }
-
 
 
     @Override
@@ -178,7 +178,7 @@ public class NewDogFormFragment extends Fragment {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
-                Log.d(TAG, "------------- dog kind "+dog.getDogKind()+" starts onDogFinishedListener");
+                Log.d(TAG, "------------- dog kind " + dog.getDogKind() + " starts onDogFinishedListener");
                 finishedDogListener.onDogFinishedListener(owner);
 
 //              backToDogListActivity();
@@ -223,7 +223,7 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "NewDog onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
+        Log.d(TAG, "NewDog onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
     private void showNoPermissionSnackbarSettings(int snackBarStringResId, int settingPermissionRequest) {
@@ -305,12 +305,35 @@ public class NewDogFormFragment extends Fragment {
     }
 
     private void startCamera() {
+        Log.d(TAG, "CAMERA startActivityForResult(captureImage, REQUEST_CAMERA);");
         photoFile = getPhotoFile(getActivity());
         Uri uri = FileProvider.getUriForFile(getActivity(),
                 "com.andersen.dogsapp.fileprovider", photoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        Log.d(TAG, "CAMERA startActivityForResult(captureImage, REQUEST_CAMERA);");
+//        List<ResolveInfo> cameraActivities = getActivity().getPackageManager()
+//                .queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
+//        for (ResolveInfo activity : cameraActivities) {
+//            getActivity().grantUriPermission(activity.activityInfo.packageName,
+//                    uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//        }
         startActivityForResult(captureImage, REQUEST_CAMERA);
+    }
+
+    private void startPhotoPreviewActivity(String photoFilePathString) {
+        DogPhotoPreviewFragment dialogFragment = DogPhotoPreviewFragment.newInstance(photoFilePathString);
+
+        // назначаем текущий фрагмент целевым для DogPhotoPreviewFragment'a
+        dialogFragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_PREVIEW);
+        dialogFragment.show(((MainAppDescriptionActivity) getActivity()).fragManager, PREVIEW_TAG);
+
+//        ((MainAppDescriptionActivity)getActivity()).fragManager.beginTransaction()
+//                .replace(R.id.host_fragment_container, previewFragment, PREVIEW_TAG)
+//                .addToBackStack(BACK_STACK_ROOT_TAG)
+//                .commit();
+
+//        Intent intent = new Intent(getApplicationContext(), DogPhotoPreviewActivity.class);
+//        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
+//        startActivityForResult(intent, REQUEST_CODE_PREVIEW);
     }
 
     private File getPhotoFile(Context context) {
@@ -319,34 +342,15 @@ public class NewDogFormFragment extends Fragment {
         return new File(filesDir, timeStamp);
     }
 
-    private void startPhotoPreviewActivity(String photoFilePathString) {
-        Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_FILE_PATH, photoFilePathString);
-
-        Fragment previewFragment = Fragment.instantiate(getActivity(), DogPhotoPreviewFragment.class.getName(), bundle);
-        // назначаем текущий фрагмент целевым для DogPhotoPreviewFragment'a
-        previewFragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_PREVIEW);
-
-        ((MainAppDescriptionActivity)getActivity()).fragManager.beginTransaction()
-                .replace(R.id.host_fragment_container, previewFragment, PREVIEW_TAG)
-                .addToBackStack(BACK_STACK_ROOT_TAG)
-                .commit();
-
-//        Intent intent = new Intent(getApplicationContext(), DogPhotoPreviewActivity.class);
-//        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
-//        startActivityForResult(intent, REQUEST_CODE_PREVIEW);
-    }
-
     private void startDogsKindsListActivity() {
         // Если сети нет, то список пород НЕ открываем
         if (!NetworkManager.hasNetWorkAccess(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network_toast, Toast.LENGTH_SHORT).show();
             Log.d(TAG, "no network");
-        }
-        else {
+        } else {
             Fragment frag = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName());
             frag.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
-            ((MainAppDescriptionActivity)getActivity()).startBreedsFromTargetFragment(frag);
+            ((MainAppDescriptionActivity) getActivity()).startBreedsFromTargetFragment(frag);
         }
     }
 
@@ -398,6 +402,11 @@ public class NewDogFormFragment extends Fragment {
         dogTallEditText.setText("" + SomeDog.get().tall());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "NewDog onStart");
+    }
 
     @Override
     public void onStop() {
@@ -419,8 +428,8 @@ public class NewDogFormFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_CODE_DOG_KIND:
                     dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
                     setDogKindTitleAndImage();
@@ -433,7 +442,8 @@ public class NewDogFormFragment extends Fragment {
                     hasPhoto = true;
                     break;
                 case REQUEST_CODE_PREVIEW:
-//                    photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+                    Log.d(TAG, "case REQUEST_CODE_PREVIEW: ");
+                    photoFilePathString = data.getStringExtra(EXTRA_FILE_PATH);
                     break;
                 case PERMISSIONS_REQUEST:
                 case STORAGE_REQUEST_PERMISSION:
@@ -443,8 +453,13 @@ public class NewDogFormFragment extends Fragment {
                         startCameraOrPreview(photoFilePathString);
                     }
                     break;
+                default:
+                    updatePhotoView();
+                    dog.setDogImageString(photoFilePathString);
+                    break;
             }
-
+        } else {
+            hasPhoto = false;
         }
     }
 }
