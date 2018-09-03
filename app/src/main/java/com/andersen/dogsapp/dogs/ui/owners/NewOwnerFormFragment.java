@@ -77,12 +77,6 @@ public class NewOwnerFormFragment extends Fragment {
 
         testingFillEditText();
 
-        if (getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null) {
-            Log.d(TAG, "OwnersListFragment not exist");
-        } else {
-            Log.d(TAG, "OwnersListFragment exists");
-        }
-
         addOwnerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +121,7 @@ public class NewOwnerFormFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         if (getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null) {
-            Log.d(TAG, "onDetach: OwnersListFragment not exist");
+            Log.d(TAG, "NewOwnerFragment: onDetach: OwnersListFragment not exist");
         } else {
             Log.d(TAG, "NewOwnerFragment: onDetach: OwnersListFragment found by tag");
         }

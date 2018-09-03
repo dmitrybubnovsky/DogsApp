@@ -86,13 +86,13 @@ public class NewDogFormFragment extends Fragment {
         void onDogFinishedListener(T t);
     }
 
-    public static Fragment newInstance(Owner owner) {
-        final NewDogFormFragment newDogFragment = new NewDogFormFragment();
-        final Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(NEW_DOG_ARG, owner);
-        newDogFragment.setArguments(bundleArgs);
-        return newDogFragment;
-    }
+//    public static Fragment newInstance(Owner owner) {
+//        final NewDogFormFragment newDogFragment = new NewDogFormFragment();
+//        final Bundle bundleArgs = new Bundle();
+//        bundleArgs.putParcelable(NEW_DOG_ARG, owner);
+//        newDogFragment.setArguments(bundleArgs);
+//        return newDogFragment;
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -112,13 +112,20 @@ public class NewDogFormFragment extends Fragment {
         } else {
             readBundle(bundleArguments);
         }
+        Log.d(TAG, "NewDog onCreate");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "BreedsFragment onDestroy");
+        Log.d(TAG, "NewDog onDestroy");
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "NewDog onDestroy");
     }
 
     private void readBundle(final Bundle bundle) {
@@ -135,6 +142,7 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_dog_form, container, false);
+        Log.d(TAG, "NewDog onCreateView");
         Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
         if (toolbar != null) {
             ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
@@ -147,10 +155,6 @@ public class NewDogFormFragment extends Fragment {
         testingFillEditText();
 
         createDogModelWithInputDatas();
-
-        if((owner != null) && (dogKind != null)){
-            setDogKindTitleAndImage();
-        }
 
         dogKindEditText.setFocusable(false);
         dogKindEditText.setClickable(true);
@@ -167,10 +171,9 @@ public class NewDogFormFragment extends Fragment {
                 dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
                 Log.d(TAG, "------------- dog kind "+dog.getDogKind()+" starts onDogFinishedListener");
-//                getActivity().getSupportFragmentManager().popBackStack();
                 finishedDogListener.onDogFinishedListener(owner);
 
-//                backToDogListActivity();
+//              backToDogListActivity();
             }
         });
 
@@ -180,7 +183,7 @@ public class NewDogFormFragment extends Fragment {
     }
 
     private void checkPermissions() {
-        // если все ок запускаем камеру
+        // если есть все разрешения запускаем камеру
         if (hasBothPermissions()) {
             startCameraOrPreview(photoFilePathString);
         } // если отсутствуют оба разрешения
@@ -281,9 +284,9 @@ public class NewDogFormFragment extends Fragment {
 
     private void startCameraOrPreview(String photoFilePathString) {
         if (hasPhoto) {
-//            startPhotoPreviewActivity(photoFilePathString);
+            startPhotoPreviewActivity(photoFilePathString);
         } else {
-//            startCamera();
+            startCamera();
         }
     }
 
@@ -292,6 +295,7 @@ public class NewDogFormFragment extends Fragment {
         Uri uri = FileProvider.getUriForFile(getActivity(),
                 "com.andersen.dogsapp.fileprovider", photoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        Log.d(TAG, "CAMERA startActivityForResult(captureImage, REQUEST_CAMERA);");
         startActivityForResult(captureImage, REQUEST_CAMERA);
     }
 
@@ -314,14 +318,9 @@ public class NewDogFormFragment extends Fragment {
             Log.d(TAG, "no network");
         }
         else {
-
             Fragment frag = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName());
             frag.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
             ((MainAppDescriptionActivity)getActivity()).startBreedsFromTargetFragment(frag);
-
-//            getActivity().getSupportFragmentManager().popBackStack();
-//            breedListener.onSetBreedListener(owner);
-//            startActivityForResult(new Intent(getApplicationContext(), BreedsListActivity.class), REQUEST_CODE_DOG_KIND);
         }
     }
 
@@ -377,79 +376,49 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG, "BreedsFragment onStop");
+        Log.d(TAG, "NewDog onStop");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "BreedsFragment  onDetach");
+        Log.d(TAG, "NewDog onDetach");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "BreedsFragment  onPause");
+        Log.d(TAG, "NewDog onPause");
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
-            dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
-            setDogKindTitleAndImage();
+            switch (requestCode){
+                case REQUEST_CODE_DOG_KIND:
+                    dogKind = data.getParcelableExtra(EXTRA_SELECTED_KIND);
+                    setDogKindTitleAndImage();
+                    break;
+                case REQUEST_CAMERA:
+                    Log.d(TAG, "case REQUEST_CAMERA: ");
+                    setFilePathString();
+                    dog.setDogImageString(photoFilePathString);
+                    updatePhotoView();
+                    hasPhoto = true;
+                    break;
+                case REQUEST_CODE_PREVIEW:
+//                    photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
+                    break;
+                case PERMISSIONS_REQUEST:
+                case STORAGE_REQUEST_PERMISSION:
+                case CAMERA_REQUEST_PERMISSION:
+                    if (hasPermission(Manifest.permission.CAMERA)
+                            && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        startCameraOrPreview(photoFilePathString);
+                    }
+                    break;
+            }
+
         }
     }
 }
-
-
-
-
-
-
-
-//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//
-//        if (resultCode == RESULT_OK) {
-//            switch (requestCode) {
-//                case REQUEST_CODE_DOG_KIND:
-//                    dogKind = intent.getParcelableExtra(EXTRA_SELECTED_KIND);
-//                    setDogKindTitleAndImage();
-//                    break;
-//                case REQUEST_CAMERA:
-//                    setFilePathString();
-//                    dog.setDogImageString(photoFilePathString);
-//                    updatePhotoView();
-//                    hasPhoto = true;
-//                    break;
-//                case REQUEST_CODE_PREVIEW:
-//                    photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
-//                    break;
-//                case PERMISSIONS_REQUEST:
-//                case STORAGE_REQUEST_PERMISSION:
-//                case CAMERA_REQUEST_PERMISSION:
-//                    if (hasPermission(Manifest.permission.CAMERA)
-//                            && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                        startCameraOrPreview(photoFilePathString);
-//                    }
-//                    break;
-//                default:
-//                    updatePhotoView();
-//                    dog.setDogImageString(photoFilePathString);
-//                    break;
-//            }
-//        } else {
-//            hasPhoto = false;
-//        }
-//    }
-
-
-
-
-
-
-//    private void backToDogListActivity() {
-//        Intent intent = new Intent();
-//        intent.putExtra(EXTRA_OWNER, owner);
-//        setResult(RESULT_OK, intent);
-//        finish();
-//    }

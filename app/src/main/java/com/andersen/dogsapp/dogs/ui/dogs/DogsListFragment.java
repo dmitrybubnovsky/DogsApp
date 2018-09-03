@@ -44,10 +44,17 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         void onAddDogFragmentListener(T t);
     }
 
+    private IAddedDogFragmentListener addedDogListener;
+
+    public interface IAddedDogFragmentListener {
+        void onAddedDogFragmentListener();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         addDogListener = (MainAppDescriptionActivity) context;
+        addedDogListener = (MainAppDescriptionActivity) context;
         Log.d(TAG, "DogsList onAttach"); // TODO Delete
     }
 
@@ -105,7 +112,9 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
             // TODO: OPEN "ADD NEW DOG FRAGMENT"
         } else {
             Log.d(TAG, "DogsListFragment: onResume: owners not empty");
+//            addedDogListener.onAddedDogFragmentListener();
             updateUI();
+
         }
     }
 

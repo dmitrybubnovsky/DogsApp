@@ -275,7 +275,6 @@ public class NewDogFormActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(getApplicationContext(), BreedsListActivity.class);
             startActivityForResult(intent, REQUEST_CODE_DOG_KIND);
-            Toast.makeText(getApplicationContext(), R.string.specify_kind_please_toast, Toast.LENGTH_SHORT).show();
         }
     }
 

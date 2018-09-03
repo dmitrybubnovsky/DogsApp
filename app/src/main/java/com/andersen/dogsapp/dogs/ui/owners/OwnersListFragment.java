@@ -68,6 +68,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d(TAG, "OwnersListFragment onAttach");
         fragmentListener = (MainAppDescriptionActivity) context;
         addOwnerListener = (MainAppDescriptionActivity) context;
     }
@@ -75,6 +76,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "OwnersListFragment onCreate");
         setHasOptionsMenu(true);
     }
 
@@ -82,7 +84,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
-        Log.d(TAG, "OwnersList onCreate");
+        Log.d(TAG, "OwnersList onCreateView");
 
         ownersAdapter = new OwnersAdapter(getActivity(), this);
 
@@ -94,6 +96,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "OWNERS  onResume() " );
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             Toast.makeText(getActivity(), "Owners is empty", Toast.LENGTH_SHORT).show();
