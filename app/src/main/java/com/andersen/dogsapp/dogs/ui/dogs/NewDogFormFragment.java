@@ -42,7 +42,10 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
+import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BACK_STACK_ROOT_TAG;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELECTED_KIND;
+import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
+import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
 
 public class NewDogFormFragment extends Fragment {
     public static final String TAG = "#";
@@ -317,6 +320,18 @@ public class NewDogFormFragment extends Fragment {
     }
 
     private void startPhotoPreviewActivity(String photoFilePathString) {
+        Bundle bundle = new Bundle();
+        bundle.putString(EXTRA_FILE_PATH, photoFilePathString);
+
+        Fragment previewFragment = Fragment.instantiate(getActivity(), DogPhotoPreviewFragment.class.getName(), bundle);
+        // назначаем текущий фрагмент целевым для DogPhotoPreviewFragment'a
+        previewFragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_PREVIEW);
+
+        ((MainAppDescriptionActivity)getActivity()).fragManager.beginTransaction()
+                .replace(R.id.host_fragment_container, previewFragment, PREVIEW_TAG)
+                .addToBackStack(BACK_STACK_ROOT_TAG)
+                .commit();
+
 //        Intent intent = new Intent(getApplicationContext(), DogPhotoPreviewActivity.class);
 //        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
 //        startActivityForResult(intent, REQUEST_CODE_PREVIEW);

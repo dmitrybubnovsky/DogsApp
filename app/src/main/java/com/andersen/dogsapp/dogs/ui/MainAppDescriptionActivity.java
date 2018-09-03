@@ -22,6 +22,7 @@ import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
+import com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
@@ -29,9 +30,11 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
 import java.util.List;
 
+import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.OWNER_ARG;
+import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.BREED_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_TAG;
@@ -53,6 +56,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private static final String OWNERS_FRAGMENT = OwnersListFragment.class.getName();
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
     private static final String DOGS_FRAGMENT = DogsListFragment.class.getName();
+    private static final String PREVIVEW_FRAGMENT = DogPhotoPreviewFragment.class.getName();
     private static final String BREEDS_FRAGMENT = BreedsListFragment.class.getName();
     private Toolbar toolbar;
     private boolean GOT_BACK_FROM_CAMERA = false;
@@ -67,7 +71,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private Fragment fragment;
     private Class fragmentClass;
 
-    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+    public static final String BACK_STACK_ROOT_TAG = "root_fragment";
     private static final String BACK_STACK_NEW_DOG_TAG = "root_fragment";
 
     @Override
@@ -338,6 +342,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         fragManager.beginTransaction()
                 .add(R.id.host_fragment_container, frag, BREEDS_TAG)
                 .commit();
+    }
+
+    public void startDogPhotoPreviewFragment(String photoFilePathString) {
+
+        Fragment frag = Fragment.instantiate(getActivity(), DogPhotoPreviewFragment.class.getName());
     }
 
 
