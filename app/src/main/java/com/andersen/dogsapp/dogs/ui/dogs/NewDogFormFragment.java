@@ -102,6 +102,7 @@ public class NewDogFormFragment extends Fragment {
         super.onAttach(context);
 //        previewClickListener = (MainAppDescriptionActivity) context;
         finishedDogListener = (MainAppDescriptionActivity) context;
+        Log.d(TAG, "NewDog onAttach");
     }
 
 
@@ -130,7 +131,7 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG, "NewDog onDestroy");
+        Log.d(TAG, "NewDog onDestroyView");
     }
 
     private void readBundle(final Bundle bundle) {
@@ -435,15 +436,17 @@ public class NewDogFormFragment extends Fragment {
                     setDogKindTitleAndImage();
                     break;
                 case REQUEST_CAMERA:
-                    Log.d(TAG, "case REQUEST_CAMERA: ");
+                    Log.d(TAG, "NewDog case REQUEST_CAMERA: ");
                     setFilePathString();
                     dog.setDogImageString(photoFilePathString);
                     updatePhotoView();
                     hasPhoto = true;
                     break;
                 case REQUEST_CODE_PREVIEW:
-                    Log.d(TAG, "case REQUEST_CODE_PREVIEW: ");
+                    Log.d(TAG, "NewDog case REQUEST_CODE_PREVIEW: ");
                     photoFilePathString = data.getStringExtra(EXTRA_FILE_PATH);
+                    dog.setDogImageString(photoFilePathString);
+                    updatePhotoView();
                     break;
                 case PERMISSIONS_REQUEST:
                 case STORAGE_REQUEST_PERMISSION:
@@ -461,5 +464,17 @@ public class NewDogFormFragment extends Fragment {
         } else {
             hasPhoto = false;
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "NewDog onActivityCreated");
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.d(TAG, "NewDog onViewStateRestored");
     }
 }
