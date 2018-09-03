@@ -106,6 +106,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
         ownerDogs = DogsRepository.get().getOwnerDogs(owner);
         if (ownerDogs.isEmpty()) {
             Toast.makeText(getActivity(), "DogListFragment: NO dogs", Toast.LENGTH_SHORT).show();
@@ -114,7 +115,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
             Log.d(TAG, "DogsListFragment: onResume: owners not empty");
 //            addedDogListener.onAddedDogFragmentListener();
             updateUI();
-
         }
     }
 

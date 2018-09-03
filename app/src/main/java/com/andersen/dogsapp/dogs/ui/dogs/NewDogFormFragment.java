@@ -101,10 +101,13 @@ public class NewDogFormFragment extends Fragment {
         finishedDogListener = (MainAppDescriptionActivity) context;
     }
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Log.d(TAG, "NewDog onCreate");
 
         final Bundle bundleArguments = getArguments();
         if (bundleArguments == null) {
@@ -138,6 +141,8 @@ public class NewDogFormFragment extends Fragment {
             }
         } else { Log.d(TAG, "NewDogFragment bundle = null"); } // TODO delete this line
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -210,6 +215,12 @@ public class NewDogFormFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, permission_request_int);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "NewDog onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
     }
 
     private void showNoPermissionSnackbarSettings(int snackBarStringResId, int settingPermissionRequest) {

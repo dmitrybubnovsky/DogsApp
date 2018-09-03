@@ -96,7 +96,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "OWNERS  onResume() " );
+        Log.d(TAG, "OWNERS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             Toast.makeText(getActivity(), "Owners is empty", Toast.LENGTH_SHORT).show();

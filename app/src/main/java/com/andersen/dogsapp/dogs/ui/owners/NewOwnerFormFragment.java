@@ -63,8 +63,16 @@ public class NewOwnerFormFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "NewOnwer: onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_owner_form, container, false);
+        Log.d(TAG, "NewOwner onCreate");
+
         Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
         if (toolbar != null) {
             ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
@@ -120,10 +128,6 @@ public class NewOwnerFormFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        if (getActivity().getSupportFragmentManager().findFragmentByTag(OwnersListFragment.OWNERS_TAG) == null) {
-            Log.d(TAG, "NewOwnerFragment: onDetach: OwnersListFragment not exist");
-        } else {
-            Log.d(TAG, "NewOwnerFragment: onDetach: OwnersListFragment found by tag");
-        }
+        Log.d(TAG, "NewOwner: onDetach:");
     }
 }
