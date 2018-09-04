@@ -36,34 +36,17 @@ public class BreedsListFragment extends Fragment
     public static final String OWNER_ARG = "BreedsListFragment_owner_arg";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private static final String BREEDS_ON_SAVE_INSTANCE_STATE_KEY = "breeds_bundle_key";
-    public static final String BREEDS_ARG = "breeds_arg";
-    public static final String BREEDS_TAG = "breeds_tag";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
-    private Owner owner; // set final
+    private Owner owner;
     private boolean calledFromDrawer;
-
-    IOnBreedFragmentListener fragmentListener;
-
-    public interface IOnBreedFragmentListener<D, O> {
-        void onBreedFragmentListener(D d, O o);
-    }
-
-    public BreedsListFragment() {
-    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY, (ArrayList<DogKind>) dogKinds);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        fragmentListener = (MainAppDescriptionActivity) getContext();
     }
 
     @Override
@@ -95,6 +78,7 @@ public class BreedsListFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "BREEDS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
         BreedsRepository.getInstance().getDogsKinds(dogBreeds -> {
             dogKinds = dogBreeds;
             getActivity().runOnUiThread(this::updateUI);
@@ -140,9 +124,7 @@ public class BreedsListFragment extends Fragment
             if (bundle.containsKey(OWNER_ARG)) {
                 owner = bundle.getParcelable(OWNER_ARG);
             }
-        } else {
-            Log.d(TAG, "owner bundle = null");
-        } // TODO delete this line
+        }
     }
 
     private File getImageBreedFile(Context context, String breedFileNameString) {
@@ -153,12 +135,6 @@ public class BreedsListFragment extends Fragment
 
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
-//        if(!calledFromDrawer){
-//            fragmentListener.onBreedFragmentListener(dogKind, owner);
-//        }
-//        if (!calledFromDrawer) {
-//            fragmentListener.onBreedFragmentListener(dogKind, owner);
-//        }
         sendResultBreed(Activity.RESULT_OK, dogKind);
         ((MainAppDescriptionActivity) getActivity()).deleteFragment(BreedsListFragment.this);
     }
@@ -171,7 +147,6 @@ public class BreedsListFragment extends Fragment
 
     private void sendResultBreed(int resultCode, DogKind dogkind) {
         if (getTargetFragment() == null) {
-            Log.d(TAG, "getTargetFragment() == null");
             return;
         }
         Intent intent = new Intent();

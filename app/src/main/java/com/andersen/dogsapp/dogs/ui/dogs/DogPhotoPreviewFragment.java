@@ -1,11 +1,7 @@
 package com.andersen.dogsapp.dogs.ui.dogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +9,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,10 +20,8 @@ import android.widget.ImageView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
-import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
 
 import java.io.File;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
@@ -68,7 +61,7 @@ public class DogPhotoPreviewFragment extends DialogFragment {
 //        photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
     }
 
-    private void showDialogFragment(){
+    private void showDialogFragment() {
 
     }
 
@@ -78,6 +71,12 @@ public class DogPhotoPreviewFragment extends DialogFragment {
         } else {
             photoFilePathString = bundleArguments.getString(PREVIEW_ARG);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "PREVIEW onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
     @Nullable
@@ -145,8 +144,8 @@ public class DogPhotoPreviewFragment extends DialogFragment {
 //        finish();
     }
 
-    private void sendResult(int resultCode, String photoFilePathString){
-        if(getTargetFragment() == null){
+    private void sendResult(int resultCode, String photoFilePathString) {
+        if (getTargetFragment() == null) {
             return;
         }
         Intent intent = new Intent();
@@ -184,10 +183,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
         }
     }
 }
-
-
-
-
 
 
 //    @NonNull

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -50,8 +49,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         DogsListFragment.IAddDogFragmentListener<Owner>,
         DogsListFragment.IAddedDogFragmentListener<Dog>,
         OwnersListFragment.IaddOwnerFragmentListener,
-        NewDogFormFragment.IDogFinishedFragmentListener<Owner>,
-        BreedsListFragment.IOnBreedFragmentListener<DogKind, Owner> {
+        NewDogFormFragment.IDogFinishedFragmentListener<Owner> {
+    public static final String BACK_STACK_ROOT_TAG = "root_fragment";
     private static final String TAG = "#";
     private static final String BREEDS_TAG = "breeds_tag";
     private static final String NEW_OWNER_FRAGMENT = NewOwnerFormFragment.class.getName();
@@ -59,23 +58,21 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
     private static final String DOGS_FRAGMENT = DogsListFragment.class.getName();
     private static final String INFO_FRAGMENT = DogsInfoFragment.class.getName();
-    private static final String PREVIVEW_FRAGMENT = DogPhotoPreviewFragment.class.getName();
-    private static final String BREEDS_FRAGMENT = BreedsListFragment.class.getName();
+    private static final String BACK_STACK_NEW_DOG_TAG = "root_fragment";
+    public FragmentManager fragManager;
     private Toolbar toolbar;
-    private boolean GOT_BACK_FROM_CAMERA = false;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    public FragmentManager fragManager;
-
     private List<Owner> owners;
-    private String fragmentTag;
 
-    private Fragment fragment;
-    private Class fragmentClass;
 
-    public static final String BACK_STACK_ROOT_TAG = "root_fragment";
-    private static final String BACK_STACK_NEW_DOG_TAG = "root_fragment";
+    /*
+     * TODO: вынести всю логику создающую фрагменты в AppFragmentManager
+     * TODO: допилить оставшиеся пункты меню
+     * TODO: FloatingActionButton
+     * TODO: поосвобождать ресуры во фрагментах
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,27 +84,12 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
         initViews();
 
-//        addOwnersListFragment();
         AppFragmentManager.getInstance(this)
                 .replaceFragmentAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
 
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             replaceNewOwnerFragmentToBackStack();
-        }
-    }
-
-    public void addOwnersListFragment() {
-        Fragment ownersFragment = fragManager.findFragmentByTag(OWNERS_TAG);
-        if (ownersFragment == null) {
-            ownersFragment = Fragment.instantiate(this, OWNERS_FRAGMENT);
-            fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, ownersFragment, OWNERS_TAG)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
-            Log.d(TAG, "commit");
-        } else {
-            Log.d(TAG, "not null ");
         }
     }
 
@@ -169,12 +151,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
     private void setupDrawerContent(NavigationView navigViewDrawer) {
         navigViewDrawer.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return false;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return false;
                 }
         );
     }
@@ -184,8 +163,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     private void selectDrawerItem(MenuItem menuItem) {
-        fragment = null;
-        fragmentClass = null;
         AppFragmentManager.getInstance(this).clearBackStackImmediate();
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
@@ -259,28 +236,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         startNewDogFragment(owner);
     }
 
-    // callback метода  вызывается из BreedsListFragment
-    // запускает NewDogFragment
-    @Override
-    public void onBreedFragmentListener(DogKind dogKind, Owner owner) {
-        Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(BREED_ARG, (Parcelable) dogKind);
-        bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
-
-        Fragment breedsFragment = fragManager.findFragmentByTag(BREEDS_TAG);
-        fragManager.popBackStack();
-
-        Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
-        if (newDogFragment == null) {
-            newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
-            fragManager.beginTransaction()
-                    .add(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
-        }
-    }
-
-
     // callback метода IaddOwnerFragmentListener вызывается из OwnersListFragment в menu
     @Override
     public void onAddOwnerFragmentListener() {
@@ -322,11 +277,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     // вызывается при клике добавить owner'a в NewOwnerFormFragment
     @Override
     public void onAddedOwnerListener() {
-//        deleteFragmentByTag(NEW_OWNER_TAG);
         deleteFragmentByTag(NEW_OWNER_TAG);
-
         fragManager.popBackStack();
-        Log.d(TAG, "onAddedOwnerListener called; delete fragment and popbackstack");
     }
 
     public void deleteFragmentByTag(String fragmentTag) {

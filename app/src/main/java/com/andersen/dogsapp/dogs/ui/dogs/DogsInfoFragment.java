@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,8 @@ import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
+import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
-import com.andersen.dogsapp.dogs.ui.DogToolBar;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
 public class DogsInfoFragment extends Fragment {
@@ -27,6 +26,8 @@ public class DogsInfoFragment extends Fragment {
     public static final String DOG_INFO_TAG = "dog_info_tag";
     private MediaPlayer mediaPlayer;
     private Dog dog;
+    private IChangeFragmentListener fragmentNameListener;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,12 @@ public class DogsInfoFragment extends Fragment {
         mediaPlayer = MediaPlayer.create(getActivity(), R.raw.dog_sound);
 
         readArguments();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        fragmentNameListener = (MainAppDescriptionActivity) context;
     }
 
     @Override
@@ -50,17 +57,23 @@ public class DogsInfoFragment extends Fragment {
         if (bundleArguments == null || !bundleArguments.containsKey(DOG_INFO_ARG)) {
         } else {
             dog = bundleArguments.getParcelable(DOG_INFO_ARG);
-
         }
     }
 
-    private void initViews(Context context, View view, Dog dog, MediaPlayer mediaPlayer) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
-        if (toolbar != null) {
-            ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
-//            toolbar.setTitle(R.string.title_add_dog);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentNameListener.onFragmentChangeListener(R.string.title_dog_description);
+        Log.d(TAG, "INFO onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        fragmentNameListener = null;
+    }
+
+    private void initViews(Context context, View view, Dog dog, MediaPlayer mediaPlayer) {
         ImageView dogsImageView = view.findViewById(R.id.dog_imageview_frag);
         String dogImageString = dog.getDogImageString();
         if (dogImageString.contains("_doggy_dogg.jpg")) {

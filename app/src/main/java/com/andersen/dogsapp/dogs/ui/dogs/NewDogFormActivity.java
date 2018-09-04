@@ -37,8 +37,8 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 
 import java.io.File;
 
-import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListActivity.EXTRA_SELECTED_KIND;
+import static com.andersen.dogsapp.dogs.ui.dogs.DogsListActivity.EXTRA_OWNER;
 
 public class NewDogFormActivity extends AppCompatActivity {
     public static final String EXTRA_NEW_OWNER = "new owner dog";

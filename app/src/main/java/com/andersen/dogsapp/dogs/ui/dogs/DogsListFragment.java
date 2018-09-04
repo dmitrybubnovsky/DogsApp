@@ -28,30 +28,18 @@ import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 import java.util.List;
 
 public class DogsListFragment extends Fragment implements IRecyclerItemListener<Dog> {
-    private static final String TAG = "#";
     public static final String DOGS_ARG = "dogs_arg";
     public static final String OWNER_ARG = "owner_arg";
     public static final String DOGS_TAG = "dogs_tag";
-
+    private static final String TAG = "#";
     private RecyclerView dogsRecyclerView;
     private Owner owner;
     private DogsAdapter dogsAdapter;
     private List<Dog> ownerDogs;
 
     private IAddDogFragmentListener addDogListener;
-
-    public interface IAddDogFragmentListener<T> {
-        void onAddDogFragmentListener(T t);
-    }
-
     private IAddedDogFragmentListener addedDogListener;
-
-    public interface IAddedDogFragmentListener<T> {
-        void onAddedDogFragmentListener(T t);
-    }
-
     private IChangeFragmentListener fragmentNameListener;
-
 
     @Override
     public void onAttach(Context context) {
@@ -97,7 +85,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         return view;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -108,12 +95,11 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
         fragmentNameListener.onFragmentChangeListener(R.string.title_dogs_list);
-        Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
+        Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
         ownerDogs = DogsRepository.get().getOwnerDogs(owner);
         if (ownerDogs.isEmpty()) {
             Toast.makeText(getActivity(), R.string.no_dogs, Toast.LENGTH_SHORT).show();
@@ -152,5 +138,13 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     public void onRecyclerItemClick(Dog dog) {
         // реагирует на клик собаки из списка
         addedDogListener.onAddedDogFragmentListener(dog);
+    }
+
+    public interface IAddDogFragmentListener<T> {
+        void onAddDogFragmentListener(T t);
+    }
+
+    public interface IAddedDogFragmentListener<T> {
+        void onAddedDogFragmentListener(T t);
     }
 }

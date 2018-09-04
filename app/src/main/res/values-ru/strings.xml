@@ -40,6 +40,7 @@
 
     <string name="specify_kind_please_toast">Пожалуйста, укажите породу собаки!</string>
 
+    <string name="title_dog_description">Информация о собаке</string>
     <string name="title_owners_list">Собаководы</string>
     <string name="title_dogs_list">Собаки</string>
     <string name="title_breeds">Породы</string>
@@ -53,6 +54,7 @@
     <string name="toolbar_title_kinds_list">Выберите породу собаки</string>
 
     <string name="no_network_toast">ПОДКЛЮЧЕНИЕ К СЕТИ ОТСУТСТВУЕТ</string>
+    <string name="no_dogs">Пока собак нет. Добавьте сообаку.</string>
 
     <string name="text_view_app_title">DOGGY DOGG</string>
     <string name="text_view_app_description">Это приложение для собаководов. Оно состоит из списка владельцев домашних животных и детальной информации об их домашних любимцах, включая имя, породу, возраст и рост питомца.</string>

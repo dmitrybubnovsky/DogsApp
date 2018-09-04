@@ -18,7 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +32,7 @@ import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
@@ -62,6 +62,8 @@ public class NewDogFormFragment extends Fragment {
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    IPreviewClickFragmentListener previewClickListener;
+    IDogFinishedFragmentListener finishedDogListener;
     private EditText dogNameEditText;
     private EditText dogKindEditText;
     private EditText dogAgeEditText;
@@ -76,35 +78,15 @@ public class NewDogFormFragment extends Fragment {
     private String photoFilePathString;
     private boolean hasPhoto;
     private View rootLayout;
-
-    IPreviewClickFragmentListener previewClickListener;
-
-    public interface IPreviewClickFragmentListener<T> {
-        void onPreviewClickListener(T t);
-    }
-
-    IDogFinishedFragmentListener finishedDogListener;
-
-    public interface IDogFinishedFragmentListener<T> {
-        void onDogFinishedListener(T t);
-    }
-
-//    public static Fragment newInstance(Owner owner) {
-//        final NewDogFormFragment newDogFragment = new NewDogFormFragment();
-//        final Bundle bundleArgs = new Bundle();
-//        bundleArgs.putParcelable(NEW_DOG_ARG, owner);
-//        newDogFragment.setArguments(bundleArgs);
-//        return newDogFragment;
-//    }
+    private IChangeFragmentListener fragmentNameListener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        previewClickListener = (MainAppDescriptionActivity) context;
         finishedDogListener = (MainAppDescriptionActivity) context;
+        fragmentNameListener = (MainAppDescriptionActivity) context;
         Log.d(TAG, "NewDog onAttach");
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,6 +102,14 @@ public class NewDogFormFragment extends Fragment {
         }
         Log.d(TAG, "NewDog onCreate");
     }
+
+//    public static Fragment newInstance(Owner owner) {
+//        final NewDogFormFragment newDogFragment = new NewDogFormFragment();
+//        final Bundle bundleArgs = new Bundle();
+//        bundleArgs.putParcelable(NEW_DOG_ARG, owner);
+//        newDogFragment.setArguments(bundleArgs);
+//        return newDogFragment;
+//    }
 
     @Override
     public void onDestroy() {
@@ -147,16 +137,10 @@ public class NewDogFormFragment extends Fragment {
         } // TODO delete this line
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_dog_form, container, false);
         Log.d(TAG, "NewDog onCreateView");
-        Toolbar toolbar = view.findViewById(R.id.toolbar_dogs_app);
-        if (toolbar != null) {
-            ((MainAppDescriptionActivity) getActivity()).setSupportActionBar(toolbar);
-//            toolbar.setTitle(R.string.title_add_dog);
-        }
 
         hasPhoto = false;
 
@@ -180,9 +164,8 @@ public class NewDogFormFragment extends Fragment {
                 dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
                 Log.d(TAG, "------------- dog kind " + dog.getDogKind() + " starts onDogFinishedListener");
+                // переход в DogsListFragment
                 finishedDogListener.onDogFinishedListener(owner);
-
-//              backToDogListActivity();
             }
         });
 
@@ -224,6 +207,7 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        fragmentNameListener.onFragmentChangeListener(R.string.title_add_dog);
         Log.d(TAG, "NewDog onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
@@ -418,6 +402,7 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        fragmentNameListener = null;
         Log.d(TAG, "NewDog onDetach");
     }
 
@@ -476,5 +461,13 @@ public class NewDogFormFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         Log.d(TAG, "NewDog onViewStateRestored");
+    }
+
+    public interface IPreviewClickFragmentListener<T> {
+        void onPreviewClickListener(T t);
+    }
+
+    public interface IDogFinishedFragmentListener<T> {
+        void onDogFinishedListener(T t);
     }
 }

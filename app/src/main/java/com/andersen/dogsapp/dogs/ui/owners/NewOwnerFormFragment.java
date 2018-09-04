@@ -25,16 +25,11 @@ public class NewOwnerFormFragment extends Fragment {
     public static final String TAG = "#";
     public static final String NEW_OWNER_TAG = "new_onwer_tag";
     private static final String NAME_ARG = "name";
+    IAddedOwnerFragmentListener addedOwnerListener;
     private EditText ownerNameEditText;
     private EditText ownerSurnameEditText;
     private EditText preferredKindEditText;
     private Button addOwnerButton;
-
-    IAddedOwnerFragmentListener addedOwnerListener;
-
-    public interface IAddedOwnerFragmentListener {
-        void onAddedOwnerListener();
-    }
 
     public NewOwnerFormFragment() {
     }
@@ -65,7 +60,7 @@ public class NewOwnerFormFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "NewOnwer: onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
+        Log.d(TAG, "NewOnwer: onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
     @Override
@@ -129,5 +124,9 @@ public class NewOwnerFormFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, "NewOwner: onDetach:");
+    }
+
+    public interface IAddedOwnerFragmentListener {
+        void onAddedOwnerListener();
     }
 }

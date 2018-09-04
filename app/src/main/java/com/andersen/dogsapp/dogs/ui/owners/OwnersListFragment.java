@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
@@ -28,25 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OwnersListFragment extends Fragment implements IRecyclerItemListener<Owner> {
-    private static final String TAG = "#";
     public static final String OWNERS_ARG = "onwers_arg";
     public static final String OWNERS_TAG = "owners_tag";
-
+    private static final String TAG = "#";
+    IChangeFragmentListener fragmentNameListener;
     private RecyclerView ownersRecyclerView;
     private OwnersAdapter ownersAdapter;
-
     private IFragmentOwnerListener fragmentListener;
-
-    public interface IFragmentOwnerListener<T> {
-        void onFragmentOwnerListener(T t);
-    }
-
-    IaddOwnerFragmentListener addOwnerListener;
-
-    public interface IaddOwnerFragmentListener {
-        void onAddOwnerFragmentListener();
-    }
-
+    private IaddOwnerFragmentListener addOwnerListener;
     private List<Owner> owners;
 
     public OwnersListFragment() {
@@ -71,6 +61,7 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         Log.d(TAG, "OwnersListFragment onAttach");
         fragmentListener = (MainAppDescriptionActivity) context;
         addOwnerListener = (MainAppDescriptionActivity) context;
+        fragmentNameListener = (MainAppDescriptionActivity) context;
     }
 
     @Override
@@ -96,7 +87,9 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "OWNERS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
+        // установить title для toolbar'a
+        fragmentNameListener.onFragmentChangeListener(R.string.title_owners_list);
+        Log.d(TAG, "OWNERS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             Toast.makeText(getActivity(), "Owners is empty", Toast.LENGTH_SHORT).show();
@@ -119,7 +112,6 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         ownersAdapter.notifyDataSetChanged();
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -141,28 +133,37 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
         fragmentListener.onFragmentOwnerListener(owner); // TODO fix this warning
     }
 
-
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG, "OwnersListFragment onStop");
+//        Log.d(TAG, "OwnersListFragment onStop");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "OwnersListFragment onDetach");
+        fragmentListener = null;
+        addOwnerListener = null;
+        fragmentNameListener = null;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "OwnersListFragment onPause");
+//        Log.d(TAG, "OwnersListFragment onPause");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "OwnersListFragment onDestroy");
+//        Log.d(TAG, "OwnersListFragment onDestroy");
+    }
+
+    public interface IFragmentOwnerListener<T> {
+        void onFragmentOwnerListener(T t);
+    }
+
+    public interface IaddOwnerFragmentListener {
+        void onAddOwnerFragmentListener();
     }
 }

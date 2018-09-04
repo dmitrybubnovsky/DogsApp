@@ -27,6 +27,7 @@
     <string name="specify_kind_please_toast">Specify dog\'s breed please!</string>
 
     <string name="title_description">Description</string>
+    <string name="title_dog_description">Dog\'s description</string>
     <string name="title_owners_list">Dog Owners</string>
     <string name="title_dogs_list">Dogs</string>
     <string name="title_breeds">Breeds</string>
@@ -43,6 +44,7 @@
     <string name="drawer_close">Close drawer</string>
 
     <string name="no_network_toast">NO NETWORK CONNECTION</string>
+    <string name="no_dogs">There is no any dog yet</string>
 
 
     <string name="storage_not_granted_snackbar">"Storage permission isn't granted" </string>
