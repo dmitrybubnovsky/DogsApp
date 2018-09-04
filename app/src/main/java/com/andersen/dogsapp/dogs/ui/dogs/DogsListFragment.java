@@ -46,8 +46,8 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
     private IAddedDogFragmentListener addedDogListener;
 
-    public interface IAddedDogFragmentListener {
-        void onAddedDogFragmentListener();
+    public interface IAddedDogFragmentListener<T> {
+        void onAddedDogFragmentListener(T t);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     public void onDetach() {
         super.onDetach();
         addDogListener = null;
+        addedDogListener = null;
         Log.d(TAG, "DogsList onDetach");  // TODO Delete
     }
 
@@ -147,5 +148,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onRecyclerItemClick(Dog dog) {
         // должна реагировать на касание элемента списка
+        addedDogListener.onAddedDogFragmentListener(dog);
     }
 }

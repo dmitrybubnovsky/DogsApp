@@ -18,11 +18,13 @@ import android.view.MenuItem;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppFragmentManager;
+import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
 import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment;
+import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
@@ -30,6 +32,8 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
 import java.util.List;
 
+import static com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment.DOG_INFO_ARG;
+import static com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment.DOG_INFO_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.OWNER_ARG;
@@ -43,7 +47,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         implements OwnersListFragment.IFragmentOwnerListener<Owner>,
         NewOwnerFormFragment.IAddedOwnerFragmentListener,
         DogsListFragment.IAddDogFragmentListener<Owner>,
-        DogsListFragment.IAddedDogFragmentListener,
+        DogsListFragment.IAddedDogFragmentListener<Dog>,
         OwnersListFragment.IaddOwnerFragmentListener,
         NewDogFormFragment.IDogFinishedFragmentListener<Owner>,
         BreedsListFragment.IOnBreedFragmentListener<DogKind, Owner> {
@@ -53,6 +57,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private static final String OWNERS_FRAGMENT = OwnersListFragment.class.getName();
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
     private static final String DOGS_FRAGMENT = DogsListFragment.class.getName();
+    private static final String INFO_FRAGMENT = DogsInfoFragment.class.getName();
     private static final String PREVIVEW_FRAGMENT = DogPhotoPreviewFragment.class.getName();
     private static final String BREEDS_FRAGMENT = BreedsListFragment.class.getName();
     private Toolbar toolbar;
@@ -388,11 +393,25 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
 
+    // callback метода of IAddedDogFragmentListener<Dog> вызывается из DogsListFragment
+    // по клику элемента списка, запускает DogsInfoFragment
     @Override
-    public void onAddedDogFragmentListener() {
-//        fragManager.popBackStack(BACK_STACK_NEW_DOG_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        deleteFragmentByTag(NEW_DOG_TAG);
-        Log.d(TAG, "! ! ! onAddedDogFragmentListener()");
+    public void onAddedDogFragmentListener(Dog dog) {
+        startDogsInfoFragment(dog);
+    }
+
+    private void startDogsInfoFragment(Dog dog) {
+        Bundle bundleArgs = new Bundle();
+        bundleArgs.putParcelable(DOG_INFO_ARG, (Parcelable) dog);
+
+        Fragment dogsInfoFragment = fragManager.findFragmentByTag(DOG_INFO_TAG);
+        if (dogsInfoFragment == null) {
+            dogsInfoFragment = Fragment.instantiate(this, INFO_FRAGMENT, bundleArgs);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, dogsInfoFragment, DOG_INFO_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
     }
 
     @Override
