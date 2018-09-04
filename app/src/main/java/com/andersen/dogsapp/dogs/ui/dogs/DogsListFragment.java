@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
+import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
@@ -32,7 +33,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     public static final String OWNER_ARG = "owner_arg";
     public static final String DOGS_TAG = "dogs_tag";
 
-    public final int REQUEST_CODE_NEW_DOG = 2;
     private RecyclerView dogsRecyclerView;
     private Owner owner;
     private DogsAdapter dogsAdapter;
@@ -50,12 +50,16 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         void onAddedDogFragmentListener(T t);
     }
 
+    private IChangeFragmentListener fragmentNameListener;
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         addDogListener = (MainAppDescriptionActivity) context;
         addedDogListener = (MainAppDescriptionActivity) context;
-        Log.d(TAG, "DogsList onAttach"); // TODO Delete
+        fragmentNameListener = (MainAppDescriptionActivity) context;
+        Log.d(TAG, "DogsList onAttach");
     }
 
     @Override
@@ -63,6 +67,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         super.onDetach();
         addDogListener = null;
         addedDogListener = null;
+        fragmentNameListener = null;
         Log.d(TAG, "DogsList onDetach");  // TODO Delete
     }
 
@@ -107,14 +112,12 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onResume() {
         super.onResume();
+        fragmentNameListener.onFragmentChangeListener(R.string.title_dogs_list);
         Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity)getActivity()).fragManager.getBackStackEntryCount());
         ownerDogs = DogsRepository.get().getOwnerDogs(owner);
         if (ownerDogs.isEmpty()) {
-            Toast.makeText(getActivity(), "DogListFragment: NO dogs", Toast.LENGTH_SHORT).show();
-            // TODO: OPEN "ADD NEW DOG FRAGMENT"
+            Toast.makeText(getActivity(), R.string.no_dogs, Toast.LENGTH_SHORT).show();
         } else {
-            Log.d(TAG, "DogsListFragment: onResume: owners not empty");
-//            addedDogListener.onAddedDogFragmentListener();
             updateUI();
         }
     }
@@ -147,7 +150,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
     @Override
     public void onRecyclerItemClick(Dog dog) {
-        // должна реагировать на касание элемента списка
+        // реагирует на клик собаки из списка
         addedDogListener.onAddedDogFragmentListener(dog);
     }
 }
