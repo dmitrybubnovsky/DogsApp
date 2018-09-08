@@ -29,7 +29,6 @@ import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment;
 import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 
-import java.lang.reflect.Constructor;
 import java.util.List;
 
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.CALLED_FOR_SELECT_KEY;
@@ -39,7 +38,6 @@ import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.OWNER_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_TAG;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.REQUEST_CODE_DOG_KIND;
 import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER_TAG;
 import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
@@ -53,7 +51,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         NewDogFormFragment.IDogFinishedFragmentListener<Owner> {
     public static final String BACK_STACK_ROOT_TAG = "root_fragment";
     private static final String TAG = "#";
-    private static final int DELAY_MILLIS = 10;
+    private static final int DELAY_MILLIS = 3;
     public static final String BREEDS_TAG = "breeds_tag";
     private static final String NEW_OWNER_FRAGMENT = NewOwnerFormFragment.class.getName();
     private static final String OWNERS_FRAGMENT = OwnersListFragment.class.getName();
@@ -162,12 +160,12 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         Log.d(TAG, "selectDrawerItem calls AppFragmentManager.clearBackStack();");
 //        AppFragmentManager.getInstance(this).clearBackStack();
         clearBackStack();
-
+        Handler handler = new Handler();
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
 //                AppFragmentManager.getInstance(this)
 //                        .replaceAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
-                Handler handler = new Handler();
+
                 handler.postDelayed(this::replaceOwnersFragmentToBackStack, DELAY_MILLIS);
                 break;
             case R.id.dogs_list_fragment:
@@ -176,13 +174,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 break;
             case R.id.breeds_fragment:
                 toolbar.setTitle(R.string.title_breeds);
-                Bundle bundleArg = new Bundle();
-                bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, false);
-                Fragment fragment = Fragment.instantiate(this, BreedsListFragment.class.getName(), bundleArg);
-                fragManager.beginTransaction()
-                        .replace(R.id.host_fragment_container, fragment, BREEDS_TAG)
-                        .addToBackStack(BACK_STACK_ROOT_TAG)
-                        .commit();
+
+                handler.postDelayed(this::startBreedsFromDrawer, DELAY_MILLIS);
 //              // empty implementation
                 break;
             default:
@@ -206,22 +199,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //        bundle.putParcelable(OWNER_ARG, owner);
 //        AppFragmentManager.getInstance(this).replaceAddToBackStack(this, DOGS_FRAGMENT,
 //                DOGS_TAG, bundle); // getParcelableBundle(OWNER_ARG, owner));
-    }
-
-    private void startNewDogFragment(Owner owner) {
-        Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
-
-        Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
-        if (newDogFragment == null) {
-            newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArgs);
-            fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
-                    .addToBackStack(BACK_STACK_NEW_DOG_TAG) // BACK_STACK_ROOT_TAG
-                    .commit();
-        } else {
-            Log.d(TAG, "NEW_DOG_TAG != null");
-        }
     }
 
     // callback метода of IAddDogFragmentListener<Dog> вызывается из DogsListFragment в menu
@@ -305,20 +282,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //        AppFragmentManager.getInstance(this).replaceAddToBackStack(this, INFO_FRAGMENT, DOG_INFO_TAG, bundle);
     }
 
-    private void startDogsInfoFragment(Dog dog) {
-        Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(DOG_INFO_ARG, (Parcelable) dog);
-
-        Fragment dogsListFragment = fragManager.findFragmentByTag(DOG_INFO_TAG);
-        if (dogsListFragment == null) {
-            dogsListFragment = Fragment.instantiate(this, INFO_FRAGMENT, bundleArgs);
-            fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, dogsListFragment, DOG_INFO_TAG)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
-        }
-    }
-
     private <T> Bundle getParcelableBundle(String keyArg, T t) {
         Bundle bundleArg = new Bundle();
         bundleArg.putParcelable(keyArg, (Parcelable) t);
@@ -358,14 +321,57 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     private void startDogsListFragment(Owner owner) {
-        Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(OWNER_ARG, (Parcelable) owner);
+        Bundle bundleArg = new Bundle();
+        bundleArg.putParcelable(OWNER_ARG, (Parcelable) owner);
 
         Fragment dogsListFragment = fragManager.findFragmentByTag(DOGS_TAG);
         if (dogsListFragment == null) {
-            dogsListFragment = Fragment.instantiate(this, DOGS_FRAGMENT, bundleArgs);
+            dogsListFragment = Fragment.instantiate(this, DOGS_FRAGMENT, bundleArg);
             fragManager.beginTransaction()
                     .replace(R.id.host_fragment_container, dogsListFragment, DOGS_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
+    }
+
+    private void startNewDogFragment(Owner owner) {
+        Bundle bundleArg = new Bundle();
+        bundleArg.putParcelable(NEW_DOG_ARG, (Parcelable) owner);
+
+        Fragment newDogFragment = fragManager.findFragmentByTag(NEW_DOG_TAG);
+        if (newDogFragment == null) {
+            newDogFragment = Fragment.instantiate(this, NEW_DOG_FRAGMENT, bundleArg);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, newDogFragment, NEW_DOG_TAG)
+                    .addToBackStack(BACK_STACK_NEW_DOG_TAG) // BACK_STACK_ROOT_TAG
+                    .commit();
+        } else {
+            Log.d(TAG, "NEW_DOG_TAG != null");
+        }
+    }
+
+    private void startDogsInfoFragment(Dog dog) {
+        Bundle bundleArg = new Bundle();
+        bundleArg.putParcelable(DOG_INFO_ARG, (Parcelable) dog);
+
+        Fragment dogsListFragment = fragManager.findFragmentByTag(DOG_INFO_TAG);
+        if (dogsListFragment == null) {
+            dogsListFragment = Fragment.instantiate(this, INFO_FRAGMENT, bundleArg);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, dogsListFragment, DOG_INFO_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
+    }
+
+    private void startBreedsFromDrawer() {
+        Bundle bundleArg = new Bundle();
+        bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, false);
+        Fragment fragment = fragManager.findFragmentByTag(BREEDS_TAG);
+        if (fragment == null) {
+            fragment = Fragment.instantiate(this, BreedsListFragment.class.getName(), bundleArg);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, fragment, BREEDS_TAG)
                     .addToBackStack(BACK_STACK_ROOT_TAG)
                     .commit();
         }
