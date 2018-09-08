@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -42,6 +43,7 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
+import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BREEDS_TAG;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELECTED_KIND;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
 
@@ -91,6 +93,7 @@ public class NewDogFormFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         Log.d(TAG, "NewDog onCreate");
 
@@ -333,9 +336,12 @@ public class NewDogFormFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.no_network_toast, Toast.LENGTH_SHORT).show();
             Log.d(TAG, "no network");
         } else {
-            Fragment frag = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName());
-            frag.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
-            ((MainAppDescriptionActivity) getActivity()).startBreedsFromTargetFragment(frag);
+            Fragment fragment = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName());
+            fragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
+//            ((MainAppDescriptionActivity) getActivity()).startBreedsFromTargetFragment(frag);
+            ((MainAppDescriptionActivity) getActivity()).fragManager.beginTransaction()
+                    .add(R.id.host_fragment_container, fragment, BREEDS_TAG)
+                    .commit();
         }
     }
 

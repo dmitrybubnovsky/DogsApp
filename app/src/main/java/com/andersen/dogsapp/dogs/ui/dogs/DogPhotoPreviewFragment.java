@@ -55,10 +55,9 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
         readArguments();
-
-//        photoFilePathString = intent.getStringExtra(EXTRA_FILE_PATH);
     }
 
     private void showDialogFragment() {
@@ -137,11 +136,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     private void backToNewDogFormActivity() {
         sendResult(RESULT_OK, photoFilePathString);
         ((MainAppDescriptionActivity) getActivity()).deleteFragment(DogPhotoPreviewFragment.this);
-
-//        Intent intent = new Intent();
-//        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
-//        setResult(RESULT_OK, intent);
-//        finish();
     }
 
     private void sendResult(int resultCode, String photoFilePathString) {
@@ -157,12 +151,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
         Uri uri = FileProvider.getUriForFile(getActivity(),
                 "com.andersen.dogsapp.fileprovider", photoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//        List<ResolveInfo> cameraActivities = getActivity().getPackageManager()
-//                .queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
-//        for (ResolveInfo activity : cameraActivities) {
-//            getActivity().grantUriPermission(activity.activityInfo.packageName,
-//                    uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//        }
         startActivityForResult(captureImage, REQUEST_CAMERA);
     }
 

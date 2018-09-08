@@ -3,6 +3,7 @@ package com.andersen.dogsapp.dogs.ui;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,12 +19,9 @@ import android.view.MenuItem;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
-import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
-import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
-import com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
@@ -36,7 +34,6 @@ import static com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment.DOG_INFO_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment.DOG_INFO_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.OWNER_ARG;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.BREED_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_TAG;
 import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER_TAG;
@@ -52,7 +49,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         NewDogFormFragment.IDogFinishedFragmentListener<Owner> {
     public static final String BACK_STACK_ROOT_TAG = "root_fragment";
     private static final String TAG = "#";
-    private static final String BREEDS_TAG = "breeds_tag";
+    private static final int DELAY_MILLIS = 10;
+    public static final String BREEDS_TAG = "breeds_tag";
     private static final String NEW_OWNER_FRAGMENT = NewOwnerFormFragment.class.getName();
     private static final String OWNERS_FRAGMENT = OwnersListFragment.class.getName();
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
@@ -75,6 +73,12 @@ public class MainAppDescriptionActivity extends AppCompatActivity
      */
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "HOST onSaveInstanceState");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
@@ -84,8 +88,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 
         initViews();
 
-        AppFragmentManager.getInstance(this)
-                .replaceFragmentAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
+//        AppFragmentManager.getInstance(this)
+//                .replaceAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
+
+//        replaceOwnersFragmentToBackStack();
+        OwnersListFragment.startFragment(fragManager, OWNERS_TAG);
 
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
@@ -98,18 +105,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         super.onResume();
         Log.d(TAG, "HOST onResume");
     }
-
-    public void replaceNewOwnerFragmentToBackStack() {
-        Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
-        if (newOwnerFragment == null) {
-            newOwnerFragment = Fragment.instantiate(this, NEW_OWNER_FRAGMENT);
-            fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, newOwnerFragment)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
-        }
-    }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -163,11 +158,13 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     private void selectDrawerItem(MenuItem menuItem) {
-        AppFragmentManager.getInstance(this).clearBackStackImmediate();
+        AppFragmentManager.getInstance(this).clearBackStack();
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
-                AppFragmentManager.getInstance(this)
-                        .replaceFragmentAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
+//                AppFragmentManager.getInstance(this)
+//                        .replaceAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
+                Handler handler = new Handler();
+                handler.postDelayed(() -> OwnersListFragment.startFragment(fragManager, OWNERS_TAG), DELAY_MILLIS);
                 break;
             case R.id.dogs_list_fragment:
                 toolbar.setTitle(R.string.title_dogs_list);
@@ -190,27 +187,14 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     // вызывается из OwnersListFragment клик по списку
     @Override
     public void onFragmentOwnerListener(Owner owner) {
+
+        // TODO ПРОБЛЕМА
         startDogsListFragment(owner);
-    }
 
-    private <T> Bundle getParcelableBundle(String keyArg, T t) {
-        Bundle bundleArg = new Bundle();
-        bundleArg.putParcelable(keyArg, (Parcelable) t);
-        return bundleArg;
-    }
-
-    private void startDogsListFragment(Owner owner) {
-        Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelable(OWNER_ARG, (Parcelable) owner);
-
-        Fragment dogsListFragment = fragManager.findFragmentByTag(DOGS_TAG);
-        if (dogsListFragment == null) {
-            dogsListFragment = Fragment.instantiate(this, DOGS_FRAGMENT, bundleArgs);
-            fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, dogsListFragment, DOGS_TAG)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
-        }
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable(OWNER_ARG, owner);
+//        AppFragmentManager.getInstance(this).replaceAddToBackStack(this, DOGS_FRAGMENT,
+//                DOGS_TAG, bundle); // getParcelableBundle(OWNER_ARG, owner));
     }
 
     private void startNewDogFragment(Owner owner) {
@@ -260,34 +244,30 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "Main onDestroy");
+        Log.d(TAG, "HOST onDestroy");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(TAG, "HOST onStop");
     }
 
+    // вызывается при нажатии на кнопку добавить (собачку) в NewDogFormFragment
     @Override
     public void onDogFinishedListener(Owner owner) {
         fragManager.popBackStack();
-        startDogsListFragment(owner);
+            startDogsListFragment(owner);
+        // TODO ПРОБЛЕМА
+//        AppFragmentManager.getInstance(this).replaceAddToBackStack(this, DOGS_FRAGMENT,
+//                DOGS_TAG, getParcelableBundle(OWNER_ARG, owner));
     }
 
-    // вызывается при клике добавить owner'a в NewOwnerFormFragment
+    // вызывается при клике по кнопке добавить owner'a в NewOwnerFormFragment
     @Override
     public void onAddedOwnerListener() {
-        deleteFragmentByTag(NEW_OWNER_TAG);
+        AppFragmentManager.getInstance(this).deleteFragmentByTag(NEW_OWNER_TAG);
         fragManager.popBackStack();
-    }
-
-    public void deleteFragmentByTag(String fragmentTag) {
-        Fragment newOwnerFragment = fragManager.findFragmentByTag(fragmentTag);
-        if (newOwnerFragment != null) {
-            fragManager.beginTransaction()
-                    .remove(newOwnerFragment)
-                    .commit();
-        }
     }
 
     public void deleteFragment(Fragment fragment) {
@@ -303,20 +283,29 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     public void onAddedDogFragmentListener(Dog dog) {
         startDogsInfoFragment(dog);
+        // TODO проблема
+//        Bundle bundle = getParcelableBundle(DOG_INFO_ARG, dog);
+//        AppFragmentManager.getInstance(this).replaceAddToBackStack(this, INFO_FRAGMENT, DOG_INFO_TAG, bundle);
     }
 
     private void startDogsInfoFragment(Dog dog) {
         Bundle bundleArgs = new Bundle();
         bundleArgs.putParcelable(DOG_INFO_ARG, (Parcelable) dog);
 
-        Fragment dogsInfoFragment = fragManager.findFragmentByTag(DOG_INFO_TAG);
-        if (dogsInfoFragment == null) {
-            dogsInfoFragment = Fragment.instantiate(this, INFO_FRAGMENT, bundleArgs);
+        Fragment dogsListFragment = fragManager.findFragmentByTag(DOG_INFO_TAG);
+        if (dogsListFragment == null) {
+            dogsListFragment = Fragment.instantiate(this, INFO_FRAGMENT, bundleArgs);
             fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, dogsInfoFragment, DOG_INFO_TAG)
+                    .replace(R.id.host_fragment_container, dogsListFragment, DOG_INFO_TAG)
                     .addToBackStack(BACK_STACK_ROOT_TAG)
                     .commit();
         }
+    }
+
+    private <T> Bundle getParcelableBundle(String keyArg, T t) {
+        Bundle bundleArg = new Bundle();
+        bundleArg.putParcelable(keyArg, (Parcelable) t);
+        return bundleArg;
     }
 
     @Override
@@ -328,6 +317,44 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     public void onFragmentChangeListener(int toolbarTitle) {
         setToolbarTitle(toolbarTitle);
     }
+
+    private void replaceOwnersFragmentToBackStack() {
+        Fragment fragment = fragManager.findFragmentByTag(OWNERS_TAG);
+        if (fragment == null) {
+            fragment = Fragment.instantiate(this, OWNERS_FRAGMENT);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, fragment, OWNERS_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
+    }
+
+
+    private void replaceNewOwnerFragmentToBackStack() {
+        Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
+        if (newOwnerFragment == null) {
+            newOwnerFragment = Fragment.instantiate(this, NEW_OWNER_FRAGMENT);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, newOwnerFragment,NEW_OWNER_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
+    }
+
+    private void startDogsListFragment(Owner owner) {
+        Bundle bundleArgs = new Bundle();
+        bundleArgs.putParcelable(OWNER_ARG, (Parcelable) owner);
+
+        Fragment dogsListFragment = fragManager.findFragmentByTag(DOGS_TAG);
+        if (dogsListFragment == null) {
+            dogsListFragment = Fragment.instantiate(this, DOGS_FRAGMENT, bundleArgs);
+            fragManager.beginTransaction()
+                    .replace(R.id.host_fragment_container, dogsListFragment, DOGS_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit();
+        }
+    }
+
 }
 
 

@@ -62,11 +62,10 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         final Bundle bundleArguments = getArguments();
-
         readArguments(bundleArguments);
-
         if (bundleArguments == null || !bundleArguments.containsKey(DOGS_TAG)) {
             Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
         } else {

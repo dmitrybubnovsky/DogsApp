@@ -1,11 +1,13 @@
 package com.andersen.dogsapp.dogs.ui.owners;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,14 +24,17 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
+import com.andersen.dogsapp.dogs.ui.BaseFragment;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnersListFragment extends Fragment implements IRecyclerItemListener<Owner> {
-    public static final String OWNERS_ARG = "onwers_arg";
+import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BACK_STACK_ROOT_TAG;
+
+public class OwnersListFragment extends BaseFragment implements IRecyclerItemListener<Owner> {
+    public static final String OWNERS_ARG = "owners_arg";
     public static final String OWNERS_TAG = "owners_tag";
     private static final String TAG = "#";
     IChangeFragmentListener fragmentNameListener;
@@ -42,10 +47,22 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     public OwnersListFragment() {
     }
 
-    public static Fragment newInstance() {
-        final OwnersListFragment ownersListFragment = new OwnersListFragment();
-        return ownersListFragment;
-    }
+//    public static OwnersListFragment newInstance(){
+//        OwnersListFragment fragment = new OwnersListFragment();
+//        return fragment;
+//    }
+//
+//    public static void startFragment(FragmentManager fragmentManager) {
+//        Fragment fragment = fragmentManager.findFragmentByTag(OWNERS_TAG);
+//        if (fragment == null) {
+//            fragment = new OwnersListFragment();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.host_fragment_container, fragment, OWNERS_TAG)
+//                    .addToBackStack(BACK_STACK_ROOT_TAG)
+//                    .commit();
+//        }
+//    }
+
 
     public static Fragment newInstance(List<Owner> owners) {
         final OwnersListFragment ownersListFragment = new OwnersListFragment();
@@ -67,7 +84,9 @@ public class OwnersListFragment extends Fragment implements IRecyclerItemListene
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "OwnersListFragment onCreate");
+        setRetainInstance(true);
+
+        Log.d(TAG, "OwnersListFragment onCreate"); // TODO: DELETE THIS LINE
         setHasOptionsMenu(true);
     }
 

@@ -48,6 +48,7 @@ public class NewOwnerFormFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         final Bundle bundleArguments = getArguments();
         if (bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)) {
             Log.d("", "NewOwnerFormFragment: bundleArguments == null || !bundleArguments.containsKey(NAME_ARG)");
