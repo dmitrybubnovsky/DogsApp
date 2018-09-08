@@ -52,14 +52,6 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
 //        return fragment;
 //    }
 
-    public static Fragment newInstance(List<Owner> owners) {
-        final OwnersListFragment ownersListFragment = new OwnersListFragment();
-        final Bundle bundleArgs = new Bundle();
-        bundleArgs.putParcelableArrayList(OWNERS_ARG, (ArrayList<Owner>) owners);
-        ownersListFragment.setArguments(bundleArgs);
-        return ownersListFragment;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

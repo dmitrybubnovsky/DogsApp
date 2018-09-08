@@ -96,6 +96,7 @@ public class AppFragmentManager {
                     .commit();
         }
     }
+
 //
 //    private <T> void showFragment(String fragmentTag, Class<?> cls){ // , T data
 //        Fragment fragm = fragManager.findFragmentByTag(fragmentTag);

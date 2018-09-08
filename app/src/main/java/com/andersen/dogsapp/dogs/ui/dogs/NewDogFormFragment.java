@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -44,6 +43,7 @@ import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BREEDS_TAG;
+import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.CALLED_FOR_SELECT_KEY;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELECTED_KIND;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
 
@@ -334,11 +334,11 @@ public class NewDogFormFragment extends Fragment {
         // Если сети нет, то список пород НЕ открываем
         if (!NetworkManager.hasNetWorkAccess(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network_toast, Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "no network");
         } else {
-            Fragment fragment = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName());
+            Bundle bundleArg = new Bundle();
+            bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, true);
+            Fragment fragment = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName(), bundleArg);
             fragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
-//            ((MainAppDescriptionActivity) getActivity()).startBreedsFromTargetFragment(frag);
             ((MainAppDescriptionActivity) getActivity()).fragManager.beginTransaction()
                     .add(R.id.host_fragment_container, fragment, BREEDS_TAG)
                     .commit();

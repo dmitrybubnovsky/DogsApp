@@ -35,17 +35,19 @@ public class BreedsListFragment extends Fragment
     public static final String TAG = "#";
     public static final String OWNER_ARG = "BreedsListFragment_owner_arg";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
-    private static final String BREEDS_ON_SAVE_INSTANCE_STATE_KEY = "breeds_bundle_key";
+    private static final String BREEDS_OUT_STATE_KEY = "breeds_bundle_key";
+    private static final String CALLED_SELECT_OUT_STATE_KEY = "breeds_bundle_key";
+    public static final String CALLED_FOR_SELECT_KEY = "called_from_drawer_bundle_arg";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
-    private Owner owner;
-    private boolean calledFromDrawer;
+    public boolean calledForSelect;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY, (ArrayList<DogKind>) dogKinds);
+        outState.putParcelableArrayList(BREEDS_OUT_STATE_KEY, (ArrayList<DogKind>) dogKinds);
+        outState.putBoolean(CALLED_SELECT_OUT_STATE_KEY, calledForSelect);
         super.onSaveInstanceState(outState);
     }
 
@@ -53,18 +55,13 @@ public class BreedsListFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        calledFromDrawer = false;
+        calledForSelect = false;
 
-        final Bundle bundleArguments = getArguments();
-        if (bundleArguments == null) {
-            calledFromDrawer = true;
-        } else {
-            readBundle(bundleArguments);
-        }
+        readBundle();
 
         if (savedInstanceState != null) {
-            dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_ON_SAVE_INSTANCE_STATE_KEY);
-            Log.d(TAG, "dogKinds " + dogKinds.size());
+            dogKinds = savedInstanceState.getParcelableArrayList(BREEDS_OUT_STATE_KEY);
+            calledForSelect = savedInstanceState.getBoolean(CALLED_SELECT_OUT_STATE_KEY);
         }
     }
 
@@ -120,11 +117,10 @@ public class BreedsListFragment extends Fragment
         }
     }
 
-    private void readBundle(final Bundle bundle) {
-        if (bundle != null) {
-            if (bundle.containsKey(OWNER_ARG)) {
-                owner = bundle.getParcelable(OWNER_ARG);
-            }
+    private void readBundle() {
+        final Bundle bundleArguments = getArguments();
+        if (bundleArguments != null) {
+            calledForSelect = bundleArguments.getBoolean(CALLED_FOR_SELECT_KEY);
         }
     }
 
@@ -136,8 +132,10 @@ public class BreedsListFragment extends Fragment
 
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
-        sendResultBreed(Activity.RESULT_OK, dogKind);
-        ((MainAppDescriptionActivity) getActivity()).deleteFragment(BreedsListFragment.this);
+        if(calledForSelect){
+            sendResultBreed(Activity.RESULT_OK, dogKind);
+            ((MainAppDescriptionActivity) getActivity()).deleteFragment(BreedsListFragment.this);
+        }
     }
 
     @Override

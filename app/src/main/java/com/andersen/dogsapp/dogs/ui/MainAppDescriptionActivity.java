@@ -22,6 +22,7 @@ import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
+import com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment;
 import com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment;
@@ -31,12 +32,14 @@ import com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.CALLED_FOR_SELECT_KEY;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment.DOG_INFO_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsInfoFragment.DOG_INFO_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.DOGS_TAG;
 import static com.andersen.dogsapp.dogs.ui.dogs.DogsListFragment.OWNER_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_ARG;
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.NEW_DOG_TAG;
+import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormFragment.REQUEST_CODE_DOG_KIND;
 import static com.andersen.dogsapp.dogs.ui.owners.NewOwnerFormFragment.NEW_OWNER_TAG;
 import static com.andersen.dogsapp.dogs.ui.owners.OwnersListFragment.OWNERS_TAG;
 
@@ -173,6 +176,13 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 break;
             case R.id.breeds_fragment:
                 toolbar.setTitle(R.string.title_breeds);
+                Bundle bundleArg = new Bundle();
+                bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, false);
+                Fragment fragment = Fragment.instantiate(this, BreedsListFragment.class.getName(), bundleArg);
+                fragManager.beginTransaction()
+                        .replace(R.id.host_fragment_container, fragment, BREEDS_TAG)
+                        .addToBackStack(BACK_STACK_ROOT_TAG)
+                        .commit();
 //              // empty implementation
                 break;
             default:
@@ -335,7 +345,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                     .commit();
         }
     }
-
 
     private void replaceNewOwnerFragmentToBackStack() {
         Fragment newOwnerFragment = fragManager.findFragmentByTag(NEW_OWNER_TAG);
