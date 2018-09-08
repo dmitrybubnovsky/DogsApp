@@ -51,18 +51,6 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
 //        OwnersListFragment fragment = new OwnersListFragment();
 //        return fragment;
 //    }
-//
-//    public static void startFragment(FragmentManager fragmentManager) {
-//        Fragment fragment = fragmentManager.findFragmentByTag(OWNERS_TAG);
-//        if (fragment == null) {
-//            fragment = new OwnersListFragment();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.host_fragment_container, fragment, OWNERS_TAG)
-//                    .addToBackStack(BACK_STACK_ROOT_TAG)
-//                    .commit();
-//        }
-//    }
-
 
     public static Fragment newInstance(List<Owner> owners) {
         final OwnersListFragment ownersListFragment = new OwnersListFragment();

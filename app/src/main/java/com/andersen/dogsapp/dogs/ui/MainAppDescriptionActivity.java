@@ -91,25 +91,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
 //        AppFragmentManager.getInstance(this)
 //                .replaceAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
         replaceOwnersFragmentToBackStack();
-        showFragment(OWNERS_TAG, OwnersListFragment.class);
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             replaceNewOwnerFragmentToBackStack();
-        }
-    }
-
-    private <T> void showFragment(String fragmentTag, Class<?> cls){ // , T data
-        Fragment fragm = fragManager.findFragmentByTag(fragmentTag);
-        if (fragm == null) {
-            try{
-                Constructor constructor = cls.getConstructor(); // data.getClass()
-                fragm = (Fragment) constructor.newInstance();  // data
-            } catch (Exception e) {
-            }
-            fragManager.beginTransaction()
-                    .replace(R.id.host_fragment_container, fragm)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
         }
     }
 
@@ -172,14 +156,16 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     private void selectDrawerItem(MenuItem menuItem) {
-        AppFragmentManager.getInstance(this).clearBackStack();
+        Log.d(TAG, "selectDrawerItem calls AppFragmentManager.clearBackStack();");
+//        AppFragmentManager.getInstance(this).clearBackStack();
+        clearBackStack();
+
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
 //                AppFragmentManager.getInstance(this)
 //                        .replaceAddToBackStack(this, OWNERS_FRAGMENT, OWNERS_TAG);
                 Handler handler = new Handler();
                 handler.postDelayed(this::replaceOwnersFragmentToBackStack, DELAY_MILLIS);
-//                handler.postDelayed(() -> OwnersListFragment.startFragment(fragManager), DELAY_MILLIS);
                 break;
             case R.id.dogs_list_fragment:
                 toolbar.setTitle(R.string.title_dogs_list);
@@ -260,6 +246,12 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "HOST onDestroy");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "HOST onRestoreInstanceState");
     }
 
     @Override
@@ -368,6 +360,10 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                     .addToBackStack(BACK_STACK_ROOT_TAG)
                     .commit();
         }
+    }
+
+    public void clearBackStack() {
+        fragManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
 

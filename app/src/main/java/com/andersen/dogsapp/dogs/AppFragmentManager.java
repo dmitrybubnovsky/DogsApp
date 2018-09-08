@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.andersen.dogsapp.R;
 
+import java.lang.reflect.Constructor;
+
 public class AppFragmentManager {
     public static AppFragmentManager instance;
     public static final String BACK_STACK_ROOT_TAG = "root_fragment";
@@ -94,4 +96,20 @@ public class AppFragmentManager {
                     .commit();
         }
     }
+//
+//    private <T> void showFragment(String fragmentTag, Class<?> cls){ // , T data
+//        Fragment fragm = fragManager.findFragmentByTag(fragmentTag);
+//        if (fragm == null) {
+//            try{
+//                Constructor constructor = cls.getConstructor(); // data.getClass()
+//                fragm = (Fragment) constructor.newInstance();  // data
+//            } catch (Exception e) {
+//            }
+//            fragManager.beginTransaction()
+//                    .replace(R.id.host_fragment_container, fragm, fragmentTag)
+//                    .addToBackStack(BACK_STACK_ROOT_TAG)
+//                    .commit();
+//        }
+//    }
+
 }
