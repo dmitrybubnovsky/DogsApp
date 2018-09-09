@@ -1,13 +1,11 @@
 package com.andersen.dogsapp.dogs.ui.owners;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,10 +26,7 @@ import com.andersen.dogsapp.dogs.ui.BaseFragment;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BACK_STACK_ROOT_TAG;
 
 public class OwnersListFragment extends BaseFragment implements IRecyclerItemListener<Owner> {
     public static final String OWNERS_ARG = "owners_arg";
@@ -39,6 +34,7 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
     private static final String TAG = "#";
     IChangeFragmentListener fragmentNameListener;
     private RecyclerView ownersRecyclerView;
+    private FloatingActionButton floatingButton;
     private OwnersAdapter ownersAdapter;
     private IFragmentOwnerListener fragmentListener;
     private IaddOwnerFragmentListener addOwnerListener;
@@ -79,6 +75,9 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
         ownersAdapter = new OwnersAdapter(getActivity(), this);
 
         initRecyclerView(view);
+        listenToScrolledRecyclerView();
+
+        floatingButton.setOnClickListener(v -> addOwnerListener.onAddOwnerFragmentListener());
 
         return view;
     }
@@ -98,12 +97,34 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
         }
     }
 
+    private void listenToScrolledRecyclerView(){
+        ownersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(dy < 0){
+                    floatingButton.show();
+                }
+                if (dy > 0){
+                    floatingButton.hide();
+                }
+            }
+        });
+    }
+
     private void initRecyclerView(View view) {
         Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
         ownersRecyclerView = view.findViewById(R.id.owners_recycler_view);
         ownersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         ownersRecyclerView.setAdapter(ownersAdapter);
+
+        floatingButton = view.findViewById(R.id.add_owner_fab);
+
     }
 
     private void updateUI() {

@@ -25,6 +25,7 @@ import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DogsListFragment extends Fragment implements IRecyclerItemListener<Dog> {
@@ -97,8 +98,8 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount()); // TODO delete line
         fragmentNameListener.onFragmentChangeListener(R.string.title_dogs_list);
-        Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
         ownerDogs = DogsRepository.get().getOwnerDogs(owner);
         if (ownerDogs.isEmpty()) {
             Toast.makeText(getActivity(), R.string.no_dogs, Toast.LENGTH_SHORT).show();
