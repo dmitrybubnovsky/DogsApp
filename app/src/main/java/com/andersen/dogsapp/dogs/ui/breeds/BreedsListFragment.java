@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
-import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.BreedsRepository;
 import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
@@ -76,7 +75,6 @@ public class BreedsListFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "BREEDS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
         BreedsRepository.getInstance().getDogsKinds(dogBreeds -> {
             dogKinds = dogBreeds;
             getActivity().runOnUiThread(this::updateUI);
@@ -132,16 +130,10 @@ public class BreedsListFragment extends Fragment
 
     @Override
     public void onRecyclerItemClick(DogKind dogKind) {
-        if(calledForSelect){
+        if (calledForSelect) {
             sendResultBreed(Activity.RESULT_OK, dogKind);
-            AppFragmentManager.getInstance().deleteFragment(getActivity().getSupportFragmentManager(),BreedsListFragment.this);
+            AppFragmentManager.getInstance().deleteFragment(getActivity().getSupportFragmentManager(), BreedsListFragment.this);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "breeds onDestroy");
     }
 
     private void sendResultBreed(int resultCode, DogKind dogkind) {

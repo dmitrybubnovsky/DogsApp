@@ -32,7 +32,6 @@ public class OwnersSQLiteDataSource implements IOwnersDataSource {
     @Override
     public List<Owner> getOwners() {
         loadOwners();
-        Log.d("#", ""+owners.size());
         return owners;
     }
 

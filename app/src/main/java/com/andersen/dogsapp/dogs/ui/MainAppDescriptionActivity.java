@@ -235,6 +235,12 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 DOG_INFO_TAG, getParcelableBundle(DOG_INFO_ARG, dog));
     }
 
+    // вызывается в каждом из 4-х фрагментов (в onResume) для установки toolbar title'a
+    @Override
+    public void onFragmentChangeListener(int toolbarTitle) {
+        setToolbarTitle(toolbarTitle);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -244,11 +250,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         Bundle bundleArg = new Bundle();
         bundleArg.putParcelable(keyArg, (Parcelable) t);
         return bundleArg;
-    }
-
-    @Override
-    public void onFragmentChangeListener(int toolbarTitle) {
-        setToolbarTitle(toolbarTitle);
     }
 
     private void startBreedsFromDrawer() {

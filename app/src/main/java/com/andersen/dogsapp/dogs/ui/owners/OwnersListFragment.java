@@ -1,6 +1,7 @@
 package com.andersen.dogsapp.dogs.ui.owners;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,13 +22,12 @@ import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.OwnersRepository;
-import com.andersen.dogsapp.dogs.ui.BaseFragment;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
 import java.util.List;
 
-public class OwnersListFragment extends BaseFragment implements IRecyclerItemListener<Owner> {
+public class OwnersListFragment extends Fragment implements IRecyclerItemListener<Owner> {
     public static final String OWNERS_TAG = "owners_tag";
     private static final String TAG = "#";
     private IChangeFragmentListener fragmentNameListener;
@@ -83,8 +83,7 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
         fragmentNameListener.onFragmentChangeListener(R.string.title_owners_list);
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
-            Toast.makeText(getActivity(), "Owners list is empty", Toast.LENGTH_SHORT).show();
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+            Toast.makeText(getActivity(), "Add new owner, please", Toast.LENGTH_SHORT).show();
         } else {
             updateUI();
         }

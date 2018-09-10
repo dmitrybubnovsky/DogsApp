@@ -20,18 +20,18 @@ import android.widget.ImageView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
-import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.EXTRA_FILE_PATH;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.REQUEST_CAMERA;
-import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.REQUEST_CODE_PREVIEW;
 
 public class DogPhotoPreviewFragment extends DialogFragment {
     public static final String PREVIEW_TAG = "preview_tag";
     public static final String PREVIEW_ARG = "preview_bundle_arg";
+    public static final int REQUEST_CAMERA = 201;
+    public static final int REQUEST_CODE_PREVIEW = 203;
+
+    public static final String EXTRA_FILE_PATH = "extra_file_path";
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private File photoFile;
     private Button cancelButton;
@@ -61,12 +61,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
         if (bundleArguments != null && bundleArguments.containsKey(PREVIEW_ARG)) {
             photoFilePathString = bundleArguments.getString(PREVIEW_ARG);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "PREVIEW onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
     @Nullable

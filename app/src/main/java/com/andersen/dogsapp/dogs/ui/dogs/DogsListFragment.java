@@ -72,14 +72,10 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owner_dogs_list, container, false);
-
         dogsAdapter = new DogsAdapter(getActivity(), this);
-
         initViews(view);
         listenToScrolledRecyclerView();
-
         floatingButton.setOnClickListener(v -> addDogListener.onAddDogFragmentListener(owner));
-
         return view;
     }
 
@@ -96,7 +92,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "DOGS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount()); // TODO delete line
         fragmentNameListener.onFragmentChangeListener(R.string.title_dogs_list);
         ownerDogs = DogsRepository.get().getOwnerDogs(owner);
         if (ownerDogs.isEmpty()) {
@@ -108,7 +103,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
     private void readArguments(Bundle bundle) {
         if (bundle != null) {
-            Log.d(TAG, "OwnersListFragment: readArguments: bundle != null"); // TODO delete line
             owner = getArguments().getParcelable(OWNER_ARG);
         }
     }
@@ -119,7 +113,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         dogsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dogsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         dogsRecyclerView.setAdapter(dogsAdapter);
-
         floatingButton = view.findViewById(R.id.add_dog_fab);
     }
 

@@ -18,7 +18,6 @@ public class HorizontalDividerItemDecoration extends RecyclerView.ItemDecoration
         int right = parent.getWidth() - parent.getPaddingRight();
 
         int childCount = parent.getChildCount();
-
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
             RecyclerView.LayoutParams params =

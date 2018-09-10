@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parent_layout"
-    tools:context=".dogs.ui.dogs.DogsListActivity">
+    tools:context=".dogs.ui.dogs.DogsListFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -64,7 +64,6 @@ public class DogsInfoFragment extends Fragment {
     public void onResume() {
         super.onResume();
         fragmentNameListener.onFragmentChangeListener(R.string.title_dog_description);
-        Log.d(TAG, "INFO onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
     @Override

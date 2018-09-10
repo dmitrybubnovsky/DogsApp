@@ -53,8 +53,6 @@ public class DogsSQLiteDataSource implements IDogsDataSource {
                     dogs.add(dog);
                     cursor.moveToNext();
                 }
-            } else {
-                Log.d(TAG, "loadDogs. cursor.count == 0");
             }
             cursor.close();
         } finally { // закрываем БД

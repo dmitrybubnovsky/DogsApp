@@ -176,7 +176,6 @@ public class NewDogFormFragment extends Fragment {
     public void onResume() {
         super.onResume();
         fragmentNameListener.onFragmentChangeListener(R.string.title_add_dog);
-        Log.d(TAG, "NewDog onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
     }
 
     private void showNoPermissionSnackbarSettings(int snackBarStringResId, int settingPermissionRequest) {
