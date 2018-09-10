@@ -26,11 +26,9 @@ import com.andersen.dogsapp.dogs.data.repositories.DogsRepository;
 import com.andersen.dogsapp.dogs.ui.HorizontalDividerItemDecoration;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DogsListFragment extends Fragment implements IRecyclerItemListener<Dog> {
-    public static final String DOGS_ARG = "dogs_arg";
     public static final String OWNER_ARG = "owner_arg";
     public static final String DOGS_TAG = "dogs_tag";
     private static final String TAG = "#";
@@ -39,7 +37,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     private Owner owner;
     private DogsAdapter dogsAdapter;
     private List<Dog> ownerDogs;
-
     private IAddDogFragmentListener addDogListener;
     private IAddedDogFragmentListener addedDogListener;
     private IChangeFragmentListener fragmentNameListener;
@@ -50,7 +47,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         addDogListener = (MainAppDescriptionActivity) context;
         addedDogListener = (MainAppDescriptionActivity) context;
         fragmentNameListener = (MainAppDescriptionActivity) context;
-        Log.d(TAG, "DogsList onAttach");
     }
 
     @Override
@@ -59,7 +55,6 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         addDogListener = null;
         addedDogListener = null;
         fragmentNameListener = null;
-        Log.d(TAG, "DogsList onDetach");  // TODO Delete
     }
 
     @Override
@@ -69,9 +64,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         setHasOptionsMenu(true);
         final Bundle bundleArguments = getArguments();
         readArguments(bundleArguments);
-        if (bundleArguments == null || !bundleArguments.containsKey(DOGS_TAG)) {
-            Log.d("", "OwnersListFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
-        } else {
+        if (bundleArguments != null && bundleArguments.containsKey(DOGS_TAG)) {
             Toast.makeText(getActivity(), "Owner's name " + owner.getOwnerName(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -82,7 +75,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
         dogsAdapter = new DogsAdapter(getActivity(), this);
 
-        initRecyclerView(view);
+        initViews(view);
         listenToScrolledRecyclerView();
 
         floatingButton.setOnClickListener(v -> addDogListener.onAddDogFragmentListener(owner));
@@ -120,7 +113,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         }
     }
 
-    private void initRecyclerView(View view) {
+    private void initViews(View view) {
         Drawable divider = getResources().getDrawable(R.drawable.dogs_divider);
         dogsRecyclerView = view.findViewById(R.id.owner_dogs_recycler_view);
         dogsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -162,7 +155,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
     @Override
     public void onRecyclerItemClick(Dog dog) {
-        // реагирует на клик собаки из списка
+        // реагирует на клик по собаке из списка
         addedDogListener.onAddedDogFragmentListener(dog);
     }
 

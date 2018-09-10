@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.entities.Owner;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
@@ -32,8 +33,6 @@ import java.util.List;
 
 public class BreedsListFragment extends Fragment
         implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
-    public static final String TAG = "#";
-    public static final String OWNER_ARG = "BreedsListFragment_owner_arg";
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
     private static final String BREEDS_OUT_STATE_KEY = "breeds_bundle_key";
     private static final String CALLED_SELECT_OUT_STATE_KEY = "breeds_bundle_key";
@@ -42,7 +41,8 @@ public class BreedsListFragment extends Fragment
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
-    public boolean calledForSelect;
+    private boolean calledForSelect;
+    private static final String TAG = "#";
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -134,7 +134,7 @@ public class BreedsListFragment extends Fragment
     public void onRecyclerItemClick(DogKind dogKind) {
         if(calledForSelect){
             sendResultBreed(Activity.RESULT_OK, dogKind);
-            ((MainAppDescriptionActivity) getActivity()).deleteFragment(BreedsListFragment.this);
+            AppFragmentManager.getInstance().deleteFragment(getActivity().getSupportFragmentManager(),BreedsListFragment.this);
         }
     }
 

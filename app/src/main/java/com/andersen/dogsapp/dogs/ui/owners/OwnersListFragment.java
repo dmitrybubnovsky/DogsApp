@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,10 +28,9 @@ import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 import java.util.List;
 
 public class OwnersListFragment extends BaseFragment implements IRecyclerItemListener<Owner> {
-    public static final String OWNERS_ARG = "owners_arg";
     public static final String OWNERS_TAG = "owners_tag";
     private static final String TAG = "#";
-    IChangeFragmentListener fragmentNameListener;
+    private IChangeFragmentListener fragmentNameListener;
     private RecyclerView ownersRecyclerView;
     private FloatingActionButton floatingButton;
     private OwnersAdapter ownersAdapter;
@@ -40,18 +38,18 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
     private IaddOwnerFragmentListener addOwnerListener;
     private List<Owner> owners;
 
-    public OwnersListFragment() {
+
+    public interface IFragmentOwnerListener<T> {
+        void onFragmentOwnerListener(T t);
     }
 
-//    public static OwnersListFragment newInstance(){
-//        OwnersListFragment fragment = new OwnersListFragment();
-//        return fragment;
-//    }
+    public interface IaddOwnerFragmentListener {
+        void onAddOwnerFragmentListener();
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d(TAG, "OwnersListFragment onAttach");
         fragmentListener = (MainAppDescriptionActivity) context;
         addOwnerListener = (MainAppDescriptionActivity) context;
         fragmentNameListener = (MainAppDescriptionActivity) context;
@@ -60,9 +58,6 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-
-        Log.d(TAG, "OwnersListFragment onCreate"); // TODO: DELETE THIS LINE
         setHasOptionsMenu(true);
     }
 
@@ -70,7 +65,6 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_owners_list, container, false);
-        Log.d(TAG, "OwnersList onCreateView");
 
         ownersAdapter = new OwnersAdapter(getActivity(), this);
 
@@ -87,49 +81,21 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
         super.onResume();
         // установить title для toolbar'a
         fragmentNameListener.onFragmentChangeListener(R.string.title_owners_list);
-        Log.d(TAG, "OWNERS onResume: getBackStackEntryCount " + ((MainAppDescriptionActivity) getActivity()).fragManager.getBackStackEntryCount());
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
-            Toast.makeText(getActivity(), "Owners is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Owners list is empty", Toast.LENGTH_SHORT).show();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         } else {
             updateUI();
         }
     }
 
-    private void listenToScrolledRecyclerView(){
-        ownersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy < 0){
-                    floatingButton.show();
-                }
-                if (dy > 0){
-                    floatingButton.hide();
-                }
-            }
-        });
-    }
-
-    private void initRecyclerView(View view) {
-        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
-        ownersRecyclerView = view.findViewById(R.id.owners_recycler_view);
-        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
-        ownersRecyclerView.setAdapter(ownersAdapter);
-
-        floatingButton = view.findViewById(R.id.add_owner_fab);
-
-    }
-
-    private void updateUI() {
-        ownersAdapter.setOwners(owners);
-        ownersAdapter.notifyDataSetChanged();
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        fragmentListener = null;
+        addOwnerListener = null;
+        fragmentNameListener = null;
     }
 
     @Override
@@ -150,40 +116,39 @@ public class OwnersListFragment extends BaseFragment implements IRecyclerItemLis
 
     @Override
     public void onRecyclerItemClick(Owner owner) {
-        fragmentListener.onFragmentOwnerListener(owner); // TODO fix this warning
+        fragmentListener.onFragmentOwnerListener(owner);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-//        Log.d(TAG, "OwnersListFragment onStop");
+    private void listenToScrolledRecyclerView() {
+        ownersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy < 0) {
+                    floatingButton.show();
+                }
+                if (dy > 0) {
+                    floatingButton.hide();
+                }
+            }
+        });
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        fragmentListener = null;
-        addOwnerListener = null;
-        fragmentNameListener = null;
+    private void initRecyclerView(View view) {
+        Drawable divider = getResources().getDrawable(R.drawable.owners_divider);
+        ownersRecyclerView = view.findViewById(R.id.owners_recycler_view);
+        ownersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ownersRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
+        ownersRecyclerView.setAdapter(ownersAdapter);
+        floatingButton = view.findViewById(R.id.add_owner_fab);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-//        Log.d(TAG, "OwnersListFragment onPause");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        Log.d(TAG, "OwnersListFragment onDestroy");
-    }
-
-    public interface IFragmentOwnerListener<T> {
-        void onFragmentOwnerListener(T t);
-    }
-
-    public interface IaddOwnerFragmentListener {
-        void onAddOwnerFragmentListener();
+    private void updateUI() {
+        ownersAdapter.setOwners(owners);
+        ownersAdapter.notifyDataSetChanged();
     }
 }

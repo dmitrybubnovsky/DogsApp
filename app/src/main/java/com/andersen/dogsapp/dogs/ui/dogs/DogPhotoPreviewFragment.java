@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
@@ -29,11 +30,8 @@ import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.REQUEST_CAMER
 import static com.andersen.dogsapp.dogs.ui.dogs.NewDogFormActivity.REQUEST_CODE_PREVIEW;
 
 public class DogPhotoPreviewFragment extends DialogFragment {
-    public static final String TAG = "#";
     public static final String PREVIEW_TAG = "preview_tag";
     public static final String PREVIEW_ARG = "preview_bundle_arg";
-
-
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private File photoFile;
     private Button cancelButton;
@@ -41,14 +39,13 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     private Button savePhotoButton;
     private ImageView dogPhotoPreImageview;
     private String photoFilePathString;
+    private static final String TAG = "#";
 
     static DogPhotoPreviewFragment newInstance(String photoFilePathString) {
         DogPhotoPreviewFragment fragDialog = new DogPhotoPreviewFragment();
-
         Bundle args = new Bundle();
         args.putString(PREVIEW_ARG, photoFilePathString);
         fragDialog.setArguments(args);
-
         return fragDialog;
     }
 
@@ -56,18 +53,12 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-
         readArguments();
-    }
-
-    private void showDialogFragment() {
-
     }
 
     public void readArguments() {
         final Bundle bundleArguments = getArguments();
-        if (bundleArguments == null || !bundleArguments.containsKey(PREVIEW_ARG)) {
-        } else {
+        if (bundleArguments != null && bundleArguments.containsKey(PREVIEW_ARG)) {
             photoFilePathString = bundleArguments.getString(PREVIEW_ARG);
         }
     }
@@ -82,8 +73,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dog_photo_preview, container, false);
-        Log.d(TAG, "Preview onCreateView");
-
         initViews(view);
 
         Bitmap bitmap = PictureUtils.getScaledBitmap(photoFilePathString, getActivity());
@@ -105,7 +94,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
             updatePhotoView();
             backToNewDogFormActivity();
         });
-
         return view;
     }
 
@@ -135,7 +123,8 @@ public class DogPhotoPreviewFragment extends DialogFragment {
 
     private void backToNewDogFormActivity() {
         sendResult(RESULT_OK, photoFilePathString);
-        ((MainAppDescriptionActivity) getActivity()).deleteFragment(DogPhotoPreviewFragment.this);
+        AppFragmentManager.getInstance().deleteFragment(getActivity().getSupportFragmentManager(),
+                DogPhotoPreviewFragment.this);
     }
 
     private void sendResult(int resultCode, String photoFilePathString) {
@@ -171,15 +160,3 @@ public class DogPhotoPreviewFragment extends DialogFragment {
         }
     }
 }
-
-
-//    @NonNull
-//    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dog_photo_preview, false);
-//
-//        return new AlertDialog.Builder(getActivity())
-//                .setView()
-//                .setPositiveButton(android.R.string.ok, null)
-//
-//    }

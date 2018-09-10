@@ -48,14 +48,14 @@ import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELEC
 import static com.andersen.dogsapp.dogs.ui.dogs.DogPhotoPreviewFragment.PREVIEW_TAG;
 
 public class NewDogFormFragment extends Fragment {
-    public static final String TAG = "#";
     public static final String NEW_DOG_ARG = "new_dog_arg";
     public static final String BREED_ARG = "breed_arg";
     public static final String NEW_DOG_TAG = "new_dog_tag";
-    public static final String EXTRA_FILE_PATH = "extra_file_path";
-    public static final int REQUEST_CAMERA = 201;
-    public static final int REQUEST_CODE_DOG_KIND = 202;
-    public static final int REQUEST_CODE_PREVIEW = 203;
+    private static final String TAG = "#";
+    private static final String EXTRA_FILE_PATH = "extra_file_path";
+    private static final int REQUEST_CAMERA = 201;
+    private static final int REQUEST_CODE_DOG_KIND = 202;
+    private static final int REQUEST_CODE_PREVIEW = 203;
     private static final int PERMISSIONS_REQUEST = 115;
     private static final int STORAGE_REQUEST_PERMISSION = 114;
     private static final int CAMERA_REQUEST_PERMISSION = 116;
@@ -64,8 +64,7 @@ public class NewDogFormFragment extends Fragment {
     private static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
     private static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    IPreviewClickFragmentListener previewClickListener;
-    IDogFinishedFragmentListener finishedDogListener;
+    private IDogFinishedFragmentListener finishedDogListener;
     private EditText dogNameEditText;
     private EditText dogKindEditText;
     private EditText dogAgeEditText;
@@ -87,7 +86,6 @@ public class NewDogFormFragment extends Fragment {
         super.onAttach(context);
         finishedDogListener = (MainAppDescriptionActivity) context;
         fragmentNameListener = (MainAppDescriptionActivity) context;
-        Log.d(TAG, "NewDog onAttach");
     }
 
     @Override
@@ -95,36 +93,11 @@ public class NewDogFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         setHasOptionsMenu(true);
-        Log.d(TAG, "NewDog onCreate");
 
         final Bundle bundleArguments = getArguments();
-        if (bundleArguments == null) {
-            Log.d("", "NewDogFormFragment: bundleArguments == null || !bundleArguments.containsKey(OWNERS_ARG)");
-        } else {
+        if (bundleArguments != null) {
             readBundle(bundleArguments);
         }
-        Log.d(TAG, "NewDog onCreate");
-    }
-
-//    public static Fragment newInstance(Owner owner) {
-//        final NewDogFormFragment newDogFragment = new NewDogFormFragment();
-//        final Bundle bundleArgs = new Bundle();
-//        bundleArgs.putParcelable(NEW_DOG_ARG, owner);
-//        newDogFragment.setArguments(bundleArgs);
-//        return newDogFragment;
-//    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "NewDog onDestroy");
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "NewDog onDestroyView");
     }
 
     private void readBundle(final Bundle bundle) {
@@ -135,15 +108,12 @@ public class NewDogFormFragment extends Fragment {
             if (bundle.containsKey(BREED_ARG)) {
                 dogKind = bundle.getParcelable(BREED_ARG);
             }
-        } else {
-            Log.d(TAG, "NewDogFragment bundle = null");
-        } // TODO delete this line
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_new_dog_form, container, false);
-        Log.d(TAG, "NewDog onCreateView");
 
         hasPhoto = false;
 
@@ -160,20 +130,15 @@ public class NewDogFormFragment extends Fragment {
             // если порода собаки еще не установлена, то переход в список пород
             if (dog.getDogKind() == null) {
                 startDogsKindsListActivity();
-                Log.d(TAG, "------------- dog.getDogKind() starts breeedslist");
-
             } else {
                 // добавляем собачку в БД и возвращаем её уже с сгенерированным dogId в модель dog
                 dog = DogsRepository.get().addDog(dog);
                 owner.addDog(dog);
-                Log.d(TAG, "------------- dog kind " + dog.getDogKind() + " starts onDogFinishedListener");
                 // переход в DogsListFragment
                 finishedDogListener.onDogFinishedListener(owner);
             }
         });
-
         photoDogImageView.setOnClickListener(view_ -> checkPermissions());
-
         return view;
     }
 
@@ -298,12 +263,6 @@ public class NewDogFormFragment extends Fragment {
         Uri uri = FileProvider.getUriForFile(getActivity(),
                 "com.andersen.dogsapp.fileprovider", photoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//        List<ResolveInfo> cameraActivities = getActivity().getPackageManager()
-//                .queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
-//        for (ResolveInfo activity : cameraActivities) {
-//            getActivity().grantUriPermission(activity.activityInfo.packageName,
-//                    uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//        }
         startActivityForResult(captureImage, REQUEST_CAMERA);
     }
 
@@ -313,15 +272,6 @@ public class NewDogFormFragment extends Fragment {
         // назначаем текущий фрагмент целевым для DogPhotoPreviewFragment'a
         dialogFragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_PREVIEW);
         dialogFragment.show(((MainAppDescriptionActivity) getActivity()).fragManager, PREVIEW_TAG);
-
-//        ((MainAppDescriptionActivity)getActivity()).fragManager.beginTransaction()
-//                .replace(R.id.host_fragment_container, previewFragment, PREVIEW_TAG)
-//                .addToBackStack(BACK_STACK_ROOT_TAG)
-//                .commit();
-
-//        Intent intent = new Intent(getApplicationContext(), DogPhotoPreviewActivity.class);
-//        intent.putExtra(EXTRA_FILE_PATH, photoFilePathString);
-//        startActivityForResult(intent, REQUEST_CODE_PREVIEW);
     }
 
     private File getPhotoFile(Context context) {
@@ -394,28 +344,9 @@ public class NewDogFormFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "NewDog onStart");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "NewDog onStop");
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
         fragmentNameListener = null;
-        Log.d(TAG, "NewDog onDetach");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "NewDog onPause");
     }
 
     @Override
@@ -427,14 +358,12 @@ public class NewDogFormFragment extends Fragment {
                     setDogKindTitleAndImage();
                     break;
                 case REQUEST_CAMERA:
-                    Log.d(TAG, "NewDog case REQUEST_CAMERA: ");
                     setFilePathString();
                     dog.setDogImageString(photoFilePathString);
                     updatePhotoView();
                     hasPhoto = true;
                     break;
                 case REQUEST_CODE_PREVIEW:
-                    Log.d(TAG, "NewDog case REQUEST_CODE_PREVIEW: ");
                     photoFilePathString = data.getStringExtra(EXTRA_FILE_PATH);
                     dog.setDogImageString(photoFilePathString);
                     updatePhotoView();
@@ -455,22 +384,6 @@ public class NewDogFormFragment extends Fragment {
         } else {
             hasPhoto = false;
         }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "NewDog onActivityCreated");
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        Log.d(TAG, "NewDog onViewStateRestored");
-    }
-
-    public interface IPreviewClickFragmentListener<T> {
-        void onPreviewClickListener(T t);
     }
 
     public interface IDogFinishedFragmentListener<T> {

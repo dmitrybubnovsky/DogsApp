@@ -9,8 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +18,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.AppFragmentManager;
@@ -65,7 +65,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private static final String DOGS_FRAGMENT = DogsListFragment.class.getName();
     private static final String INFO_FRAGMENT = DogsInfoFragment.class.getName();
     private static final String DOG_CHANNEL_ID = "DOG_CHANNEL";
-    private static final String BACK_STACK_NEW_DOG_TAG = "root_fragment";
     public FragmentManager fragManager;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -73,21 +72,15 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private List<Owner> owners;
 
-    /*
-     * TODO: поосвобождать ресуры во фрагментах
-     */
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "HOST onSaveInstanceState");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app_subscription);
-        Log.d(TAG, "HOST onCreate");
 
         fragManager = getSupportFragmentManager();
 
@@ -97,14 +90,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         owners = OwnersRepository.get().getOwners();
         if (owners.isEmpty()) {
             AppFragmentManager.getInstance()
-                    .replaceAddToBackStack(fragManager, this, NEW_OWNER_FRAGMENT, NEW_OWNER_TAG);
+                    .replaceAddToBackStack(fragManager, this, NEW_OWNER_FRAGMENT,
+                            NEW_OWNER_TAG);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "HOST onResume");
     }
 
     @Override
@@ -165,7 +153,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
             case R.id.owners_list_fragment:
                 handler.postDelayed(() -> AppFragmentManager.getInstance()
-                        .replaceAddToBackStack(fragManager, getApplicationContext(), OWNERS_FRAGMENT, OWNERS_TAG), DELAY_MILLIS);
+                        .replaceAddToBackStack(fragManager, getApplicationContext(), OWNERS_FRAGMENT,
+                                OWNERS_TAG), DELAY_MILLIS);
                 break;
             case R.id.dogs_list_fragment:
                 toolbar.setTitle(R.string.title_dogs_list);
@@ -210,6 +199,7 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         if (fragManager.getBackStackEntryCount() == 1) {
+            Toast.makeText(this, "Chao-chao!", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             super.onBackPressed();
@@ -217,20 +207,8 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "HOST onDestroy");
-    }
-
-    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "HOST onStop");
     }
 
     // вызывается при нажатии на кнопку добавить (собачку) в NewDogFormFragment
@@ -249,14 +227,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         notifyOwnerAdded();
     }
 
-    public void deleteFragment(Fragment fragment) {
-        if (fragment != null) {
-            fragManager.beginTransaction()
-                    .remove(fragment)
-                    .commit();
-        }
-    }
-
     // callback метода of IAddedDogFragmentListener<Dog> вызывается из DogsListFragment
     // по клику элемента списка, запускает DogsInfoFragment
     @Override
@@ -265,15 +235,15 @@ public class MainAppDescriptionActivity extends AppCompatActivity
                 DOG_INFO_TAG, getParcelableBundle(DOG_INFO_ARG, dog));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private <T> Bundle getParcelableBundle(String keyArg, T t) {
         Bundle bundleArg = new Bundle();
         bundleArg.putParcelable(keyArg, (Parcelable) t);
         return bundleArg;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -305,10 +275,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         notificationManager.notify(1, notification);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private NotificationChannel createDogChannel() {
         NotificationChannel channel = new NotificationChannel(DOG_CHANNEL_ID,
                 "Doggy dogg channel", NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("Dog's channel");
+        channel.setDescription("Dog Notification's Channel");
         channel.enableLights(true);
         channel.setLightColor(R.color.colorCustomDarkL);
         channel.enableVibration(false);

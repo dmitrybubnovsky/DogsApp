@@ -14,7 +14,6 @@ import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 public class AppFragmentManager {
     private static AppFragmentManager instance;
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
-//    private FragmentManager fragmentManager;
 
     public static AppFragmentManager getInstance() {
         if (instance == null) {
@@ -24,7 +23,6 @@ public class AppFragmentManager {
     }
                     
     public void replaceAddToBackStack(FragmentManager fragmentManager, Context context, String fragmentName, String fragmentTag) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragment == null) {
             fragment = Fragment.instantiate(context, fragmentName);
@@ -49,9 +47,7 @@ public class AppFragmentManager {
         }
     }
 
-    public void deleteFragment(Context context, Fragment fragment) {
-        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-
+    public void deleteFragment(FragmentManager fragmentManager, Fragment fragment) {
         if (fragment != null) {
             fragmentManager.beginTransaction()
                     .remove(fragment)
