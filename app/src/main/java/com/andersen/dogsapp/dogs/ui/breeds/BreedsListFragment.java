@@ -132,7 +132,8 @@ public class BreedsListFragment extends Fragment
     public void onRecyclerItemClick(DogKind dogKind) {
         if (calledForSelect) {
             sendResultBreed(Activity.RESULT_OK, dogKind);
-            AppFragmentManager.getInstance().deleteFragment(getActivity().getSupportFragmentManager(), BreedsListFragment.this);
+            ((MainAppDescriptionActivity) getActivity()).fragManager.popBackStack();
+//            AppFragmentManager.getInstance().deleteFragment(getActivity().getSupportFragmentManager(), BreedsListFragment.this);
         }
     }
 

@@ -42,6 +42,7 @@ import com.andersen.dogsapp.dogs.utils.NetworkManager;
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
+import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BACK_STACK_ROOT_TAG;
 import static com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity.BREEDS_TAG;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.CALLED_FOR_SELECT_KEY;
 import static com.andersen.dogsapp.dogs.ui.breeds.BreedsListFragment.EXTRA_SELECTED_KIND;
@@ -290,6 +291,7 @@ public class NewDogFormFragment extends Fragment {
             fragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
             ((MainAppDescriptionActivity) getActivity()).fragManager.beginTransaction()
                     .add(R.id.host_fragment_container, fragment, BREEDS_TAG)
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
                     .commit();
         }
     }

@@ -71,11 +71,11 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private List<Owner> owners;
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

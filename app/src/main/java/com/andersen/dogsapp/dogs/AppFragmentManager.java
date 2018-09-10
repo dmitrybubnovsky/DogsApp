@@ -10,7 +10,7 @@ import com.andersen.dogsapp.R;
 
 public class AppFragmentManager {
     private static AppFragmentManager instance;
-    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+    public static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     public static AppFragmentManager getInstance() {
         if (instance == null) {
@@ -29,6 +29,16 @@ public class AppFragmentManager {
         }
     }
 
+    public void replaceAddToBackStack(FragmentManager fragmentManager, Context context,
+                                      String fragmentName, String fragmentTag, Bundle bundle) {
+        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
+        if (fragment == null) {
+            fragment = Fragment.instantiate(context, fragmentName, bundle);
+            replaceAndAddToBackStack(fragmentManager, fragment, fragmentTag)
+                    .commit();
+        }
+    }
+
     private FragmentTransaction replaceAndAddToBackStack(FragmentManager fragmentManager,
                                                          Fragment fragment, String fragmentTag) {
         return fragmentManager.beginTransaction()
@@ -36,13 +46,8 @@ public class AppFragmentManager {
                 .addToBackStack(BACK_STACK_ROOT_TAG);
     }
 
-    public void deleteFragmentByTag(FragmentManager fragmentManager, String fragmentTag) {
-        Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
-        if (fragment != null) {
-            fragmentManager.beginTransaction()
-                    .remove(fragment)
-                    .commit();
-        }
+    public void clearBackStack(FragmentManager fragmentManager) {
+        fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public void deleteFragment(FragmentManager fragmentManager, Fragment fragment) {
@@ -53,16 +58,12 @@ public class AppFragmentManager {
         }
     }
 
-    public void replaceAddToBackStack(FragmentManager fragmentManager, Context context,
-                                      String fragmentName, String fragmentTag, Bundle bundle) {
+    public void deleteFragmentByTag(FragmentManager fragmentManager, String fragmentTag) {
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
-        if (fragment == null) {
-            fragment = Fragment.instantiate(context, fragmentName, bundle);
-            replaceAndAddToBackStack(fragmentManager, fragment, fragmentTag).commit();
+        if (fragment != null) {
+            fragmentManager.beginTransaction()
+                    .remove(fragment)
+                    .commit();
         }
-    }
-
-    public void clearBackStack(FragmentManager fragmentManager) {
-        fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
