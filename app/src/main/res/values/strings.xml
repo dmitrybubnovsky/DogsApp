@@ -39,6 +39,7 @@
     <string name="toolbar_title_add_dog">Add new dog</string>
     <string name="toolbar_title_kinds_list">Choose dog kind</string>
     <string name="toolbar_title_detail_info">Dogs info</string>
+    <string name="note_owner_added">New owner has been added</string>
 
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>

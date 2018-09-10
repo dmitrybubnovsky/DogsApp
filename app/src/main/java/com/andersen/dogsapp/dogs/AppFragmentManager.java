@@ -9,35 +9,38 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.andersen.dogsapp.R;
-
-import java.lang.reflect.Constructor;
+import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
 public class AppFragmentManager {
-    public static AppFragmentManager instance;
-    public static final String BACK_STACK_ROOT_TAG = "root_fragment";
-    private FragmentManager fragmentManager;
+    private static AppFragmentManager instance;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+//    private FragmentManager fragmentManager;
 
-    private AppFragmentManager(Context context) {
-        fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-    }
-
-    public static AppFragmentManager getInstance(Context context) {
+    public static AppFragmentManager getInstance() {
         if (instance == null) {
-            instance = new AppFragmentManager(context);
+            instance = new AppFragmentManager();
         }
         return instance;
     }
                     
-    public <T> void replaceAddToBackStack(Context context, String fragmentName, String fragmentTag) {
+    public void replaceAddToBackStack(FragmentManager fragmentManager, Context context, String fragmentName, String fragmentTag) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragment == null) {
             fragment = Fragment.instantiate(context, fragmentName);
-            replaceAndAddToBackStack(fragment, fragmentTag)
+            replaceAndAddToBackStack(fragmentManager, fragment, fragmentTag)
                     .commit();
         }
     }
 
-    public void deleteFragmentByTag(String fragmentTag) {
+    private FragmentTransaction replaceAndAddToBackStack(FragmentManager fragmentManager, Fragment fragment, String fragmentTag) {
+        return fragmentManager.beginTransaction()
+                .replace(R.id.host_fragment_container, fragment, fragmentTag)
+                .addToBackStack(BACK_STACK_ROOT_TAG);
+    }
+
+    public void deleteFragmentByTag(FragmentManager fragmentManager, String fragmentTag) {
+
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragment != null) {
             fragmentManager.beginTransaction()
@@ -46,7 +49,9 @@ public class AppFragmentManager {
         }
     }
 
-    public void deleteFragment(Fragment fragment) {
+    public void deleteFragment(Context context, Fragment fragment) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+
         if (fragment != null) {
             fragmentManager.beginTransaction()
                     .remove(fragment)
@@ -55,6 +60,7 @@ public class AppFragmentManager {
     }
 
     public <T> void addFragment(Context context, String fragmentName, String fragmentTag) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragment == null) {
             fragment = Fragment.instantiate(context, fragmentName);
@@ -64,26 +70,20 @@ public class AppFragmentManager {
         }
     }
 
-    public <T> void replaceAddToBackStack(Context context, String fragmentName, String fragmentTag, Bundle bundle) {
+    public void replaceAddToBackStack(FragmentManager fragmentManager, Context context, String fragmentName, String fragmentTag, Bundle bundle) {
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragment == null) {
             fragment = Fragment.instantiate(context, fragmentName, bundle);
-            replaceAndAddToBackStack(fragment, fragmentTag).commit();
+            replaceAndAddToBackStack(fragmentManager, fragment, fragmentTag).commit();
         }
     }
 
-    private FragmentTransaction replaceAndAddToBackStack(Fragment fragment, String fragmentTag) {
-        return fragmentManager.beginTransaction()
-                .replace(R.id.host_fragment_container, fragment, fragmentTag)
-                .addToBackStack(BACK_STACK_ROOT_TAG);
-    }
-
-    public void clearBackStack() {
-//      fragmentManager.popBackStackImmediate(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    public void clearBackStack(FragmentManager fragmentManager) {
         fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     public <T> void replaceBreedFragment(Context context, String fragmentName, String fragmentTag, String keyArgs, T t) {
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTag);
         if (fragment == null) {
             Bundle bundleArgs = new Bundle();

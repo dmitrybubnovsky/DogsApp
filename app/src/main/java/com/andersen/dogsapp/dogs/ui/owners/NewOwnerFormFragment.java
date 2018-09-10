@@ -31,9 +31,6 @@ public class NewOwnerFormFragment extends Fragment {
     private EditText preferredKindEditText;
     private Button addOwnerButton;
 
-    public NewOwnerFormFragment() {
-    }
-
     public static Fragment newInstance() {
         final NewOwnerFormFragment fragment = new NewOwnerFormFragment();
         return fragment;
@@ -86,7 +83,6 @@ public class NewOwnerFormFragment extends Fragment {
             public void onClick(View v) {
                 addOwner();
                 addedOwnerListener.onAddedOwnerListener();
-//                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 

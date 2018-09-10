@@ -12,6 +12,8 @@
 
     <string name="add_item_menu">Добавить</string>
 
+    <string name="note_owner_added">Добавлен новый владелец</string>
+
     <string name="owner_name_hint">Имя</string>
     <string name="owner_surname_hint">Фамилия</string>
     <string name="prefered_dog_hint">Любимая порода собаки</string>
