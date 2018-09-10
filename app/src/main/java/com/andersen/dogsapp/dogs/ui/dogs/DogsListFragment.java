@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
     public static final String DOGS_TAG = "dogs_tag";
     private static final String TAG = "#";
     private RecyclerView dogsRecyclerView;
+    private FloatingActionButton floatingButton;
     private Owner owner;
     private DogsAdapter dogsAdapter;
     private List<Dog> ownerDogs;
@@ -81,6 +83,9 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         dogsAdapter = new DogsAdapter(getActivity(), this);
 
         initRecyclerView(view);
+        listenToScrolledRecyclerView();
+
+        floatingButton.setOnClickListener(v -> addDogListener.onAddDogFragmentListener(owner));
 
         return view;
     }
@@ -121,6 +126,27 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         dogsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         dogsRecyclerView.addItemDecoration(new HorizontalDividerItemDecoration(divider));
         dogsRecyclerView.setAdapter(dogsAdapter);
+
+        floatingButton = view.findViewById(R.id.add_dog_fab);
+    }
+
+    private void listenToScrolledRecyclerView(){
+        dogsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(dy < 0){
+                    floatingButton.show();
+                }
+                if (dy > 0){
+                    floatingButton.hide();
+                }
+            }
+        });
     }
 
     private void updateUI() {
