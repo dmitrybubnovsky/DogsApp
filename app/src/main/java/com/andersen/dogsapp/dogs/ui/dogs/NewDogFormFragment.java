@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
+import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -285,15 +286,19 @@ public class NewDogFormFragment extends Fragment {
         if (!NetworkManager.hasNetWorkAccess(getActivity())) {
             Toast.makeText(getActivity(), R.string.no_network_toast, Toast.LENGTH_SHORT).show();
         } else {
-            Bundle bundleArg = new Bundle();
-            bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, true);
-            Fragment fragment = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName(), bundleArg);
-            fragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
-            ((MainAppDescriptionActivity) getActivity()).fragManager.beginTransaction()
-                    .add(R.id.host_fragment_container, fragment, BREEDS_TAG)
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit();
+            startBreedsFragmentForResult();
         }
+    }
+
+    private void startBreedsFragmentForResult(){
+        Bundle bundleArg = new Bundle();
+        bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, true);
+        Fragment fragment = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName(), bundleArg);
+        fragment.setTargetFragment(NewDogFormFragment.this, REQUEST_CODE_DOG_KIND);
+        ((MainAppDescriptionActivity) getActivity()).fragManager.beginTransaction()
+                .add(R.id.host_fragment_container, fragment, BREEDS_TAG)
+                .addToBackStack(BACK_STACK_ROOT_TAG)
+                .commit();
     }
 
     private void setFilePathString() {

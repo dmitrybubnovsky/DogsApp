@@ -102,7 +102,7 @@ public class WebBreedsDataSource {
                 List<String> listString;
                 String uriImageString;
                 // Если с response'ом все ок, тогда вытягиваем Uri строку,
-                // которая приходит к нам от десериализатора как List<String>
+                // которая приходит из десериализатора как List<String>
                 if (response.isSuccessful()) {
                     listString = response.body();
                     uriImageString = listString.get(0);
@@ -121,7 +121,6 @@ public class WebBreedsDataSource {
     }
 
     private List<DogKind> convertStringListToDogKindList(List<String> breedsListString) {
-
         List<DogKind> dogKinds = new ArrayList<>();
         for (String breedString : breedsListString) {
             dogKinds.add(new DogKind(breedString));

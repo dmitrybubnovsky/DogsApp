@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
 import com.andersen.dogsapp.dogs.data.interfaces.IRecyclerItemListener;
 import com.andersen.dogsapp.dogs.data.repositories.BreedsRepository;
@@ -100,18 +99,20 @@ public class BreedsListFragment extends Fragment
             BreedsRepository.getInstance().getBreedsImage(dogKindString, uriBreedString -> {
                 final File breedImageFile = getImageBreedFile(getActivity(), dogKindString);
                 dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
+                Log.d(TAG, "dogKindInstance.setImageString = "+ breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД
                 BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
 
-                Target target = BreedPicasso.get(getActivity())
+                Target target = BreedPicasso.getInstance(getActivity())
                         .getTarget(itemProgressBar, dogKindImageView, breedImageFile);
                 dogKindImageView.setTag(target);
-                BreedPicasso.get(getActivity())
-                        .intoTarget(uriBreedString, target);
+                BreedPicasso.getInstance(getActivity()).intoTarget(uriBreedString, target);
+
             });
         } else {
-            BreedPicasso.get(getActivity())
+            BreedPicasso.getInstance(getActivity())
                     .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
+            Log.d(TAG, "dogKindInstance.getUriImageString() = "+ dogKindInstance.getUriImageString());
         }
     }
 

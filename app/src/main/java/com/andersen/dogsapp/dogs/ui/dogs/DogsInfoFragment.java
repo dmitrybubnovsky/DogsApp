@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
+import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
@@ -79,6 +80,10 @@ public class DogsInfoFragment extends Fragment {
             dogsImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
         } else {
             dogsImageView.setImageURI(Uri.parse(dogImageString));
+
+//            BreedPicasso.getInstance(getActivity())
+//                    .intoImageView(dogImageString, dogsImageView);
+            Log.d(TAG, "dogImageString = "+ dogImageString);
         }
 
         TextView dogNameTextView = view.findViewById(R.id.dog_name_textview_frag);

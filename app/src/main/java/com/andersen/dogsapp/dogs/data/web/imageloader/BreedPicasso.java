@@ -26,7 +26,7 @@ public class BreedPicasso {
         Picasso.setSingletonInstance(picasso);
     }
 
-    public static BreedPicasso get(Context context) {
+    public static BreedPicasso getInstance(Context context) {
         if (instance == null) {
             instance = new BreedPicasso(context);
         }
@@ -47,7 +47,6 @@ public class BreedPicasso {
                 .load(uriBreedString)
                 .placeholder(placeholder)
 //                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .resize(500, 0)
                 .into(dogKindImageView);
     }
 
@@ -77,11 +76,13 @@ public class BreedPicasso {
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
                 if (placeHolderDrawable != null) {
+                    // null implementation
                 }
             }
 
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                // null implementation
             }
         };
     }
