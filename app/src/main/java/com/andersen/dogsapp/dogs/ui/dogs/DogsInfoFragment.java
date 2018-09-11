@@ -29,7 +29,6 @@ public class DogsInfoFragment extends Fragment {
     private Dog dog;
     private IChangeFragmentListener fragmentNameListener;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
