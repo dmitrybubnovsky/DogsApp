@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.andersen.dogsapp.R;
-import com.andersen.dogsapp.dogs.AppFragmentManager;
 import com.andersen.dogsapp.dogs.camera.PictureUtils;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.entities.DogKind;
@@ -290,7 +289,7 @@ public class NewDogFormFragment extends Fragment {
         }
     }
 
-    private void startBreedsFragmentForResult(){
+    private void startBreedsFragmentForResult() {
         Bundle bundleArg = new Bundle();
         bundleArg.putBoolean(CALLED_FOR_SELECT_KEY, true);
         Fragment fragment = Fragment.instantiate(getActivity(), BreedsListFragment.class.getName(), bundleArg);

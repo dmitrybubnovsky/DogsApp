@@ -32,15 +32,15 @@ import java.util.List;
 public class BreedsListFragment extends Fragment
         implements IRecyclerItemListener<DogKind>, IResponseImageCallback {
     public static final String EXTRA_SELECTED_KIND = "extra_kind";
+    public static final String CALLED_FOR_SELECT_KEY = "called_from_drawer_bundle_arg";
     private static final String BREEDS_OUT_STATE_KEY = "breeds_bundle_key";
     private static final String CALLED_SELECT_OUT_STATE_KEY = "breeds_bundle_key";
-    public static final String CALLED_FOR_SELECT_KEY = "called_from_drawer_bundle_arg";
+    private static final String TAG = "#";
     private List<DogKind> dogKinds;
     private ProgressBar progressBar;
     private DogsKindAdapter adapter;
     private RecyclerView recyclerView;
     private boolean calledForSelect;
-    private static final String TAG = "#";
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -99,7 +99,7 @@ public class BreedsListFragment extends Fragment
             BreedsRepository.getInstance().getBreedsImage(dogKindString, uriBreedString -> {
                 final File breedImageFile = getImageBreedFile(getActivity(), dogKindString);
                 dogKindInstance.setImageString(breedImageFile.getAbsolutePath());
-                Log.d(TAG, "dogKindInstance.setImageString = "+ breedImageFile.getAbsolutePath());
+                Log.d(TAG, "dogKindInstance.setImageString = " + breedImageFile.getAbsolutePath());
                 // обновить поле imageString в БД
                 BreedsRepository.getInstance().updateBreedDBWithUriImage(dogKindInstance);
 
@@ -112,7 +112,7 @@ public class BreedsListFragment extends Fragment
         } else {
             BreedPicasso.getInstance(getActivity())
                     .intoImageView(dogKindInstance.getUriImageString(), dogKindImageView);
-            Log.d(TAG, "dogKindInstance.getUriImageString() = "+ dogKindInstance.getUriImageString());
+            Log.d(TAG, "dogKindInstance.getUriImageString() = " + dogKindInstance.getUriImageString());
         }
     }
 

@@ -5,19 +5,17 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andersen.dogsapp.R;
 import com.andersen.dogsapp.dogs.data.entities.Dog;
 import com.andersen.dogsapp.dogs.data.interfaces.IChangeFragmentListener;
-import com.andersen.dogsapp.dogs.data.web.imageloader.BreedPicasso;
 import com.andersen.dogsapp.dogs.ui.DogImageUtils;
 import com.andersen.dogsapp.dogs.ui.MainAppDescriptionActivity;
 
@@ -79,10 +77,6 @@ public class DogsInfoFragment extends Fragment {
             dogsImageView.setImageDrawable(DogImageUtils.getDogImage(context, dogImageString));
         } else {
             dogsImageView.setImageURI(Uri.parse(dogImageString));
-
-//            BreedPicasso.getInstance(getActivity())
-//                    .intoImageView(dogImageString, dogsImageView);
-            Log.d(TAG, "dogImageString = "+ dogImageString);
         }
 
         TextView dogNameTextView = view.findViewById(R.id.dog_name_textview_frag);
@@ -100,7 +94,7 @@ public class DogsInfoFragment extends Fragment {
         TextView dogWeightTextView = view.findViewById(R.id.dog_weight_textview_frag);
         dogWeightTextView.setText("" + dog.getDogWeight() + " " + getResources().getString(R.string.weight_measure));
 
-        Button btnVoice = view.findViewById(R.id.button_voice_frag);
+        FloatingActionButton btnVoice = view.findViewById(R.id.barking_fab);
         btnVoice.setOnClickListener(view1 -> playSound(mediaPlayer));
     }
 

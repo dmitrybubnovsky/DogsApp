@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +92,7 @@ public class DogsKindAdapter extends RecyclerView.Adapter<DogsKindAdapter.ViewHo
              * и update'им в БД это поле
              */
             if (dogKind.getUriImageString().isEmpty()) {
-                    itemProgressBar.setVisibility(View.VISIBLE);
+                itemProgressBar.setVisibility(View.VISIBLE);
                 responseCallback.onResponseImageListener(dogKindName, dogKindImageView, dogKind, itemProgressBar);
             } else {
                 itemProgressBar.setVisibility(View.GONE);

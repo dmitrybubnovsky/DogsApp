@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -116,7 +115,7 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
         floatingButton = view.findViewById(R.id.add_dog_fab);
     }
 
-    private void listenToScrolledRecyclerView(){
+    private void listenToScrolledRecyclerView() {
         dogsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -125,10 +124,10 @@ public class DogsListFragment extends Fragment implements IRecyclerItemListener<
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(dy < 0){
+                if (dy < 0) {
                     floatingButton.show();
                 }
-                if (dy > 0){
+                if (dy > 0) {
                     floatingButton.hide();
                 }
             }

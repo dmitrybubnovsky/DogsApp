@@ -55,9 +55,9 @@ public class MainAppDescriptionActivity extends AppCompatActivity
         OwnersListFragment.IaddOwnerFragmentListener,
         NewDogFormFragment.IDogFinishedFragmentListener<Owner> {
     public static final String BACK_STACK_ROOT_TAG = "root_fragment";
+    public static final String BREEDS_TAG = "breeds_tag";
     private static final String TAG = "#";
     private static final int DELAY_MILLIS = 5;
-    public static final String BREEDS_TAG = "breeds_tag";
     private static final String NEW_OWNER_FRAGMENT = NewOwnerFormFragment.class.getName();
     private static final String OWNERS_FRAGMENT = OwnersListFragment.class.getName();
     private static final String NEW_DOG_FRAGMENT = NewDogFormFragment.class.getName();
@@ -71,11 +71,6 @@ public class MainAppDescriptionActivity extends AppCompatActivity
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private List<Owner> owners;
-//
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

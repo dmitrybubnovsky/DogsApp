@@ -32,6 +32,7 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     public static final int REQUEST_CODE_PREVIEW = 203;
 
     public static final String EXTRA_FILE_PATH = "extra_file_path";
+    private static final String TAG = "#";
     private final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     private File photoFile;
     private Button cancelButton;
@@ -39,7 +40,6 @@ public class DogPhotoPreviewFragment extends DialogFragment {
     private Button savePhotoButton;
     private ImageView dogPhotoPreImageview;
     private String photoFilePathString;
-    private static final String TAG = "#";
 
     static DogPhotoPreviewFragment newInstance(String photoFilePathString) {
         DogPhotoPreviewFragment fragDialog = new DogPhotoPreviewFragment();
